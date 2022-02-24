@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Appmain.cpp" />
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>Precom</Filter>
+    </ClCompile>
+    <ClCompile Include="UserGame.cpp">
+      <Filter>UserCore</Filter>
+    </ClCompile>
+    <ClCompile Include="UserGame_Resources.cpp">
+      <Filter>UserCore</Filter>
+    </ClCompile>
+    <ClCompile Include="UserGame_Resources_Shader.cpp">
+      <Filter>UserCore\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Setting.cpp">
+      <Filter>Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Actor\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TopUI.cpp">
+      <Filter>Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Actor\MOB</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Precom">
+      <UniqueIdentifier>{0d0b75c7-5726-42b1-aa92-879451e131c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserCore">
+      <UniqueIdentifier>{ae1c99fc-5ae2-4958-9205-8018fcb509b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CustomVertex">
+      <UniqueIdentifier>{16842167-2534-42db-8026-796a267ad72b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserCore\Resources">
+      <UniqueIdentifier>{097aabc9-6df0-4d53-a9ed-77681a8002e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{e6998438-49d5-445a-83ae-2e78e52a45df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{5b1798ae-0845-4fbe-8a16-76e0e38dd1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Player">
+      <UniqueIdentifier>{9be1d242-92bc-4502-851d-9beafd04356a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect">
+      <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI">
+      <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\MOB">
+      <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PreCompile.h">
+      <Filter>Precom</Filter>
+    </ClInclude>
+    <ClInclude Include="UserGame.h">
+      <Filter>UserCore</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomVertex.h">
+      <Filter>CustomVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="UserGame_Resources_Shader.h">
+      <Filter>UserCore\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h" />
+    <ClInclude Include="Bullet.h">
+      <Filter>Actor\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TopUI.h">
+      <Filter>Actor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Actor\MOB</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
