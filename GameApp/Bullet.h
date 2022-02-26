@@ -15,10 +15,18 @@ public:
 	Bullet& operator=(const Bullet& _Other) = delete;
 	Bullet& operator=(Bullet&& _Other) noexcept = delete;
 
-protected:
+private:
+	float4 MoveDir_;
+
 
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+public:
+	void SetMoveDir(float4 _MoveDir)
+	{
+		MoveDir_ = _MoveDir;
+	}
 };
 

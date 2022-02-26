@@ -31,6 +31,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineBlend.h" />
+    <ClInclude Include="GameEngineBlendManager.h" />
     <ClInclude Include="GameEngineComponent.h">
       <SubType>
       </SubType>
@@ -175,6 +177,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineBlend.cpp" />
+    <ClCompile Include="GameEngineBlendManager.cpp" />
     <ClCompile Include="GameEngineComponent.cpp">
       <SubType>
       </SubType>

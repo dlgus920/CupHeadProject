@@ -7,8 +7,6 @@
 Player::Player() :
 	State_(this),
 	PlayerImageRenderer(nullptr),
-	Move_Info_(Player_Move_Info::Idle),
-	Act_Info_(Player_Act_Info::None),
 	Dir_(Dir::Right),
 	KeyDir_(KeyDir::None),
 	Key_Up_(false),
@@ -41,32 +39,288 @@ void Player::Start()
 
 void Player::Update(float _DeltaTime)
 {
+	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+
 	KeyUpdate(_DeltaTime);
-	StateUpdate(_DeltaTime);
 	CollisonUpdate();
+	StateUpdate(_DeltaTime);
+	if (false == State_Ground)
+	{
+		GravityUpdate(_DeltaTime);
+	}
 }
 
 void Player::StateUpdate(float _DeltaTime)
 {
-	if (Key_Bomb)
+	if (true == State_Hit_)
 	{
-		State_.ChangeState("Bomb");
+		if (Dir_ == Dir::Left)
+		{
+			//Hit_Left
+			return;
+		}
+		else
+		{
+			//Hit_Right
+			return;
+		}
 	}
-	else if (Key_Dash_)
+	else if (true == Key_Bomb)
 	{
-		State_.ChangeState("Dash");
+		if (Dir_ == Dir::Left)
+		{
+			//Bomb_Left
+			return;
+		}
+		else
+		{
+			//Bomb_Right
+			return;
+		}
 	}
+	else if (true == Key_Jump_)
+	{
+		if (Key_Right_)
+		{
+			Move(_DeltaTime, 1.f, 0.f);
+			Shoot(1.f, 0.f);
+			return;
+		}
+		else if (Key_Left_)
+		{
+			Move(_DeltaTime, -1.f, 0.f);
+			Shoot(-1.f, 0.f);
+			return;
+		}
+		else if (Dir_ == Dir::Left)
+		{
+			//Jump_Left
+			Shoot(-1.f, 0.f);
+			return;
+		}
+		else
+		{
+			//Jump_Right
+			Shoot(1.f, 0.f);
+			return;
+		}
+	}
+	else if (true == Key_Dash_)
+	{
+		if (Dir_ == Dir::Left)
+		{
+			//Dash_Left
+			return;
+		}
+		else
+		{
+			//Dash_Right
+			return;
+		}
+	}
+	else if (true == Key_RockOn_)
+	{
+		if (true == Key_Shoot_) // ½î´ÂÁß
+		{
+			if (Key_Up_)
+			{
+				if (Key_Left_)
+				{
+					//RockOn_UpLeft_Shoot
+					Shoot(1.f, -1.f);
+					return;
+				}
+				else if (Key_Right_)
+				{
+					//RockOn_UpRight_Shoot
+					Shoot(1.f, 1.f);
+					return;
+				}
 
-	else if (Key_RockOn_)
-	{
-		State_.ChangeState("RockOn");
-	}
-	else if (Key_Jump_)
-	{
-		State_.ChangeState("Jump");
-	}
+				else
+				{
+					if (Dir_ == Dir::Left)
+					{
+						//RockOn_LeftUp_Shoot
+						Shoot(1.f, 0.f);
+						return;
+					}
+					else
+					{
+						//RockOn_RightUp_Shoot
+						Shoot(1.f, 0.f);
+						return;
+					}
+				}
+			}
+			else if (Key_Down_)
+			{
+				if (Key_Left_)
+				{
+					//RockOn_DownLeft_Shoot
+					Shoot(-1.f, 0.f);
+					return;
+				}
+				else if (Key_Right_)
+				{
+					//RockOn_DownRight_Shoot
+					Shoot(-1.f, 0.f);
+					return;
+				}
 
+				else
+				{
+					if (Dir_ == Dir::Left)
+					{
+						//RockOn_LeftDown_Shoot
+						Shoot(-1.f, -1.f);
+						return;
+					}
+					else
+					{
+						//RockOn_RightDown_Shoot
+						Shoot(-1.f, 1.f);
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (Key_Up_)
+			{
+				if (Key_Left_)
+				{
+					//RockOn_UpLeft_
+					return;
+				}
+				else if (Key_Right_)
+				{
+					//RockOn_UpRight_
+					return;
+				}
 
+				else
+				{
+					if (Dir_ == Dir::Left)
+					{
+						//RockOn_LeftUp_
+						return;
+					}
+					else
+					{
+						//RockOn_RightUp_
+						return;
+					}
+				}
+			}
+			else if (Key_Down_)
+			{
+				if (Key_Left_)
+				{
+					//RockOn_DownLeft_
+					return;
+				}
+				else if (Key_Right_)
+				{
+					//RockOn_DownRight_
+					return;
+				}
+
+				else
+				{
+					if (Dir_ == Dir::Left)
+					{
+						//RockOn_LeftDown_
+						return;
+					}
+					else
+					{
+						//RockOn_RightDown_
+						return;
+					}
+				}
+			}
+		}
+	}
+	else if (true == Key_Down_)
+	{
+		if (true == Key_Shoot_) // ½î´ÂÁß
+		{
+			if (Dir_ == Dir::Left)
+			{
+				//Duck_Left_Shoot
+				Shoot(0.f, -1.f);
+				return;
+			}
+			else
+			{
+				//Duck_Right_Shoot
+				Shoot(0.f, 1.f);
+				return;
+			}
+		}
+		else
+		{
+			if (Dir_ == Dir::Left)
+			{
+				//Duck_Left_
+				return;
+			}
+			else
+			{
+				//Duck_Right_
+				return;
+			}
+		}
+	}
+	else if (true == Key_Right_)
+	{
+		if (true == Key_Shoot_)
+		{
+			//Walk_Right_Shoot
+			Move(_DeltaTime, 1.f, 0.f);
+			Shoot(0.f, 1.f);
+			return;
+		}
+		else
+		{
+			//Walk_Right_
+			Move(_DeltaTime, 1.f, 0.f);
+			return;
+		}
+	}
+	else if (true == Key_Left_)
+	{
+		if (true == Key_Shoot_)
+		{
+			Shoot(0.f, -1.f);
+			Move(_DeltaTime, -1.f, 0.f);
+			//Walk_Left_Shoot
+			return;
+		}
+		else
+		{
+			//Walk_Left_
+			Move(_DeltaTime, -1.f, 0.f);
+			return;
+		}
+	}
+	else if (true == Key_Shoot_)
+	{
+		if (Dir_ == Dir::Left)
+		{
+			//Idle_Left_Shoot 
+			Shoot(0.f, -1.f);
+			return;
+		}
+		else
+		{
+			//Idle_Right_Shoot
+			Shoot(0.f, 1.f);
+			return;
+		}
+	}
 
 	State_.Update(_DeltaTime);
 }
@@ -92,241 +346,6 @@ void Player::KeyUpdate(float _DeltaTime)
 	Key_Dash_ = GameEngineInput::GetInst().Down("Dash");
 	Key_RockOn_ = GameEngineInput::GetInst().Down("RockOn");
 
-
-	if (true == State_Hit_)
-	{
-		if (Dir_ == Dir::Left)
-		{
-			//Hit_Left
-		}
-		else
-		{
-			//Hit_Right
-		}
-	}
-	else if (true == Key_Bomb)
-	{
-		if (Dir_ == Dir::Left)
-		{
-			//Bomb_Left
-		}
-		else
-		{
-			//Bomb_Right
-		}
-	}
-	else if (true == Key_Jump_)
-	{	
-		if (Key_Right_)
-		{
-			Move(_DeltaTime, 1.f, 0.f);
-			Shoot(1.f, 0.f);
-		}
-		else if (Key_Left_)
-		{
-			Move(_DeltaTime, -1.f, 0.f);
-			Shoot(-1.f, 0.f);
-		}
-		else if (Dir_ == Dir::Left)
-		{
-			//Jump_Left
-			Shoot(-1.f, 0.f);
-		}
-		else
-		{
-			//Jump_Right
-			Shoot(1.f, 0.f);
-		}
-	}
-	else if (true == Key_Dash_)
-	{
-		if (Dir_ == Dir::Left)
-		{
-			//Dash_Left
-		}
-		else
-		{
-			//Dash_Right
-		}
-	}
-	else if (true == Key_RockOn_)
-	{
-		if (true == Key_Shoot_) // ½î´ÂÁß
-		{
-			if (Key_Up_)
-			{
-				if (Key_Left_)
-				{
-					//RockOn_UpLeft_Shoot
-					Shoot(1.f, -1.f);
-				}
-				else if (Key_Right_)
-				{
-					//RockOn_UpRight_Shoot
-					Shoot(1.f, 1.f);
-				}
-
-				else
-				{
-					if (Dir_ == Dir::Left)
-					{
-						//RockOn_LeftUp_Shoot
-						Shoot(1.f, 0.f);
-					}
-					else
-					{
-						//RockOn_RightUp_Shoot
-						Shoot(1.f, 0.f);
-					}
-				}
-			}
-			else if (Key_Down_)
-			{
-				if (Key_Left_)
-				{
-					//RockOn_DownLeft_Shoot
-					Shoot(-1.f, 0.f);
-				}
-				else if (Key_Right_)
-				{
-					//RockOn_DownRight_Shoot
-					Shoot(-1.f, 0.f);
-				}
-
-				else
-				{
-					if (Dir_ == Dir::Left)
-					{
-						//RockOn_LeftDown_Shoot
-						Shoot(-1.f, -1.f);
-					}
-					else
-					{
-						//RockOn_RightDown_Shoot
-						Shoot(-1.f, 1.f);
-					}
-				}
-			}
-		}
-		else
-		{
-			if (Key_Up_)
-			{
-				if (Key_Left_)
-				{
-					//RockOn_UpLeft_
-				}
-				else if (Key_Right_)
-				{
-					//RockOn_UpRight_
-				}
-
-				else
-				{
-					if (Dir_ == Dir::Left)
-					{
-						//RockOn_LeftUp_
-					}
-					else
-					{
-						//RockOn_RightUp_
-					}
-				}
-			}
-			else if (Key_Down_)
-			{
-				if (Key_Left_)
-				{
-					//RockOn_DownLeft_
-				}
-				else if (Key_Right_)
-				{
-					//RockOn_DownRight_
-				}
-
-				else
-				{
-					if (Dir_ == Dir::Left)
-					{
-						//RockOn_LeftDown_
-					}
-					else
-					{
-						//RockOn_RightDown_
-					}
-				}
-			}
-		}
-	}
-	else if (true == Key_Down_)
-	{
-		if (true == Key_Shoot_) // ½î´ÂÁß
-		{
-			if (Dir_ == Dir::Left)
-			{
-				//Duck_Left_Shoot
-				Shoot(0.f, -1.f);
-			}
-			else
-			{
-				//Duck_Right_Shoot
-				Shoot(0.f, 1.f);
-			}
-		}
-		else
-		{
-			if (Dir_ == Dir::Left)
-			{
-				//Duck_Left_
-			}
-			else
-			{
-				//Duck_Right_
-			}
-		}
-	}
-	else if (true == Key_Right_)
-	{
-		if (true == Key_Shoot_)
-		{
-			//Walk_Right_Shoot
-			Move(_DeltaTime, 1.f, 0.f);
-			Shoot(0.f, 1.f);
-		}
-		else
-		{
-			//Walk_Right_
-			Move(_DeltaTime, 1.f, 0.f);
-		}
-	}
-	else if (true == Key_Left_)
-	{
-		if (true == Key_Shoot_)
-		{
-			Shoot(0.f, -1.f);
-			Move(_DeltaTime, -1.f, 0.f);
-			//Walk_Left_Shoot
-		}
-		else
-		{
-			//Walk_Left_
-			Move(_DeltaTime, -1.f, 0.f);
-		}
-	}
-	else if (true == Key_Shoot_)
-	{
-		if (Dir_ == Dir::Left)
-		{
-			//Idle_Left_Shoot 
-			Shoot(0.f, -1.f);
-		}
-		else
-		{
-			//Idle_Right_Shoot
-			Shoot(0.f, 1.f);
-		}
-	}
-
 	//if (true == Key_Shoot_)
 	//{
 	//	
@@ -344,31 +363,42 @@ void Player::KeyUpdate(float _DeltaTime)
 	//{
 	//	PlayerImageRenderer->GetTransform()->SetLocalDeltaTimeRotation(float4{ 0.0f, 0.0f, -1.0f } *100.0f);
 	//}
-	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	
 }
 
 void Player::CollisonUpdate()
 {
 }
 
-void Player::Gravity()
+void Player::GravityUpdate(float _DeltaTime)
 {
+	GetTransform()->SetLocalMove(float4::DOWN * _DeltaTime);
 }
 
 void Player::Shoot(float4 ShootDir)
 {
+	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+	NewBullet->SetMoveDir(ShootDir);
+	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	NewBullet->Release(1.0f);
 }
 
 void Player::Shoot(float ShootDirX, float ShootDirY)
 {
+	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+	NewBullet->SetMoveDir(float4(ShootDirX, ShootDirY, 0.f));
+	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	NewBullet->Release(1.0f);
 }
 
-void Player::Move(float _DeltaTime, float4 MoveDir)
+void Player::Move(float4 MoveDir, float _DeltaTime)
 {
+	GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
 }
 
-void Player::Move(float _DeltaTime, float ShootDirX, float ShootDirY)
+void Player::Move(float DirX, float DirY, float _DeltaTime)
 {
+	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
 
 

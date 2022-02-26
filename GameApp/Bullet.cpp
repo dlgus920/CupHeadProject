@@ -2,8 +2,10 @@
 #include "GameEngine/GameEngineRenderer.h"
 #include "Bullet.h"
 
-Bullet::Bullet()
+Bullet::Bullet() :
+	MoveDir_()
 {
+
 }
 
 Bullet::~Bullet()

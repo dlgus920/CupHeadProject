@@ -138,9 +138,8 @@
     <CopyFileToFolders Include="..\ThirdParty\x64\Release\FMOD\fmod_vc.lib">
       <Filter>Lib\FMOD\Release</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL.dll">
+    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL_vc.lib">
       <Filter>Lib\FMOD\Debug</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL_vc.lib" />
   </ItemGroup>
 </Project>

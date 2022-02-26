@@ -5,23 +5,6 @@
 // 설명 :
 class GameEngineImageRenderer;
 
-enum class Player_Move_Info
-{
-	Idle,
-	Walk,
-	Jump
-};
-
-enum class Player_Act_Info
-{
-	None,
-	Shoot,
-	Bomb,
-	Death,
-	Hit,
-	Dash
-};
-
 enum class Dir
 {
 	Right,
@@ -46,6 +29,7 @@ enum class KeyDir
 class Player : public GameEngineActor
 {
 	friend class PlayLevel;
+	friend class GameEngineLevel;
 
 private:
 	Player();
@@ -60,9 +44,6 @@ private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
 	GameEngineFSM<Player> State_;
-
-	Player_Move_Info Move_Info_;
-	Player_Act_Info Act_Info_;
 
 	//누르고 있는가
 	bool Key_Up_;
@@ -102,13 +83,13 @@ private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate(float _DeltaTime);
 	void CollisonUpdate();
+	void GravityUpdate(float _DeltaTime);
 private://Func
 
-	void Gravity();
 	void Shoot(float4 ShootDir);
 	void Shoot(float ShootDirX, float ShootDirY);
-	void Move(float _DeltaTime, float4 MoveDir);
-	void Move(float _DeltaTime, float ShootDirX, float ShootDirY);
+	void Move(float4 MoveDir, float _DeltaTime);
+	void Move(float DirX, float DirY, float _DeltaTime);
 		
 private: //State_
 	StateInfo Idle_Start(StateInfo _state);
@@ -146,14 +127,5 @@ public: //Inline
 		return State_.GetName();
 	}
 
-	Player_Move_Info GetCurMoveInfo()
-	{
-		return Move_Info_;
-	}
-
-	Player_Act_Info GetCurActInfo()
-	{
-		return Act_Info_;
-	}
 };
 
