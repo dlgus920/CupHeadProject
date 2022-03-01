@@ -1,8 +1,8 @@
 #pragma once
-#include <GameEngine/GameEngineActor.h>
+#include "UIBase.h"
 
 // Ό³Έν :
-class TopUI : public GameEngineActor
+class TopUI : public UIBase
 {
 public:
 	// constrcuter destructer

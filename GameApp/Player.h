@@ -11,6 +11,27 @@ enum class Dir
 	Left
 };
 
+enum class AnimationOnfo
+{
+	Idle_Right,
+	Idle_Left,
+	Duck_Right_Idle,
+	Duck_Left_Idle,
+	Duck_Right_Shoot,
+	Duck_Left_Shoot,
+	Death_Right,
+	Death_Left,
+	Dash,
+	Rockon,
+	Walk,
+	Shoot,
+	Hit,
+	Jump,
+
+
+
+
+};
 enum class KeyDir
 {	
 	None,
@@ -43,26 +64,31 @@ private:
 private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
+	GameEngineTransformComponent* BulletPoint_;
+
 	GameEngineFSM<Player> State_;
-
-	//누르고 있는가
-	bool Key_Up_;
-	bool Key_Down_;
-	bool Key_Left_;
-	bool Key_Right_;
-
-	bool Key_Shoot_;
-
-	bool Key_RockOn_;
-	bool Key_Bomb;
-	bool Key_Jump_;
-
-	bool Key_Hit_;
-	bool Key_Dash_;
+	GameEngineTransform* Camera_;
 
 	// state
-	bool State_Ground;
-	bool State_Hit_;
+	bool State_Update_;
+
+	bool KetState_Up_;
+	bool KetState_Down_;
+	bool KetState_Left_;
+	bool KetState_Right_;
+
+	bool KetState_Shoot_;
+
+	bool KetState_RockOn_;
+	bool KetState_Bomb;
+	bool KetState_Jump_;
+
+	bool KetState_Hit_;
+	bool KetState_Dash_;
+
+	bool ColState_Ground;
+	bool ColState_Hit_;
+
 	// 현재 보고 있는 방향
 	Dir		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 	KeyDir	KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
@@ -74,12 +100,15 @@ private: //Legacy
 	void Update(float _DeltaTime) override;
 
 private: //Setting
+	void ComponentSetting();
 	void KeySetting();
 	void StateSetting();
 	void RendererSetting();
 	void TransformSetting();
+	void CollisionSetting();
 
 private: //Update
+	void KeyStateUpdate(float _DeltaTime);
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate(float _DeltaTime);
 	void CollisonUpdate();
@@ -92,14 +121,25 @@ private://Func
 	void Move(float DirX, float DirY, float _DeltaTime);
 		
 private: //State_
+	StateInfo Bomb_Start(StateInfo _state);
+	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Death_Start(StateInfo _state);
+	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Dash_Start(StateInfo _state);
+	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Jump_Start(StateInfo _state);
+	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
+
+
 	StateInfo Idle_Start(StateInfo _state);
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 
 	StateInfo Walk_Start(StateInfo _state);
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
 
-	StateInfo Jump_Start(StateInfo _state);
-	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
 
 	StateInfo Duck_Start(StateInfo _state);
 	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
@@ -109,19 +149,20 @@ private: //State_
 	StateInfo RockOn_Start(StateInfo _state);
 	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
 
-	StateInfo Bomb_Start(StateInfo _state);
-	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo Death_Start(StateInfo _state);
-	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
-
 	StateInfo Hit_Start(StateInfo _state);
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
 
-	StateInfo Dash_Start(StateInfo _state);
-	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
 
 public: //Inline
+	void SetStateUpdateOn()
+	{
+		State_Update_ = true;
+	}
+	void SetStateUpdateOff()
+	{
+		State_Update_ = false;
+	}
+
 	std::string GetCurState()
 	{
 		return State_.GetName();

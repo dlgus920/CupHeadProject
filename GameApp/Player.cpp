@@ -9,16 +9,18 @@ Player::Player() :
 	PlayerImageRenderer(nullptr),
 	Dir_(Dir::Right),
 	KeyDir_(KeyDir::None),
-	Key_Up_(false),
-	Key_Down_(false),
-	Key_Left_(false),
-	Key_Right_(false),
-	Key_RockOn_(false),
-	Key_Shoot_(false),
-	Key_Bomb(false),
-	Key_Jump_(false),
-	Key_Hit_(false),
-	Key_Dash_(false),
+	KetState_Up_(false),
+	KetState_Down_(false),
+	KetState_Left_(false),
+	KetState_Right_(false),
+	KetState_RockOn_(false),
+	KetState_Shoot_(false),
+	KetState_Bomb(false),
+	KetState_Jump_(false),
+	KetState_Hit_(false),
+	KetState_Dash_(false),
+	ColState_Ground(false),
+	ColState_Hit_(false),
 	MoveDir_()
 
 {
@@ -31,7 +33,9 @@ Player::~Player()
 
 void Player::Start()
 {
+	ComponentSetting();
 	RendererSetting();
+	CollisionSetting();
 	TransformSetting();
 	KeySetting();
 	StateSetting();
@@ -40,20 +44,32 @@ void Player::Start()
 void Player::Update(float _DeltaTime)
 {
 	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-
+	
 	KeyUpdate(_DeltaTime);
-	CollisonUpdate();
+	CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
+	State_.Update(_DeltaTime);
 	StateUpdate(_DeltaTime);
-	if (false == State_Ground)
+
+	if (true == State_Update_)
+	{
+		KeyStateUpdate(_DeltaTime);
+	}
+
+	if (false == ColState_Ground)
 	{
 		GravityUpdate(_DeltaTime);
 	}
 }
-
 void Player::StateUpdate(float _DeltaTime)
 {
-	if (true == State_Hit_)
+	State_Update_ = true;
+}
+
+void Player::KeyStateUpdate(float _DeltaTime)
+{
+	if (true == ColState_Hit_)
 	{
+		State_.ChangeState("Hit");
 		if (Dir_ == Dir::Left)
 		{
 			//Hit_Left
@@ -65,8 +81,9 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_Bomb)
+	else if (true == KetState_Bomb)
 	{
+		State_.ChangeState("Bomb");
 		if (Dir_ == Dir::Left)
 		{
 			//Bomb_Left
@@ -78,15 +95,17 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_Jump_)
+	else if (true == KetState_Jump_)
 	{
-		if (Key_Right_)
+		State_.ChangeState("Jump");
+
+		if (KetState_Right_)
 		{
 			Move(_DeltaTime, 1.f, 0.f);
 			Shoot(1.f, 0.f);
 			return;
 		}
-		else if (Key_Left_)
+		else if (KetState_Left_)
 		{
 			Move(_DeltaTime, -1.f, 0.f);
 			Shoot(-1.f, 0.f);
@@ -105,8 +124,9 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_Dash_)
+	else if (true == KetState_Dash_)
 	{
+		State_.ChangeState("Dash");
 		if (Dir_ == Dir::Left)
 		{
 			//Dash_Left
@@ -118,19 +138,19 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_RockOn_)
+	else if (true == KetState_RockOn_)
 	{
-		if (true == Key_Shoot_) // 쏘는중
+		if (true == KetState_Shoot_) // 쏘는중
 		{
-			if (Key_Up_)
+			if (KetState_Up_)
 			{
-				if (Key_Left_)
+				if (KetState_Left_)
 				{
 					//RockOn_UpLeft_Shoot
 					Shoot(1.f, -1.f);
 					return;
 				}
-				else if (Key_Right_)
+				else if (KetState_Right_)
 				{
 					//RockOn_UpRight_Shoot
 					Shoot(1.f, 1.f);
@@ -153,15 +173,15 @@ void Player::StateUpdate(float _DeltaTime)
 					}
 				}
 			}
-			else if (Key_Down_)
+			else if (KetState_Down_)
 			{
-				if (Key_Left_)
+				if (KetState_Left_)
 				{
 					//RockOn_DownLeft_Shoot
 					Shoot(-1.f, 0.f);
 					return;
 				}
-				else if (Key_Right_)
+				else if (KetState_Right_)
 				{
 					//RockOn_DownRight_Shoot
 					Shoot(-1.f, 0.f);
@@ -187,19 +207,18 @@ void Player::StateUpdate(float _DeltaTime)
 		}
 		else
 		{
-			if (Key_Up_)
+			if (KetState_Up_)
 			{
-				if (Key_Left_)
+				if (KetState_Left_)
 				{
 					//RockOn_UpLeft_
 					return;
 				}
-				else if (Key_Right_)
+				else if (KetState_Right_)
 				{
 					//RockOn_UpRight_
 					return;
 				}
-
 				else
 				{
 					if (Dir_ == Dir::Left)
@@ -214,19 +233,18 @@ void Player::StateUpdate(float _DeltaTime)
 					}
 				}
 			}
-			else if (Key_Down_)
+			else if (KetState_Down_)
 			{
-				if (Key_Left_)
+				if (KetState_Left_)
 				{
 					//RockOn_DownLeft_
 					return;
 				}
-				else if (Key_Right_)
+				else if (KetState_Right_)
 				{
 					//RockOn_DownRight_
 					return;
 				}
-
 				else
 				{
 					if (Dir_ == Dir::Left)
@@ -243,9 +261,9 @@ void Player::StateUpdate(float _DeltaTime)
 			}
 		}
 	}
-	else if (true == Key_Down_)
+	else if (true == KetState_Down_)
 	{
-		if (true == Key_Shoot_) // 쏘는중
+		if (true == KetState_Shoot_) // 쏘는중
 		{
 			if (Dir_ == Dir::Left)
 			{
@@ -274,9 +292,9 @@ void Player::StateUpdate(float _DeltaTime)
 			}
 		}
 	}
-	else if (true == Key_Right_)
+	else if (true == KetState_Right_)
 	{
-		if (true == Key_Shoot_)
+		if (true == KetState_Shoot_)
 		{
 			//Walk_Right_Shoot
 			Move(_DeltaTime, 1.f, 0.f);
@@ -290,9 +308,9 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_Left_)
+	else if (true == KetState_Left_)
 	{
-		if (true == Key_Shoot_)
+		if (true == KetState_Shoot_)
 		{
 			Shoot(0.f, -1.f);
 			Move(_DeltaTime, -1.f, 0.f);
@@ -306,7 +324,7 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-	else if (true == Key_Shoot_)
+	else if (true == KetState_Shoot_)
 	{
 		if (Dir_ == Dir::Left)
 		{
@@ -321,32 +339,30 @@ void Player::StateUpdate(float _DeltaTime)
 			return;
 		}
 	}
-
-	State_.Update(_DeltaTime);
 }
 
 void Player::KeyUpdate(float _DeltaTime)
 {
-	Key_Left_ = GameEngineInput::GetInst().Down("MoveLeft");
-	Key_Right_ = GameEngineInput::GetInst().Down("MoveRight");
+	KetState_Left_ = GameEngineInput::GetInst().Down("MoveLeft");
+	KetState_Right_ = GameEngineInput::GetInst().Down("MoveRight");
 
-	if(Key_Left_)
+	if (KetState_Left_ && !KetState_Right_)
 		Dir_ = Dir::Left;
 
-	if(Key_Right_)
+	else if (KetState_Right_ && !KetState_Left_)
 		Dir_ = Dir::Right;
 
-	Key_Up_ = GameEngineInput::GetInst().Down("MoveUp");
-	Key_Down_ = GameEngineInput::GetInst().Down("MoveDown");
+	KetState_Up_ = GameEngineInput::GetInst().Down("MoveUp");
+	KetState_Down_ = GameEngineInput::GetInst().Down("MoveDown");
 
-	Key_Shoot_ = GameEngineInput::GetInst().Down("Fire");
+	KetState_Shoot_ = GameEngineInput::GetInst().Down("Fire");
 
-	Key_Bomb = GameEngineInput::GetInst().Down("Bomb");
-	Key_Jump_ = GameEngineInput::GetInst().Down("Jump");
-	Key_Dash_ = GameEngineInput::GetInst().Down("Dash");
-	Key_RockOn_ = GameEngineInput::GetInst().Down("RockOn");
+	KetState_Bomb = GameEngineInput::GetInst().Down("Bomb");
+	KetState_Jump_ = GameEngineInput::GetInst().Down("Jump");
+	KetState_Dash_ = GameEngineInput::GetInst().Down("Dash");
+	KetState_RockOn_ = GameEngineInput::GetInst().Down("RockOn");
 
-	//if (true == Key_Shoot_)
+	//if (true == KetState_Shoot_)
 	//{
 	//	
 	//	//Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
@@ -363,11 +379,29 @@ void Player::KeyUpdate(float _DeltaTime)
 	//{
 	//	PlayerImageRenderer->GetTransform()->SetLocalDeltaTimeRotation(float4{ 0.0f, 0.0f, -1.0f } *100.0f);
 	//}
-	
+
 }
 
 void Player::CollisonUpdate()
 {
+	if (true) // TODO : 컬리전이 처음부터 bool 값으로 리턴되게끔
+	{
+		ColState_Ground = true;
+	}
+	else
+	{
+		ColState_Ground = false;
+	}
+
+	if (true)
+	{
+		ColState_Hit_ = true;
+	}
+	else
+	{
+		ColState_Hit_ = false;
+	}
+
 }
 
 void Player::GravityUpdate(float _DeltaTime)

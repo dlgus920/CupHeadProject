@@ -6,7 +6,7 @@
 #include <GameEngine/GameEngineWindow.h>
 #include <GameEngine/GameEngineRenderingPipeLine.h>
 
-#include "TitleLevel.h"
+#include "TitleScene.h"
 #include "PlayLevel.h"
 
 UserGame::UserGame() // default constructer 디폴트 생성자
@@ -40,7 +40,7 @@ void UserGame::Initialize()
 	//GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Find("ColorRendering");
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
-	LevelCreate<TitleLevel>("Title");
+	LevelCreate<TitleScene>("Title");
 	LevelCreate<PlayLevel>("Play");
 	LevelChange("Play");
 

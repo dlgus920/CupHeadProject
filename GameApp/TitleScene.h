@@ -2,18 +2,18 @@
 #include <GameEngine/GameEngineLevel.h>
 
 // Ό³Έν :
-class TitleLevel : public GameEngineLevel
+class TitleScene : public GameEngineLevel
 {
 public:
 	// constrcuter destructer
-	TitleLevel();
-	~TitleLevel();
+	TitleScene();
+	~TitleScene();
 
 	// delete Function
-	TitleLevel(const TitleLevel& _Other) = delete;
-	TitleLevel(TitleLevel&& _Other) noexcept = delete;
-	TitleLevel& operator=(const TitleLevel& _Other) = delete;
-	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
+	TitleScene(const TitleScene& _Other) = delete;
+	TitleScene(TitleScene&& _Other) noexcept = delete;
+	TitleScene& operator=(const TitleScene& _Other) = delete;
+	TitleScene& operator=(TitleScene&& _Other) = delete;
 
 protected:
 	void LevelStart() override;

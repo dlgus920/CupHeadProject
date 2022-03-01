@@ -14,29 +14,44 @@
     <ClCompile Include="UserGame_Resources_Shader.cpp">
       <Filter>UserCore\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Actor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_State.cpp">
-      <Filter>Actor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_Setting.cpp">
-      <Filter>Actor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Actor\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="TopUI.cpp">
       <Filter>Actor\UI</Filter>
     </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level\04. PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Level\00. MainLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Setting.cpp">
+      <Filter>Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="LoaddingScene.cpp">
+      <Filter>Level\01. LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapScene.cpp">
+      <Filter>Level\02. WolrdMap</Filter>
+    </ClCompile>
+    <ClCompile Include="StoryScene.cpp">
+      <Filter>Level\03. StoryScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>Actor\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectBase.cpp">
+      <Filter>Actor\Effect\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Actor\Bullet\Base</Filter>
+    </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Actor\MOB</Filter>
+      <Filter>Actor\MOB\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +85,45 @@
     <Filter Include="Actor\MOB">
       <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Bullet">
+      <UniqueIdentifier>{c109a256-8ae9-496a-bc86-14e905481b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\00. MainLoad">
+      <UniqueIdentifier>{2eea9bad-f280-49e1-b974-8b60367e37da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\02. WolrdMap">
+      <UniqueIdentifier>{57d0f3d0-bb31-47a7-8172-62de4a3a35c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\03. StoryScene">
+      <UniqueIdentifier>{c8488634-b3e9-4e12-94b8-1f4ce5175d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\04. PlayLevel">
+      <UniqueIdentifier>{87927065-6845-4564-9509-402c5a97d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Player\PlayMap">
+      <UniqueIdentifier>{79f1951c-21a4-468e-838c-1010edad0e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Player\WorldMap">
+      <UniqueIdentifier>{064506d8-bfc8-4230-9082-9a99394b6d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Image">
+      <UniqueIdentifier>{8877c995-7c38-4347-b50d-545d55bd3789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\01. LoadingScene">
+      <UniqueIdentifier>{39089cdb-be51-4d93-9e99-9b40b457ebf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\UI\Base">
+      <UniqueIdentifier>{2edcbc75-7d06-4c55-ba88-65c65d0f4b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\Base">
+      <UniqueIdentifier>{03b4a099-1381-435b-ac41-3b5b828b6038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Bullet\Base">
+      <UniqueIdentifier>{a6644d60-0ac6-416f-8883-75e107677fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\MOB\Base">
+      <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -84,24 +138,39 @@
     <ClInclude Include="UserGame_Resources_Shader.h">
       <Filter>UserCore\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Actor\Player</Filter>
-    </ClInclude>
     <ClInclude Include="GameInfo.h" />
-    <ClInclude Include="Bullet.h">
-      <Filter>Actor\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="TopUI.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level\04. PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Level\00. MainLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Player\PlayMap</Filter>
+    </ClInclude>
+    <ClInclude Include="LoaddingScene.h">
+      <Filter>Level\01. LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapScene.h">
+      <Filter>Level\02. WolrdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="StoryScene.h">
+      <Filter>Level\03. StoryScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>Actor\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectBase.h">
+      <Filter>Actor\Effect\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Actor\Bullet\Base</Filter>
+    </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Actor\MOB</Filter>
+      <Filter>Actor\MOB\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

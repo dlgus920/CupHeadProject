@@ -19,9 +19,11 @@ private:
 	float4 MoveDir_;
 
 
-private:
-	void Start() override;
-	void Update(float _DeltaTime) override;
+protected:
+	virtual void Start();
+	virtual void TransformUpdate();
+	virtual void Update(float _DeltaTime);
+	virtual void ReleaseEvent();
 
 public:
 	void SetMoveDir(float4 _MoveDir)

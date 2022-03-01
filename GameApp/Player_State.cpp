@@ -13,9 +13,7 @@ StateInfo Player::Idle_Start(StateInfo _state)
 }
 StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 {
-	//state 시스템 없앨까 고민중
-
-	
+	StateUpdate(_DeltaTime);
 
 	return StateInfo();
 }
@@ -28,6 +26,8 @@ StateInfo Player::Walk_Start(StateInfo _state)
 }
 StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 {
+	StateUpdate(_DeltaTime);
+
 	return StateInfo();
 }
 
@@ -37,42 +37,7 @@ StateInfo Player::Jump_Start(StateInfo _state)
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
-	if (true == Key_Bomb)
-	{
-		return "Bomb";
-	}
-	else if (true == Key_Dash_)
-	{
-		return "Dash";
-	}
-	if (!(Key_Up_ && Key_Down_ && Key_Right_ && Key_Left_))
-	{
-		return "Idle";
-	}
-
-
-	if (true == Key_Shoot_) // 쏘는중
-	{
-		//ShootJump();
-	}
-	else
-	{
-
-	}
-
-	if (Key_Right_)
-	{
-		
-	}
-	else if (Key_Left_)
-	{
-		
-	}
-
-	float4 MoveDir;
-
-	Gravity();
-	//Move();
+	StateUpdate(_DeltaTime);
 
 	return StateInfo();
 }
@@ -84,6 +49,8 @@ StateInfo Player::Duck_Start(StateInfo _state)
 
 StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
 {
+	StateUpdate(_DeltaTime);
+
 	return StateInfo();
 }
 
@@ -94,17 +61,7 @@ StateInfo Player::RockOn_Start(StateInfo _state)
 
 StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 {
-	if (true == Key_Shoot_) // 쏘는중
-	{
-		//ShootRockOn();
-	}
-	else // 록온 자세만
-	{
-
-	}
-
-
-
+	StateUpdate(_DeltaTime);
 
 	return StateInfo();
 }
@@ -116,7 +73,21 @@ StateInfo Player::Bomb_Start(StateInfo _state)
 
 StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
 {
-	return StateInfo();
+	if (true) // 조건 충족시
+	{
+		if (true == ColState_Ground)
+		{
+			return "Idle";
+		}
+		else
+		{
+			return "Jump";
+		}
+	}
+	else
+	{
+		return StateInfo();
+	}
 }
 
 StateInfo Player::Death_Start(StateInfo _state)
@@ -126,7 +97,14 @@ StateInfo Player::Death_Start(StateInfo _state)
 
 StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 {
-	return StateInfo();
+	if (true) // 조건 충족시
+	{
+		//return "Idle";
+	}
+	else
+	{
+		return StateInfo();
+	}
 }
 
 StateInfo Player::Hit_Start(StateInfo _state)
@@ -136,7 +114,16 @@ StateInfo Player::Hit_Start(StateInfo _state)
 
 StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 {
-	return StateInfo();
+	//StateUpdate(_DeltaTime);
+
+	if (true) // 조건 충족시
+	{
+		return "Idle";
+	}
+	else
+	{
+		return StateInfo();
+	}
 }
 
 StateInfo Player::Dash_Start(StateInfo _state)
@@ -146,5 +133,12 @@ StateInfo Player::Dash_Start(StateInfo _state)
 
 StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 {
-	return StateInfo();
+	if (true) // 조건 충족시
+	{
+		return "Idle";
+	}
+	else
+	{
+		return StateInfo();
+	}
 }

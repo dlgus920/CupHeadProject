@@ -4,17 +4,25 @@
 #include "Bullet.h"
 
 
+void Player::ComponentSetting()
+{
+	BulletPoint_ = CreateComponent<GameEngineTransformComponent>();
+	BulletPoint_->AttachTransform(GetTransform());
+}
+
 void Player::KeySetting()
 {
 	if (false == GameEngineInput::GetInst().IsKey("PlayerMove"))
 	{
-		GameEngineInput::GetInst().CreateKey("MoveLeft", 'A');
-		GameEngineInput::GetInst().CreateKey("MoveRight", 'D');
-		GameEngineInput::GetInst().CreateKey("MoveUp", 'W');
-		GameEngineInput::GetInst().CreateKey("MoveDown", 'S');
-		//GameEngineInput::GetInst().CreateKey("RotZ+", 'Q');
-		//GameEngineInput::GetInst().CreateKey("RotZ-", 'E');
-		GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
+		GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
+		GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
+		GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
+		GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
+		GameEngineInput::GetInst().CreateKey("Jump", 'Z');
+		GameEngineInput::GetInst().CreateKey("Fire", 'X');
+		GameEngineInput::GetInst().CreateKey("Dash", 'C');
+		GameEngineInput::GetInst().CreateKey("Bomb", 'V');
+		//GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
 	}
 }
 
@@ -46,4 +54,8 @@ void Player::TransformSetting()
 	Renderer->GetTransform()->SetLocalScaling({ 100.0f, 20.0f, 1.0f });
 	Renderer->GetTransform()->SetLocalPosition({ 0.0f, 80.0f, 0.0f });
 	Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f));
+}
+
+void Player::CollisionSetting()
+{
 }
