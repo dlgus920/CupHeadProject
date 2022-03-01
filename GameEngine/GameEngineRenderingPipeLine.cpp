@@ -97,8 +97,6 @@ void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name)
 		GameEngineDebug::MsgBoxError("존재하지 않는 픽셀 쉐이더를 세팅을 세팅하려고 했습니다.");
 		return;
 	}
-
-
 }
 
 void GameEngineRenderingPipeLine::SetOutputMergerBlend(const std::string& _Name)
@@ -170,4 +168,7 @@ void GameEngineRenderingPipeLine::Rendering()
 	GameEngineDevice::GetContext()->DrawIndexed(IndexBuffer_->GetIndexCount(), 0, 0);
 }
 
-
+void GameEngineRenderingPipeLine::Reset()
+{
+	Blend_->Reset();
+}

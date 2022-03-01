@@ -10,3 +10,19 @@ LoaddingScene::~LoaddingScene() // default destructer 디폴트 소멸자
 {
 
 }
+
+void LoaddingScene::LevelStart()
+{
+}
+
+void LoaddingScene::LevelUpdate(float _DeltaTime)
+{
+}
+
+void LoaddingScene::LevelChangeEndEvent()
+{
+}
+
+void LoaddingScene::LevelChangeStartEvent()
+{
+}

@@ -45,6 +45,13 @@ void GameEngineBlend::Create(const D3D11_BLEND_DESC& _Info, float4 _Factor, unsi
 	State_ = State;
 }
 
-void GameEngineBlend::Setting() {
+void GameEngineBlend::Setting() 
+{
 	GameEngineDevice::GetContext()->OMSetBlendState(State_, Factor_.Arr1D, Mask_);
+}
+
+
+void GameEngineBlend::Reset()
+{
+	GameEngineDevice::GetContext()->OMSetBlendState(nullptr, Factor_.Arr1D, Mask_);
 }

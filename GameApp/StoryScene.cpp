@@ -11,3 +11,18 @@ StoryScene::~StoryScene() // default destructer 디폴트 소멸자
 
 }
 
+void StoryScene::LevelStart()
+{
+}
+
+void StoryScene::LevelUpdate(float _DeltaTime)
+{
+}
+
+void StoryScene::LevelChangeEndEvent()
+{
+}
+
+void StoryScene::LevelChangeStartEvent()
+{
+}

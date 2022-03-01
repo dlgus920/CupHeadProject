@@ -16,3 +16,19 @@ EffectBase::EffectBase(EffectBase&& _other) noexcept  // default RValue Copy con
 
 }
 
+void EffectBase::Start()
+{
+}
+
+void EffectBase::TransformUpdate()
+{
+}
+
+void EffectBase::Update(float _DeltaTime)
+{
+}
+
+void EffectBase::ReleaseEvent()
+{
+}
+

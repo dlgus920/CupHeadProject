@@ -104,7 +104,9 @@ StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 	else
 	{
 		return StateInfo();
+
 	}
+	return StateInfo();
 }
 
 StateInfo Player::Hit_Start(StateInfo _state)

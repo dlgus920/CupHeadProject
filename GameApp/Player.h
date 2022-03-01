@@ -27,10 +27,6 @@ enum class AnimationOnfo
 	Shoot,
 	Hit,
 	Jump,
-
-
-
-
 };
 enum class KeyDir
 {	

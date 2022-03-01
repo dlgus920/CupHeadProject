@@ -11,8 +11,18 @@ UIBase::~UIBase() // default destructer 디폴트 소멸자
 
 }
 
-UIBase::UIBase(UIBase&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
+void UIBase::Start()
 {
-
 }
 
+void UIBase::TransformUpdate()
+{
+}
+
+void UIBase::Update(float _DeltaTime)
+{
+}
+
+void UIBase::ReleaseEvent()
+{
+}

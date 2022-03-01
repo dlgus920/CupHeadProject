@@ -6,8 +6,8 @@
 
 void Player::ComponentSetting()
 {
-	BulletPoint_ = CreateComponent<GameEngineTransformComponent>();
-	BulletPoint_->AttachTransform(GetTransform());
+	//BulletPoint_ = CreateComponent<GameEngineTransformComponent>();
+	//BulletPoint_->AttachTransform(GetTransform());
 }
 
 void Player::KeySetting()

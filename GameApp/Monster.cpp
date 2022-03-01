@@ -33,7 +33,15 @@ void Monster::Start()
 
 }
 
+void Monster::TransformUpdate()
+{
+}
+
 void Monster::Update(float _DeltaTime)
 {
 
+}
+
+void Monster::ReleaseEvent()
+{
 }
