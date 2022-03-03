@@ -11,21 +11,39 @@ class GameEngineActor : public GameEngineObjectNameBase
 	friend GameEngineLevel;
 
 public:
-
-	// constrcuter destructer
 	GameEngineActor();
 	~GameEngineActor();
 
-	// delete Function
 	GameEngineActor(const GameEngineActor& _Other) = delete;
 	GameEngineActor(GameEngineActor&& _Other) noexcept = delete;
 	GameEngineActor& operator=(const GameEngineActor& _Other) = delete;
 	GameEngineActor& operator=(GameEngineActor&& _Other) noexcept = delete;
 
+public:
 	bool IsDestroyed_;
 	float DeathTime_;
 
-	GameEngineLevel* GetLevel() 
+private:
+	GameEngineTransform* Transform_;
+	GameEngineLevel* Level_;
+	// Status
+	std::list<GameEngineComponent*> ComponentList_;
+	std::list<GameEngineTransformComponent*> TransformComponentList_;
+
+protected:
+	virtual void Start() {}
+	virtual void TransformUpdate();
+	virtual void Update(float _DeltaTime) {}
+	virtual void ReleaseEvent() {}
+
+private:
+	void SetLevel(GameEngineLevel* Level);
+	void UpdateComponent(float _DeltaTime);
+	void ComponentRelease();
+	void ReleaseUpdate(float _DeltaTime);
+
+public:
+	GameEngineLevel* GetLevel()
 	{
 		return Level_;
 	}
@@ -36,7 +54,7 @@ public:
 		{
 			Death();
 		}
-		else 
+		else
 		{
 			IsDestroyed_ = true;
 			DeathTime_ = _Time;
@@ -46,7 +64,7 @@ public:
 	template<typename ComponentType>
 	ComponentType* CreateComponent(int _Order = 0)
 	{
-		GameEngineComponent* NewComponent = new ComponentType(); 
+		GameEngineComponent* NewComponent = new ComponentType();
 		NewComponent->SetParent(this);
 		NewComponent->SetOrder(_Order);
 		NewComponent->InitComponent(this);
@@ -68,43 +86,14 @@ public:
 			GameEngineDebug::MsgBoxError("트랜스폼을 세팅안 해줬습니다.");
 		}
 		NewComponent->AttachTransform(_ParentTrans);
-		ComponentList_.push_back(NewComponent);
+		TransformComponentList_.push_back(NewComponent); //?? TransformComponentList_에 넣어야 하는거 아닌가?
 
 		NewComponent->Start();
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
-
-protected:
-	virtual void Start() {}
-	virtual void TransformUpdate();
-	virtual void Update(float _DeltaTime) {}
-	virtual void ReleaseEvent() {}
-
-	// 트랜스폼을 변화시킨다는걸 기본적으로 생각할겁니다.
-
-////////////////////////
-
-public:
-	GameEngineTransform* GetTransform() 
+	GameEngineTransform* GetTransform()
 	{
 		return 	Transform_;
 	}
-
-private:
-	GameEngineTransform* Transform_;
-	GameEngineLevel* Level_;
-
-	// Status
-	std::list<GameEngineComponent*> ComponentList_;
-
-	std::list<GameEngineTransformComponent*> TransformComponentList_;
-
-	void SetLevel(GameEngineLevel* Level);
-
-	void UpdateComponent();
-
-	void ComponentRelease();
-
-	void ReleaseUpdate(float _DeltaTime);
 };
 

@@ -37,6 +37,7 @@ void Player::StateSetting()
 	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update);
 	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update);
 
+	State_.ChangeState("Idle");
 }
 
 void Player::RendererSetting()

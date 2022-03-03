@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include "LoaddingScene.h"
 
-LoaddingScene::LoaddingScene() // default constructer 디폴트 생성자
+LoaddingScene::LoaddingScene() :
+	PrevScene_(),
+	NextScene_()
 {
 
 }

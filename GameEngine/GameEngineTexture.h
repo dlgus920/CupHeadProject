@@ -35,5 +35,14 @@ private:		//delete operator
 	ID3D11RenderTargetView* RenderTargetView_;
 	ID3D11ShaderResourceView* ShaderResourceViewPtr_;
 	DirectX::ScratchImage Image_;
+
+public:
+	bool IsCut();
+	void Cut(int _x, int _y);
+	void PushCutIndex(const float4& _Size, const float4& _Pos);
+	float4 GetCutData(int _Index);
+
+private:
+	std::vector<float4> CutList_;
 };
 

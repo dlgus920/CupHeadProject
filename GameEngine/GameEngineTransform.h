@@ -125,8 +125,6 @@ public:
 		SetWorldRotation(TransformData_.vWorldRotation_ + _Value * GameEngineTime::GetInst().GetDeltaTime());
 	}
 
-
-
 	void SetLocalPosition(const float4& _Value);
 	void SetWorldPosition(const float4& _Value);
 
@@ -149,16 +147,18 @@ public:
 	{
 		SetWorldPosition(TransformData_.vWorldPosition_ + _Value * GameEngineTime::GetInst().GetDeltaTime());
 	}
+	
+	//
+	//void SetLocalDeltaTimeMove(const float4& _Value, float DeltaTime_)
+	//{
+	//	SetLocalPosition(TransformData_.vLocalPosition_ + _Value * DeltaTime_);
+	//}
 
-	void SetLocalDeltaTimeMove(const float4& _Value, float DeltaTime_)
-	{
-		SetLocalPosition(TransformData_.vLocalPosition_ + _Value * DeltaTime_);
-	}
-
-	void SetWorldDeltaTimeMove(const float4& _Value, float DeltaTime_)
-	{
-		SetWorldPosition(TransformData_.vWorldPosition_ + _Value * DeltaTime_);
-	}
+	//void SetWorldDeltaTimeMove(const float4& _Value, float DeltaTime_)
+	//{
+	//	SetWorldPosition(TransformData_.vWorldPosition_ + _Value * DeltaTime_);
+	//}
+	//
 
 	void DetachChildTransform(GameEngineTransform* _Child);
 	void AttachTransform(GameEngineTransform* _Transform);
@@ -168,6 +168,12 @@ public:
 		return TransformData_;
 	}
 
+	void SetLocalScaling( const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetWorldScaling(const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetLocalRotation(const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetWorldRotation(const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
 
 protected:
 	TransformData TransformData_;

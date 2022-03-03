@@ -1,3 +1,12 @@
 #pragma once
 
-#define Gravity 200.f
+enum class CollisonIndex
+{
+	None,
+	Effect,
+	Player,
+	UI,
+	Monster,
+	Bullet,
+};
+

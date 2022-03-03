@@ -5,8 +5,11 @@
 class LoaddingScene : public GameEngineLevel
 {
 private:	// member Var
+	std::string PrevScene_;
 	std::string NextScene_;
 
+	GameEngineLevel* pPrevScene_;
+	GameEngineLevel* pNextScene_;
 
 public:
 	LoaddingScene(); // default constructer 디폴트 생성자

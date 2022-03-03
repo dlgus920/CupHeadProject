@@ -2,7 +2,6 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
 
-// Ό³Έν :
 class GameEngineImageRenderer;
 
 enum class Dir
@@ -11,23 +10,6 @@ enum class Dir
 	Left
 };
 
-enum class AnimationOnfo
-{
-	Idle_Right,
-	Idle_Left,
-	Duck_Right_Idle,
-	Duck_Left_Idle,
-	Duck_Right_Shoot,
-	Duck_Left_Shoot,
-	Death_Right,
-	Death_Left,
-	Dash,
-	Rockon,
-	Walk,
-	Shoot,
-	Hit,
-	Jump,
-};
 enum class KeyDir
 {	
 	None,

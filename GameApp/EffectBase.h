@@ -3,7 +3,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
-class EffectBase
+class EffectBase : public GameEngineActor
 {
 private:	// member Var
 

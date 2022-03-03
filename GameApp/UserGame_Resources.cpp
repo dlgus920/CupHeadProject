@@ -31,9 +31,27 @@ void UserGame::ResourcesLoad()
 		for (size_t i = 0; i < AllFile.size(); i++)
 		{
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
+		}	
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Animation.png");
+		Texture->Cut(8, 8);
 	}
 
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent("CupHeadProject");
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("TitleScreen");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("title_screen_background.png");
+		Texture->Cut(8, 8);
+	}
 
 	AppShaderLoad();
 

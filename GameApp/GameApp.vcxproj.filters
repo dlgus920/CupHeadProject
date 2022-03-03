@@ -53,6 +53,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Actor\MOB\Base</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Actor\Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -138,7 +141,6 @@
     <ClInclude Include="UserGame_Resources_Shader.h">
       <Filter>UserCore\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="GameInfo.h" />
     <ClInclude Include="TopUI.h">
       <Filter>Actor\UI</Filter>
     </ClInclude>
@@ -171,6 +173,12 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Actor\MOB\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Actor\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h">
+      <Filter>Precom</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

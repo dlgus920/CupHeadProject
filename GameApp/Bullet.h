@@ -2,13 +2,14 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineImageRenderer;
+
 class Bullet : public GameEngineActor
 {
 public:
 	// constrcuter destructer
 	Bullet();
 	~Bullet();
-
 	// delete Function
 	Bullet(const Bullet& _Other) = delete;
 	Bullet(Bullet&& _Other) noexcept = delete;
@@ -16,6 +17,8 @@ public:
 	Bullet& operator=(Bullet&& _Other) noexcept = delete;
 
 private:
+	GameEngineImageRenderer* ImageRenderer_;
+
 	float4 MoveDir_;
 
 

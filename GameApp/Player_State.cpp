@@ -37,6 +37,7 @@ StateInfo Player::Jump_Start(StateInfo _state)
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
+	//TODO : 점프하고 올라갈때 내려갈때를 flag 하여 하단, 상단 컬리전을 키고 끈다.
 	StateUpdate(_DeltaTime);
 
 	return StateInfo();
