@@ -197,6 +197,12 @@
     <ClInclude Include="GameEngineBlend.h">
       <Filter>Resources\02Image</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineFolderTextureManager.h">
+      <Filter>Resources\99Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFolderTexture.h">
+      <Filter>Resources\02Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -316,6 +322,12 @@
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineBlend.cpp">
+      <Filter>Resources\02Image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFolderTextureManager.cpp">
+      <Filter>Resources\99Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFolderTexture.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
   </ItemGroup>
