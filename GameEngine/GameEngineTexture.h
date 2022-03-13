@@ -36,6 +36,8 @@ private:		//delete operator
 	ID3D11ShaderResourceView* ShaderResourceViewPtr_;
 	DirectX::ScratchImage Image_;
 
+	float4 TextureScale_;
+
 public:
 	bool IsCut();
 	void Cut(int _x, int _y);
@@ -45,6 +47,11 @@ public:
 	inline float4 GetTextureSize()
 	{
 		return float4(TextureDesc_.Width, TextureDesc_.Height);
+	}
+
+	inline const float4 GetTextureScale()
+	{
+		return TextureScale_;
 	}
 
 private:

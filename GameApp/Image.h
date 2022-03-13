@@ -6,7 +6,7 @@ class GameEngineImageRenderer;
 class Image : public GameEngineActor
 {
 private:	// member Var
-	GameEngineImageRenderer* ImageRenderer;
+	GameEngineImageRenderer* ImageRenderer_;
 public:
 	Image(); // default constructer 디폴트 생성자
 	~Image(); // default destructer 디폴트 소멸자
@@ -19,11 +19,22 @@ private:		//delete operator
 	Image& operator=(const Image& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	Image& operator=(const Image&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
+private:
+	virtual void Start();
+	virtual void TransformUpdate();
+	virtual void Update(float _DeltaTime);
+	virtual void ReleaseEvent();
+
 public:
 
-	void SetImage(std::string _name)
+	GameEngineImageRenderer* GetImageRenderer()
 	{
-		ImageRenderer->SetImage(_name);
+		return ImageRenderer_;
 	}
+
+	void SetImageAnimation(const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
+	void SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop /*= true*/);
+	void SetImageLocalScaling(const float4& _Value);
+	void SetImageWorldPosition(const float4& _Value);
 };
 

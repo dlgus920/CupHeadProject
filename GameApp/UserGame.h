@@ -30,5 +30,7 @@ public:
 	virtual float4 StartWindowSize() {
 		return { 1280, 720 };
 	}
+
+	void LoadingNextLevel(std::string _NextLevel);
 };
 

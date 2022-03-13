@@ -1,6 +1,6 @@
 #pragma once
 
-enum class CollisonIndex
+enum class CollisonType
 {
 	None,
 	Effect,

@@ -93,6 +93,7 @@ private: //Update
 	void GravityUpdate(float _DeltaTime);
 private://Func
 
+	void ChangeAnimation(std::string _animation);
 	void Shoot(float4 ShootDir);
 	void Shoot(float ShootDirX, float ShootDirY);
 	void Move(float4 MoveDir, float _DeltaTime);
@@ -145,6 +146,7 @@ public: //Inline
 	{
 		return State_.GetName();
 	}
+
 
 };
 

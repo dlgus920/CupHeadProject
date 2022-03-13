@@ -5,12 +5,11 @@
 class LoaddingScene : public GameEngineLevel
 {
 private:	// member Var
-	std::string PrevScene_;
 	std::string NextScene_;
 
-	GameEngineLevel* pPrevScene_;
-	GameEngineLevel* pNextScene_;
+	class Image* HourGlass_;
 
+	bool LoadEnd_;
 public:
 	LoaddingScene(); // default constructer 디폴트 생성자
 	~LoaddingScene(); // default destructer 디폴트 소멸자
@@ -28,5 +27,10 @@ protected:
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent() override;
 	void LevelChangeStartEvent() override;
+public:
+	void SetNextLevel(std::string _Nextlevel)
+	{
+		NextScene_ = _Nextlevel;
+	}
 };
 

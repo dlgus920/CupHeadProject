@@ -409,6 +409,14 @@ void Player::GravityUpdate(float _DeltaTime)
 	GetTransform()->SetLocalMove(float4::DOWN * _DeltaTime);
 }
 
+void Player::ChangeAnimation(std::string _animation)
+{
+	PlayerImageRenderer->SetChangeAnimation(_animation);
+	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetTextureSize()); 
+	//TODO: 근데 이거 혹시 안 잘라진 텍스처 크기 그대로 가져오나?
+	// 아무래도 텍스처가 지 크기를 가지고 있는데 좋을거같다.
+}
+
 void Player::Shoot(float4 ShootDir)
 {
 	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();

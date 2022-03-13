@@ -127,6 +127,11 @@ void GameEngineTexture::PushCutIndex(const float4& _Size, const float4& _Pos)
 
 void GameEngineTexture::Cut(int _x, int _y)
 {
+	TextureScale_ = float4(TextureDesc_.Width, TextureDesc_.Height);
+	TextureScale_.x /= _x;
+	TextureScale_.y /= _y;
+
+
 	// UV값은 무조건
 	// 1.0f 라고 봐야죠?
 	// 

@@ -28,6 +28,9 @@ void PlayLevel::LevelStart()
 	{
 		Monster* Actor = CreateActor<Monster>();
 		Actor->GetTransform()->SetWorldPosition(float4(200.0f, 0.0f, 0.0f));
+		float4 texsize = Actor->GetTextureSize();
+		float4 cutsize = Actor->GetCutSize();
+		float4 TextureScale = Actor->GetTextureScale();
 	}
 
 	{

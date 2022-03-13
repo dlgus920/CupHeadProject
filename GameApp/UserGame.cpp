@@ -7,6 +7,7 @@
 #include <GameEngine/GameEngineRenderingPipeLine.h>
 
 #include "TitleScene.h"
+#include "LoaddingScene.h"
 #include "PlayLevel.h"
 
 UserGame::UserGame() // default constructer 디폴트 생성자
@@ -41,8 +42,10 @@ void UserGame::Initialize()
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
 	LevelCreate<TitleScene>("Title");
+	
 	LevelCreate<PlayLevel>("Play");
 
+	//LevelChange("Title");
 	LevelChange("Play");
 
 	return;
@@ -51,6 +54,17 @@ void UserGame::Initialize()
 void UserGame::Release()
 {
 
+}
+
+void UserGame::LoadingNextLevel(std::string _NextLevel)
+{
+	//LevelCreate<LoaddingScene>("Loading");
+	//GameEngineLevel* FindLevel = LevelFind("Loading");
+	//reinterpret_cast<LoaddingScene*>(FindLevel)->SetNextLevel(_NextLevel);
+	//LevelChange("Loading");
+
+	LevelCreate<LoaddingScene>("Loading")->SetNextLevel(_NextLevel);
+	LevelChange("Loading");
 }
 
 //TODO: 게임엔진 코어가 레벨로부터 bool값을 검사하며 다음 레벨을 만들어 주길 바람

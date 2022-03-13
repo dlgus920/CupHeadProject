@@ -1,8 +1,9 @@
 #pragma once
-#include <GameEngine/GameEngineActor.h>
+#include "GameObject.h"
+#include <GameEngine/GameEngineImageRenderer.h>
 
 // Ό³Έν :
-class Monster : public GameEngineActor
+class Monster : public GameObject
 {
 public:
 	// constrcuter destructer
@@ -15,12 +16,14 @@ public:
 	Monster& operator=(const Monster& _Other) = delete;
 	Monster& operator=(Monster&& _Other) noexcept = delete;
 
-protected:
+//protected:
+//	GameEngineImageRenderer* ImageRenderer;
 
 protected:
 	virtual void Start();
 	virtual void TransformUpdate();
 	virtual void Update(float _DeltaTime);
 	virtual void ReleaseEvent();
+
 };
 

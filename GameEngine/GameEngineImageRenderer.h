@@ -64,6 +64,38 @@ public:
 protected:
 	void Update(float _DeltaTime) override;
 
+public:
+	//
+	inline const float4 GetTextureSize() // TODO : 잘려진 이미지 사이즈에 맞는 값을 반환하도록 해주어야 함
+	{
+		if (nullptr != CurTexture)
+		{
+			return CurTexture->GetTextureSize();
+		}
+		else
+		{
+			GameEngineDebug::MsgBoxError("텍스처가 없습니다.");
+		}
+	}
+
+	inline const float4 GetCutData()
+	{
+		return CutData;
+	}
+
+	inline const float4 GetTextureScale() // TODO : 잘려진 이미지 사이즈에 맞는 값을 반환하도록 해주어야 함
+	{
+		if (nullptr != CurTexture)
+		{
+			return CurTexture->GetTextureScale();
+		}
+		else
+		{
+			GameEngineDebug::MsgBoxError("텍스처가 없습니다.");
+		}
+	}
+	//
+
 private:
 	std::map<std::string, Animation2D*> AllAnimations_;
 	Animation2D* CurAnimation_;

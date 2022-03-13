@@ -30,8 +30,6 @@ public:
 	CameraActor* GetUICameraActor();
 	CameraComponent* GetUICamera();
 
-protected:
-
 private:
 	std::map<int, std::list<GameEngineActor*>> ActorList_;
 	CameraActor* MainCameraActor_;
@@ -69,5 +67,4 @@ public:
 
 private:
 	void Init();
-
 };

@@ -33,9 +33,8 @@ void UserGame::ResourcesLoad()
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		}	
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Animation.png");
-		Texture->Cut(8, 8);
+		Texture->Cut(8, 9);
 	}
-
 	{
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent("CupHeadProject");
@@ -51,6 +50,23 @@ void UserGame::ResourcesLoad()
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("title_screen_background.png");
 		Texture->Cut(8, 8);
+	}
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent("CupHeadProject");
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Loading");
+		
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
+		Texture->Cut(200.f, 320.f);
+		
 	}
 
 	AppShaderLoad();
