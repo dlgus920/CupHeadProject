@@ -10,6 +10,9 @@ class GameEngineCore : public GameEngineObjectBase
 {
 private:
 	void EngineInitialize();
+	void EngineResourcesLoad();
+	void EngineResourcesCreate();
+
 	void EngineDestroy();
 
 protected:

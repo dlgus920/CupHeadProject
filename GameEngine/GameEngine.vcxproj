@@ -27,12 +27,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineVertex.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineBlend.h" />
     <ClInclude Include="GameEngineBlendManager.h" />
+    <ClInclude Include="GameEngineCollision.h" />
     <ClInclude Include="GameEngineComponent.h">
       <SubType>
       </SubType>
@@ -49,6 +52,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineDebugRenderData.h" />
     <ClInclude Include="GameEngineDevice.h">
       <SubType>
       </SubType>
@@ -157,6 +161,7 @@
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
     <ClInclude Include="GameEngineResourcesManager.h" />
+    <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -181,6 +186,7 @@
     </ClCompile>
     <ClCompile Include="GameEngineBlend.cpp" />
     <ClCompile Include="GameEngineBlendManager.cpp" />
+    <ClCompile Include="GameEngineCollision.cpp" />
     <ClCompile Include="GameEngineComponent.cpp">
       <SubType>
       </SubType>
@@ -197,6 +203,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineCore_Resources.cpp" />
+    <ClCompile Include="GameEngineDebugRenderData.cpp" />
     <ClCompile Include="GameEngineDevice.cpp">
       <SubType>
       </SubType>

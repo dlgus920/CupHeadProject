@@ -3,6 +3,11 @@
 #include "CameraComponent.h"
 #include "GameEngineWindow.h"
 #include "GameEngineRenderer.h"
+#include "GameEngineRenderingPipeLineManager.h"
+#include "GameEngineRenderingPipeLine.h"
+#include "GameEngineShader.h"
+#include "GameEnginePixelShader.h"
+#include "GameEngineVertexShader.h"
 
 CameraComponent::CameraComponent() 
 	: ProjectionMode_(ProjectionMode::Perspective)
@@ -19,10 +24,18 @@ CameraComponent::~CameraComponent()
 
 void CameraComponent::Start()
 {
+	DebugVector_.resize(1000);
+	DebugRenderCount_ = 0;
 
+	GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("DebugColorRect");
+
+	for (size_t i = 0; i < DebugVector_.size(); i++)
+	{
+		DebugVector_[i].ShaderHelper.ShaderResourcesCheck(Pipe->GetVertexShader());
+		DebugVector_[i].ShaderHelper.ShaderResourcesCheck(Pipe->GetPixelShader());
+		DebugVector_[i].ShaderHelper.SettingConstantBufferLink("TransformData", DebugVector_[i].Data);
+	}
 }
-
-
 
 void CameraComponent::Update(float _DeltaTime)
 {
@@ -113,4 +126,57 @@ void CameraComponent::ReleaseRenderer()
 			}
 		}
 	}
+}
+
+void CameraComponent::ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer)
+{
+	RendererList_[_Renderer->GetOrder()].remove(_Renderer);
+
+	_Renderer->SetOrder(_Group);
+
+	RendererList_[_Renderer->GetOrder()].push_back(_Renderer);
+}
+
+
+void CameraComponent::DebugRender()
+{
+	//for (size_t i = 0; i < DebugRenderCount_; i++)
+	//{
+	//	DebugVector_[i].R
+	//}
+
+	DebugRenderCount_ = 0;
+
+	// DebugVector_.clear();
+}
+
+void CameraComponent::PushDebug(GameEngineTransform* _Trans, CollisionType _Type)
+{
+	// DebugVector_[i].Data
+
+	// GameEngineDebugRenderData NewData;
+
+	switch (_Type)
+	{
+	case CollisionType::Point2D:
+	case CollisionType::CirCle:
+	case CollisionType::Rect:
+	case CollisionType::OrientedRect:
+		// DebugVector_.resize(DebugVector_.size() + 1);
+
+		DebugVector_[DebugRenderCount_].Data = _Trans->GetTransformData();
+
+		break;
+	case CollisionType::Point3D:
+	case CollisionType::Sphere3D:
+	case CollisionType::AABBBox3D:
+	case CollisionType::OBBBox3D:
+	case CollisionType::MAX:
+		GameEngineDebug::MsgBoxError("처리할수 없는 디버그 타입입니다.");
+		break;
+	default:
+		break;
+	}
+
+	++DebugRenderCount_;
 }

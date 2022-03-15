@@ -20,7 +20,7 @@ LoaddingScene::~LoaddingScene() // default destructer 디폴트 소멸자
 void LoaddingScene::LevelStart()
 {	
 	HourGlass_ = CreateActor<Image>();
-	HourGlass_->SetImageAnimation("HourGlass", 0, 45, 0.1f, true);
+	HourGlass_->SetImageAnimation("HourGlass", "HourGlass", 0, 45, 0.1f, true);
 	HourGlass_->SetImageLocalScaling({200.f,320.f,0.f});
 	//HourGlass_->GetImageRenderer()->
 	//HourGlass_->get

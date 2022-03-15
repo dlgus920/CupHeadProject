@@ -187,4 +187,7 @@
       <Filter>Actor</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ShaderProject.vcxproj" />
+  </ItemGroup>
 </Project>

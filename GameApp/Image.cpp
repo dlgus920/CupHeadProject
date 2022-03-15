@@ -38,9 +38,9 @@ void Image::ReleaseEvent()
 {
 }
 
-void Image::SetImageAnimation(const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
+void Image::SetImageAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
 {
-	ImageRenderer_->CreateAnimation(_Name, _StartFrame, _EndFrame, _Loop);
+	ImageRenderer_->CreateAnimation(_TextureName,_Name, _StartFrame, _EndFrame, _Loop);
 }
 
 void Image::SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop)

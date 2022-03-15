@@ -1,17 +1,30 @@
 #pragma once
 #include <list>
 #include <map>
-
-// 설명 : 
-
+#include <GameEngine\Enums.h>
+//#include <GameEngine\GameEngineRenderingPipeLine.h>
+//
+//// 설명 : 
+//
+//class DebugRenderData
+//{
+//	TransformData Data;
+//	GameEngineRenderingPipeLine Data;
+//	// 파이프라인
+//	// 쉐이더 헬퍼가 한쌍이어야 한다.
+//};
 class CameraActor;
 class CameraComponent;
 class GameEngineActor;
 class GameEngineRenderer;
+class GameEngineTransform;
+class GameEngineCollision;
+class GameEngineDebugRenderData;
 class GameEngineLevel : public GameEngineObjectNameBase
 {
 	friend class GameEngineCore;
 	friend class GameEngineRenderer;
+	friend class GameEngineCollision;
 
 public:
 	// constrcuter destructer
@@ -35,6 +48,8 @@ private:
 	CameraActor* MainCameraActor_;
 	// std::list<CameraActor*> 커스텀Camera;
 	CameraActor* UICameraActor_;
+
+	void Init();
 
 public:
 	template<typename ActorType>
@@ -66,5 +81,26 @@ public:
 ////////////////////////////////////////////////////// Renderer
 
 private:
-	void Init();
+	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
+
+	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
+	{
+		return CollisionList_[_Group];
+	}
+
+	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
+
+	void DebugRender(GameEngineTransform* _Transform, CollisionType _Type);
+
+public:
+	template<typename UserEnumType>
+	void PushCollision(GameEngineCollision* _Collision, UserEnumType _Group)
+	{
+		PushCollision(_Collision, static_cast<int>(_Group));
+	}
+
+	void PushCollision(GameEngineCollision* _Collision, int _Group);
+
+	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
+
 };

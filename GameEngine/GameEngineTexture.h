@@ -46,7 +46,7 @@ public:
 
 	inline float4 GetTextureSize()
 	{
-		return float4(TextureDesc_.Width, TextureDesc_.Height);
+		return float4(static_cast<float>(TextureDesc_.Width), static_cast<float>(TextureDesc_.Height));
 	}
 
 	inline const float4 GetTextureScale()

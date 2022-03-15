@@ -1,5 +1,4 @@
 #include "PreCompile.h"
-
 #include <GameEngine/GameEngineImageRenderer.h>
 #include "Player.h"
 #include "Bullet.h"

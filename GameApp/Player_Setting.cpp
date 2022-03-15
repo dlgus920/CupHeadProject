@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
 #include "Player.h"
 #include "Bullet.h"
 
@@ -42,7 +43,7 @@ void Player::StateSetting()
 
 void Player::RendererSetting()
 {
-	PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
+	PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 
 	PlayerImageRenderer->SetImage("Char.png");
 	PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
@@ -50,7 +51,7 @@ void Player::RendererSetting()
 
 void Player::TransformSetting()
 {
-	GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
+	GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>();
 	Renderer->SetRenderingPipeLine("Color");
 	Renderer->GetTransform()->SetLocalScaling({ 100.0f, 20.0f, 1.0f });
 	Renderer->GetTransform()->SetLocalPosition({ 0.0f, 80.0f, 0.0f });
@@ -59,4 +60,17 @@ void Player::TransformSetting()
 
 void Player::CollisionSetting()
 {
+	{
+		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+		//PlayerImageRenderer->SetImage("Char.png");
+		PlayerImageRenderer->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
+	}
+
+	{
+		PlayerCollision = CreateTransformComponent<GameEngineCollision>(10);
+
+		PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
+
+		PlayerCollision->SetCollisionGroup(30);
+	}
 }

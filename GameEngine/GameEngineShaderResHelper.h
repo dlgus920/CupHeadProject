@@ -23,10 +23,10 @@ public:
 	~GameEngineShaderResHelper();
 
 	// delete Function
-	GameEngineShaderResHelper(const GameEngineShaderResHelper& _Other) = delete;
-	GameEngineShaderResHelper(GameEngineShaderResHelper&& _Other) noexcept = delete;
-	GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
-	GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
+	//GameEngineShaderResHelper(const GameEngineShaderResHelper& _Other) = delete;
+	//GameEngineShaderResHelper(GameEngineShaderResHelper&& _Other) noexcept = delete;
+	//GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
+	//GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
 
 	void ShaderResourcesCheck(GameEngineShader* _Shader);
 

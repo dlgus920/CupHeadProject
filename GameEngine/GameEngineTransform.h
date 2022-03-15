@@ -3,6 +3,24 @@
 #include "GameEngineComponent.h"
 #include <GameEngineBase/GameEngineTime.h>
 
+#include <DirectXCollision.h>
+#include <DirectXCollision.inl>
+
+
+union CollisionData
+{
+public:
+	DirectX::BoundingSphere Sphere;
+	DirectX::BoundingBox AABB; // 회전이 고려하면 안되는 박스
+	DirectX::BoundingOrientedBox OBB; // 회전한 박스
+
+	CollisionData()
+		: OBB()
+	{
+
+	}
+};
+
 class TransformData 
 {
 public:
@@ -80,8 +98,8 @@ public:
 	~GameEngineTransform();
 
 	// delete Function
-	GameEngineTransform(const GameEngineTransform& _Other) = delete;
-	GameEngineTransform(GameEngineTransform&& _Other) noexcept = delete;
+	//GameEngineTransform(const GameEngineTransform& _Other) = delete;
+	//GameEngineTransform(GameEngineTransform&& _Other) noexcept = delete;
 	GameEngineTransform& operator=(const GameEngineTransform& _Other) = delete;
 	GameEngineTransform& operator=(GameEngineTransform&& _Other) noexcept = delete;
 
@@ -175,8 +193,29 @@ public:
 	void SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
 	void SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
 
+	const CollisionData& GetCollisionData()
+	{
+		return ColData_;
+	}
+
+	const DirectX::BoundingSphere& GetSphere()
+	{
+		return ColData_.Sphere;
+	}
+
+	const DirectX::BoundingOrientedBox& GetOBB()
+	{
+		return ColData_.OBB;
+	}
+
+	const DirectX::BoundingBox& GetAABB()
+	{
+		return ColData_.AABB;
+	}
+
 protected:
 	TransformData TransformData_;
+	CollisionData ColData_;
 
 	GameEngineTransform* Parent_;
 	std::vector<GameEngineTransform*> Childs_;

@@ -6,6 +6,9 @@
 #include "GameEngineTransform.h"
 #include "CameraActor.h"
 #include "CameraComponent.h"
+#include "GameEngineCollision.h"
+#include "GameEngineDebugRenderData.h"
+
 
 
 CameraActor* GameEngineLevel::GetMainCameraActor()
@@ -81,11 +84,15 @@ void GameEngineLevel::Render()
 {
 	GameEngineDevice::RenderStart();
 
-	// 
+	// 월드를 그리는 것이죠
 	MainCameraActor_->GetCamera()->Render();
 
-	// 
+	// ui를 여기에 그리죠?
 	UICameraActor_->GetCamera()->Render();
+
+	// MainCameraActor_->GetCamera()->DebugRender();
+
+	// 충돌체 랜더링이 무조건 화면에 뚫고 나와야하는 애들은
 
 	GameEngineDevice::RenderEnd();
 }
@@ -104,6 +111,41 @@ void GameEngineLevel::Release(float _DeltaTime)
 
 	MainCameraActor_->GetCamera()->ReleaseRenderer();
 	UICameraActor_->GetCamera()->ReleaseRenderer();
+
+	// 콜리전 삭제
+	{
+		std::map<int, std::list<GameEngineCollision*>>::iterator RenderMapBeginIter = CollisionList_.begin();
+		std::map<int, std::list<GameEngineCollision*>>::iterator RenderMapEndIter = CollisionList_.end();
+
+
+		for (; RenderMapBeginIter != RenderMapEndIter; ++RenderMapBeginIter)
+		{
+			std::list<GameEngineCollision*>& Collisions = RenderMapBeginIter->second;
+
+			std::list<GameEngineCollision*>::iterator BeginIter = Collisions.begin();
+			std::list<GameEngineCollision*>::iterator EndIter = Collisions.end();
+
+			for (; BeginIter != EndIter; )
+			{
+				GameEngineCollision* ReleaseCollision = *BeginIter;
+
+				if (nullptr == ReleaseCollision)
+				{
+					GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
+				}
+
+				if (true == ReleaseCollision->IsDeath())
+				{
+					BeginIter = Collisions.erase(BeginIter);
+
+					continue;
+				}
+
+				++BeginIter;
+
+			}
+		}
+	}
 
 	{
 		std::map<int, std::list<GameEngineActor*>>::iterator ActorMapBeginIter = ActorList_.begin();
@@ -157,4 +199,31 @@ void GameEngineLevel::LevelChangeStartEvent()
 void GameEngineLevel::LevelChangeEndEvent() 
 {
 
+}
+
+void GameEngineLevel::PushCollision(GameEngineCollision* _Collision, int _Group)
+{
+	CollisionList_[_Group].push_back(_Collision);
+}
+
+void GameEngineLevel::ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision)
+{
+	CollisionList_[_Collision->GetOrder()].remove(_Collision);
+
+	_Collision->SetOrder(_Group);
+
+	CollisionList_[_Collision->GetOrder()].push_back(_Collision);
+}
+
+void GameEngineLevel::ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer)
+{
+	MainCameraActor_->GetCamera()->ChangeRendererGroup(_Group, _Renderer);
+}
+
+void GameEngineLevel::DebugRender(GameEngineTransform* _Transform, CollisionType _Type)
+{
+	if (true)
+	{
+
+	}
 }

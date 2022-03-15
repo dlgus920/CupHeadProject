@@ -11,6 +11,7 @@ private:
 	struct Animation2D
 	{
 		GameEngineFolderTexture* FolderTextures_;
+		GameEngineTexture* AnimationTexture_;
 		float InterTime_;
 		float CurTime_;
 
@@ -49,7 +50,7 @@ public:
 
 	void SetIndex(const int Index);
 
-	void CreateAnimation(const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
+	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
 
 	void CreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop = true);
 

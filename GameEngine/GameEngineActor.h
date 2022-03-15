@@ -1,11 +1,12 @@
 #pragma once
 #include <GameEngineBase/GameEngineObjectNameBase.h>
+#include "GameEngineTransform.h"
 
 // 설명 :
 class GameEngineComponent;
-class GameEngineTransformComponent;
 class GameEngineLevel;
 class GameEngineTransform;
+class GameEngineTransformComponent;
 class GameEngineActor : public GameEngineObjectNameBase
 {
 	friend GameEngineLevel;
@@ -23,8 +24,13 @@ public:
 	bool IsDestroyed_;
 	float DeathTime_;
 
+	GameEngineTransform* GetTransform()
+	{
+		return &Transform_;
+	}
+
 private:
-	GameEngineTransform* Transform_;
+	GameEngineTransform Transform_;
 	GameEngineLevel* Level_;
 	// Status
 	std::list<GameEngineComponent*> ComponentList_;
@@ -72,27 +78,38 @@ public:
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
 
-	template<typename ComponentType>
-	ComponentType* CreateTransformComponent(GameEngineTransform* _ParentTrans, int _Order = 0)
+template<typename ComponentType>
+	ComponentType* CreateTransformComponent(int _Order = 0)
 	{
 		// 업캐스팅을 이용해서 컴파일 에러를 낼것이다.
 		GameEngineTransformComponent* NewComponent = new ComponentType();
 		NewComponent->SetParent(this);
 		NewComponent->SetOrder(_Order);
 		NewComponent->InitComponent(this);
-		if (nullptr == _ParentTrans)
-		{
-			GameEngineDebug::MsgBoxError("트랜스폼을 세팅안 해줬습니다.");
-		}
-		NewComponent->AttachTransform(_ParentTrans);
-		TransformComponentList_.push_back(NewComponent); //?? TransformComponentList_에 넣어야 하는거 아닌가?
+		NewComponent->AttachTransform(GetTransform());
+		TransformComponentList_.push_back(NewComponent);
 
 		NewComponent->Start();
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
-	GameEngineTransform* GetTransform()
+
+	template<typename ComponentType>
+	ComponentType* CreateTransformComponent(GameEngineTransform* _Transform, int _Order = 0)
 	{
-		return 	Transform_;
+		// 업캐스팅을 이용해서 컴파일 에러를 낼것이다.
+		GameEngineTransformComponent* NewComponent = new ComponentType();
+		NewComponent->SetParent(this);
+		NewComponent->SetOrder(_Order);
+		NewComponent->InitComponent(this);
+		if (nullptr == _Transform)
+		{
+			GameEngineDebug::MsgBoxError("트랜스폼을 세팅안 해줬습니다.");
+		}
+		NewComponent->AttachTransform(_Transform);
+		TransformComponentList_.push_back(NewComponent);
+
+		NewComponent->Start();
+		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
 };
 

@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level0", "Level0", "{A19D16
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level1", "Level1", "{6499AE55-D0B9-4632-BF22-888FE7557FD7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderProject", "Resources\Shader\ShaderProject.vcxproj", "{4C1C6377-1B69-4398-B712-DDB840A0CA12}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderProject", "ShaderProject.vcxproj", "{4C1C6377-1B69-4398-B712-DDB840A0CA12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

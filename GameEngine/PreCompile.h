@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GameEngineBase/PreCompile.h>
+#include "GlobalValue.h"
 
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEnginePath.h>

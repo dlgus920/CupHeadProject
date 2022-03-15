@@ -73,6 +73,8 @@ private: //Member
 
 	float4 MoveDir_;
 
+	GameEngineCollision* PlayerCollision;
+
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;

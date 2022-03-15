@@ -5,6 +5,7 @@
 #include "GameEngineDevice.h"
 #include "GameEngineLevel.h"
 #include "GameEngineInput.h"
+#include "GameEngineCollision.h"
 #include "GameEngineBase/GameEngineDirectory.h"
 #include "GameEngineBase/GameEngineFile.h"
 
@@ -32,22 +33,12 @@ GameEngineCore::GameEngineCore(GameEngineCore&& _other) noexcept  // default RVa
 
 void GameEngineCore::EngineInitialize()
 {
-	{
-		GameEngineDirectory EngineTextureDir;
-		EngineTextureDir.MoveParent("CupHeadProject");
-		EngineTextureDir.MoveChild("EngineResources");
-		EngineTextureDir.MoveChild("Texture");
-
-		std::vector<GameEngineFile> AllFile = EngineTextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
-	}
-
+	EngineResourcesLoad();
+	EngineResourcesCreate();
+	// 엔진용 파이프라인
 
 	// 기본 엔진 수준 리소스를 로드할 겁니다.
+	GameEngineCollision::Init();
 
 	GameEngineSoundManager::GetInst().Initialize();
 }
