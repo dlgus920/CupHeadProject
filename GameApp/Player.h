@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
+#include "Bullet.h"
 
 class GameEngineImageRenderer;
 
@@ -48,6 +49,13 @@ private: //Member
 	GameEngineFSM<Player> AnimationState_;
 	GameEngineTransform* Camera_;
 
+	float TimeCheck_;
+	float DistTimeCheck_;
+
+	float GravitySpeed_;
+	float GravityAcc_;
+
+
 		// state
 	bool KeyState_Update_;
 	bool ColState_Update_;
@@ -70,16 +78,20 @@ private: //Member
 	bool ColState_Ground;
 	bool ColState_Hit_;
 	
+	bool StateHitInvince_;
 
 	// 현재 보고 있는 방향
+	BulletType BulletType_;
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
-	float4 MoveDir_;
+	//float4 MoveDir_;
 
 	GameEngineCollision* PlayerHitBox;
 	GameEngineCollision* PlayerMovingCollision;
 	GameEngineCollision* PlayerCollision;
+
+	std::string CurState_;
 
 private: //Legacy
 	void Start() override;
@@ -87,24 +99,26 @@ private: //Legacy
 
 private://Func
 	void ChangeAnimation(std::string _animation);
-	void ChangeAnimation();
-	void ChangeState();
+	StateInfo ChangeState();
+	const std::string CheckState();
+
 	void Shoot(float4 ShootDir);
 	void Shoot(float ShootDirX, float ShootDirY);
 	void Move(float4 MoveDir, float _DeltaTime);
 	void Move(float DirX, float DirY, float _DeltaTime);
 
+	void SpawnBullet(BulletType _Type, float4 _Dir);
+
+
+	float4 GetBulletPoint();
+
 private: //Setting
-	void ComponentSetting();
 	void KeySetting();
 	void StateSetting();
-	void RendererSetting();
+	void ComponentSetting();
 	void AnimationSetting();
-	void TransformSetting();
-	void CollisionSetting();
 
 private: //Update
-	void KeyStateUpdate(float _DeltaTime);
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate(float _DeltaTime);
 	void CollisonUpdate();

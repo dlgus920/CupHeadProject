@@ -8,9 +8,9 @@
 Player::Player() :
 	State_(this),
 	AnimationState_(this),
-	PlayerImageRenderer(nullptr),
-	KeyDir_(KeyDir::None),
 	KeyState_Update_(true),
+	ColState_Update_(true),
+	State_Update_(true),
 	KeyState_Up_(false),
 	KeyState_Down_(false),
 	KeyState_Left_(false),
@@ -21,12 +21,17 @@ Player::Player() :
 	KeyState_Jump_(false),
 	KeyState_Hit_(false),
 	KeyState_Dash_(false),
-	ColState_Update_(true),
 	ColState_Ground(false),
 	ColState_Hit_(false),
-	State_Update_(true),
-	MoveDir_()
-
+	Camera_(nullptr),
+	BulletPoint_(nullptr),
+	PlayerHitBox(nullptr),
+	PlayerMovingCollision(nullptr),
+	PlayerCollision(nullptr),
+	PlayerImageRenderer(nullptr),
+	BulletType_(BulletType::Default),
+	KeyDir_(KeyDir::None),
+	Dir_(AnimationDirection::Right)
 {
 }
 
@@ -54,10 +59,7 @@ void Player::Start()
 	//}
 
 	ComponentSetting();
-	RendererSetting();
 	AnimationSetting();
-	CollisionSetting();
-	//TransformSetting();
 	KeySetting();
 	StateSetting();
 
@@ -94,7 +96,6 @@ void Player::Update(float _DeltaTime)
 	{
 		State_.Update(_DeltaTime);
 	}
-	KeyStateUpdate(_DeltaTime); // 사실상 key와 별개인ㄴㅁ
 
 	//StateUpdate(_DeltaTime);
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
@@ -117,273 +118,96 @@ void Player::ChangeAnimation(std::string _animation)
 	// 아무래도 텍스처가 지 크기를 가지고 있는데 좋을거같다.
 }
 
-void Player::ChangeAnimation()
-{
-	//if (true == ColState_Hit_)
-	//{
-	//	State_.ChangeState("Hit");
-	//}
-	//else if (true == KeyState_Bomb)
-	//{
-	//	State_.ChangeState("Bomb");
-	//}
-	//else if (true == KeyState_Jump_)
-	//{
-	//	State_.ChangeState("Jump");
-	//	// ????
-	//	if (KeyState_Right_)
-	//	{
-	//		Move(_DeltaTime, 1.f, 0.f);
-	//		Shoot(1.f, 0.f);
-	//		return;
-	//	}
-	//	else if (KeyState_Left_)
-	//	{
-	//		Move(_DeltaTime, -1.f, 0.f);
-	//		Shoot(-1.f, 0.f);
-	//		return;
-	//	}
-	//	else if (Dir_ == Dir::Left)
-	//	{
-	//		//Jump_Left
-	//		Shoot(-1.f, 0.f);
-	//		return;
-	//	}
-	//	else
-	//	{
-	//		//Jump_Right
-	//		Shoot(1.f, 0.f);
-	//		return;
-	//	}
-	//}
-	//else if (true == KeyState_Dash_)
-	//{
-	//	State_.ChangeState("Dash");
-	//}
-	//else if (true == KeyState_RockOn_)
-	//{
-	//	if (true == KeyState_Shoot_) // 쏘는중
-	//	{
-	//		if (KeyState_Up_)
-	//		{
-	//			if (KeyState_Left_)
-	//			{
-	//				//RockOn_UpLeft_Shoot
-	//				Shoot(1.f, -1.f);
-	//				return;
-	//			}
-	//			else if (KeyState_Right_)
-	//			{
-	//				//RockOn_UpRight_Shoot
-	//				Shoot(1.f, 1.f);
-	//				return;
-	//			}
-	//
-	//			else
-	//			{
-	//				if (Dir_ == Dir::Left)
-	//				{
-	//					//RockOn_LeftUp_Shoot
-	//					Shoot(1.f, 0.f);
-	//					return;
-	//				}
-	//				else
-	//				{
-	//					//RockOn_RightUp_Shoot
-	//					Shoot(1.f, 0.f);
-	//					return;
-	//				}
-	//			}
-	//		}
-	//		else if (KeyState_Down_)
-	//		{
-	//			if (KeyState_Left_)
-	//			{
-	//				//RockOn_DownLeft_Shoot
-	//				Shoot(-1.f, 0.f);
-	//				return;
-	//			}
-	//			else if (KeyState_Right_)
-	//			{
-	//				//RockOn_DownRight_Shoot
-	//				Shoot(-1.f, 0.f);
-	//				return;
-	//			}
-	//
-	//			else
-	//			{
-	//				if (Dir_ == Dir::Left)
-	//				{
-	//					//RockOn_LeftDown_Shoot
-	//					Shoot(-1.f, -1.f);
-	//					return;
-	//				}
-	//				else
-	//				{
-	//					//RockOn_RightDown_Shoot
-	//					Shoot(-1.f, 1.f);
-	//					return;
-	//				}
-	//			}
-	//		}
-	//	}
-	//	else
-	//	{
-	//		if (KeyState_Up_)
-	//		{
-	//			if (KeyState_Left_)
-	//			{
-	//				//RockOn_UpLeft_
-	//				return;
-	//			}
-	//			else if (KeyState_Right_)
-	//			{
-	//				//RockOn_UpRight_
-	//				return;
-	//			}
-	//			else
-	//			{
-	//				if (Dir_ == Dir::Left)
-	//				{
-	//					//RockOn_LeftUp_
-	//					return;
-	//				}
-	//				else
-	//				{
-	//					//RockOn_RightUp_
-	//					return;
-	//				}
-	//			}
-	//		}
-	//		else if (KeyState_Down_)
-	//		{
-	//			if (KeyState_Left_)
-	//			{
-	//				//RockOn_DownLeft_
-	//				return;
-	//			}
-	//			else if (KeyState_Right_)
-	//			{
-	//				//RockOn_DownRight_
-	//				return;
-	//			}
-	//			else
-	//			{
-	//				if (Dir_ == Dir::Left)
-	//				{
-	//					//RockOn_LeftDown_
-	//					return;
-	//				}
-	//				else
-	//				{
-	//					//RockOn_RightDown_
-	//					return;
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
-	//else if (true == KeyState_Down_)
-	//{
-	//	if (true == KeyState_Shoot_) // 쏘는중
-	//	{
-	//		if (Dir_ == Dir::Left)
-	//		{
-	//			//Duck_Left_Shoot
-	//			Shoot(0.f, -1.f);
-	//			return;
-	//		}
-	//	}
-	//	else
-	//	{
-	//	}
-	//}
-	//else if (true == KeyState_Right_)
-	//{
-	//	if (true == KeyState_Shoot_)
-	//	{
-	//		//Walk_Right_Shoot
-	//		ChangeAnimation("");
-	//		
-	//		return;
-	//	}
-	//	ChangeAnimation("");
-	//}
-	//else if (true == KeyState_Left_)
-	//{
-	//	if (true == KeyState_Shoot_)
-	//	{
-	//		Shoot(0.f, -1.f);
-	//		Move(_DeltaTime, -1.f, 0.f);
-	//		//Walk_Left_Shoot
-	//		return;
-	//	}
-	//}
-	//else if (true == KeyState_Shoot_)
-	//{
-	//	if (Dir_ == Dir::Left)
-	//	{
-	//		//Idle_Left_Shoot 
-	//		Shoot(0.f, -1.f);
-	//		return;
-	//	}
-	//}
-}
-
-void Player::ChangeState()
+StateInfo Player::ChangeState()
 {
 	if (true == ColState_Hit_)
 	{
 		State_.ChangeState("Hit");
-		return;
+		return "Hit";
 	}
 	else if (true == KeyState_Bomb)
 	{
 		State_.ChangeState("Bomb");
-		return;
+		return "Bomb";
 	}
 	else if (true == KeyState_Jump_)
 	{
 		State_.ChangeState("Jump");
-		return;
+		return "Jump";
 	}
 	else if (true == KeyState_Dash_)
 	{
 		State_.ChangeState("Dash");
-		return;
+		return "Dash";
 	}
 	else if (true == KeyState_RockOn_)
 	{
 		State_.ChangeState("RockOn");
-		return;
+		return "Rockon";
 	}
 	else if (true == KeyState_Down_)
 	{
 		State_.ChangeState("Duck");
-		return;
+		return "Duck";
 	}
 	else if (true == KeyState_Right_ || true == KeyState_Left_)
 	{
 		State_.ChangeState("Walk");
-		return;
+		return "Walk";
 	}
 }
 
-void Player::Shoot(float4 ShootDir)
+const std::string Player::CheckState()
 {
-	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-	NewBullet->SetMoveDir(ShootDir);
-	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-	NewBullet->Release(1.0f);
+	if (true == ColState_Hit_)
+	{
+		CurState_ = "Hit";
+	}
+	else if (true == KeyState_Bomb)
+	{
+		CurState_ = "Bomb";
+	}
+	else if (true == KeyState_Jump_)
+	{
+		CurState_ = "Jump";
+	}
+	else if (true == KeyState_Dash_)
+	{
+		CurState_ = "Dash";
+	}
+	else if (true == KeyState_RockOn_)
+	{
+		CurState_ = "Rockon";
+	}
+	else if (true == KeyState_Down_)
+	{
+		CurState_ = "Duck";
+	}
+	else if (true == KeyState_Right_ || true == KeyState_Left_)
+	{
+		CurState_ = "Walk";
+	}
+
+	CurState_ = "Idle";
+
+	return CurState_;
 }
 
-void Player::Shoot(float ShootDirX, float ShootDirY)
-{
-	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-	NewBullet->SetMoveDir(float4(ShootDirX, ShootDirY, 0.f));
-	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-	NewBullet->Release(1.0f);
-}
+//void Player::Shoot(float4 ShootDir)
+//{
+//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+//	NewBullet->SetMoveDir(ShootDir);
+//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+//	NewBullet->Release(1.0f);
+//}
+//
+//void Player::Shoot(float ShootDirX, float ShootDirY)
+//{
+//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
+//	NewBullet->SetMoveDir(float4(ShootDirX, ShootDirY, 0.f));
+//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+//	NewBullet->Release(1.0f);
+//}
 
 void Player::Move(float4 MoveDir, float _DeltaTime)
 {
@@ -393,6 +217,49 @@ void Player::Move(float4 MoveDir, float _DeltaTime)
 void Player::Move(float DirX, float DirY, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
+}
+
+void Player::SpawnBullet(BulletType _Type, float4 _Dir)
+{
+	// 발사되는 방향에 맞게 로테이트 작업 해줘야함
+	// 발사 오른쪽 왼쪽 잡아서 수평 회전시키기
+
+	if (_Type == BulletType::Spread)
+	{
+		Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
+		GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+		_Bullet->SetType(_Type);
+		_Bullet->SetMoveDir(_Dir);
+
+		_Bullet = GetLevel()->CreateActor<Bullet>();
+		compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+		_Bullet->SetType(_Type);
+		_Bullet->SetMoveDir(_Dir);
+		compo->GetTransform()->SetLocalRotation(45.f, 0.f);
+
+		_Bullet = GetLevel()->CreateActor<Bullet>();
+		compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+		_Bullet->SetType(_Type);
+		_Bullet->SetMoveDir(_Dir);
+		compo->GetTransform()->SetLocalRotation(-45.f, 0.f);
+
+	}
+	else
+	{
+		Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
+		GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+		_Bullet->SetType(_Type);
+		_Bullet->SetMoveDir(_Dir);
+	}
+}
+
+float4 Player::GetBulletPoint()
+{
+	return BulletPoint_->GetTransform()->GetLocalPosition();
 }
 
 

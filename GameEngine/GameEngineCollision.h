@@ -56,6 +56,31 @@ public:
 		std::function<void(GameEngineCollision*)> _CallBack
 	);
 
+	//Custom Func
+	bool Collision(int _OtherGroup);
+	GameEngineCollision* CollisionPtr(int _OtherGroup);
+
+	template<typename UserType>
+	void CreateCollision(CollisionType _CollisionType, UserType _Type, float4 _Scale)
+	{
+		if (nullptr == CollisionType_)
+		{
+			GameEngineDebug::MsgBoxError("컬리전 컴포넌트 안만듦");
+		}
+
+		SetCollisionType(_CollisionType);
+		SetCollisionGroup(static_cast<int>(_Type));
+		GetTransform()->SetLocalScaling(_Scale);
+	}
+
+	void SetCollisionType(CollisionType _CollisionType)
+	{
+		CollisionType_ = _CollisionType;
+	}
+
+	//Custom Member
+	CollisionType CollisionType_;
+
 	void SphereToSphereCollision(int _OtherGroup, std::function<void(GameEngineCollision*)> _CallBack);
 
 

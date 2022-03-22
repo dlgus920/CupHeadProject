@@ -4,6 +4,13 @@
 // Ό³Έν :
 class GameEngineImageRenderer;
 
+enum class BulletType
+{
+	Default,
+	Guided,
+	Spread
+};
+
 class Bullet : public GameEngineActor
 {
 public:
@@ -18,9 +25,8 @@ public:
 
 private:
 	GameEngineImageRenderer* ImageRenderer_;
-
+	BulletType Type_;
 	float4 MoveDir_;
-
 
 protected:
 	virtual void Start();
@@ -32,6 +38,11 @@ public:
 	void SetMoveDir(float4 _MoveDir)
 	{
 		MoveDir_ = _MoveDir;
+	}
+
+	void SetType(BulletType _Type)
+	{
+		Type_ = _Type;
 	}
 };
 
