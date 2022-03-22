@@ -1,10 +1,6 @@
 #include "PreCompile.h"
-#include <GameEngine/GameEngineImageRenderer.h>
 #include "Player.h"
-
-#include "PreCompile.h"
-#include <GameEngine/GameEngineImageRenderer.h>
-#include "Player.h"
+//#include <GameEngine/GameEngineImageRenderer.h>
 
 
 StateInfo Player::Idle_Start(StateInfo _state)
@@ -93,6 +89,7 @@ StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
 
 StateInfo Player::Death_Start(StateInfo _state)
 {
+	State_Update_ = false;
 	return StateInfo();
 }
 
@@ -112,6 +109,7 @@ StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 
 StateInfo Player::Hit_Start(StateInfo _state)
 {
+	State_Update_ = false;
 	return StateInfo();
 }
 
@@ -121,6 +119,7 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 
 	if (true) // 조건 충족시
 	{
+		State_Update_ = true;
 		return "Idle";
 	}
 	else

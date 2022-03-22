@@ -29,17 +29,18 @@ protected:
 public:
 	inline const float4 GetTextureSize()
 	{
-		return ImageRenderer->GetTextureSize();
+		return ImageRenderer->GetCurrentAnimationTexture()->GetTextureSize();
+		//return ImageRenderer->GetTextureSize(); //TODO :: 렌더러에서 현재 에니메이션을 가져올 ㅅ 있어야함
 	}
 
 	inline const float4 GetCutSize()
 	{
-		return ImageRenderer->GetCutData();
+		return ImageRenderer->GetCurrentAnimationTexture()->GetCutData(0);
 	}
 
 	inline const float4 GetTextureScale()
 	{
-		return ImageRenderer->GetTextureScale();
+		return ImageRenderer->GetCurrentAnimationTexture()->GetTextureScale();
 	}
 
 	

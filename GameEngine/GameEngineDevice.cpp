@@ -4,6 +4,8 @@
 #include "GameEngineTextureManager.h"
 #include "GameEngineRenderTargetManager.h"
 #include "GameEngineRenderTarget.h"
+#include "GameEngineDepthBufferManager.h"
+#include "GameEngineDepthBuffer.h"
 
 GameEngineDevice* GameEngineDevice::Inst = new GameEngineDevice();
 
@@ -11,6 +13,11 @@ GameEngineRenderTarget* GameEngineDevice::BackBufferTarget_ = nullptr;
 ID3D11Device* GameEngineDevice::Device_ = nullptr;
 ID3D11DeviceContext* GameEngineDevice::Context_ = nullptr;
 IDXGISwapChain* GameEngineDevice::SwapChain_ = nullptr;
+
+GameEngineRenderTarget* GameEngineDevice::GetBackBufferTarget()
+{
+	return BackBufferTarget_;
+}
 
 ID3D11Device* GameEngineDevice::GetDevice() 
 {
@@ -92,7 +99,7 @@ void GameEngineDevice::Initialize()
 		GameEngineDebug::MsgBoxError("D3D11 Not FEATURE LEVEL 11 ERROR");
 	}
 
-	CreateSwapChain();
+	//CreateSwapChain();
 }
 
 void GameEngineDevice::CreateSwapChain()

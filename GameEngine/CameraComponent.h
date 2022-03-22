@@ -31,17 +31,24 @@ public:
 		ProjectionMode_ = _ProjectionMode;
 	}
 
-
 	void PushRenderer(int _Order, GameEngineRenderer* _Renderer);
-	void PushDebug(GameEngineTransform* _Trans, CollisionType _Type);
+
+	void PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type);
+
+	GameEngineRenderTarget* CameraBufferTarget_;
+
+	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
+private:
+	inline GameEngineRenderTarget* GetCameraRenderTarget()
+	{
+		return CameraBufferTarget_;
+	}
 
-private:	
-	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
 
 	ProjectionMode ProjectionMode_;
 	float FovAngleY_;
@@ -49,18 +56,20 @@ private:
 	float NearZ_;
 	float FarZ_;
 
-
+	void ClearCameraTarget();
 
 	void Render();
 	void DebugRender();
+
 	void ReleaseRenderer();
 
 	void CameraTransformUpdate();
 
+	std::map<int, std::list<GameEngineRenderer*>> RendererList_;
+	// std::set<int> ZSort_;
 
 	int DebugRenderCount_;
 	std::vector<GameEngineDebugRenderData> DebugVector_;
 
-	std::map<int, std::list<GameEngineRenderer*>> RendererList_;
 };
 

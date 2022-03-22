@@ -4,7 +4,7 @@
 
 class GameEngineImageRenderer;
 
-enum class Dir
+enum class AnimationDirection
 {
 	Right,
 	Left
@@ -45,45 +45,61 @@ private: //Member
 	GameEngineTransformComponent* BulletPoint_;
 
 	GameEngineFSM<Player> State_;
+	GameEngineFSM<Player> AnimationState_;
 	GameEngineTransform* Camera_;
 
-	// state
+		// state
+	bool KeyState_Update_;
+	bool ColState_Update_;
 	bool State_Update_;
 
-	bool KetState_Up_;
-	bool KetState_Down_;
-	bool KetState_Left_;
-	bool KetState_Right_;
+	bool KeyState_Up_;
+	bool KeyState_Down_;
+	bool KeyState_Left_;
+	bool KeyState_Right_;
 
-	bool KetState_Shoot_;
+	bool KeyState_Shoot_;
 
-	bool KetState_RockOn_;
-	bool KetState_Bomb;
-	bool KetState_Jump_;
+	bool KeyState_RockOn_;
+	bool KeyState_Bomb;
+	bool KeyState_Jump_;
 
-	bool KetState_Hit_;
-	bool KetState_Dash_;
+	bool KeyState_Hit_;
+	bool KeyState_Dash_;
 
 	bool ColState_Ground;
 	bool ColState_Hit_;
+	
 
 	// 현재 보고 있는 방향
-	Dir		Dir_; // 보고있는 왼쪽, 오른쪽 방향
-	KeyDir	KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
+	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
+	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	float4 MoveDir_;
 
+	GameEngineCollision* PlayerHitBox;
+	GameEngineCollision* PlayerMovingCollision;
 	GameEngineCollision* PlayerCollision;
 
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
+private://Func
+	void ChangeAnimation(std::string _animation);
+	void ChangeAnimation();
+	void ChangeState();
+	void Shoot(float4 ShootDir);
+	void Shoot(float ShootDirX, float ShootDirY);
+	void Move(float4 MoveDir, float _DeltaTime);
+	void Move(float DirX, float DirY, float _DeltaTime);
+
 private: //Setting
 	void ComponentSetting();
 	void KeySetting();
 	void StateSetting();
 	void RendererSetting();
+	void AnimationSetting();
 	void TransformSetting();
 	void CollisionSetting();
 
@@ -93,15 +109,9 @@ private: //Update
 	void KeyUpdate(float _DeltaTime);
 	void CollisonUpdate();
 	void GravityUpdate(float _DeltaTime);
-private://Func
-
-	void ChangeAnimation(std::string _animation);
-	void Shoot(float4 ShootDir);
-	void Shoot(float ShootDirX, float ShootDirY);
-	void Move(float4 MoveDir, float _DeltaTime);
-	void Move(float DirX, float DirY, float _DeltaTime);
 		
-private: //State_
+private: 
+#pragma region State_
 	StateInfo Bomb_Start(StateInfo _state);
 	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
 
@@ -121,7 +131,6 @@ private: //State_
 	StateInfo Walk_Start(StateInfo _state);
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
 
-
 	StateInfo Duck_Start(StateInfo _state);
 	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
 	//StateInfo Shoot_Start(StateInfo _state);
@@ -132,6 +141,31 @@ private: //State_
 
 	StateInfo Hit_Start(StateInfo _state);
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
+#pragma endregion
+
+#pragma region AnimationState
+
+	StateInfo AnimationReady_Start(StateInfo _state); // 현재 state에 맞는 키가 눌려있지 않으면 그에 맞게 에니메이션을 바꿈
+	StateInfo AnimationReady_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Animation_Idle_Start(StateInfo _state);
+	StateInfo Animation_Idle_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Animation_Walk_Start(StateInfo _state);
+	StateInfo Animation_Walk_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Animation_Shoot_Start(StateInfo _state);
+	StateInfo Animation_Shoot_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo Animation_Duck_Start(StateInfo _state);
+	StateInfo Animation_Duck_Update(StateInfo _state, float _DeltaTime);
+
+	StateInfo _Start(StateInfo _state);
+	StateInfo _Update(StateInfo _state, float _DeltaTime);
+#pragma endregion
+	//필요할때 딱 한번만 실행됨
+	//에니메이션 별로 state를 만들까 계획중
+
 
 
 public: //Inline

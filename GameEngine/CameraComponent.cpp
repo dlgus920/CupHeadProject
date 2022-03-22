@@ -8,8 +8,10 @@
 #include "GameEngineShader.h"
 #include "GameEnginePixelShader.h"
 #include "GameEngineVertexShader.h"
+#include "GameEngineRenderTarget.h"
+#include <algorithm>
 
-CameraComponent::CameraComponent() 
+CameraComponent::CameraComponent()
 	: ProjectionMode_(ProjectionMode::Perspective)
 	, FovAngleY_(90.0f)
 	, CamSize_(GameEngineWindow::GetInst().GetSize())
@@ -18,8 +20,13 @@ CameraComponent::CameraComponent()
 {
 }
 
-CameraComponent::~CameraComponent() 
+CameraComponent::~CameraComponent()
 {
+	if (nullptr != CameraBufferTarget_)
+	{
+		delete CameraBufferTarget_;
+		CameraBufferTarget_ = nullptr;
+	}
 }
 
 void CameraComponent::Start()
@@ -27,21 +34,27 @@ void CameraComponent::Start()
 	DebugVector_.resize(1000);
 	DebugRenderCount_ = 0;
 
-	GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("DebugColorRect");
+	GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
 
 	for (size_t i = 0; i < DebugVector_.size(); i++)
 	{
 		DebugVector_[i].ShaderHelper.ShaderResourcesCheck(Pipe->GetVertexShader());
 		DebugVector_[i].ShaderHelper.ShaderResourcesCheck(Pipe->GetPixelShader());
+		DebugVector_[i].Color = float4::RED;
+		DebugVector_[i].ShaderHelper.SettingConstantBufferLink("ResultColor", DebugVector_[i].Color);
 		DebugVector_[i].ShaderHelper.SettingConstantBufferLink("TransformData", DebugVector_[i].Data);
 	}
+
+	CameraBufferTarget_ = new GameEngineRenderTarget();
+	CameraBufferTarget_->Create(GameEngineWindow::GetInst().GetSize(), float4::NONE);
+	CameraBufferTarget_->CreateDepthBuffer(GameEngineWindow::GetInst().GetSize());
 }
 
 void CameraComponent::Update(float _DeltaTime)
 {
 }
 
-void CameraComponent::CameraTransformUpdate() 
+void CameraComponent::CameraTransformUpdate()
 {
 	GetTransform()->GetTransformData().View_.ViewToLH(GetTransform()->GetWorldPosition(), GetTransform()->GetWorldForwardVector(), GetTransform()->GetWorldUpVector());
 
@@ -58,8 +71,20 @@ void CameraComponent::CameraTransformUpdate()
 	}
 }
 
+void CameraComponent::ClearCameraTarget()
+{
+	CameraBufferTarget_->Clear();
+}
+
+bool ZSort(GameEngineRenderer* _Left, GameEngineRenderer* _Right)
+{
+	return _Left->GetTransform()->GetWorldPosition().z > _Right->GetTransform()->GetWorldPosition().z;
+}
+
 void CameraComponent::Render()
 {
+	CameraBufferTarget_->Setting();
+
 	CameraTransformUpdate();
 
 	float4x4 View = GetTransform()->GetTransformData().View_;
@@ -68,6 +93,7 @@ void CameraComponent::Render()
 	for (std::pair<int, std::list<GameEngineRenderer*>> Pair : RendererList_)
 	{
 		std::list<GameEngineRenderer*>& Renderers = Pair.second;
+		Renderers.sort(ZSort);
 
 		for (GameEngineRenderer* Renderer : Renderers)
 		{
@@ -79,17 +105,18 @@ void CameraComponent::Render()
 			Renderer->GetTransform()->GetTransformData().Projection_ = Projection;
 			Renderer->GetTransform()->GetTransformData().View_ = View;
 			Renderer->GetTransform()->GetTransformData().CalWVP();
-
 			Renderer->Render();
 		}
 	}
 
 }
 
-void CameraComponent::PushRenderer(int _Order, GameEngineRenderer* _Renderer) 
+void CameraComponent::PushRenderer(int _Order, GameEngineRenderer* _Renderer)
 {
 	RendererList_[_Order].push_back(_Renderer);
+
 }
+
 
 void CameraComponent::ReleaseRenderer()
 {
@@ -97,10 +124,11 @@ void CameraComponent::ReleaseRenderer()
 		std::map<int, std::list<GameEngineRenderer*>>::iterator RenderMapBeginIter = RendererList_.begin();
 		std::map<int, std::list<GameEngineRenderer*>>::iterator RenderMapEndIter = RendererList_.end();
 
-
 		for (; RenderMapBeginIter != RenderMapEndIter; ++RenderMapBeginIter)
 		{
 			std::list<GameEngineRenderer*>& Renderers = RenderMapBeginIter->second;
+
+			// std::sort(Renderers.begin(), Renderers.end(), ZSort);
 
 			std::list<GameEngineRenderer*>::iterator BeginIter = Renderers.begin();
 			std::list<GameEngineRenderer*>::iterator EndIter = Renderers.end();
@@ -130,27 +158,45 @@ void CameraComponent::ReleaseRenderer()
 
 void CameraComponent::ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer)
 {
+
 	RendererList_[_Renderer->GetOrder()].remove(_Renderer);
 
 	_Renderer->SetOrder(_Group);
 
-	RendererList_[_Renderer->GetOrder()].push_back(_Renderer);
+	RendererList_[_Group].push_back(_Renderer);
 }
-
 
 void CameraComponent::DebugRender()
 {
-	//for (size_t i = 0; i < DebugRenderCount_; i++)
-	//{
-	//	DebugVector_[i].R
-	//}
+	if (true == IsDebugCheck())
+	{
+		return;
+	}
+
+	CameraBufferTarget_->Setting();
+
+	float4x4 View = GetTransform()->GetTransformData().View_;
+	float4x4 Projection = GetTransform()->GetTransformData().Projection_;
+
+	for (size_t i = 0; i < DebugRenderCount_; i++)
+	{
+		DebugVector_[i].Data.Projection_ = Projection;
+		DebugVector_[i].Data.View_ = View;
+		DebugVector_[i].Data.CalWVP();
+
+
+		DebugVector_[i].ShaderHelper.Setting();
+		DebugVector_[i].PipeLine_->Rendering();
+		DebugVector_[i].ShaderHelper.ReSet();
+		DebugVector_[i].PipeLine_->Reset();
+	}
 
 	DebugRenderCount_ = 0;
 
 	// DebugVector_.clear();
 }
 
-void CameraComponent::PushDebug(GameEngineTransform* _Trans, CollisionType _Type)
+void CameraComponent::PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type)
 {
 	// DebugVector_[i].Data
 
@@ -159,13 +205,16 @@ void CameraComponent::PushDebug(GameEngineTransform* _Trans, CollisionType _Type
 	switch (_Type)
 	{
 	case CollisionType::Point2D:
+		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		break;
 	case CollisionType::CirCle:
+		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		break;
 	case CollisionType::Rect:
+		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		break;
 	case CollisionType::OrientedRect:
-		// DebugVector_.resize(DebugVector_.size() + 1);
-
-		DebugVector_[DebugRenderCount_].Data = _Trans->GetTransformData();
-
+		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
 		break;
 	case CollisionType::Point3D:
 	case CollisionType::Sphere3D:
@@ -178,5 +227,6 @@ void CameraComponent::PushDebug(GameEngineTransform* _Trans, CollisionType _Type
 		break;
 	}
 
+	DebugVector_[DebugRenderCount_].Data = _Trans->GetTransformData();
 	++DebugRenderCount_;
 }

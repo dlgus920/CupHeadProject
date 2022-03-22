@@ -35,4 +35,11 @@ void GameEngineTime::TimeCheck()
 	QueryPerformanceCounter(&endCheck_);
 	deltaTime_ = static_cast<double>((endCheck_.QuadPart - startCheck_.QuadPart)) / static_cast<double>(timeCount_.QuadPart);
 	startCheck_.QuadPart = endCheck_.QuadPart;
+
+
+	if (deltaTime_ >= 0.1f)
+	{
+		std::string Text = std::to_string(deltaTime_) + "\n";
+		OutputDebugStringA(Text.c_str());
+	}
 }

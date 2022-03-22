@@ -50,6 +50,7 @@ public:
 		WindowCreate(NewUserGame);
 
 		NewUserGame.EngineInitialize();
+
 		NewUserGame.ResourcesLoad();
 		NewUserGame.Initialize();
 
@@ -59,6 +60,8 @@ public:
 
 		NewUserGame.Release();
 		NewUserGame.EngineDestroy();
+
+		return;
 	}
 
 protected:

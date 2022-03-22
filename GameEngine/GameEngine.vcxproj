@@ -53,6 +53,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineDebugRenderData.h" />
+    <ClInclude Include="GameEngineDepthBuffer.h" />
+    <ClInclude Include="GameEngineDepthBufferManager.h" />
+    <ClInclude Include="GameEngineDepthStencil.h" />
+    <ClInclude Include="GameEngineDepthStencilManager.h" />
     <ClInclude Include="GameEngineDevice.h">
       <SubType>
       </SubType>
@@ -161,7 +165,8 @@
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
     <ClInclude Include="GameEngineResourcesManager.h" />
-    <ClInclude Include="GlobalValue.h" />
+    <ClInclude Include="EngineGlobalValue.h" />
+    <ClInclude Include="MouseActor.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -205,6 +210,10 @@
     </ClCompile>
     <ClCompile Include="GameEngineCore_Resources.cpp" />
     <ClCompile Include="GameEngineDebugRenderData.cpp" />
+    <ClCompile Include="GameEngineDepthBuffer.cpp" />
+    <ClCompile Include="GameEngineDepthBufferManager.cpp" />
+    <ClCompile Include="GameEngineDepthStencil.cpp" />
+    <ClCompile Include="GameEngineDepthStencilManager.cpp" />
     <ClCompile Include="GameEngineDevice.cpp">
       <SubType>
       </SubType>
@@ -312,6 +321,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineWindow.cpp" />
+    <ClCompile Include="MouseActor.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>

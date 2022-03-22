@@ -1,5 +1,7 @@
 #pragma once
 #include "GameEngineRenderer.h"
+#include "GameEngineFolderTexture.h"
+#include <GameEngineBase\GameEngineObjectNameBase.h>
 
 
 // 설명 :
@@ -8,7 +10,7 @@ class GameEngineFolderTexture;
 class GameEngineImageRenderer : public GameEngineRenderer
 {
 private:
-	struct Animation2D
+	struct Animation2D : public GameEngineObjectNameBase
 	{
 		GameEngineFolderTexture* FolderTextures_;
 		GameEngineTexture* AnimationTexture_;
@@ -33,6 +35,18 @@ private:
 		void CallEnd();
 		void CallFrame();
 		void Update(float _DeltaTime);
+
+	public:
+		GameEngineTexture* GetCurAnimation(int index = 0)
+		{
+			if(AnimationTexture_)
+				return AnimationTexture_;
+
+			if (FolderTextures_)
+				return FolderTextures_->GetTextureIndex(index);
+
+			GameEngineDebug::MsgBoxError("존재하지 않는 텍스처");
+		}
 	};
 
 public:
@@ -62,40 +76,34 @@ public:
 	void SetFrameCallBack(const std::string& _Name, int _Index, std::function<void()> _CallBack);
 
 
+	inline GameEngineTexture* GetCurrentTexture()
+	{
+		return CurTexture;
+	}
+
+	inline GameEngineTexture* GetCurrentAnimationTexture(int index = 0)
+	{
+		return CurAnimation_->GetCurAnimation(index);
+	}
+
+	inline std::string GetCurrentAnimationName()
+	{
+		return CurAnimation_->GetName();
+	}
+
+	inline bool IsCurrentAnimationString(const std::string& _Name)
+	{
+		return CurAnimation_->GetName() == _Name;
+	}
+
+	inline bool IsCurrentAnimationPtr(const char* _Name)
+	{
+		return CurAnimation_->GetName() == _Name;
+	}
+
 protected:
+	void ImageRendererStart();
 	void Update(float _DeltaTime) override;
-
-public:
-	//
-	inline const float4 GetTextureSize() // TODO : 잘려진 이미지 사이즈에 맞는 값을 반환하도록 해주어야 함
-	{
-		if (nullptr != CurTexture)
-		{
-			return CurTexture->GetTextureSize();
-		}
-		else
-		{
-			GameEngineDebug::MsgBoxError("텍스처가 없습니다.");
-		}
-	}
-
-	inline const float4 GetCutData()
-	{
-		return CutData;
-	}
-
-	inline const float4 GetTextureScale() // TODO : 잘려진 이미지 사이즈에 맞는 값을 반환하도록 해주어야 함
-	{
-		if (nullptr != CurTexture)
-		{
-			return CurTexture->GetTextureScale();
-		}
-		else
-		{
-			GameEngineDebug::MsgBoxError("텍스처가 없습니다.");
-		}
-	}
-	//
 
 private:
 	std::map<std::string, Animation2D*> AllAnimations_;

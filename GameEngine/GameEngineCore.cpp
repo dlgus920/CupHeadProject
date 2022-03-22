@@ -33,8 +33,10 @@ GameEngineCore::GameEngineCore(GameEngineCore&& _other) noexcept  // default RVa
 
 void GameEngineCore::EngineInitialize()
 {
+	GameEngineDevice::GetInst().Initialize();
 	EngineResourcesLoad();
 	EngineResourcesCreate();
+	GameEngineDevice::GetInst().CreateSwapChain();
 	// 엔진용 파이프라인
 
 	// 기본 엔진 수준 리소스를 로드할 겁니다.
@@ -77,11 +79,17 @@ void GameEngineCore::MainLoop()
 		if (nullptr == CurrentLevel_)
 		{
 			CurrentLevel_ = NextLevel_;
+			NextLevel_->LevelChangeStartActorEvent();
+			NextLevel_->LevelChangeStartEvent();
 		}
 		else
 		{
+			CurrentLevel_->LevelChangeEndActorEvent();
 			CurrentLevel_->LevelChangeEndEvent();
+
+			NextLevel_->LevelChangeStartActorEvent();
 			NextLevel_->LevelChangeStartEvent();
+
 			CurrentLevel_ = NextLevel_;
 		}
 
@@ -114,7 +122,7 @@ void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
 
 	// 디바이스가 만들어져야 합니다.
 	// HWND 윈도우에서 제공하는 3D 라이브러리니까 WINDOW API를 기반으로 처리되어 있습니다.
-	GameEngineDevice::GetInst().Initialize();
+	//GameEngineDevice::GetInst().Initialize();
 }
 
 void GameEngineCore::Loop()

@@ -14,6 +14,6 @@
 #include <GameEngine/GameEngineLevel.h>
 
 
-#include "GameInfo.h"
+#include "AppGlobalValue.h"
 
 

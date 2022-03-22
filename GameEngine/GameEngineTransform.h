@@ -124,7 +124,7 @@ public:
 	float4 GetWorldUpVector() { return TransformData_.WorldWorld_.vy.NormalizeReturn3D(); }
 	float4 GetLocalUpVector() { return TransformData_.LocalWorld_.vy.NormalizeReturn3D(); }
 
-
+	void SetHorizenInvertTransform();
 
 	void SetLocalScaling(const float4& _Value);
 	void SetWorldScaling(const float4& _Value);

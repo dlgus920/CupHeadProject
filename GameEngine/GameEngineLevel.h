@@ -89,10 +89,13 @@ private:
 	}
 
 	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
+//	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
 
-	void DebugRender(GameEngineTransform* _Transform, CollisionType _Type);
-
+	void LevelChangeEndActorEvent();
+	void LevelChangeStartActorEvent();
 public:
+	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
+
 	template<typename UserEnumType>
 	void PushCollision(GameEngineCollision* _Collision, UserEnumType _Group)
 	{
@@ -100,7 +103,4 @@ public:
 	}
 
 	void PushCollision(GameEngineCollision* _Collision, int _Group);
-
-	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
-
 };

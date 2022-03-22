@@ -121,6 +121,22 @@ void GameEngineTransform::CalculationWorldPosition()
 	TransformData_.vWorldPosition_ = CalLocalPos;
 }
 
+void GameEngineTransform::SetHorizenInvertTransform()
+{
+	if (nullptr == Parent_)
+	{
+		TransformData_.vLocalScaling_.x * -1;
+		TransformData_.vWorldScaling_.x * -1;
+		AllChildCalculationScaling();
+		TransformUpdate();
+		return;
+	}
+	TransformData_.LocalScaling_.vx * -1;
+	CalculationWorldScaling();
+	AllChildCalculationScaling();
+	TransformUpdate();
+}
+
 void GameEngineTransform::SetLocalScaling(const float4& _Value)
 {
 	if (nullptr == Parent_)

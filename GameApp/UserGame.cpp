@@ -27,7 +27,10 @@ UserGame::UserGame(UserGame&& _other) noexcept  // default RValue Copy construct
 
 
 void UserGame::Initialize()
-{
+{	
+	// ShowCursor(false)
+	GameEngineInput::GetInst().HideCursor();
+
 	//TransData.View.ViewToLH( { 0.0f, 0.0f, -10.0f }, {0.0f, 0.0f , 1.0f}, {0.0f, 1.0f , 0.0f});
 
 	//TransData.Proj.OrthographicLH( 1280.f, 720.f, 0.1f, 1000.0f );

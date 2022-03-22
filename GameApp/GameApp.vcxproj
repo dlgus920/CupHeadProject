@@ -193,6 +193,11 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MainLoading.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
@@ -213,6 +218,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Player_Update.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
@@ -263,13 +272,13 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameInfo.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
     <ClInclude Include="GameObject.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="Image.h">
       <SubType>
       </SubType>
@@ -278,6 +287,11 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MainLoading.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h">
       <SubType>
@@ -313,9 +327,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\ShaderProject.vcxproj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

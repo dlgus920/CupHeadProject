@@ -8,7 +8,7 @@
 #include "CameraComponent.h"
 #include "GameEngineCollision.h"
 #include "GameEngineDebugRenderData.h"
-
+#include "GameEngineRenderTarget.h"
 
 
 CameraActor* GameEngineLevel::GetMainCameraActor()
@@ -80,20 +80,47 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 	}
 }
 
+void GameEngineLevel::LevelChangeEndActorEvent()
+{
+	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
+	{
+		std::list<GameEngineActor*>& Actors = Pair.second;
+
+		for (GameEngineActor* Actor : Actors)
+		{
+			Actor->LevelChangeEndEvent();
+		}
+	}
+}
+void GameEngineLevel::LevelChangeStartActorEvent()
+{
+	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
+	{
+		std::list<GameEngineActor*>& Actors = Pair.second;
+
+		for (GameEngineActor* Actor : Actors)
+		{
+			Actor->LevelChangeStartEvent();
+		}
+	}
+}
+
 void GameEngineLevel::Render() 
 {
 	GameEngineDevice::RenderStart();
 
+	MainCameraActor_->GetCamera()->ClearCameraTarget();
+	UICameraActor_->GetCamera()->ClearCameraTarget();
 	// 월드를 그리는 것이죠
 	MainCameraActor_->GetCamera()->Render();
-
+	MainCameraActor_->GetCamera()->DebugRender();
 	// ui를 여기에 그리죠?
 	UICameraActor_->GetCamera()->Render();
 
-	// MainCameraActor_->GetCamera()->DebugRender();
+	GameEngineDevice::GetBackBufferTarget()->Merge(MainCameraActor_->GetCamera()->GetCameraRenderTarget());
+	GameEngineDevice::GetBackBufferTarget()->Merge(UICameraActor_->GetCamera()->GetCameraRenderTarget());
 
 	// 충돌체 랜더링이 무조건 화면에 뚫고 나와야하는 애들은
-
 	GameEngineDevice::RenderEnd();
 }
 
@@ -215,15 +242,7 @@ void GameEngineLevel::ChangeCollisionGroup(int _Group, GameEngineCollision* _Col
 	CollisionList_[_Collision->GetOrder()].push_back(_Collision);
 }
 
-void GameEngineLevel::ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer)
+void GameEngineLevel::PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type)
 {
-	MainCameraActor_->GetCamera()->ChangeRendererGroup(_Group, _Renderer);
-}
-
-void GameEngineLevel::DebugRender(GameEngineTransform* _Transform, CollisionType _Type)
-{
-	if (true)
-	{
-
-	}
+	MainCameraActor_->GetCamera()->PushDebugRender(_Transform, _Type);
 }

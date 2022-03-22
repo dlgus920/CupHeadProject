@@ -40,6 +40,8 @@ protected:
 	virtual void Start() {}
 	virtual void Update(float _DeltaTime) {}
 	virtual void ReleaseEvent() {}
+	virtual void LevelChangeEndEvent() {}
+	virtual void LevelChangeStartEvent() {}
 
 private:
 	void SetLevel(GameEngineLevel* Level);

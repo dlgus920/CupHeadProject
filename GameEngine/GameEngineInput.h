@@ -65,6 +65,11 @@ public: // static Func
     static bool Press(const std::string& _Name);
     static bool Free(const std::string& _Name);
 
+    static void HideCursor()
+    {
+        ShowCursor(false);
+    }
+
 private: // member
     std::map<std::string, GameEngineKey*> AllKey_;
 

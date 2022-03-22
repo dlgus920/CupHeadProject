@@ -59,6 +59,15 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
+    <ClCompile Include="MainLoading.cpp">
+      <Filter>Level\00. MainLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Update.cpp">
+      <Filter>Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -130,6 +139,9 @@
     <Filter Include="Actor\MOB\Base">
       <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Precom\GlobalValue">
+      <UniqueIdentifier>{3647aba2-8302-43ee-9f2d-d9ec195737b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -180,14 +192,17 @@
     <ClInclude Include="Image.h">
       <Filter>Actor\Image</Filter>
     </ClInclude>
-    <ClInclude Include="GameInfo.h">
-      <Filter>Precom</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Actor</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\ShaderProject.vcxproj" />
+    <ClInclude Include="AppGlobalValue.h">
+      <Filter>Precom\GlobalValue</Filter>
+    </ClInclude>
+    <ClInclude Include="MainLoading.h">
+      <Filter>Level\00. MainLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

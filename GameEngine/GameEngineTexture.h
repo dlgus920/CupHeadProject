@@ -9,14 +9,38 @@
 class GameEngineTexture : public GameEngineObjectNameBase
 {
 public:
-	void Create(ID3D11Texture2D* _Texture2D);
-	void Load(const std::string& _Path);
+
+	inline ID3D11DepthStencilView* GetDepthStencilView()
+	{
+		return DepthStencilView_;
+	}
+
+	inline ID3D11RenderTargetView* GetRenderTargetView()
+	{
+		return RenderTargetView_;
+	}
+
+	inline ID3D11ShaderResourceView** GetShaderResourcesView()
+	{
+		return &ShaderResourceView_;
+	}
 
 	ID3D11RenderTargetView* CreateRenderTargetView();
+	ID3D11ShaderResourceView* CreateShaderResourceView();
+	ID3D11DepthStencilView* CreateDepthStencilView();
 
+	void Create(ID3D11Texture2D* _Texture2D);
 
-	ID3D11RenderTargetView* GetRenderTargetView();
-	ID3D11ShaderResourceView** GetShaderResourcesView();
+	void Create(
+		float4 _TextureSize,
+		DXGI_FORMAT _Format,
+		D3D11_USAGE _Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT,
+		unsigned int _BindFlag = D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE
+	);
+
+	void Create(D3D11_TEXTURE2D_DESC _Desc);
+
+	void Load(const std::string& _Path);
 
 	GameEngineTexture(); // default constructer 디폴트 생성자
 	~GameEngineTexture(); // default destructer 디폴트 소멸자
@@ -29,11 +53,11 @@ private:		//delete operator
 	GameEngineTexture& operator=(const GameEngineTexture& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	GameEngineTexture& operator=(const GameEngineTexture&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
-
 	D3D11_TEXTURE2D_DESC TextureDesc_;
 	ID3D11Texture2D* Texture2D_;
 	ID3D11RenderTargetView* RenderTargetView_;
-	ID3D11ShaderResourceView* ShaderResourceViewPtr_;
+	ID3D11ShaderResourceView* ShaderResourceView_;
+	ID3D11DepthStencilView* DepthStencilView_;
 	DirectX::ScratchImage Image_;
 
 	float4 TextureScale_;
@@ -53,6 +77,8 @@ public:
 	{
 		return TextureScale_;
 	}
+
+	float4 GetPixel(int _X, int _y);
 
 private:
 	std::vector<float4> CutList_;

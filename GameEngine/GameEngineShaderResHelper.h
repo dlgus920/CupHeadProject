@@ -5,15 +5,18 @@
 #include <memory>
 #include "GameEngineRenderingSettingData.h"
 #include "GameEngine/GameEngineShader.h"
+#include "GameEngineRenderingPipeLine.h"
+#include "GameEngineVertexShader.h"
+#include "GameEnginePixelShader.h"
 
-
-
+class GameEngineRenderingPipeLine;
 class GameEngineTexture;
 class GameEngineSampler;
 class GameEngineConstantBuffer;
 // 설명 :
 class GameEngineShaderResHelper
 {
+	friend class CameraComponent;
 	friend class  GameEngineRenderer;
 	/////////////////////////////////// 쉐이더 세팅 데이터들
 
@@ -27,6 +30,8 @@ public:
 	//GameEngineShaderResHelper(GameEngineShaderResHelper&& _Other) noexcept = delete;
 	//GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
 	//GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
+
+	void ShaderResourcesCheck(GameEngineRenderingPipeLine* _Shader);
 
 	void ShaderResourcesCheck(GameEngineShader* _Shader);
 
@@ -90,6 +95,8 @@ public:
 
 	void SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture);
 
+	void Setting();
+	void ReSet();
 protected:
 
 private:
@@ -97,8 +104,7 @@ private:
 	std::map<std::string, GameEngineTextureSetting*> AllTextureData_;
 	std::map<std::string, GameEngineSamplerSetting*> AllSamplerData_;
 
-	void Setting();
-	void ReSet();
+	void Clear();
 
 };
 
