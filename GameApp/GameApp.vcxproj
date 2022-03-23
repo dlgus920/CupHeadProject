@@ -177,6 +177,13 @@
   <ItemGroup>
     <ClCompile Include="Appmain.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Bullet_Defalut.cpp" />
+    <ClCompile Include="Bullet_Guided.cpp" />
+    <ClCompile Include="Bullet_Spread.cpp" />
+    <ClCompile Include="Dice.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EffectBase.cpp">
       <SubType>
       </SubType>
@@ -186,6 +193,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Image.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="King_Dice.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -237,6 +248,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Precompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="StoryScene.cpp">
       <SubType>
       </SubType>
@@ -268,6 +283,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dice.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EffectBase.h">
       <SubType>
       </SubType>
@@ -280,6 +299,10 @@
     </ClInclude>
     <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="Image.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="King_Dice.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -302,6 +325,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="Store.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StoryScene.h">
       <SubType>
       </SubType>

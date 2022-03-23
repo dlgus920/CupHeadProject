@@ -1,8 +1,9 @@
 #pragma once
 #include "GameObject.h"
 #include <GameEngine/GameEngineImageRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
+#include <GameEngineBase/GameEngineFSM.h>
 
-// Ό³Έν :
 class Monster : public GameObject
 {
 public:
@@ -15,6 +16,28 @@ public:
 	Monster(Monster&& _Other) noexcept = delete;
 	Monster& operator=(const Monster& _Other) = delete;
 	Monster& operator=(Monster&& _Other) noexcept = delete;
+
+protected:
+	GameEngineCollision* MonsterHitBox;
+	GameEngineCollision* MonsterGroundCollision;
+
+	GameEngineImageRenderer* MonsterImageRenderer;
+
+	GameEngineFSM<Monster> State_;
+
+	std::string CurState_;
+
+protected:
+	void ChangeAnimation(std::string _animation);
+
+
+protected:
+	const std::string GetCurState()
+	{
+		return State_.GetName();
+	}
+
+
 
 //protected:
 //	GameEngineImageRenderer* ImageRenderer;

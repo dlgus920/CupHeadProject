@@ -126,7 +126,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 
 StateInfo Player::Duck_Start(StateInfo _state)
 {
-	ChangeAnimation("Duck-Idle");
+	ChangeAnimation("Cup-Duck-Idle");
 
 	return StateInfo();
 }

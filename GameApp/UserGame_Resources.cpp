@@ -53,6 +53,27 @@ void UserGame::ResourcesLoad()
 		Texture->Cut(20, 20);
 	}
 
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Bullet");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
+		Texture->Cut(1,8);
+		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
+		Texture->Cut(1, 4);
+		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
+		Texture->Cut(1, 6);
+	}
+
 	{	
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent(GV_GAMEFILENAME);

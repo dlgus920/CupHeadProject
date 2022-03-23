@@ -23,6 +23,8 @@ Player::Player() :
 	KeyState_Dash_(false),
 	ColState_Ground(false),
 	ColState_Hit_(false),
+	HitInvince_(false),
+	HitInvinceTime_(0.f),
 	Camera_(nullptr),
 	BulletPoint_(nullptr),
 	PlayerHitBox(nullptr),
@@ -31,7 +33,12 @@ Player::Player() :
 	PlayerImageRenderer(nullptr),
 	BulletType_(BulletType::Default),
 	KeyDir_(KeyDir::None),
-	Dir_(AnimationDirection::Right)
+	Dir_(AnimationDirection::Right),
+	TimeCheck_(0.f),
+	DistTimeCheck_(0.f),
+	GravitySpeed_(0.f),
+	GravityAcc_(0.f)
+
 {
 }
 
@@ -57,7 +64,6 @@ void Player::Start()
 	//	PlayerImageRenderer->SetImage("Char.png");
 	//	PlayerImageRenderer->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
 	//}
-
 	ComponentSetting();
 	AnimationSetting();
 	KeySetting();
@@ -65,49 +71,8 @@ void Player::Start()
 
 	//SetScale(x *= -1, y, z); 가로 뒤집기
 	Dir_ = AnimationDirection::Right;
-	PlayerImageRenderer->SetChangeAnimation("Cup-Hit-Air");
+	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
 	State_.ChangeState("Idle");
-}
-
-void Player::Update(float _DeltaTime)
-{
-	//float4 Color = Map::GetColor(GetTransform());
-
-	//if (Color != float4::BLACK)
-	//{
-	//	GetTransform()->SetLocalDeltaTimeMove(float4::DOWN * 100.0f);
-	//}
-
-	GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);
-
-	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-
-	if (true == KeyState_Update_)
-	{
-		KeyUpdate(_DeltaTime);
-	}
-
-	if (true == ColState_Update_)
-	{
-		CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
-	}
-
-	if (true == State_Update_)
-	{
-		State_.Update(_DeltaTime);
-	}
-
-	//StateUpdate(_DeltaTime);
-	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
-
-	//State_Update_는 State_.Update중에 설정함
-
-
-
-	if (false == ColState_Ground)
-	{
-		GravityUpdate(_DeltaTime);
-	}
 }
 
 void Player::ChangeAnimation(std::string _animation)
@@ -187,8 +152,10 @@ const std::string Player::CheckState()
 	{
 		CurState_ = "Walk";
 	}
-
-	CurState_ = "Idle";
+	else
+	{
+		CurState_ = "Idle";
+	}
 
 	return CurState_;
 }
@@ -219,47 +186,99 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
 
+bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
+{
+	Move(_MoveDist, _DeltaTime);
+	
+	float4 Color = Map::GetColor(GetTransform());
+
+	if (Color == float4::BLACK)
+	{
+		Move(0.f,10.f,1.f);
+		Color = Map::GetColor(GetTransform());
+
+		if (Color == float4::BLACK)
+		{
+			Move(0.f, -10.f, 1.f);
+			Move(-_MoveDist, _DeltaTime);
+
+			return false;
+		}
+
+		else
+		{
+			return true;
+		}
+	}
+
+	return true;
+}
+
+bool Player::MapCollisionMove(float DirX, float DirY, float _DeltaTime)
+{
+	Move(DirX, DirY,_DeltaTime);
+
+	float4 Color = Map::GetColor(GetTransform());
+
+	if (Color == float4::BLACK)
+	{
+		Move(0.f, 10.f, 1.f);
+		Color = Map::GetColor(GetTransform());
+
+		if (Color == float4::BLACK)
+		{
+			Move(0.f, -10.f, 1.f);
+			Move(-DirX, -DirY, _DeltaTime);
+
+			return false;
+		}
+
+		else
+		{
+			return true;
+		}
+	}
+
+	return true;
+}
+
 void Player::SpawnBullet(BulletType _Type, float4 _Dir)
 {
 	// 발사되는 방향에 맞게 로테이트 작업 해줘야함
 	// 발사 오른쪽 왼쪽 잡아서 수평 회전시키기
 
-	if (_Type == BulletType::Spread)
-	{
-		Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
-		GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-		_Bullet->SetType(_Type);
-		_Bullet->SetMoveDir(_Dir);
+	//if (_Type == BulletType::Spread)
+	//{
+	//	Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
+	//	GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+	//	_Bullet->SetMoveDir(_Dir);
 
-		_Bullet = GetLevel()->CreateActor<Bullet>();
-		compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-		_Bullet->SetType(_Type);
-		_Bullet->SetMoveDir(_Dir);
-		compo->GetTransform()->SetLocalRotation(45.f, 0.f);
+	//	_Bullet = GetLevel()->CreateActor<Bullet>();
+	//	compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+	//	_Bullet->SetMoveDir(_Dir);
+	//	compo->GetTransform()->SetLocalRotation(45.f, 0.f);
 
-		_Bullet = GetLevel()->CreateActor<Bullet>();
-		compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-		_Bullet->SetType(_Type);
-		_Bullet->SetMoveDir(_Dir);
-		compo->GetTransform()->SetLocalRotation(-45.f, 0.f);
+	//	_Bullet = GetLevel()->CreateActor<Bullet>();
+	//	compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+	//	_Bullet->SetMoveDir(_Dir);
+	//	compo->GetTransform()->SetLocalRotation(-45.f, 0.f);
 
-	}
-	else
-	{
-		Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
-		GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-		compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-		_Bullet->SetType(_Type);
-		_Bullet->SetMoveDir(_Dir);
-	}
+	//}
+	//else
+	//{
+	//	Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
+	//	GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
+	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
+	//	_Bullet->SetMoveDir(_Dir);
+	//}
 }
 
 float4 Player::GetBulletPoint()
 {
-	return BulletPoint_->GetTransform()->GetLocalPosition();
+	return BulletPoint_->GetLocalPosition();
 }
 
 

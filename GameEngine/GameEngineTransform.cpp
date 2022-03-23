@@ -125,8 +125,8 @@ void GameEngineTransform::SetHorizenInvertTransform()
 {
 	if (nullptr == Parent_)
 	{
-		TransformData_.vLocalScaling_.x * -1;
-		TransformData_.vWorldScaling_.x * -1;
+		TransformData_.vLocalScaling_.x *= -1;
+		//TransformData_.vWorldScaling_.x * -1;
 		AllChildCalculationScaling();
 		TransformUpdate();
 		return;

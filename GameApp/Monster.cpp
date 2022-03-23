@@ -2,9 +2,14 @@
 #include "GameEngine/GameEngineRenderer.h"
 #include "GameEngine/GameEngineImageRenderer.h"
 #include "Monster.h"
-#include "Bullet.h"
 
-Monster::Monster()
+Monster::Monster() :
+	State_(this),
+	MonsterHitBox(nullptr),
+	MonsterGroundCollision(nullptr),
+	MonsterImageRenderer(nullptr),
+	CurState_()
+
 {
 }
 
@@ -12,7 +17,10 @@ Monster::~Monster()
 {
 }
 
-
+void Monster::ChangeAnimation(std::string _animation)
+{
+	MonsterImageRenderer->SetChangeAnimation(_animation);
+}
 
 void Monster::Start()
 {

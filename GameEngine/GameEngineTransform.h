@@ -186,12 +186,12 @@ public:
 		return TransformData_;
 	}
 
-	void SetLocalScaling( const float _ValueX, const float _ValueY, const float _ValueZ =0);
-	void SetWorldScaling(const float _ValueX, const float _ValueY, const float _ValueZ =0);
-	void SetLocalRotation(const float _ValueX, const float _ValueY, const float _ValueZ =0);
-	void SetWorldRotation(const float _ValueX, const float _ValueY, const float _ValueZ =0);
-	void SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
-	void SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ =0);
+	void SetLocalScaling(const float _ValueX, const float _ValueY, const float _ValueZ = 1.f);
+	void SetWorldScaling(const float _ValueX, const float _ValueY, const float _ValueZ = 1.f);
+	void SetLocalRotation(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
+	void SetWorldRotation(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
+	void SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
+	void SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
 
 	const CollisionData& GetCollisionData()
 	{

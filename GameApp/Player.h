@@ -26,6 +26,13 @@ enum class KeyDir
 	Down_Right,
 };
 
+enum class BulletType
+{
+	Default,
+	Guided,
+	Spread
+};
+
 class Player : public GameEngineActor
 {
 	friend class PlayLevel;
@@ -43,18 +50,21 @@ private:
 private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-	GameEngineTransformComponent* BulletPoint_;
+	GameEngineTransform* BulletPoint_;
 
 	GameEngineFSM<Player> State_;
 	GameEngineFSM<Player> AnimationState_;
 	GameEngineTransform* Camera_;
+
+	GameEngineCollision* PlayerHitBox;
+	GameEngineCollision* PlayerMovingCollision;
+	GameEngineCollision* PlayerCollision;
 
 	float TimeCheck_;
 	float DistTimeCheck_;
 
 	float GravitySpeed_;
 	float GravityAcc_;
-
 
 		// state
 	bool KeyState_Update_;
@@ -78,7 +88,9 @@ private: //Member
 	bool ColState_Ground;
 	bool ColState_Hit_;
 	
-	bool StateHitInvince_;
+	//무적시간 판별 여부
+	bool  HitInvince_;
+	float HitInvinceTime_;
 
 	// 현재 보고 있는 방향
 	BulletType BulletType_;
@@ -86,10 +98,6 @@ private: //Member
 	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	//float4 MoveDir_;
-
-	GameEngineCollision* PlayerHitBox;
-	GameEngineCollision* PlayerMovingCollision;
-	GameEngineCollision* PlayerCollision;
 
 	std::string CurState_;
 
@@ -102,10 +110,12 @@ private://Func
 	StateInfo ChangeState();
 	const std::string CheckState();
 
-	void Shoot(float4 ShootDir);
-	void Shoot(float ShootDirX, float ShootDirY);
-	void Move(float4 MoveDir, float _DeltaTime);
+	void Move(float4 MoveDir, float _DeltaTime); // Cold 하게 무브만 함
 	void Move(float DirX, float DirY, float _DeltaTime);
+	
+	bool MapCollisionMove(float4 _MoveDist, float _DeltaTime); 
+	// 10픽셀 차이로 맵의 곡선을 넘을 수 있나 체크하고 이동함(못하면 안함), 근데 이거 필요한가? 컵헤드 곡선맵 있나?, 월드맵에서?
+	bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
 
 	void SpawnBullet(BulletType _Type, float4 _Dir);
 
@@ -138,7 +148,6 @@ private:
 	StateInfo Jump_Start(StateInfo _state);
 	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
 
-
 	StateInfo Idle_Start(StateInfo _state);
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 
@@ -147,8 +156,6 @@ private:
 
 	StateInfo Duck_Start(StateInfo _state);
 	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
-	//StateInfo Shoot_Start(StateInfo _state);
-	//StateInfo Shoot_Update(StateInfo _state, float _DeltaTime);
 
 	StateInfo RockOn_Start(StateInfo _state);
 	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
@@ -156,30 +163,6 @@ private:
 	StateInfo Hit_Start(StateInfo _state);
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
 #pragma endregion
-
-#pragma region AnimationState
-
-	StateInfo AnimationReady_Start(StateInfo _state); // 현재 state에 맞는 키가 눌려있지 않으면 그에 맞게 에니메이션을 바꿈
-	StateInfo AnimationReady_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo Animation_Idle_Start(StateInfo _state);
-	StateInfo Animation_Idle_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo Animation_Walk_Start(StateInfo _state);
-	StateInfo Animation_Walk_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo Animation_Shoot_Start(StateInfo _state);
-	StateInfo Animation_Shoot_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo Animation_Duck_Start(StateInfo _state);
-	StateInfo Animation_Duck_Update(StateInfo _state, float _DeltaTime);
-
-	StateInfo _Start(StateInfo _state);
-	StateInfo _Update(StateInfo _state, float _DeltaTime);
-#pragma endregion
-	//필요할때 딱 한번만 실행됨
-	//에니메이션 별로 state를 만들까 계획중
-
 
 
 public: //Inline
@@ -192,7 +175,7 @@ public: //Inline
 		State_Update_ = false;
 	}
 
-	std::string GetCurState()
+	const std::string GetCurState()
 	{
 		return State_.GetName();
 	}

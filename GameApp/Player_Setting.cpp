@@ -23,6 +23,7 @@ void Player::StateSetting()
 	State_.CreateState("Walk", &Player::Walk_Start, &Player::Walk_Update);
 	State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update);
 	State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update);
+	State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update);
 
 	State_.CreateState("Bomb", &Player::Bomb_Start, &Player::Bomb_Update);
 	State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update);
@@ -34,13 +35,13 @@ void Player::StateSetting()
 void Player::ComponentSetting()
 {
 	{
-		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>(static_cast<int>(RenderOrder::Player));
+		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
 	}
 
 	{
-		BulletPoint_ = CreateComponent<GameEngineTransformComponent>();
-		BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,0.f,1.f });
+		//BulletPoint_ = CreateTransformComponent<GameEngineTransform>();
+		//BulletPoint_->SetLocalPosition(float4{ 50.f,0.f,1.f });
 	}
 
 	{
@@ -63,7 +64,7 @@ void Player::AnimationSetting()
 {
 	// IDLE
 	{		
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Idle", 0, 4, 0.1f);
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Idle", 0, 7, 0.1f);
 	}
 	// JUMP
 	{
@@ -73,11 +74,11 @@ void Player::AnimationSetting()
 	{
 		// HIT_GROUND
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-HitGround", 6, 11, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Hit-Ground", 28, 33, 0.1f);
 		}
 		// HIT_AIR
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-HitAir", 13, 18, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Hit-Air", 34, 39, 0.1f);
 		}
 	}
 
@@ -102,31 +103,31 @@ void Player::AnimationSetting()
 	{
 		//ROCK-ON
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up-Str", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Str", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down-Str", 20, 27, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up", 206, 210, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up-Str", 186, 190, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Str", 200, 204, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down", 192, 196, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down-Str", 180, 184, 0.1f);
 		}
 		//DUCK
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Start", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Idle", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 20, 27, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Start", 160, 166, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Idle", 168, 172, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 174, 179, 0.1f);
 
 		}
 
 		//
 		//SHOOT
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up-Str", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Str", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down", 20, 27, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down-Str", 20, 27, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up", 116, 118, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up-Str", 108, 110, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Str", 100, 102, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down", 112, 114, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down-Str", 104, 106, 0.1f);
 		}
 	}
 
 	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Dash", 20, 27, 0.1f);
-	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Death", 20, 27, 0.1f);
+	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Death", 140, 154, 0.1f);
 }

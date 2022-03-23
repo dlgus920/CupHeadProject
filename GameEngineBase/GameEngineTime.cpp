@@ -17,7 +17,9 @@ GameEngineTime::~GameEngineTime()
 GameEngineTime::GameEngineTime(const GameEngineTime&& _Other)
 	: timeCount_(_Other.timeCount_),
 	startCheck_(_Other.startCheck_),
-	endCheck_(_Other.endCheck_)
+	endCheck_(_Other.endCheck_),
+	Frame_(0),
+	FPS_(0)
 {
 }
 
@@ -42,4 +44,15 @@ void GameEngineTime::TimeCheck()
 		std::string Text = std::to_string(deltaTime_) + "\n";
 		OutputDebugStringA(Text.c_str());
 	}
+
+#ifdef _DEBUG
+	++Frame_;
+
+	if (deltaTime_ >= 1.f)
+	{
+		FPS_ = Frame_;
+		Frame_ = 0;
+	}
+#endif // _DEBUG
+
 }

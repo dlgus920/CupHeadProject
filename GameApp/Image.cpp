@@ -26,15 +26,7 @@ void Image::Start()
 	//PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
 }
 
-void Image::TransformUpdate()
-{
-}
-
 void Image::Update(float _DeltaTime)
-{
-}
-
-void Image::ReleaseEvent()
 {
 }
 
@@ -54,4 +46,10 @@ void Image::SetImageLocalScaling(const float4& _Value)
 
 void Image::SetImageWorldPosition(const float4& _Value)
 {
+	ImageRenderer_->GetTransform()->SetLocalPosition(_Value);
+}
+
+void Image::SetAnimationReserveDeath(std::string _Name)
+{
+	SetImageAnimationEndFunc(_Name, &Image::Death);
 }

@@ -45,10 +45,7 @@
       <Filter>Actor\UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="EffectBase.cpp">
-      <Filter>Actor\Effect\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Actor\Bullet\Base</Filter>
+      <Filter>Actor\Image\Effect\Base</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Actor\MOB\Base</Filter>
@@ -67,6 +64,27 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Defalut.cpp">
+      <Filter>Actor\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Spread.cpp">
+      <Filter>Actor\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Actor\Bullet\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Guided.cpp">
+      <Filter>Actor\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="King_Dice.cpp">
+      <Filter>Actor\MOB</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice.cpp">
+      <Filter>Level\04. PlayLevel\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>Level\02. WolrdMap\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +108,6 @@
     </Filter>
     <Filter Include="Actor\Player">
       <UniqueIdentifier>{9be1d242-92bc-4502-851d-9beafd04356a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\Effect">
-      <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\UI">
       <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
@@ -130,9 +145,6 @@
     <Filter Include="Actor\UI\Base">
       <UniqueIdentifier>{2edcbc75-7d06-4c55-ba88-65c65d0f4b9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Effect\Base">
-      <UniqueIdentifier>{03b4a099-1381-435b-ac41-3b5b828b6038}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Bullet\Base">
       <UniqueIdentifier>{a6644d60-0ac6-416f-8883-75e107677fd9}</UniqueIdentifier>
     </Filter>
@@ -141,6 +153,21 @@
     </Filter>
     <Filter Include="Precom\GlobalValue">
       <UniqueIdentifier>{3647aba2-8302-43ee-9f2d-d9ec195737b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Image\Effect">
+      <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Image\Effect\Base">
+      <UniqueIdentifier>{03b4a099-1381-435b-ac41-3b5b828b6038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\04. PlayLevel\Stage">
+      <UniqueIdentifier>{8044c92d-1e39-4d66-af65-ef813ee737a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\02. WolrdMap\Stage">
+      <UniqueIdentifier>{f7c0f664-23f9-49ee-ab5f-7a6a8c233519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\04. PlayLevel\MIniStage">
+      <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +208,7 @@
       <Filter>Actor\UI\Base</Filter>
     </ClInclude>
     <ClInclude Include="EffectBase.h">
-      <Filter>Actor\Effect\Base</Filter>
+      <Filter>Actor\Image\Effect\Base</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Actor\Bullet\Base</Filter>
@@ -203,6 +230,15 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="King_Dice.h">
+      <Filter>Actor\MOB</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice.h">
+      <Filter>Level\04. PlayLevel\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>Level\02. WolrdMap\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

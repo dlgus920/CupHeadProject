@@ -60,14 +60,10 @@ public:
 	bool Collision(int _OtherGroup);
 	GameEngineCollision* CollisionPtr(int _OtherGroup);
 
+	//custom
 	template<typename UserType>
 	void CreateCollision(CollisionType _CollisionType, UserType _Type, float4 _Scale)
 	{
-		if (nullptr == CollisionType_)
-		{
-			GameEngineDebug::MsgBoxError("컬리전 컴포넌트 안만듦");
-		}
-
 		SetCollisionType(_CollisionType);
 		SetCollisionGroup(static_cast<int>(_Type));
 		GetTransform()->SetLocalScaling(_Scale);
