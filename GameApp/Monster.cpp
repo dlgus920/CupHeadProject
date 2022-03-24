@@ -24,21 +24,19 @@ void Monster::ChangeAnimation(std::string _animation)
 
 void Monster::Start()
 {
-	// 정말 세팅해줘야할게 많은 녀석입니다.
-	// 랜더러로서 뭐든지 다 그릴수있는 가능성을 가지고 있는 녀석.
+	{
+		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle", "KDIce-idle", 0.05);
+		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 935.f, 439.0f, 1.0f });
+		//MonsterImageRenderer->GetTransform()->SetLocalPosition();
+	}
+
 	//{
-	//	GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
-	//	Renderer->SetRenderingPipeLine("Color");
-	//	Renderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
-	//	Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(0.0f, 0.0f, 0.0f));
+	//	MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
+	//	MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
 	//}
 
-	{
-		ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
-		ImageRenderer->CreateAnimation("Animation.png","Test", 5, 20, 0.5f);
-		ImageRenderer->SetChangeAnimation("Test"); 
-		ImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
-	}
+	MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 
 }
 

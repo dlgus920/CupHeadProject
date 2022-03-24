@@ -35,13 +35,6 @@ void Player::Update(float _DeltaTime)
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
 	//State_Update_는 State_.Update중에 설정함
-
-
-
-	if (false == ColState_Ground)
-	{
-		GravityUpdate(_DeltaTime);
-	}
 }
 
 void Player::StateUpdate(float _DeltaTime)
@@ -86,21 +79,16 @@ void Player::CollisonUpdate()
 		ColState_Hit_ = true;
 	}
 
-	/*float4 Color = Map::GetColor(GetTransform());
+	float4 Color = Map::GetColor(GetTransform());
 
-	if (Color != float4::BLACK)
+	if (Color == float4::BLACK)
 	{
 		ColState_Ground = true;
-	}*/
-
+	}
+	
 	else
 	{
 		ColState_Ground = false;
 	}
-}
-
-void Player::GravityUpdate(float _DeltaTime)
-{
-	GetTransform()->SetLocalMove(float4::DOWN * _DeltaTime);
 }
 

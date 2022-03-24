@@ -13,15 +13,17 @@ void King_Dice::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		//MonsterImageRenderer->CreateAnimation();
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle","KDIce-idle",0.1);
 	}
 
 	float4 MonsterSize; //temp
 
-	{
-		MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
-		MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
-	}
+	//{
+	//	MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
+	//	MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
+	//}
+
+	MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 }
 
 void King_Dice::Update(float _DeltaTime)

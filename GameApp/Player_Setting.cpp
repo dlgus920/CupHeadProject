@@ -12,7 +12,7 @@ void Player::KeySetting()
 	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
 	GameEngineInput::GetInst().CreateKey("Jump", 'Z');
 	GameEngineInput::GetInst().CreateKey("Fire", 'X');
-	GameEngineInput::GetInst().CreateKey("Dash", 'C');
+	//GameEngineInput::GetInst().CreateKey("Dash", 'C');
 	GameEngineInput::GetInst().CreateKey("Bomb", 'V');
 	//GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
 }
@@ -92,7 +92,7 @@ void Player::AnimationSetting()
 			}
 			//STRAIGHT
 			{
-				PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Shoot-Straight", 60, 75, 0.1f);
+				PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Shoot-Str", 60, 75, 0.1f);
 			}
 		}
 		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk", 40, 55, 0.1f);

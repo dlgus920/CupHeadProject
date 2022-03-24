@@ -37,6 +37,19 @@ void UserGame::ResourcesLoad()
 	}
 
 	{
+		//Folder Load
+
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Monster");
+		TextureDir.MoveChild("KingDice(Boss)");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-idle"));
+	}
+
+	{
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent(GV_GAMEFILENAME);
 		TextureDir.MoveChild("Resources");

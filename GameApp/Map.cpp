@@ -18,8 +18,9 @@ void Map::Start()
 {
 	{
 		ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		ImageRenderer->GetTransform()->SetLocalPosition(float4{ 1000.0f, -1000.0f, 100.0f });
-		ImageRenderer->GetTransform()->SetLocalScaling(float4{ 2000.0f, 2000.0f, 1.0f });
+		//ImageRenderer->GetTransform()->SetLocalPosition(float4{ 1200 * 0.5f, -720.0f * 0.5f, 100.0f });
+		//ImageRenderer->GetTransform()->SetLocalPosition(float4{ 1200.f, 1000.f, 100.0f });
+		//ImageRenderer->GetTransform()->SetWorldScaling(float4{ 2400, 2000.0f, 1.0f });
 		ImageRenderer->SetImage("Map.Png");
 	}
 }

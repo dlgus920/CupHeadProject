@@ -29,21 +29,23 @@ void PlayLevel::LevelStart()
 	}
 
 	{
-	//	Map* Player = CreateActor<Map>();
+		Map* Player = CreateActor<Map>();
+		Player ->GetTransform()->SetWorldPosition(float4{ 1200.f, -1000.f, 100.0f });
+		Player ->GetTransform()->SetWorldScaling(float4{ 2400, 2000.0f, 1.0f });
 	}
 
 	{
 		Player* Actor = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Actor->GetTransform()->GetLocalPosition());
-		Actor->GetTransform()->SetLocalPosition(float4(0.f, 0.0f, 1.0f));
+		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, 1.0f));
 	}
 
 	{
 		Monster* Actor = CreateActor<Monster>();
-		Actor->GetTransform()->SetWorldPosition(float4(200.0f, 0.0f                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    , 0.0f));
-		float4 texsize = Actor->GetTextureSize();
-		float4 cutsize = Actor->GetCutSize();
-		float4 TextureScale = Actor->GetTextureScale();
+		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, 2.0f));
+		//float4 texsize = Actor->GetTextureSize();
+		//float4 cutsize = Actor->GetCutSize();
+		//float4 TextureScale = Actor->GetTextureScale();
 	}
 
 	//{

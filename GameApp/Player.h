@@ -54,6 +54,7 @@ private: //Member
 
 	GameEngineFSM<Player> State_;
 	GameEngineFSM<Player> AnimationState_;
+
 	GameEngineTransform* Camera_;
 
 	GameEngineCollision* PlayerHitBox;
@@ -113,15 +114,17 @@ private://Func
 	void Move(float4 MoveDir, float _DeltaTime); // Cold 하게 무브만 함
 	void Move(float DirX, float DirY, float _DeltaTime);
 	
-	bool MapCollisionMove(float4 _MoveDist, float _DeltaTime); 
+	//const bool MapCollisionMove(float4 _MoveDist, float _DeltaTime);
+	//const bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
 	// 10픽셀 차이로 맵의 곡선을 넘을 수 있나 체크하고 이동함(못하면 안함), 근데 이거 필요한가? 컵헤드 곡선맵 있나?, 월드맵에서?
-	bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
 
 	void SpawnBullet(BulletType _Type, float4 _Dir);
 
 
 	float4 GetBulletPoint();
 
+	void GravityUpdate(float _DeltaTime);
+	void GravityClear();
 private: //Setting
 	void KeySetting();
 	void StateSetting();
@@ -132,7 +135,6 @@ private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate(float _DeltaTime);
 	void CollisonUpdate();
-	void GravityUpdate(float _DeltaTime);
 		
 private: 
 #pragma region State_

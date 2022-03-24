@@ -37,7 +37,7 @@ Player::Player() :
 	TimeCheck_(0.f),
 	DistTimeCheck_(0.f),
 	GravitySpeed_(0.f),
-	GravityAcc_(0.f)
+	GravityAcc_(1.f)
 
 {
 }
@@ -185,62 +185,62 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
-
-bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
-{
-	Move(_MoveDist, _DeltaTime);
-	
-	float4 Color = Map::GetColor(GetTransform());
-
-	if (Color == float4::BLACK)
-	{
-		Move(0.f,10.f,1.f);
-		Color = Map::GetColor(GetTransform());
-
-		if (Color == float4::BLACK)
-		{
-			Move(0.f, -10.f, 1.f);
-			Move(-_MoveDist, _DeltaTime);
-
-			return false;
-		}
-
-		else
-		{
-			return true;
-		}
-	}
-
-	return true;
-}
-
-bool Player::MapCollisionMove(float DirX, float DirY, float _DeltaTime)
-{
-	Move(DirX, DirY,_DeltaTime);
-
-	float4 Color = Map::GetColor(GetTransform());
-
-	if (Color == float4::BLACK)
-	{
-		Move(0.f, 10.f, 1.f);
-		Color = Map::GetColor(GetTransform());
-
-		if (Color == float4::BLACK)
-		{
-			Move(0.f, -10.f, 1.f);
-			Move(-DirX, -DirY, _DeltaTime);
-
-			return false;
-		}
-
-		else
-		{
-			return true;
-		}
-	}
-
-	return true;
-}
+//
+//const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
+//{
+//	Move(_MoveDist, _DeltaTime);
+//	
+//	float4 Color = Map::GetColor(GetTransform());
+//
+//	if (Color == float4::BLACK)
+//	{
+//		Move(0.f,10.f,1.f);
+//		Color = Map::GetColor(GetTransform());
+//
+//		if (Color == float4::BLACK)
+//		{
+//			Move(0.f, -10.f, 1.f);
+//			Move(-_MoveDist, _DeltaTime);
+//
+//			return false;
+//		}
+//
+//		else
+//		{
+//			return true;
+//		}
+//	}
+//
+//	return true;
+//}
+//
+//const bool Player::MapCollisionMove(float DirX, float DirY, float _DeltaTime)
+//{
+//	Move(DirX, DirY,_DeltaTime);
+//
+//	float4 Color = Map::GetColor(GetTransform());
+//
+//	if (Color == float4::BLACK)
+//	{
+//		Move(0.f, 10.f, 1.f);
+//		Color = Map::GetColor(GetTransform());
+//
+//		if (Color == float4::BLACK)
+//		{
+//			Move(0.f, -10.f, 1.f);
+//			Move(-DirX, -DirY, _DeltaTime);
+//
+//			return false;
+//		}
+//
+//		else
+//		{
+//			return true;
+//		}
+//	}
+//
+//	return true;
+//}
 
 void Player::SpawnBullet(BulletType _Type, float4 _Dir)
 {
@@ -279,6 +279,18 @@ void Player::SpawnBullet(BulletType _Type, float4 _Dir)
 float4 Player::GetBulletPoint()
 {
 	return BulletPoint_->GetLocalPosition();
+}
+
+void Player::GravityUpdate(float _DeltaTime)
+{
+	GravitySpeed_ -= GravityAcc_;
+
+	Move(float4(0.f, 200.f + GravitySpeed_, 0.f), _DeltaTime);
+}
+
+void Player::GravityClear()
+{
+	GravitySpeed_ = 0.f;
 }
 
 

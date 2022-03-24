@@ -122,8 +122,8 @@ std::vector<GameEngineFile> GameEngineDirectory::GetAllFile(const std::string& _
 		}
 
 		Return.push_back(GameEngineFile(File.path()));
-
 	}
+
 
 	
 	return Return;
