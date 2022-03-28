@@ -42,12 +42,14 @@ void WorldMapPlayer::AnimationSetting()
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Walk-Right",64 ,80 , 0.1f);
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Walk-Down", 112, 128, 0.1f);
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Walk-Down-Right", 0, 7, 0.1f);
+
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Up", 0, 15, 0.1f);
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Up-Right", 16, 30, 0.1f);
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Right", 64, 80, 0.1f);
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down", 0, 7, 0.1f);
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-", 0, 7, 0.1f);
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle", 0, 7, 0.1f);
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle", 0, 7, 0.1f);
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle", 0, 7, 0.1f);
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down", 112, 128, 0.1f);
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down-Right", 0, 7, 0.1f);
+
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Chose", 0, 7, 0.1f);
 
 
 
