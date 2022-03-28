@@ -5,6 +5,8 @@
 #include <GameEngineBase/GameEngineSound.h>
 #include <iostream>
 
+
+std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)> GameEngineWindow::MessageCallBack_ = nullptr;
 // Æ÷ÀÎÅÍÇü ½Ì±ÛÅæ
 GameEngineWindow* GameEngineWindow::Inst = new GameEngineWindow();
 
@@ -12,6 +14,17 @@ bool WindowOn = true;
 
 LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lParam)
 {
+    if (nullptr != GameEngineWindow::MessageCallBack_)
+    {
+        if (0 != GameEngineWindow::MessageCallBack_(_hWnd, _message, _wParam, _lParam))
+        {
+            return true;
+        }
+    }
+
+    //if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+    //    return true;
+
     switch (_message)
     {
     case WM_PAINT:
@@ -41,7 +54,7 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
     return 0;
 }
 
-GameEngineWindow::GameEngineWindow() 
+GameEngineWindow::GameEngineWindow()
     : className_("")
     , windowTitle_("")
     , windowhandle_(nullptr)
@@ -50,7 +63,7 @@ GameEngineWindow::GameEngineWindow()
 {
 }
 
-GameEngineWindow::~GameEngineWindow() 
+GameEngineWindow::~GameEngineWindow()
 {
     if (nullptr != windowhandle_)
     {
@@ -149,7 +162,7 @@ void GameEngineWindow::SetSizeAndPos(const float4& _size, const float4& _pos)
     SetWindowPos(windowhandle_, nullptr, _pos.ix(), _pos.iy(), Rc.right - Rc.left, Rc.bottom - Rc.top, 0);
 }
 
-void GameEngineWindow::Loop(void(*_loopFunc)()) 
+void GameEngineWindow::Loop(void(*_loopFunc)())
 {
     MSG msg;
     while (WindowOn)
@@ -174,7 +187,7 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
 
 
         }
-        else 
+        else
         {
 
             if (nullptr == _loopFunc)

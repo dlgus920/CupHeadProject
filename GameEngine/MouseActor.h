@@ -24,6 +24,9 @@ public:
 		return UIRenderer;
 	}
 
+	void WindowCursorOn();
+	void WindowCursorOff();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

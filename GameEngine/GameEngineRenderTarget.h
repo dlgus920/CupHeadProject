@@ -6,12 +6,16 @@ class GameEngineTexture;
 class GameEngineRenderTarget : public GameEngineObjectNameBase
 {
 private:	// member Var
+	static GameEngineRenderTarget* LastRenderTarget;
+	static GameEngineDepthBuffer* LastDepthBuffer;
+
 	std::vector<GameEngineTexture*> ReleaseTextures_;
 
 	// 텍스처에게서 빌려오는 겁니다.
 	std::vector<GameEngineTexture*> Textures_;
 	// std::vector<D3D11_VIEWPORT> ViewPort_;
 	std::vector<ID3D11RenderTargetView*> RenderTargetViews_;
+	std::vector<ID3D11ShaderResourceView*> ShaderResourcesViews_;
 
 	std::vector<float4> ClearColor_;
 
@@ -21,6 +25,21 @@ private:	// member Var
 	GameEngineShaderResHelper Res_;
 
 public:
+	static GameEngineRenderTarget* GetLastRenderTarget()
+	{
+		return LastRenderTarget;
+	}
+
+	static GameEngineDepthBuffer* GetLastDepthBuffer()
+	{
+		return LastDepthBuffer;
+	}
+
+	inline ID3D11ShaderResourceView* GetShaderResourcesView(size_t _Index)
+	{
+		return ShaderResourcesViews_[_Index];
+	}
+
 	void Clear();
 
 	// -1이면 전부다 세팅하라는 의미가 됩니다.

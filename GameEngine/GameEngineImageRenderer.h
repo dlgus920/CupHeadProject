@@ -30,11 +30,20 @@ private:
 		std::vector<std::function<void()>> StartCallBack_;
 
 	public:
+
+		void SetCurrentIndex(int _Index)
+		{
+			CurFrame_ = _Index;
+		}
+
 		void Reset();
 		void CallStart();
 		void CallEnd();
 		void CallFrame();
 		void Update(float _DeltaTime);
+
+		void FrameUpdate();
+		void ReverseFrameUpdate();
 
 	public:
 		GameEngineTexture* GetCurAnimation(int index = 0)
@@ -48,6 +57,40 @@ private:
 			GameEngineDebug::MsgBoxError("존재하지 않는 텍스처");
 		}
 	};
+
+public:
+	//custom
+	void SetAdjustImzgeSize()
+	{
+		if (nullptr != CurTexture)
+		{
+			GetTransform()->SetWorldScaling(CurTexture->GetMetaDataImageSize());
+			return;
+		}
+		if (nullptr != CurAnimation_)
+		{
+			//GetTransform()->SetWorldScaling(CurAnimation_->GetCurAnimation()->GetMetaDataImageSize());
+
+			if (nullptr !=  CurAnimation_->AnimationTexture_)
+			{
+				float4 Size = CurAnimation_->GetCurAnimation()->GetCutData(0);
+				float4 MetaSize = CurAnimation_->GetCurAnimation()->GetMetaDataImageSize();
+
+				MetaSize.x *= Size.z;
+				MetaSize.y *= Size.w;
+
+				GetTransform()->SetWorldScaling(MetaSize);
+				return;
+			}
+
+			if (nullptr !=  CurAnimation_->FolderTextures_)
+			{
+				GetTransform()->SetWorldScaling(CurAnimation_->GetCurAnimation()->GetMetaDataImageSize());
+				return;
+			}
+		}
+	}
+
 
 public:
 	// constrcuter destructer
@@ -66,7 +109,7 @@ public:
 
 	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
 
-	void CreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop = true);
+	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
 
 	// _IsForce 같은 애니메이션 인데도 바꿀거냐? true 바꾼다.
 	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);
@@ -91,6 +134,11 @@ public:
 		return CurAnimation_->GetName();
 	}
 
+	inline void IsCurrentAnimationIndex(const int _Index)
+	{
+		CurAnimation_->SetCurrentIndex(_Index);
+	}
+
 	inline bool IsCurrentAnimationString(const std::string& _Name)
 	{
 		return CurAnimation_->GetName() == _Name;
@@ -101,6 +149,11 @@ public:
 		return CurAnimation_->GetName() == _Name;
 	}
 
+	inline void SetAlpha(float _Value)
+	{
+		ResultColor.a = _Value;
+	}
+
 protected:
 	void ImageRendererStart();
 	void Update(float _DeltaTime) override;
@@ -109,6 +162,7 @@ private:
 	std::map<std::string, Animation2D*> AllAnimations_;
 	Animation2D* CurAnimation_;
 
+	float4 ResultColor; //색상 합성용
 	float4 CutData;
 	GameEngineTexture* CurTexture;
 	void Start() override;

@@ -100,10 +100,13 @@ public:
 			GameEngineDebug::MsgBoxError("같은 이름의 레벨을 2번 만들려고 했습니다");
 			return nullptr;
 		}
+		LevelType* NewLevel = new LevelType();
 
-		AllLevel_.insert(std::make_pair(_Level, new LevelType()));
+		AllLevel_.insert(std::make_pair(_Level, NewLevel));
 		AllLevel_[_Level]->Init();
 		AllLevel_[_Level]->LevelStart();
+
+		return NewLevel;
 	}
 
 	static void LevelChange(const std::string& _Level);

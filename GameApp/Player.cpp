@@ -7,7 +7,7 @@
 
 Player::Player() :
 	State_(this),
-	AnimationState_(this),
+	//AnimationState_(this),
 	KeyState_Update_(true),
 	ColState_Update_(true),
 	State_Update_(true),

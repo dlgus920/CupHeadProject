@@ -31,6 +31,11 @@ public:
 		return { 1280, 720 };
 	}
 
+	void test()
+	{
+
+	}
+
 	void LoadingNextLevel(std::string _NextLevel);
 };
 

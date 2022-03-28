@@ -80,6 +80,9 @@ public:
 
 	float4 GetPixel(int _X, int _y);
 
+	//custom
+	const float4 GetMetaDataImageSize();
+
 private:
 	std::vector<float4> CutList_;
 };

@@ -26,8 +26,9 @@ void Monster::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle", "KDIce-idle", 0.05);
-		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 935.f, 439.0f, 1.0f });
+		MonsterImageRenderer->CreateAnimationFolder("KDIce-idle", "KDIce-idle", 0.04);
+		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 950.f, 480.0f, 1.0f });
+
 		//MonsterImageRenderer->GetTransform()->SetLocalPosition();
 	}
 
@@ -36,7 +37,7 @@ void Monster::Start()
 	//	MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
 	//}
 
-	MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
+	MonsterImageRenderer->SetChangeAnimation("KDIce-idle");
 
 }
 

@@ -171,7 +171,7 @@ void GameEngineTexture::Load(const std::string& _Path)
 	// PNG Ç³È­¼³
 
 	std::wstring wPath;
-	GameEngineString::StringToWString(_Path, wPath);
+	GameEngineString::AnsiToUnicode(_Path, wPath);
 
 	// PNG
 	if (Extension == "TGA")
@@ -288,7 +288,7 @@ float4 GameEngineTexture::GetPixel(int _x, int _y)
 		return float4::ZERO;
 	}
 
-	if (Image_.GetMetadata().height <= _x)
+	if (Image_.GetMetadata().height <= _y)
 	{
 		return float4::ZERO;
 	}
@@ -298,7 +298,7 @@ float4 GameEngineTexture::GetPixel(int _x, int _y)
 	uint8_t* Color = Image_.GetImages()->pixels;
 	// int* ColorPtr = reinterpret_cast<int*>(Color);
 
-	int Index = _y * Image_.GetMetadata().width + _x;
+	int Index = _y * static_cast<int>(Image_.GetMetadata().width) + _x;
 	Color = Color + (Index * 4);
 
 	unsigned char R = Color[0];
@@ -307,4 +307,11 @@ float4 GameEngineTexture::GetPixel(int _x, int _y)
 	unsigned char A = Color[3];
 
 	return float4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+}
+
+const float4 GameEngineTexture::GetMetaDataImageSize()
+{
+	float4 Size = { static_cast<float>(Image_.GetMetadata().width),static_cast<float>(Image_.GetMetadata().height) , 0.f,0.f};
+
+	return Size;
 }

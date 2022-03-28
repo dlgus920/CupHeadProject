@@ -36,6 +36,52 @@ void UserGame::ResourcesLoad()
 		Texture->Cut(8, 8);
 	}
 
+	// World Map
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("World");
+		TextureDir.MoveChild("Background");
+
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+		}
+
+		TextureDir.MoveParent("World");
+		TextureDir.MoveChild("Cuphead");
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("WorldCuphead.png");
+			Texture->Cut(16, 8);
+		}
+
+	}
+
+	{
+		//Folder Load
+		//Title
+
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
+	}
+
 	{
 		//Folder Load
 
@@ -117,7 +163,7 @@ void UserGame::ResourcesLoad()
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
-		Texture->Cut(200.f, 320.f);
+		Texture->Cut(16, 3);
 		
 	}
 

@@ -21,28 +21,30 @@ PlayLevel::~PlayLevel()
 void PlayLevel::LevelStart() 
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
 	{
-		MouseActor* Actor = CreateActor<MouseActor>();
-		Actor->GetUIRenderer()->SetRenderGroup(1000);  
+		//MouseActor* Actor = CreateActor<MouseActor>();
+		//Actor->GetUIRenderer()->SetRenderGroup(1000);  
 	}
 
 	{
-		Map* Player = CreateActor<Map>();
-		Player ->GetTransform()->SetWorldPosition(float4{ 1200.f, -1000.f, 100.0f });
-		Player ->GetTransform()->SetWorldScaling(float4{ 2400, 2000.0f, 1.0f });
+		Map* _Map = CreateActor<Map>();
+		//_Map->SetMapImage("WorldMap_Background.png", "WorldMap_PixelCheckBackground.png", 1212, -939.5);
+		_Map->SetMapImage("Map.png", "Map.png", 1200.f, -1000.f);
+		//_Map->GetTransform()->SetWorldPosition(float4{ 1200.f, -1000.f, static_cast<int>(ZOrder::Z04CollisonMap00) });
+		//_Map->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, 100.0f });
 	}
 
 	{
 		Player* Actor = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Actor->GetTransform()->GetLocalPosition());
-		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, 1.0f));
+		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, static_cast<int>(ZOrder::Z01Actor01)));
 	}
 
 	{
 		Monster* Actor = CreateActor<Monster>();
-		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, 2.0f));
+		Actor->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, static_cast<int>(ZOrder::Z01Actor02)));
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();

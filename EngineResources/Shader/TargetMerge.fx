@@ -11,9 +11,9 @@ struct VertexOut
     float4 Texcoord : TEXTURECOORD;
 };
 
-VertexOut TargetMerge_VS(VertexIn _in)
+VertexOut TargetMerge_VS(VertexIn _in) 
 {
-    VertexOut Out = (VertexOut) 0;
+    VertexOut Out = (VertexOut)0;
 
     Out.Position = _in.Position;
     Out.Texcoord = _in.Texcoord;

@@ -22,6 +22,5 @@ protected:
 	void LevelChangeStartEvent() override;
 
 private:
-	
 };
 

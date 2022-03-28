@@ -33,11 +33,11 @@ protected:
 
 	void Start() override;
 
+	virtual void Render();
 
 private:
 	void Update(float _DeltaTime) override;
 
-	virtual void Render();
 
 };
 

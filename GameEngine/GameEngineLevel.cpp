@@ -9,7 +9,10 @@
 #include "GameEngineCollision.h"
 #include "GameEngineDebugRenderData.h"
 #include "GameEngineRenderTarget.h"
-
+#include "GameEngineFontManager.h"
+#include "GameEngineFont.h"
+#include "GameEngineUIRenderer.h"
+#include "GameEngineGUI.h"
 
 CameraActor* GameEngineLevel::GetMainCameraActor()
 {
@@ -111,14 +114,17 @@ void GameEngineLevel::Render()
 
 	MainCameraActor_->GetCamera()->ClearCameraTarget();
 	UICameraActor_->GetCamera()->ClearCameraTarget();
-	// 월드를 그리는 것이죠
 	MainCameraActor_->GetCamera()->Render();
 	MainCameraActor_->GetCamera()->DebugRender();
-	// ui를 여기에 그리죠?
+
 	UICameraActor_->GetCamera()->Render();
+
 
 	GameEngineDevice::GetBackBufferTarget()->Merge(MainCameraActor_->GetCamera()->GetCameraRenderTarget());
 	GameEngineDevice::GetBackBufferTarget()->Merge(UICameraActor_->GetCamera()->GetCameraRenderTarget());
+
+	GameEngineGUI::GetInst()->GUIRenderStart();
+	GameEngineGUI::GetInst()->GUIRenderEnd();
 
 	// 충돌체 랜더링이 무조건 화면에 뚫고 나와야하는 애들은
 	GameEngineDevice::RenderEnd();

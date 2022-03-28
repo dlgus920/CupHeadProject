@@ -16,7 +16,8 @@ public:
 	Map& operator=(const Map& _Other) = delete;
 	Map& operator=(Map&& _Other) noexcept = delete;
 
-	GameEngineImageRenderer* ImageRenderer;
+	GameEngineImageRenderer* MapImage_;
+	GameEngineImageRenderer* CollisionMap_;
 
 	static float4 GetColor(GameEngineTransform* _Ptr, bool YRevers = true);
 
@@ -27,6 +28,8 @@ protected:
 	void Start() override;
 	void LevelChangeStartEvent() override;
 
+public:
+	void SetMapImage(std::string _MapImage, std::string _CollisionMap, float Pivot_x, float Pivot_y);
 
 
 private:

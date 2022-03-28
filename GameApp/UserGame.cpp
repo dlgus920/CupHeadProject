@@ -29,7 +29,8 @@ UserGame::UserGame(UserGame&& _other) noexcept  // default RValue Copy construct
 void UserGame::Initialize()
 {	
 	// ShowCursor(false)
-	GameEngineInput::GetInst().HideCursor();
+	// 
+	//GameEngineInput::GetInst().HideCursor();
 
 	//TransData.View.ViewToLH( { 0.0f, 0.0f, -10.0f }, {0.0f, 0.0f , 1.0f}, {0.0f, 1.0f , 0.0f});
 
@@ -45,11 +46,10 @@ void UserGame::Initialize()
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
 	LevelCreate<TitleScene>("Title");
-	
 	LevelCreate<PlayLevel>("Play");
 
-	//LevelChange("Title");
-	LevelChange("Play");
+	LevelChange("Title");
+	//LevelChange("Play");
 
 	return;
 }
@@ -66,8 +66,8 @@ void UserGame::LoadingNextLevel(std::string _NextLevel)
 	//reinterpret_cast<LoaddingScene*>(FindLevel)->SetNextLevel(_NextLevel);
 	//LevelChange("Loading");
 
-	LevelCreate<LoaddingScene>("Loading")->SetNextLevel(_NextLevel);
-	LevelChange("Loading");
+	//LevelCreate<LoaddingScene>("Loading")->SetNextLevel(_NextLevel);
+	//LevelChange("Loading");
 }
 
 //TODO: 게임엔진 코어가 레벨로부터 bool값을 검사하며 다음 레벨을 만들어 주길 바람

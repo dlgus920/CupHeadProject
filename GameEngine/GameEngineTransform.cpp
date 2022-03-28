@@ -248,6 +248,42 @@ void GameEngineTransform::SetWorldPosition(const float4& _Value)
 	TransformUpdate();
 }
 
+void GameEngineTransform::SetWorldZPosition(float Zvalue)
+{
+	if (nullptr == Parent_)
+	{
+		TransformData_.vLocalPosition_.z = Zvalue;
+		TransformData_.vWorldPosition_.z = Zvalue;
+		AllChildCalculationPosition();
+		TransformUpdate();
+		return;
+	}
+
+	TransformData_.vWorldPosition_.z = Zvalue;
+	CalculationLocalPosition();
+	AllChildCalculationRotation();
+
+	TransformUpdate();
+}
+
+void GameEngineTransform::SetLocalZPosition(float Zvalue)
+{
+	if (nullptr == Parent_)
+	{
+		TransformData_.vLocalPosition_.z = Zvalue;
+		TransformData_.vWorldPosition_.z = Zvalue;
+		AllChildCalculationPosition();
+		TransformUpdate();
+		return;
+	}
+
+	TransformData_.vLocalPosition_.z = Zvalue;
+	CalculationWorldPosition();
+	AllChildCalculationPosition();
+
+	TransformUpdate();
+}
+
 void GameEngineTransform::DetachChildTransform(GameEngineTransform* _Transform)
 {
 	// 지역변수 할당을 줄이려고

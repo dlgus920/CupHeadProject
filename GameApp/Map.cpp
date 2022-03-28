@@ -16,18 +16,35 @@ Map::~Map()
 
 void Map::Start()
 {
-	{
-		ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		//ImageRenderer->GetTransform()->SetLocalPosition(float4{ 1200 * 0.5f, -720.0f * 0.5f, 100.0f });
-		//ImageRenderer->GetTransform()->SetLocalPosition(float4{ 1200.f, 1000.f, 100.0f });
-		//ImageRenderer->GetTransform()->SetWorldScaling(float4{ 2400, 2000.0f, 1.0f });
-		ImageRenderer->SetImage("Map.Png");
-	}
+
 }
 
 void Map::LevelChangeStartEvent()
 {
 	CurrentMap = this;
+}
+
+void Map::SetMapImage(std::string _MapImage, std::string _CollisionMap, float Pivot_x, float Pivot_y)
+{
+	{
+		MapImage_ = CreateTransformComponent<GameEngineImageRenderer>();
+		MapImage_->SetImage(_MapImage);
+		MapImage_->SetAdjustImzgeSize();
+		//MapImage_->GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z03Map00) });
+		//MapImage_->GetTransform()->SetLocalPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z03Map00) });
+	}
+
+	{
+		CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
+		CollisionMap_->SetImage(_CollisionMap);
+		CollisionMap_->SetAdjustImzgeSize();
+		//CollisionMap_->GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
+		//CollisionMap_->GetTransform()->SetLocalPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
+	}
+	
+		GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
+
+	//GetTransform()->SetWorldPosition(Pivot_x, Pivot_y);
 }
 
 float4 Map::GetColor(GameEngineTransform* _Ptr, bool YRevers /*= true*/)
@@ -44,5 +61,6 @@ float4 Map::GetColor(GameEngineTransform* _Ptr, bool YRevers /*= true*/)
 
 float4 Map::GetColor(float4 _Postion)
 {
-	return CurrentMap->ImageRenderer->GetCurrentTexture()->GetPixel(_Postion.ix(), _Postion.iy());
+	//TODO : ÀÌ»õ³¢°¡ ¾ò¾î¿Ã ÇÈ¼¿ÀÇ ÁÂÇ¥¸¦ ¾îÂ¼±¸ ÀúÂ¼±¸
+	return CurrentMap->CollisionMap_->GetCurrentTexture()->GetPixel(_Postion.ix(), _Postion.iy());
 }

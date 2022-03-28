@@ -53,7 +53,7 @@ private: //Member
 	GameEngineTransform* BulletPoint_;
 
 	GameEngineFSM<Player> State_;
-	GameEngineFSM<Player> AnimationState_;
+	//GameEngineFSM<Player> AnimationState_;
 
 	GameEngineTransform* Camera_;
 
@@ -125,6 +125,7 @@ private://Func
 
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
+
 private: //Setting
 	void KeySetting();
 	void StateSetting();
@@ -140,30 +141,39 @@ private:
 #pragma region State_
 	StateInfo Bomb_Start(StateInfo _state);
 	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
+	void Bomb_End();
 
 	StateInfo Death_Start(StateInfo _state);
 	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
+	void Death_End();
 
 	StateInfo Dash_Start(StateInfo _state);
 	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
+	void Dash_End();
 
 	StateInfo Jump_Start(StateInfo _state);
 	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
+	void Jump_End();
 
 	StateInfo Idle_Start(StateInfo _state);
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
+	void Idle_End();
 
 	StateInfo Walk_Start(StateInfo _state);
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
+	void Walk_End();
 
 	StateInfo Duck_Start(StateInfo _state);
 	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
+	void Duck_End();
 
 	StateInfo RockOn_Start(StateInfo _state);
 	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
+	void RockOn_End();
 
 	StateInfo Hit_Start(StateInfo _state);
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
+	void Hit_End();
 #pragma endregion
 
 

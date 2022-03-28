@@ -6,6 +6,9 @@
 #include "GameEngineRenderingPipeLineManager.h"
 #include "GameEngineDepthBuffer.h"
 
+GameEngineRenderTarget* GameEngineRenderTarget::LastRenderTarget = nullptr;
+GameEngineDepthBuffer* GameEngineRenderTarget::LastDepthBuffer = nullptr;
+
 GameEngineRenderTarget::GameEngineRenderTarget() // default constructer 디폴트 생성자
 	: DepthBuffer_(nullptr)
 {
@@ -72,6 +75,7 @@ void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearCo
 {
 	Textures_.push_back(_Texture);
 	RenderTargetViews_.push_back(_Texture->GetRenderTargetView());
+	ShaderResourcesViews_.push_back(*_Texture->GetShaderResourcesView());
 	ClearColor_.push_back(_ClearColor);
 }
 
@@ -98,7 +102,10 @@ void GameEngineRenderTarget::Setting(int _Index)
 	if (nullptr != DepthBuffer_)
 	{
 		View = DepthBuffer_->GetDepthStencilView();
+		LastDepthBuffer = DepthBuffer_;
 	}
+
+	LastRenderTarget = this;
 
 	if (-1 == _Index)
 	{

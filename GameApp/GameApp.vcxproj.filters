@@ -86,6 +86,12 @@
     <ClCompile Include="Store.cpp">
       <Filter>Level\02. WolrdMap\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="WorldMapPlayer.cpp">
+      <Filter>Actor\Player\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapPlayer_Setting.cpp">
+      <Filter>Actor\Player\WorldMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -239,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Store.h">
       <Filter>Level\02. WolrdMap\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapPlayer.h">
+      <Filter>Actor\Player\WorldMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

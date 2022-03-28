@@ -72,6 +72,7 @@ class GameEngineFSM
 		float StateTime; // 이 스테이트에 진입한지 몇초가 됐다.
 		StateInfo(FSMType::* StateStart)(StateInfo _Ptr);
 		StateInfo(FSMType::* StateUpdate)(StateInfo _Ptr, float DeltaTime);
+		void(FSMType::* StateEnd)();
 
 	public:
 
@@ -126,6 +127,18 @@ class GameEngineFSM
 			parent_->nextState_ = Return;
 		}
 
+		void CallEnd()
+		{
+#ifdef _DEBUG
+			if (nullptr == parent_->ObjectPtr_)
+			{
+				GameEngineDebug::AssertFalse();
+				return;
+			}
+#endif // _DEBUG
+			(parent_->ObjectPtr_->*StateEnd)();
+			StateTime = 0.0f;
+		}
 
 	public:
 		void Update() {}
@@ -184,7 +197,7 @@ public:		//delete operator
 
 
 public:
-	void CreateState(const std::string& _name, StateInfo(FSMType::* _StartFunc)(StateInfo), StateInfo(FSMType::* _UpdateFunc)(StateInfo, float))
+	void CreateState(const std::string& _name, StateInfo(FSMType::* _StartFunc)(StateInfo), StateInfo(FSMType::* _UpdateFunc)(StateInfo, float), void(FSMType::* _EndFunc)())
 	{
 #ifdef _DEBUG
 		if (nullptr != FindState(_name))
@@ -197,12 +210,18 @@ public:
 
 		NewState->StateUpdate = _UpdateFunc;
 		NewState->StateStart = _StartFunc;
+		NewState->StateEnd = _EndFunc;
 		allState_.insert(std::map<std::string, State*>::value_type(_name, NewState));
 		return;
 	}
 
 	void ChangeState(const std::string& _Name)
 	{
+		if (nullptr != curState_)
+		{
+			curState_->CallEnd();
+		}
+
 		curState_ = FindState(_Name);
 #ifdef _DEBUG
 		if (nullptr == curState_)
@@ -260,20 +279,6 @@ public:
 			return;
 		}
 #endif // _DEBUG
-
-		//if (0 < nextState_.Time)
-		//{
-		//	nextState_.Time -= GameEngineTime::GetInst().GetDeltaTime();
-		//	return;
-		//}
-		//else
-		//{
-		//	if ("" != nextState_._NextState)
-		//	{
-		//		ChangeState(nextState_._NextState);
-		//		nextState_._NextState = "";
-		//	}
-		//}
 
 		curState_->CallUpdate(_DeltaTime);
 	}

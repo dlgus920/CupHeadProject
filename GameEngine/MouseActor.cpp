@@ -32,3 +32,12 @@ void MouseActor::Update(float _DeltaTime)
 {
 	GetTransform()->SetWorldPosition(GameEngineInput::GetInst().GetMouse3DPos());
 }
+
+void MouseActor::WindowCursorOn()
+{
+	ShowCursor(true);
+}
+void MouseActor::WindowCursorOff()
+{
+	ShowCursor(false);
+}

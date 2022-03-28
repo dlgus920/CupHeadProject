@@ -166,6 +166,17 @@ public:
 		SetWorldPosition(TransformData_.vWorldPosition_ + _Value * GameEngineTime::GetInst().GetDeltaTime());
 	}
 	
+public:
+	//custom func
+	void SetWorldZPosition(float Zvalue);
+	void SetLocalZPosition(float Zvalue);
+
+
+
+
+
+
+
 	//
 	//void SetLocalDeltaTimeMove(const float4& _Value, float DeltaTime_)
 	//{

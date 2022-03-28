@@ -71,7 +71,7 @@ bool GameEnginePixelShader::FileCompile(const std::string& _Path)
 	// MultiByteToWideChar()
 
 	std::wstring Path;
-	GameEngineString::StringToWString(_Path, Path);
+	GameEngineString::AnsiToUnicode(_Path, Path);
 
 	if (S_OK != D3DCompileFromFile(
 		Path.c_str(),

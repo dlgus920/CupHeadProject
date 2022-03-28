@@ -32,6 +32,10 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 	return StateInfo();
 }
 
+void Player::Idle_End()
+{
+}
+
 StateInfo Player::Walk_Start(StateInfo _state)
 {
 	// 각기 다른 에니메이션 재생
@@ -56,14 +60,18 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		Move(100.f, 0.f, _DeltaTime);
+		Move(500.f, 0.f, _DeltaTime);
 	}
 	else
 	{
-		Move(-100.f, 0.f, _DeltaTime);
+		Move(-500.f, 0.f, _DeltaTime);
 	}
 
 	return StateInfo();
+}
+
+void Player::Walk_End()
+{
 }
 
 StateInfo Player::Jump_Start(StateInfo _state)
@@ -128,6 +136,12 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	return StateInfo();
 }
 
+void Player::Jump_End()
+{
+	GravitySpeed_ = 0.f;
+
+}
+
 StateInfo Player::Duck_Start(StateInfo _state)
 {
 	ChangeAnimation("Cup-Duck-Idle");
@@ -152,6 +166,10 @@ StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
 	}
 
 	return StateInfo();
+}
+
+void Player::Duck_End()
+{
 }
 
 StateInfo Player::RockOn_Start(StateInfo _state)
@@ -227,6 +245,10 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 	return StateInfo();
 }
 
+void Player::RockOn_End()
+{
+}
+
 StateInfo Player::Bomb_Start(StateInfo _state)
 {
 	ChangeAnimation("Cup-Bomb");
@@ -240,6 +262,10 @@ StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
 	{
 		return CheckState();
 	}
+}
+
+void Player::Bomb_End()
+{
 }
 
 StateInfo Player::Death_Start(StateInfo _state)
@@ -260,6 +286,10 @@ StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 
 	}
 	return StateInfo();
+}
+
+void Player::Death_End()
+{
 }
 
 StateInfo Player::Hit_Start(StateInfo _state)
@@ -294,6 +324,10 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 	return StateInfo();
 }
 
+void Player::Hit_End()
+{
+}
+
 StateInfo Player::Dash_Start(StateInfo _state)
 {
 	ChangeAnimation("Cup-Dash");
@@ -312,4 +346,10 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 	{
 		return CheckState();
 	}
+
+	return StateInfo();
+}
+
+void Player::Dash_End()
+{
 }

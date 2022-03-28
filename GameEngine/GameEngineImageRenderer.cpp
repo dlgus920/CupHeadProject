@@ -46,10 +46,8 @@ void GameEngineImageRenderer::Animation2D::Reset()
 	CurFrame_ = StartFrame_;
 }
 
-void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
+void GameEngineImageRenderer::Animation2D::FrameUpdate()
 {
-	CurTime_ -= _DeltaTime;
-
 	if (CurTime_ <= 0.0f)
 	{
 		++CurFrame_;
@@ -72,6 +70,49 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 
 			CurFrame_ = EndFrame_;
 		}
+	}
+
+}
+
+void GameEngineImageRenderer::Animation2D::ReverseFrameUpdate()
+{
+	if (CurTime_ <= 0.0f)
+	{
+		--CurFrame_;
+		CurTime_ = InterTime_;
+		if (true == Loop_
+			&& CurFrame_ < EndFrame_)
+		{
+			CallEnd();
+			CurFrame_ = StartFrame_;
+		}
+		else if (false == Loop_
+			&& CurFrame_ < EndFrame_)
+		{
+			if (false == IsEnd)
+			{
+				CallEnd();
+			}
+
+			IsEnd = true;
+
+			CurFrame_ = EndFrame_;
+		}
+	}
+
+}
+
+void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
+{
+	CurTime_ -= _DeltaTime;
+
+	if (StartFrame_ < EndFrame_)
+	{
+		FrameUpdate();
+	}
+	else
+	{
+		ReverseFrameUpdate();
 	}
 
 	CallFrame();
@@ -121,6 +162,12 @@ void GameEngineImageRenderer::Start()
 void GameEngineImageRenderer::ImageRendererStart()
 {
 	ShaderHelper.SettingConstantBufferLink("TextureCutData", CutData);
+
+	ResultColor = float4::ONE;
+	ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor); // 색상 합성
+
+	//TODO : 모든 얘한테 다 주던가 각자 따로 만들게끔 설계하기
+
 }
 
 void GameEngineImageRenderer::SetIndex(const int Index)
@@ -185,7 +232,7 @@ void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, c
 	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
 }
 
-void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop /*= true*/)
+void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 

@@ -24,10 +24,24 @@ public:
 
 	void SetRenderGroup(int _Order) override;
 
+	void TextSetting(std::string _FontName, std::string _PrintText, float _FontSize, float4 _Color = float4::RED);
+
 protected:
+	std::string FontName_;
+	std::string PrintText_;
+	float FontSize_;
+	float4 FontPivot_;
+	float4 Color_;
+
+	// 겹쳐서 사용하려고 하지 않겠죠?
+	static GameEngineRenderTarget* FontTarget_;
+
+
 
 
 private:
 	void Start() override;
+
+	void Render() override;
 };
 

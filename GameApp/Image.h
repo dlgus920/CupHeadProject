@@ -33,22 +33,27 @@ public:
 
 	void SetImageAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
 	void SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop /*= true*/);
+	void SetImageTexture(const std::string& _TextureName);
 
 	void SetImageLocalScaling(const float4& _Value);
 	void SetImageWorldPosition(const float4& _Value);
 
 	void SetAnimationReserveDeath(std::string _Name);
 
+	void SetAdjustImzgeSize();
+
+	void SetAnimationFrame(int Frame);
+	
 	template <typename EffectType> // TODO: 나중ㅇ 람다식으로 즉석 함수만들어서 넣는 기능 추가하기
-	void SetImageAnimationEndFunc(const std::string& _Name, void(EffectType::* _EndFunc)(void))
+	void SetImageAnimationEndFunc(const std::string& _Name, void(EffectType::* _EndFunc)(void), EffectType* Obj)
 	{
-		ImageRenderer_->SetEndCallBack(_Name, std::bind(_EndFunc, this));
+		ImageRenderer_->SetEndCallBack(_Name, std::bind(_EndFunc, Obj));
 	}
 
 	template <typename EffectType>
-	void SetImageAnimationFrameFunc(const std::string& _Name, int _Index, void(EffectType::* _FrameFunc)(void))
+	void SetImageAnimationFrameFunc(const std::string& _Name, int _Index, void(EffectType::* _FrameFunc)(void), EffectType* Obj)
 	{
-		ImageRenderer_->SetFrameCallBack(_Name, _Index, std::bind(_FrameFunc, this));
+		ImageRenderer_->SetFrameCallBack(_Name, _Index, std::bind(_FrameFunc, Obj));
 	}
 };
 

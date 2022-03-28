@@ -82,6 +82,15 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{b8a4d78f-115c-4f84-a1a0-06be70d553e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lib\FW1Font">
+      <UniqueIdentifier>{7ee6f744-b7e7-496f-9f41-cd9771d3c7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{bd6bc85a-d559-4e4a-af65-8804aeeb2da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\Code">
+      <UniqueIdentifier>{aef6972d-a46f-4781-913b-d44a70c0bf1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -185,9 +194,6 @@
     <ClInclude Include="GameEngineInput.h">
       <Filter>Control</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineUIRenderer.h">
-      <Filter>Object\Component\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineImageRenderer.h">
       <Filter>Object\Component\Renderer\Sub</Filter>
     </ClInclude>
@@ -241,6 +247,45 @@
     </ClInclude>
     <ClInclude Include="MouseActor.h">
       <Filter>Object\EngineActor</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFontManager.h">
+      <Filter>Resources\99Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFont.h">
+      <Filter>Resources\02Image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineUIRenderer.h">
+      <Filter>Object\Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineGUI.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderWindow.h">
+      <Filter>Imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,9 +390,6 @@
     <ClCompile Include="GameEngineInput.cpp">
       <Filter>Control</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineUIRenderer.cpp">
-      <Filter>Object\Component\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineImageRenderer.cpp">
       <Filter>Object\Component\Renderer\Sub</Filter>
     </ClCompile>
@@ -388,6 +430,39 @@
     <ClCompile Include="GameEngineDepthBuffer.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineFontManager.cpp">
+      <Filter>Resources\99Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFont.cpp">
+      <Filter>Resources\02Image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineUIRenderer.cpp">
+      <Filter>Object\Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineGUI.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderWindow.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
     <ClCompile Include="MouseActor.cpp">
       <Filter>Object\EngineActor</Filter>
     </ClCompile>
@@ -398,6 +473,12 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="..\ThirdParty\x64\Debug\DirectXTex\DirectXTex.lib">
       <Filter>Lib\DirectXTex\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\ThirdParty\x64\Release\FW1Font\FW1FontWrapper.dll">
+      <Filter>Lib\FW1Font</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\ThirdParty\x64\Release\FW1Font\FW1FontWrapper.lib">
+      <Filter>Lib\FW1Font</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>
