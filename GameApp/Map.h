@@ -30,6 +30,7 @@ protected:
 
 public:
 	void SetMapImage(std::string _MapImage, std::string _CollisionMap, float Pivot_x, float Pivot_y);
+	void SetMapImage(std::string _MapImage, std::string _CollisionMap);
 
 
 private:

@@ -134,7 +134,7 @@ private: //Setting
 
 private: //Update
 	void StateUpdate(float _DeltaTime);
-	void KeyUpdate(float _DeltaTime);
+	void KeyUpdate();
 	void CollisonUpdate();
 		
 private: 

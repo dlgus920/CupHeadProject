@@ -282,6 +282,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer_Setting.cpp" />
+    <ClCompile Include="WorldMapPlayer_Update.cpp" />
     <ClCompile Include="WorldMapScene.cpp">
       <SubType>
       </SubType>

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "WorldMapScene.h"
+#include "WorldMapPlayer.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
@@ -10,8 +11,6 @@
 
 #include "Image.h"
 #include "Map.h"
-
-
 
 WorldMapScene::WorldMapScene() // default constructer 디폴트 생성자
 {
@@ -35,13 +34,14 @@ void WorldMapScene::LevelStart()
 
 	{
 		Map* _Map = CreateActor<Map>();
-		_Map->SetMapImage("WorldMap_Background.png", "WorldMap_PixelCheckBackground.png", 1212, -939.5);
+		//_Map->SetMapImage("WorldMap_Background.png", "WorldMap_PixelCheckBackground.png", 1212, -939.5);
+		_Map->SetMapImage("WorldMap_PixelCheckBackground.png", "WorldMap_PixelCheckBackground.png", 1212, -939.5);
 	}
-
+	
 	{
 		WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
+		WorldMapPlayer_->GetTransform()->SetLocalPosition(float4(500, -700.0f, static_cast<int>(ZOrder::Z01Actor01)));
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
-		WorldMapPlayer_->GetTransform()->SetLocalPosition(float4(100.f, -100.0f, static_cast<int>(ZOrder::Z01Actor01)));
 	}
 
 	{

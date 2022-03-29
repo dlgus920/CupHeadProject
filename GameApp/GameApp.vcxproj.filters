@@ -92,6 +92,9 @@
     <ClCompile Include="WorldMapPlayer_Setting.cpp">
       <Filter>Actor\Player\WorldMap</Filter>
     </ClCompile>
+    <ClCompile Include="WorldMapPlayer_Update.cpp">
+      <Filter>Actor\Player\WorldMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">

@@ -15,10 +15,19 @@ class float4
 public:
 	static const float4 ZERO;
 	static const float4 ONE;
+
 	static const float4 LEFT;
 	static const float4 RIGHT;
 	static const float4 UP;
 	static const float4 DOWN;
+
+
+	static const float4 UPLEFT;
+	static const float4 UPRIGHT;
+	static const float4 DOWNLEFT;
+	static const float4 DOWNRIGHT;
+
+
 
 	static const float4 RED;
 	static const float4 BLUE;

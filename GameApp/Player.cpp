@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+
 #include "Player.h"
 #include "Bullet.h"
 #include "Map.h"
@@ -49,21 +50,6 @@ Player::~Player()
 
 void Player::Start()
 {
-	//GetTransform()->SetWorldPosition({ 500.0f, -500.0f });
-
-	//{
-	//	GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
-	//	Renderer->SetRenderingPipeLine("Color");
-	//	Renderer->GetTransform()->SetLocalScaling({ 100.0f, 20.0f, 1.0f });
-	//	Renderer->GetTransform()->SetLocalPosition({ 0.0f, 80.0f, -20.0f });
-	//	Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f));
-	//}
-
-	//{
-	//	PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-	//	PlayerImageRenderer->SetImage("Char.png");
-	//	PlayerImageRenderer->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
-	//}
 	ComponentSetting();
 	AnimationSetting();
 	KeySetting();

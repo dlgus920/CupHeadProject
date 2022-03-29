@@ -78,6 +78,10 @@ class GameEngineFSM
 
 		void CallStart()
 		{
+			if (nullptr == StateStart)
+			{
+				return;
+			}
 #ifdef _DEBUG
 			if (nullptr == parent_->ObjectPtr_)
 			{
@@ -91,6 +95,11 @@ class GameEngineFSM
 
 		void CallUpdate(float _DeltaTime)
 		{
+			if (nullptr == StateUpdate)
+			{
+				return;
+			}
+
 #ifdef _DEBUG
 			if (nullptr == parent_->ObjectPtr_)
 			{
@@ -129,6 +138,11 @@ class GameEngineFSM
 
 		void CallEnd()
 		{
+			if (nullptr == StateEnd)
+			{
+				return;
+			}
+
 #ifdef _DEBUG
 			if (nullptr == parent_->ObjectPtr_)
 			{

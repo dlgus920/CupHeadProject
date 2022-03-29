@@ -5,20 +5,13 @@
 
 void Player::Update(float _DeltaTime)
 {
-	//float4 Color = Map::GetColor(GetTransform());
-
-	//if (Color != float4::BLACK)
-	//{
-	//	GetTransform()->SetLocalDeltaTimeMove(float4::DOWN * 100.0f);
-	//}
-
-	GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);
+	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
 
 	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
 
 	if (true == KeyState_Update_)
 	{
-		KeyUpdate(_DeltaTime);
+		KeyUpdate();
 	}
 
 	if (true == ColState_Update_)
@@ -28,7 +21,7 @@ void Player::Update(float _DeltaTime)
 
 	if (true == State_Update_)
 	{
-		State_.Update(_DeltaTime);
+		StateUpdate(_DeltaTime);
 	}
 
 	//StateUpdate(_DeltaTime);
@@ -39,10 +32,10 @@ void Player::Update(float _DeltaTime)
 
 void Player::StateUpdate(float _DeltaTime)
 {
-	State_Update_ = true;
+	State_.Update(_DeltaTime);
 }
 
-void Player::KeyUpdate(float _DeltaTime)
+void Player::KeyUpdate()
 {
 	KeyState_Left_ = GameEngineInput::GetInst().Press("MoveLeft");
 	KeyState_Right_ = GameEngineInput::GetInst().Press("MoveRight");

@@ -1,6 +1,5 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
-#include "WorldMapPlayer.h"
 
 // 설명 :
 class WorldMapScene : public GameEngineLevel
@@ -16,7 +15,8 @@ public:
 	WorldMapScene& operator=(const WorldMapScene&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
-	WorldMapPlayer* WorldMapPlayer_;
+	class WorldMapPlayer* WorldMapPlayer_;
+
 private:	// member Var
 
 private:

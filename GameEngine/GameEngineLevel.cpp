@@ -34,6 +34,7 @@ CameraComponent* GameEngineLevel::GetUICamera()
 	return UICameraActor_->GetCamera();
 }
 GameEngineLevel::GameEngineLevel() 
+	: IsDebug_(true)
 {
 }
 
@@ -115,7 +116,11 @@ void GameEngineLevel::Render()
 	MainCameraActor_->GetCamera()->ClearCameraTarget();
 	UICameraActor_->GetCamera()->ClearCameraTarget();
 	MainCameraActor_->GetCamera()->Render();
-	MainCameraActor_->GetCamera()->DebugRender();
+
+	if (true == IsDebug_)
+	{
+		MainCameraActor_->GetCamera()->DebugRender();
+	}
 
 	UICameraActor_->GetCamera()->Render();
 

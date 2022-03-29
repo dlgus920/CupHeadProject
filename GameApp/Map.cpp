@@ -26,25 +26,33 @@ void Map::LevelChangeStartEvent()
 
 void Map::SetMapImage(std::string _MapImage, std::string _CollisionMap, float Pivot_x, float Pivot_y)
 {
-	{
-		MapImage_ = CreateTransformComponent<GameEngineImageRenderer>();
-		MapImage_->SetImage(_MapImage);
-		MapImage_->SetAdjustImzgeSize();
-		//MapImage_->GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z03Map00) });
-		//MapImage_->GetTransform()->SetLocalPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z03Map00) });
-	}
 
-	{
-		CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
-		CollisionMap_->SetImage(_CollisionMap);
-		CollisionMap_->SetAdjustImzgeSize();
-		//CollisionMap_->GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
-		//CollisionMap_->GetTransform()->SetLocalPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
-	}
-	
-		GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
+	MapImage_ = CreateTransformComponent<GameEngineImageRenderer>();
+	MapImage_->SetImage(_MapImage);
+	MapImage_->SetAdjustImzgeSize();
 
-	//GetTransform()->SetWorldPosition(Pivot_x, Pivot_y);
+	CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
+	CollisionMap_->SetImage(_CollisionMap);
+	CollisionMap_->SetAdjustImzgeSize();
+
+	float4 mapsize = MapImage_->GetCurrentTexture()->GetMetaDataImageSize();
+
+	GetTransform()->SetWorldPosition(float4{ Pivot_x, Pivot_y, static_cast<int>(ZOrder::Z04CollisonMap00) });
+}
+
+void Map::SetMapImage(std::string _MapImage, std::string _CollisionMap)
+{
+	MapImage_ = CreateTransformComponent<GameEngineImageRenderer>();
+	MapImage_->SetImage(_MapImage);
+	MapImage_->SetAdjustImzgeSize();
+
+	CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
+	CollisionMap_->SetImage(_CollisionMap);
+	CollisionMap_->SetAdjustImzgeSize();
+
+	float4 mapsize = MapImage_->GetCurrentTexture()->GetMetaDataImageSize();
+
+	GetTransform()->SetWorldPosition(float4{ mapsize.x / 2, -mapsize.y / 2, static_cast<int>(ZOrder::Z04CollisonMap00) });
 }
 
 float4 Map::GetColor(GameEngineTransform* _Ptr, bool YRevers /*= true*/)

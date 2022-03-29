@@ -44,14 +44,51 @@ public:
 	CameraComponent* GetUICamera();
 
 private:
-	std::map<int, std::list<GameEngineActor*>> ActorList_;
+	std::map<int, std::list<GameEngineActor*>> ActorList_;	
+	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
+
 	CameraActor* MainCameraActor_;
 	// std::list<CameraActor*> Ä¿½ºÅÒCamera;
 	CameraActor* UICameraActor_;
 
-	void Init();
+	bool IsDebug_;
 
 public:
+
+	void ActorUpdate(float _DeltaTime);
+	void Render();
+	void Release(float _DeltaTime);
+
+	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
+	void PushCollision(GameEngineCollision* _Collision, int _Group);
+	
+	virtual void LevelStart() = 0;
+	virtual void LevelUpdate(float _DeltaTime) = 0;
+	virtual void LevelChangeEndEvent() = 0;
+	virtual void LevelChangeStartEvent() = 0;
+
+////////////////////////////////////////////////////// Renderer
+
+private:
+	void Init();
+
+	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
+//	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
+	void LevelChangeEndActorEvent();
+	void LevelChangeStartActorEvent();
+
+	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
+	{
+		return CollisionList_[_Group];
+	}
+
+public:
+
+	void SetDebug(bool _Debug)
+	{
+		IsDebug_ = _Debug;
+	}
+
 	template<typename ActorType>
 	ActorType* CreateActor(int _UpdateOrder = 0)
 	{
@@ -67,40 +104,10 @@ public:
 		return dynamic_cast<ActorType*>(NewActor);
 	}
 
-	void ActorUpdate(float _DeltaTime);
-	void Render();
-	void Release(float _DeltaTime);
-
-	
-
-	virtual void LevelStart() = 0;
-	virtual void LevelUpdate(float _DeltaTime) = 0;
-	virtual void LevelChangeEndEvent() = 0;
-	virtual void LevelChangeStartEvent() = 0;
-
-////////////////////////////////////////////////////// Renderer
-
-private:
-	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
-
-	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
-	{
-		return CollisionList_[_Group];
-	}
-
-	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
-//	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
-
-	void LevelChangeEndActorEvent();
-	void LevelChangeStartActorEvent();
-public:
-	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
-
 	template<typename UserEnumType>
 	void PushCollision(GameEngineCollision* _Collision, UserEnumType _Group)
 	{
 		PushCollision(_Collision, static_cast<int>(_Group));
 	}
 
-	void PushCollision(GameEngineCollision* _Collision, int _Group);
 };
