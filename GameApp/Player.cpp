@@ -58,6 +58,12 @@ void Player::Start()
 	//SetScale(x *= -1, y, z); 가로 뒤집기
 	Dir_ = AnimationDirection::Right;
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
+
+	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+	PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+	PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+
+
 	State_.ChangeState("Idle");
 }
 
@@ -94,7 +100,7 @@ StateInfo Player::ChangeState()
 	else if (true == KeyState_RockOn_)
 	{
 		State_.ChangeState("RockOn");
-		return "Rockon";
+		return "RockOn";
 	}
 	else if (true == KeyState_Down_)
 	{
@@ -128,7 +134,7 @@ const std::string Player::CheckState()
 	}
 	else if (true == KeyState_RockOn_)
 	{
-		CurState_ = "Rockon";
+		CurState_ = "RockOn";
 	}
 	else if (true == KeyState_Down_)
 	{

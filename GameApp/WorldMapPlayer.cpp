@@ -21,7 +21,6 @@ WorldMapPlayer::WorldMapPlayer()
 	, MoveDir_{}
 	, CurState_{}
 {
-
 }
 
 WorldMapPlayer::~WorldMapPlayer() // default destructer 디폴트 소멸자
@@ -37,7 +36,7 @@ void WorldMapPlayer::Start()
 	StateSetting();
 }
 
-void WorldMapPlayer::ChangeAnimation(std::string _animation)
+void WorldMapPlayer::SetChangeAnimation(std::string _animation)
 {
 	PlayerImageRenderer->SetChangeAnimation(_animation);
 }
@@ -78,7 +77,7 @@ std::string WorldMapPlayer::CheckState()
 StateInfo WorldMapPlayer::Idle_Start(StateInfo _state)
 {
 	//ChangeAnimation("Cup-Idle-Down");
-	ChangeAnimation("Cup-Idle-Down-Right");
+	SetChangeAnimation("Cup-Idle-Down-Right");
 
 	return StateInfo();
 }
@@ -92,30 +91,31 @@ StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 
 	if (MoveDir_ == float4::UP)
 	{
-		ChangeAnimation("Cup-Idle-Up");
+		SetChangeAnimation("Cup-Idle-Up");
 	}
 
 	else if (MoveDir_ == float4::DOWN)
 	{
-		ChangeAnimation("Cup-Idle-Down");
+		SetChangeAnimation("Cup-Idle-Down");
 	}
 
 	else if (MoveDir_ == float4::LEFT ||
 		MoveDir_ == float4::RIGHT)
 	{
-		ChangeAnimation("Cup-Idle-Right");
+		SetChangeAnimation("Cup-Idle-Right");
 	}
-
+	// 실시간 업데이트가 너무 빨라 여기까지 오지를 못함,
+	// MoveDir_이 float4::UPLEFT상태로 유지가 안됨 ㅋㅋㅋㅋ
 	else if (MoveDir_ == float4::UPLEFT ||
 		MoveDir_ == float4::UPRIGHT)
 	{
-		ChangeAnimation("Cup-Idle-Up-Right");
+		SetChangeAnimation("Cup-Idle-Up-Right");
 	}
 
 	else if (MoveDir_ == float4::DOWNLEFT ||
 		MoveDir_ == float4::DOWNRIGHT)
 	{
-		ChangeAnimation("Cup-Idle-Down-Right");
+		SetChangeAnimation("Cup-Idle-Down-Right");
 	}
 
 	return StateInfo();
@@ -139,33 +139,36 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (MoveDir_ == float4::UP)
 	{
-		ChangeAnimation("Cup-Walk-Up");
+		SetChangeAnimation("Cup-Walk-Up");
 	}
 
 	else if (MoveDir_ == float4::DOWN)
 	{
-		ChangeAnimation("Cup-Walk-Down");
+		SetChangeAnimation("Cup-Walk-Down");
 	}
 
 	else if (MoveDir_ == float4::LEFT ||
 			MoveDir_ == float4::RIGHT)
 	{
-		ChangeAnimation("Cup-Walk-Right");
+		SetChangeAnimation("Cup-Walk-Right");
 	}
 
 	else if (MoveDir_ == float4::UPLEFT ||
 			MoveDir_ == float4::UPRIGHT)
 	{
-		ChangeAnimation("Cup-Walk-Up-Right");
+		SetChangeAnimation("Cup-Walk-Up-Right");
 	}
 
 	else if (MoveDir_ == float4::DOWNLEFT ||
 			MoveDir_ == float4::DOWNRIGHT)
 	{
-		ChangeAnimation("Cup-Walk-Down-Right");
+		SetChangeAnimation("Cup-Walk-Down-Right");
 	}
 	
-	Move(MoveDir_ * 300.f, _DeltaTime);
+	if (false == ColState_)
+	{
+		Move(MoveDir_ * 300.f, _DeltaTime);	
+	}
 	
 	return StateInfo();
 }
@@ -176,7 +179,7 @@ void WorldMapPlayer::Walk_End()
 
 StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
 {
-	ChangeAnimation("Cup-Chose");
+	SetChangeAnimation("Cup-Chose");
 
 	return StateInfo();
 }

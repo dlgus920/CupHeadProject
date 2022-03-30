@@ -424,6 +424,8 @@ class int4
 			__int64 LowValue;
 		};
 	};
+
+
 };
 
 

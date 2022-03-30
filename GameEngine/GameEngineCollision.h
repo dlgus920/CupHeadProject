@@ -61,13 +61,6 @@ public:
 	GameEngineCollision* CollisionPtr(int _OtherGroup);
 
 	//custom
-	template<typename UserType>
-	void CreateCollision(CollisionType _CollisionType, UserType _Type, float4 _Scale)
-	{
-		SetCollisionType(_CollisionType);
-		SetCollisionGroup(static_cast<int>(_Type));
-		GetTransform()->SetLocalScaling(_Scale);
-	}
 
 	void SetCollisionType(CollisionType _CollisionType)
 	{

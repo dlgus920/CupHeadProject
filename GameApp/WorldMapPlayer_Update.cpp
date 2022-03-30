@@ -1,5 +1,7 @@
 #include "PreCompile.h"
 #include "WorldMapPlayer.h"
+#include "Map.h"
+#include <GameEngine/GameEngineCollision.h>
 
 void WorldMapPlayer::Update(float _DeltaTime)
 {
@@ -103,4 +105,12 @@ void WorldMapPlayer::KeyUpdate()
 
 void WorldMapPlayer::CollisonUpdate()
 {
+	ColState_ = Map::PixelCollision(PlayerCollision->GetTransform(), 10);
+
+	//float4 Color = Map::GetColor(GetTransform());
+
+	//if (Color == float4::BLACK)
+	//{
+	//	ColState_ = true;
+	//}
 }

@@ -22,6 +22,12 @@ public:
 	static float4 GetColor(GameEngineTransform* _Ptr, bool YRevers = true);
 
 	static float4 GetColor(float4 _Postion);
+	static float4 GetColor(int _Postion_x, int _Postion_y);
+
+	//custom func
+	//Precission 계수 만큼 정확한 충돌체크가 가능하지만 느려짐
+	static bool PixelCollision(GameEngineTransform* _Transform, int Precission_coefficient = 10);
+	static bool PixelCollision(GameEngineCollision* _Collision, int Precission_coefficient = 10);
 
 protected:
 
@@ -29,9 +35,6 @@ protected:
 	void LevelChangeStartEvent() override;
 
 public:
-	void SetMapImage(std::string _MapImage, std::string _CollisionMap, float Pivot_x, float Pivot_y);
-	void SetMapImage(std::string _MapImage, std::string _CollisionMap);
-
 
 private:
 	static Map* CurrentMap;

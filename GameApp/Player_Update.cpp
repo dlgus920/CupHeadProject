@@ -7,7 +7,7 @@ void Player::Update(float _DeltaTime)
 {
 	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
 
-	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
 
 	if (true == KeyState_Update_)
 	{
@@ -24,7 +24,8 @@ void Player::Update(float _DeltaTime)
 		StateUpdate(_DeltaTime);
 	}
 
-	//StateUpdate(_DeltaTime);
+	ImageScaleUpdate();
+
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
 	//State_Update_는 State_.Update중에 설정함
@@ -59,29 +60,28 @@ void Player::KeyUpdate()
 
 	KeyState_Shoot_ = GameEngineInput::GetInst().Press("Fire");
 
-	KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
-	KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
-	KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
+	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
+	//KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
+	//KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 }
 
 void Player::CollisonUpdate()
 {
-	if (PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet)))
+	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+
+	ColState_Ground = Map::PixelCollision(PlayerCollision, 10);
+}
+
+void Player::ImageScaleUpdate() //아직 미사용
+{
+	if (CurAnimation_ != PlayerImageRenderer->GetCurrentAnimationName())
 	{
-		ColState_Hit_ = true;
+		CurAnimation_ = PlayerImageRenderer->GetCurrentAnimationName();
+		PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+		PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+		PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 	}
 
-	float4 Color = Map::GetColor(GetTransform());
-
-	if (Color == float4::BLACK)
-	{
-		ColState_Ground = true;
-	}
-	
-	else
-	{
-		ColState_Ground = false;
-	}
 }
 

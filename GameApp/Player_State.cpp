@@ -188,58 +188,71 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 	{
 		if (true == KeyState_Up_)
 		{
-			if (true == KeyState_Left_)
+			if (KeyState_Left_ ||
+				KeyState_Right_)
 			{
 				ChangeAnimation("Cup-Shoot-Up-Str");
+				return StateInfo();
 			}
 			else
 			{
 				ChangeAnimation("Cup-Shoot-Up");
+				return StateInfo();
 			}
 		}
 
-		else if (true == KeyState_Down_)
+		if (true == KeyState_Down_)
 		{
-			if (true == KeyState_Left_)
+			if (KeyState_Left_)
 			{
 				ChangeAnimation("Cup-Shoot-Down-Str");
-				SpawnBullet(BulletType_,float4::LEFT);
+				return StateInfo();
+				//SpawnBullet(BulletType_,float4::LEFT);
 			}
 			else
 			{
 				ChangeAnimation("Cup-Shoot-Down");
+				return StateInfo();
 			}
 		}
 		ChangeAnimation("Cup-Shoot-Str");
+		return StateInfo();
 	}
 
-	else
+	else if(false == KeyState_Shoot_)
 	{
 		if (true == KeyState_Up_)
 		{
-			if (true == KeyState_Left_)
+			if (KeyState_Left_||
+				KeyState_Right_)
 			{
 				ChangeAnimation("Cup-RockOn-Up-Str");
+				return StateInfo();
 			}
 			else
 			{
 				ChangeAnimation("Cup-RockOn-Up");
+				return StateInfo();
 			}
 		}
 
 		else if (true == KeyState_Down_)
 		{
-			if (true == KeyState_Left_)
+			if (KeyState_Left_||
+				KeyState_Right_)
 			{
 				ChangeAnimation("Cup-RockOn-Down-Str");
+				return StateInfo();
 
 			}
 			else
 			{
 				ChangeAnimation("Cup-RockOn-Down");
+				return StateInfo();
 			}
 		}
 		ChangeAnimation("Cup-RockOn-Str");
+		return StateInfo();
 	}
 	
 	return StateInfo();

@@ -62,16 +62,16 @@ public:
 	//custom
 	void SetAdjustImzgeSize()
 	{
-		if (nullptr != CurTexture)
-		{
-			GetTransform()->SetWorldScaling(CurTexture->GetMetaDataImageSize());
-			return;
-		}
+		GetTransform()->SetLocalScaling(GetImageSize());
+	}
+
+	float4 GetImageSize()
+	{
 		if (nullptr != CurAnimation_)
 		{
 			//GetTransform()->SetWorldScaling(CurAnimation_->GetCurAnimation()->GetMetaDataImageSize());
 
-			if (nullptr !=  CurAnimation_->AnimationTexture_)
+			if (nullptr != CurAnimation_->AnimationTexture_)
 			{
 				float4 Size = CurAnimation_->GetCurAnimation()->GetCutData(0);
 				float4 MetaSize = CurAnimation_->GetCurAnimation()->GetMetaDataImageSize();
@@ -79,15 +79,18 @@ public:
 				MetaSize.x *= Size.z;
 				MetaSize.y *= Size.w;
 
-				GetTransform()->SetWorldScaling(MetaSize);
-				return;
+				return MetaSize;
 			}
 
-			if (nullptr !=  CurAnimation_->FolderTextures_)
+			if (nullptr != CurAnimation_->FolderTextures_)
 			{
-				GetTransform()->SetWorldScaling(CurAnimation_->GetCurAnimation()->GetMetaDataImageSize());
-				return;
+				return CurAnimation_->GetCurAnimation()->GetMetaDataImageSize();
 			}
+		}
+
+		if (nullptr != CurTexture)
+		{
+			return CurTexture->GetMetaDataImageSize();
 		}
 	}
 

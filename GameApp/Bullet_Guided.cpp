@@ -19,11 +19,9 @@ void Bullet_Guided::Start()
 	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 	//ImageRenderer_->CreateAnimation();
 
-
-
 	BulletHitBox_ = CreateTransformComponent<GameEngineCollision>();
-	BulletHitBox_->CreateCollision<CollisionGruop>
-		(CollisionType::Rect, CollisionGruop::PlayerHitBox, float4{ 100.0f, 100.0f, 1.0f });
+	BulletHitBox_->SetCollisionType(CollisionType::Rect);
+	BulletHitBox_->SetCollisionGroup(static_cast<int>(CollisionGruop::Bullet));
 
 }
 

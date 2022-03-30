@@ -71,7 +71,7 @@ private: // Func
 	void Move(float4 MoveDir, float _DeltaTime);
 	void Move(float DirX, float DirY, float _DeltaTime);
 
-	void ChangeAnimation(std::string _animation);
+	void SetChangeAnimation(std::string _animation);
 
 private:
 	StateInfo Idle_Start(StateInfo _state);

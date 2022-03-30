@@ -61,6 +61,8 @@ private: //Member
 	GameEngineCollision* PlayerMovingCollision;
 	GameEngineCollision* PlayerCollision;
 
+	std::string CurAnimation_;
+
 	float TimeCheck_;
 	float DistTimeCheck_;
 
@@ -136,6 +138,7 @@ private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate();
 	void CollisonUpdate();
+	void ImageScaleUpdate();
 		
 private: 
 #pragma region State_

@@ -12,8 +12,9 @@ void Player::KeySetting()
 	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
 	GameEngineInput::GetInst().CreateKey("Jump", 'Z');
 	GameEngineInput::GetInst().CreateKey("Fire", 'X');
-	//GameEngineInput::GetInst().CreateKey("Dash", 'C');
-	GameEngineInput::GetInst().CreateKey("Bomb", 'V');
+	GameEngineInput::GetInst().CreateKey("RockOn", 'C');
+	GameEngineInput::GetInst().CreateKey("Dash", VK_LSHIFT);
+	//GameEngineInput::GetInst().CreateKey("Bomb", 'V');
 	//GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
 }
 
@@ -44,7 +45,7 @@ void Player::ComponentSetting()
 
 	{
 		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
+		
 		//PlayerImageRenderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f)); //색상 오버레이
 		//PlayerImageRenderer->SetAlpha(0.5f); //알파
 	}
@@ -56,17 +57,16 @@ void Player::ComponentSetting()
 
 	{
 		PlayerCollision = CreateTransformComponent<GameEngineCollision>();
-		PlayerCollision->CreateCollision<CollisionGruop>
-			(CollisionType::Rect,CollisionGruop::Player, float4{ 100.0f, 100.0f, 1.0f });
+		PlayerCollision->SetCollisionType(CollisionType::Rect);
+		PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
 
 		//PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
-		//PlayerCollision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Player);
 	}
 
 	{
 		PlayerHitBox = CreateTransformComponent<GameEngineCollision>();
-		PlayerHitBox->CreateCollision<CollisionGruop>
-			(CollisionType::Rect, CollisionGruop::PlayerHitBox, float4{ 100.0f, 100.0f, 1.0f });
+		PlayerHitBox->SetCollisionType(CollisionType::Rect);
+		PlayerHitBox->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerHitBox));
 	}
 }
 
@@ -123,7 +123,7 @@ void Player::AnimationSetting()
 		{
 			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Start", 160, 166, 0.1f);
 			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Idle", 168, 172, 0.1f);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 174, 179, 0.1f);
+			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 174, 176, 0.1f);
 
 		}
 

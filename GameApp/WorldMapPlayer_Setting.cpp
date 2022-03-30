@@ -32,8 +32,8 @@ void WorldMapPlayer::ComponentSetting()
 	PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
 
 	PlayerCollision = CreateTransformComponent<GameEngineCollision>();
-	PlayerCollision->CreateCollision<CollisionGruop>
-		(CollisionType::Rect, CollisionGruop::Player, float4{ 100.0f, 100.0f, 1.0f });
+	PlayerCollision->SetCollisionType(CollisionType::Rect);
+	PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
 }
 
 void WorldMapPlayer::AnimationSetting()
