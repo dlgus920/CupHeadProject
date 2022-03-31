@@ -44,9 +44,6 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>Actor\UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="EffectBase.cpp">
-      <Filter>Actor\Image\Effect\Base</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Actor\MOB\Base</Filter>
     </ClCompile>
@@ -94,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="WorldMapPlayer_Update.cpp">
       <Filter>Actor\Player\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Actor\Image\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Actor\Image\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +169,6 @@
     <Filter Include="Actor\Image\Effect">
       <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Image\Effect\Base">
-      <UniqueIdentifier>{03b4a099-1381-435b-ac41-3b5b828b6038}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\04. PlayLevel\Stage">
       <UniqueIdentifier>{8044c92d-1e39-4d66-af65-ef813ee737a8}</UniqueIdentifier>
     </Filter>
@@ -177,6 +177,9 @@
     </Filter>
     <Filter Include="Level\04. PlayLevel\MIniStage">
       <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Image\Object">
+      <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +219,6 @@
     <ClInclude Include="UIBase.h">
       <Filter>Actor\UI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="EffectBase.h">
-      <Filter>Actor\Image\Effect\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Actor\Bullet\Base</Filter>
     </ClInclude>
@@ -251,6 +251,12 @@
     </ClInclude>
     <ClInclude Include="WorldMapPlayer.h">
       <Filter>Actor\Player\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Actor\Image\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Actor\Image\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

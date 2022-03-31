@@ -60,11 +60,11 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		Move(500.f, 0.f, _DeltaTime);
+		Move(400.f, 0.f, _DeltaTime);
 	}
 	else
 	{
-		Move(-500.f, 0.f, _DeltaTime);
+		Move(-400.f, 0.f, _DeltaTime);
 	}
 
 	return StateInfo();
@@ -125,11 +125,11 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		Move(200.f,0.f,_DeltaTime);
+		Move(400.f,0.f,_DeltaTime);
 	}
 	else if (KeyState_Left_)
 	{
-		Move(-200.f,0.f,_DeltaTime);
+		Move(-400.f,0.f,_DeltaTime);
 	}
 
 

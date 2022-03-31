@@ -16,7 +16,7 @@ WorldMapPlayer::WorldMapPlayer()
 	, KeyState_Left_(false)
 	, KeyState_Right_(false)
 	, KeyState_Chose_(false)
-	, ColState_(false)
+	, ColState_{}
 	, Dir_(AnimationDirection::Right)
 	, MoveDir_{}
 	, CurState_{}
@@ -55,7 +55,10 @@ std::string WorldMapPlayer::CheckState()
 {
 	if (true == KeyState_Chose_)
 	{
-		CurState_ = "Chose";
+		if (true == ColState_Chose_)
+		{
+			CurState_ = "Chose";
+		}
 	}
 
 	else if (true == KeyState_Up_ ||
@@ -165,10 +168,24 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 		SetChangeAnimation("Cup-Walk-Down-Right");
 	}
 	
-	if (false == ColState_)
+	if (ColState_.b_Up != 0 && MoveDir_.y > 0)
 	{
-		Move(MoveDir_ * 300.f, _DeltaTime);	
+		return StateInfo();
 	}
+	if (ColState_.b_Down != 0 && MoveDir_.y < 0)
+	{
+		return StateInfo();
+	}
+	if (ColState_.b_Left != 0 && MoveDir_.x < 0)
+	{
+		return StateInfo();
+	}
+	if (ColState_.b_Right != 0 && MoveDir_.x > 0)
+	{
+		return StateInfo();
+	}
+
+	Move(MoveDir_ * 300.f, _DeltaTime);
 	
 	return StateInfo();
 }

@@ -61,7 +61,7 @@ private: //Member
 	GameEngineCollision* PlayerMovingCollision;
 	GameEngineCollision* PlayerCollision;
 
-	std::string CurAnimation_;
+	float4 PrevAniSize_;
 
 	float TimeCheck_;
 	float DistTimeCheck_;

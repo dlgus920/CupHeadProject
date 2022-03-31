@@ -34,7 +34,7 @@ void WorldMapPlayer::KeyUpdate()
 	KeyState_Right_ = GameEngineInput::GetInst().Press("MoveRight");
 	KeyState_Up_ = GameEngineInput::GetInst().Press("MoveUp");
 	KeyState_Down_ = GameEngineInput::GetInst().Press("MoveDown");
-	//KeyState_Chose_ = GameEngineInput::GetInst().Down("Chose");
+	KeyState_Chose_ = GameEngineInput::GetInst().Down("Chose");
 
 	if (KeyState_Down_ && !KeyState_Up_)
 	{
@@ -105,7 +105,9 @@ void WorldMapPlayer::KeyUpdate()
 
 void WorldMapPlayer::CollisonUpdate()
 {
-	ColState_ = Map::PixelCollision(PlayerCollision->GetTransform(), 10);
+	ColState_ = Map::PixelCollisionTransform(PlayerCollision->GetTransform(), 10);
+
+	ColState_Chose_ = PlayerCollision->Collision(static_cast<int>(CollisionGruop::StagePoint));
 
 	//float4 Color = Map::GetColor(GetTransform());
 

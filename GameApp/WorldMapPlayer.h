@@ -29,6 +29,8 @@ private:	// member Var
 	GameEngineCollision* PlayerCollision;
 	GameEngineFSM<WorldMapPlayer> State_;
 
+
+
 	float4 MoveDir_;
 
 	std::string CurState_;
@@ -45,8 +47,12 @@ private:	// member Var
 	bool KeyState_Chose_;
 
 
-	bool ColState_;
+	//bool ColState_;
 
+	float4 ColState_;
+	bool ColState_Chose_;
+
+	bool AniState_Chose_End_;
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 
@@ -85,5 +91,12 @@ private:
 	StateInfo Chose_Start(StateInfo _state);
 	StateInfo Chose_Update(StateInfo _state, float _DeltaTime);
 	void Chose_End();
+
+private:
+	const bool SetAniStateChoseEnd()
+	{
+		AniState_Chose_End_ = true;
+	}
+
 };
 

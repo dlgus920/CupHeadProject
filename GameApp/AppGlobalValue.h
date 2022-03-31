@@ -3,6 +3,7 @@
 enum class CollisionGruop
 {
 	None,
+	StagePoint,
 	Player,
 	PlayerHitBox,
 	PlayerMoving,

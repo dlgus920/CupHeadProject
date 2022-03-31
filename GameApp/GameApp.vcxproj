@@ -184,7 +184,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EffectBase.cpp">
+    <ClCompile Include="Effect.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -210,6 +210,10 @@
     </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Object.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -293,7 +297,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EffectBase.h">
+    <ClInclude Include="Effect.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -322,6 +326,10 @@
     </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Object.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>

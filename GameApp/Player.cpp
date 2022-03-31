@@ -38,8 +38,8 @@ Player::Player() :
 	TimeCheck_(0.f),
 	DistTimeCheck_(0.f),
 	GravitySpeed_(0.f),
-	GravityAcc_(1.f)
-
+	GravityAcc_(1.f),
+	PrevAniSize_{}
 {
 }
 
@@ -277,7 +277,7 @@ void Player::GravityUpdate(float _DeltaTime)
 {
 	GravitySpeed_ -= GravityAcc_;
 
-	Move(float4(0.f, 200.f + GravitySpeed_, 0.f), _DeltaTime);
+	Move(float4(0.f, 300.f + GravitySpeed_, 0.f), _DeltaTime);
 }
 
 void Player::GravityClear()

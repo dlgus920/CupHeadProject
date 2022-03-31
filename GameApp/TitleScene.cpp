@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "TitleScene.h"
 #include "LoaddingScene.h"
+#include "WorldMapScene.h"
 
 #include "Image.h"
 #include <GameEngine/CameraComponent.h>
@@ -46,8 +47,9 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 {
 	if (GameEngineInput::GetInst().Down("Next"))
 	{
-		//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("WorldMap");;
-		GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
+		GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("WorldMap");;
+		GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+		//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 		GameEngineCore::LevelChange("Loading");
 		//TODO : 로딩씬 생성후 죽이기 or 초기화 작업
 	}

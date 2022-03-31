@@ -14,17 +14,9 @@ Image::~Image() // default destructer 디폴트 소멸자
 
 }
 
-Image::Image(Image&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-{
-
-}
-
 void Image::Start()
 {
 	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
-	//ImageRenderer_->SetAdjustImzgeSize();
-	//PlayerImageRenderer->SetImage("Animation.png");
-	//PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
 }
 
 void Image::Update(float _DeltaTime)
@@ -55,12 +47,22 @@ void Image::SetImageLocalScaling(const float4& _Value)
 	ImageRenderer_->GetTransform()->SetLocalScaling(_Value);
 }
 
-void Image::SetImageWorldPosition(const float4& _Value)
+void Image::SetImageWorldScaling(const float4& _Value)
+{
+	ImageRenderer_->GetTransform()->SetWorldScaling(_Value);
+}
+
+void Image::SetImageLocalPosition(const float4& _Value)
 {
 	ImageRenderer_->GetTransform()->SetLocalPosition(_Value);
 }
 
-void Image::SetAnimationReserveDeath(std::string _Name)
+void Image::SetImageWorldPosition(const float4& _Value)
+{
+	ImageRenderer_->GetTransform()->SetWorldPosition(_Value);
+}
+
+void Image::SetReserveDeath(std::string _Name)
 {
 	SetImageAnimationEndFunc<Image>(_Name, &Image::Death, this);
 }

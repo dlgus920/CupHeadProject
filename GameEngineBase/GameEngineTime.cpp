@@ -45,13 +45,21 @@ void GameEngineTime::TimeCheck()
 		OutputDebugStringA(Text.c_str());
 	}
 
+	if (deltaTime_ > 0.016666666666666)
+	{
+		deltaTime_ = 0.016666666666666;
+	}
+
 #ifdef _DEBUG
 	++Frame_;
 
-	if (deltaTime_ >= 1.f)
+	CheckTime_ += deltaTime_;
+
+	if (CheckTime_ >= 1.f)
 	{
 		FPS_ = Frame_;
 		Frame_ = 0;
+		CheckTime_ = 0;
 	}
 #endif // _DEBUG
 

@@ -40,6 +40,13 @@ void Player::KeyUpdate()
 {
 	KeyState_Left_ = GameEngineInput::GetInst().Press("MoveLeft");
 	KeyState_Right_ = GameEngineInput::GetInst().Press("MoveRight");
+	KeyState_Up_ = GameEngineInput::GetInst().Press("MoveUp");
+	KeyState_Down_ = GameEngineInput::GetInst().Press("MoveDown");
+	KeyState_Shoot_ = GameEngineInput::GetInst().Press("Fire");
+	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
+	KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
+	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
+	//KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 
 	if (KeyState_Left_ && !KeyState_Right_)
 	{
@@ -55,32 +62,26 @@ void Player::KeyUpdate()
 		Dir_ = AnimationDirection::Right;
 	}
 
-	KeyState_Up_ = GameEngineInput::GetInst().Press("MoveUp");
-	KeyState_Down_ = GameEngineInput::GetInst().Press("MoveDown");
-
-	KeyState_Shoot_ = GameEngineInput::GetInst().Press("Fire");
-
-	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
-	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
-	//KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
-	//KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 }
 
 void Player::CollisonUpdate()
 {
 	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
 
-	ColState_Ground = Map::PixelCollision(PlayerCollision, 10);
+	ColState_Ground = Map::PixelCollisionTransform(PlayerCollision, 10).b_Down;
 }
 
 void Player::ImageScaleUpdate() //아직 미사용
 {
-	if (CurAnimation_ != PlayerImageRenderer->GetCurrentAnimationName())
+	float4 size = PlayerImageRenderer->GetImageSize();
+
+	if (PrevAniSize_ != size)
 	{
-		CurAnimation_ = PlayerImageRenderer->GetCurrentAnimationName();
-		PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-		PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-		PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+		PrevAniSize_ = size;
+
+		PlayerImageRenderer->GetTransform()->SetLocalScaling(size);
+		PlayerCollision->GetTransform()->SetLocalScaling(size);
+		PlayerHitBox->GetTransform()->SetLocalScaling(size);
 	}
 
 }

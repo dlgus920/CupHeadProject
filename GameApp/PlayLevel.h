@@ -23,5 +23,8 @@ private:
 	void LevelChangeEndEvent() override;
 	void LevelChangeStartEvent() override;
 
+public:
+
+
 };
 

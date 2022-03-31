@@ -11,6 +11,7 @@
 
 #include "Image.h"
 #include "Map.h"
+#include "Object.h"
 
 WorldMapScene::WorldMapScene() // default constructer 디폴트 생성자
 {
@@ -36,19 +37,33 @@ void WorldMapScene::LevelStart()
 		Map* _Map = CreateActor<Map>();
 
 		_Map->MapImage_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
+		//_Map->MapImage_->SetImage("WorldMap_PixelCheckBackground.png");
 		_Map->MapImage_->SetImage("WorldMap_Background.png");
-		_Map->MapImage_->GetTransform()->SetLocalScaling(1212.f, 939.5f);
-		//_Map->MapImage_->SetAdjustImzgeSize();
+		//_Map->MapImage_->GetTransform()->SetLocalScaling(1212.f, 939.5f);
+		_Map->MapImage_->SetAdjustImzgeSize();
 
 		// 1280 720
 		_Map->CollisionMap_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
 		_Map->CollisionMap_->SetImage("WorldMap_PixelCheckBackground.png");
-		_Map->CollisionMap_->GetTransform()->SetLocalScaling(1212.f, 939.5f);
-		//_Map->CollisionMap_->SetAdjustImzgeSize();
+		//_Map->CollisionMap_->GetTransform()->SetLocalScaling(1212.f, 939.5f);
+		_Map->CollisionMap_->SetAdjustImzgeSize();
 
 		float4 mapsize = _Map->MapImage_->GetCurrentTexture()->GetMetaDataImageSize();
 
-		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap00) });
+		_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
+	}
+
+	{
+		Object* WorldMapPoint = CreateActor<Object>();
+		WorldMapPoint->GetImageRenderer()->SetImage("world_platforming_icon_0001.png");
+		float4 size = WorldMapPoint->GetImageRenderer()->GetImageSize();
+
+		WorldMapPoint->GetImageRenderer()->GetTransform()->SetLocalScaling(size);
+
+		WorldMapPoint->GetObjectCollision()->GetTransform()->SetLocalScaling(size);
+		WorldMapPoint->GetObjectCollision()->SetCollisionGroup(CollisionGruop::StagePoint);
+		WorldMapPoint->GetObjectCollision()->SetCollisionType(CollisionType::Rect);
+		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
 	}
 
 	{
@@ -73,6 +88,7 @@ void WorldMapScene::LevelStart()
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
 {
+	GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 }
 
 void WorldMapScene::LevelChangeEndEvent()
@@ -82,4 +98,7 @@ void WorldMapScene::LevelChangeEndEvent()
 
 void WorldMapScene::LevelChangeStartEvent()
 {
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+
 }

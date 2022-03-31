@@ -50,6 +50,14 @@ private:
 	void ReleaseUpdate(float _DeltaTime);
 
 public:
+	//custom
+
+	template <typename Level>
+	Level* GetLevel()
+	{
+		return dynamic_cast<Level*>(Level_);
+	}
+
 	GameEngineLevel* GetLevel()
 	{
 		return Level_;

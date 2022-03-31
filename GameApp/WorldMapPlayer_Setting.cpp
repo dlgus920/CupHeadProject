@@ -34,6 +34,8 @@ void WorldMapPlayer::ComponentSetting()
 	PlayerCollision = CreateTransformComponent<GameEngineCollision>();
 	PlayerCollision->SetCollisionType(CollisionType::Rect);
 	PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+	PlayerCollision->GetTransform()->SetLocalScaling({ 50.f, 50.f, 1.0f });
+
 }
 
 void WorldMapPlayer::AnimationSetting()
@@ -51,6 +53,8 @@ void WorldMapPlayer::AnimationSetting()
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down-Right", 64, 67, 0.1f);
 
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Chose", 112, 123, 0.1f);
+
+	PlayerImageRenderer->SetEndCallBack("Cup-Chose",std::bind(& WorldMapPlayer::PlayerImageRenderer,this));
 
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle-Down");
 }

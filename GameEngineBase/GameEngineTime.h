@@ -32,6 +32,9 @@ private:
 	LARGE_INTEGER endCheck_;
 	double deltaTime_;
 
+
+
+	double CheckTime_;
 	int Frame_;
 	int FPS_;
 

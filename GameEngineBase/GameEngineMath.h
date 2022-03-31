@@ -139,6 +139,15 @@ public:
 			float a;
 		};
 
+		//custom
+		struct
+		{
+			float b_Up;
+			float b_Down;
+			float b_Right;
+			float b_Left;
+		};
+
 		float Arr1D[4];
 
 		DirectX::XMFLOAT3 DxXmfloat3;
