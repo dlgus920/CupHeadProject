@@ -230,9 +230,6 @@
     <ClInclude Include="GameEngineDebugRenderData.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="EngineGlobalValue.h">
-      <Filter>Precom</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineDepthBufferManager.h">
       <Filter>Resources\99Manager</Filter>
     </ClInclude>
@@ -287,6 +284,7 @@
     <ClInclude Include="GameEngineRenderWindow.h">
       <Filter>Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="EngineGlovalValue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">

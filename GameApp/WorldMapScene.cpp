@@ -42,14 +42,13 @@ void WorldMapScene::LevelStart()
 		//_Map->MapImage_->SetAdjustImzgeSize();
 
 		// 1280 720
-		_Map->CollisionMap_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
-		_Map->CollisionMap_->SetImage("WorldMap_PixelCheckBackground.png");
-		_Map->CollisionMap_->SetAdjustImzgeSize();
+		_Map->GetCollisionMap()->SetImage("WorldMap_PixelCheckBackground.png");
+		_Map->GetCollisionMap()->SetAdjustImzgeSize();
 	
 		_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
 
 		Image* MapImage = CreateActor<Image>();
-		MapImage ->SetImageTexture("WorldMap_Background.png");
+		MapImage ->ImageSetImage("WorldMap_Background.png");
 		MapImage ->SetAdjustImzgeSize();
 		MapImage ->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
 	}

@@ -26,21 +26,21 @@ void TitleScene::LevelStart()
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->SetImageTexture("title_screen_background.png");
+		Actor->ImageSetImage("title_screen_background.png");
 		Actor->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
 	}
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->SetImageAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+		Actor->ImageCreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
 		Actor->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
 	}
 	
 	{
 		Image* Image_ = CreateActor<Image>();
-		Image_->SetImageTexture("Title_font.png");
+		Image_->ImageSetImage("Title_font.png");
 		Image_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}

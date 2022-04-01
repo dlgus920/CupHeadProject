@@ -16,7 +16,7 @@ Map::~Map()
 
 void Map::Start()
 {
-
+	CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
 }
 
 void Map::LevelChangeStartEvent()

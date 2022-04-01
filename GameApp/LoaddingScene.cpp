@@ -21,7 +21,7 @@ void LoaddingScene::LevelStart()
 {	
 	{
 		Image* Back = CreateActor<Image>();
-		Back->SetImageTexture("Loading_background.png");
+		Back->ImageSetImage("Loading_background.png");
 		Back->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
 		Back->SetAdjustImzgeSize();
 	}
@@ -53,7 +53,7 @@ void LoaddingScene::LevelChangeStartEvent()
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
 
 	HourGlass_ = CreateActor<Image>();
-	HourGlass_->SetImageAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
 	HourGlass_->SetAdjustImzgeSize();
 	HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
 	HourGlass_->SetImageAnimationEndFunc<LoaddingScene>("HourGlass", &LoaddingScene::LoadEnd, this);

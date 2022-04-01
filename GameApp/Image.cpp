@@ -23,18 +23,18 @@ void Image::Update(float _DeltaTime)
 {
 }
 
-void Image::SetImageAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
+void Image::ImageCreateAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
 {
 	ImageRenderer_->CreateAnimation(_TextureName,_Name, _StartFrame, _EndFrame, _InterTime, _Loop);
 	ImageRenderer_->SetChangeAnimation(_Name);
 }
 
-void Image::SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop)
+void Image::ImageCreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop)
 {
 	ImageRenderer_->CreateAnimationFolder(_Name, _FolderTexName, _InterTime, _Loop);
 	ImageRenderer_->SetChangeAnimation(_Name);
 }
-void Image::SetImageTexture(const std::string& _TextureName)
+void Image::ImageSetImage(const std::string& _TextureName)
 {
 	ImageRenderer_->SetImage(_TextureName);
 

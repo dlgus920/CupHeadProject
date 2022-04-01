@@ -34,13 +34,13 @@ void PlayLevel::LevelStart()
 	{
 		
 		Image* BackImage = CreateActor<Image>();
-		BackImage->SetImageTexture("DicePalaceBack.png");
+		BackImage->ImageSetImage("DicePalaceBack.png");
 		BackImage->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back10) });
 
 
 		BackImage = CreateActor<Image>();
-		BackImage->SetImageTexture("DicePalaceMain.png");
+		BackImage->ImageSetImage("DicePalaceMain.png");
 		BackImage->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back09) });
 
@@ -53,9 +53,8 @@ void PlayLevel::LevelStart()
 		////_Map->MapImage_->SetAdjustImzgeSize();
 
 		// 1280 720
-		_Map->CollisionMap_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
-		_Map->CollisionMap_->SetImage("DicePalaceCol.png");
-		_Map->CollisionMap_->GetTransform()->SetLocalScaling(1280.f, 720.f);
+		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
+		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(1280.f, 720.f);
 
 		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap01) });
 

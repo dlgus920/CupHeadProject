@@ -204,7 +204,7 @@ StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
 	float4 pos = GetTransform()->GetWorldPosition();
 
 	Image* IrisImage = GetLevel()->CreateActor<Image>();
-	IrisImage->SetImageAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
+	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
 	IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
 	IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
 	IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));

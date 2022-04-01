@@ -38,5 +38,4 @@ enum class ZOrder
 	Z03Map00,
 	Z04CollisonMap00,
 	Z04CollisonMap01
-
 };

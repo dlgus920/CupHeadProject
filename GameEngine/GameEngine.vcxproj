@@ -27,6 +27,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineGlovalValue.h" />
     <ClInclude Include="EngineVertex.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameEngineActor.h">
@@ -169,7 +170,6 @@
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
     <ClInclude Include="GameEngineResourcesManager.h" />
-    <ClInclude Include="EngineGlobalValue.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
