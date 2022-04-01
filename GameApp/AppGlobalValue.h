@@ -1,5 +1,7 @@
 #pragma once
 
+#define GV_GAMEFILENAME "CupHeadProject"
+
 enum class CollisionGruop
 {
 	None,
