@@ -55,6 +55,8 @@ void Player::Start()
 	KeySetting();
 	StateSetting();
 
+	ChangeShootFunc(&Player::ShootDefalutBullet);
+
 	//SetScale(x *= -1, y, z); 가로 뒤집기
 	Dir_ = AnimationDirection::Right;
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
@@ -177,6 +179,27 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
+void Player::ChangeShootFunc(void(Player::* _FrameFunc)(float4))
+{
+	BulletShootFunc_ = std::bind(_FrameFunc, this, std::placeholders::_1);
+}
+void Player::ShootGuidedBullet(float4 _Dir)
+{
+	// 소환된 방향으로 나가되, 자체적으로 주변 적을 찾아 알아서 이동하게 해줌
+
+	Bullet_Guided* Bullet = GetLevel()->CreateActor<Bullet_Guided>();
+	Bullet->SetMoveDir(_Dir);
+}
+void Player::ShootSpreadBullet(float4 _Dir)
+{
+	Bullet_Spread* Bullet = GetLevel()->CreateActor<Bullet_Spread>();
+	Bullet->SetMoveDir(_Dir);
+}
+void Player::ShootDefalutBullet(float4 _Dir)
+{
+	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
+	Bullet->SetMoveDir(_Dir);
+}
 //
 //const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
 //{
@@ -233,40 +256,6 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 //
 //	return true;
 //}
-
-void Player::SpawnBullet(BulletType _Type, float4 _Dir)
-{
-	// 발사되는 방향에 맞게 로테이트 작업 해줘야함
-	// 발사 오른쪽 왼쪽 잡아서 수평 회전시키기
-
-	//if (_Type == BulletType::Spread)
-	//{
-	//	Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
-	//	GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-	//	_Bullet->SetMoveDir(_Dir);
-
-	//	_Bullet = GetLevel()->CreateActor<Bullet>();
-	//	compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-	//	_Bullet->SetMoveDir(_Dir);
-	//	compo->GetTransform()->SetLocalRotation(45.f, 0.f);
-
-	//	_Bullet = GetLevel()->CreateActor<Bullet>();
-	//	compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-	//	_Bullet->SetMoveDir(_Dir);
-	//	compo->GetTransform()->SetLocalRotation(-45.f, 0.f);
-
-	//}
-	//else
-	//{
-	//	Bullet* _Bullet = GetLevel()->CreateActor<Bullet>();
-	//	GameEngineTransformComponent* compo = _Bullet->CreateTransformComponent<GameEngineTransformComponent>();
-	//	compo->GetTransform()->SetLocalPosition(GetBulletPoint());
-	//	_Bullet->SetMoveDir(_Dir);
-	//}
-}
 
 float4 Player::GetBulletPoint()
 {

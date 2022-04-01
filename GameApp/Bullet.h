@@ -9,6 +9,7 @@ class GameEngineImageRenderer;
 
 class Bullet : public GameEngineActor
 {
+	friend class Player;
 public:
 	// constrcuter destructer
 	Bullet();
@@ -104,6 +105,8 @@ public:
 	Bullet_Guided& operator=(Bullet_Guided&& _Other) = delete;
 
 private:
+
+	//주변적을 찾아서 탐색, 
 	GameEngineActor* Target_;
 
 	float4 OriginDir_;

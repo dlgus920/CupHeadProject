@@ -30,4 +30,6 @@ void Bullet_Defalut::Update(float _DeltaTime)
 	{
 		BulletCollisionSpawnEffect<Bullet>(CollisionGruop::Player);
 	}
+
+	GetTransform()->SetWorldMove(MoveDir_);
 }

@@ -104,6 +104,8 @@ private: //Member
 
 	std::string CurState_;
 
+	std::function<void(float4)> BulletShootFunc_;
+
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -120,12 +122,14 @@ private://Func
 	//const bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
 	// 10픽셀 차이로 맵의 곡선을 넘을 수 있나 체크하고 이동함(못하면 안함), 근데 이거 필요한가? 컵헤드 곡선맵 있나?, 월드맵에서?
 
-	void SpawnBullet(BulletType _Type, float4 _Dir);
+	void ChangeShootFunc(void(Player::* _FrameFunc)(float4));
 
+	void ShootGuidedBullet(float4 _Dir);
+	void ShootSpreadBullet(float4 _Dir);
+	void ShootDefalutBullet(float4 _Dir);
 
 	float4 GetBulletPoint();
 
-	void JumpUpdate(float _DeltaTime);
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
 
