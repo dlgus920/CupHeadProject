@@ -163,9 +163,6 @@
     <Filter Include="Actor\MOB\Base">
       <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Precom\GlobalValue">
-      <UniqueIdentifier>{3647aba2-8302-43ee-9f2d-d9ec195737b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Image\Effect">
       <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
     </Filter>
@@ -231,9 +228,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="AppGlobalValue.h">
-      <Filter>Precom\GlobalValue</Filter>
-    </ClInclude>
     <ClInclude Include="MainLoading.h">
       <Filter>Level\00. MainLoad</Filter>
     </ClInclude>
@@ -258,5 +252,6 @@
     <ClInclude Include="Effect.h">
       <Filter>Actor\Image\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="AppGlobalValue.h" />
   </ItemGroup>
 </Project>

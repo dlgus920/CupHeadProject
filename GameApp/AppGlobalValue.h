@@ -1,5 +1,7 @@
 #pragma once
 
+#define GV_GAMEFILENAME "CupHeadProject"
+
 enum class CollisionGruop
 {
 	None,
@@ -38,5 +40,4 @@ enum class ZOrder
 	Z03Map00,
 	Z04CollisonMap00,
 	Z04CollisonMap01
-
 };

@@ -9,5 +9,3 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngineBase/GameEngineMath.h>
-
-#include "EngineGlobalValue.h"

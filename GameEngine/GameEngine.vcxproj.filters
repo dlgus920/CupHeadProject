@@ -230,9 +230,6 @@
     <ClInclude Include="GameEngineDebugRenderData.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="EngineGlobalValue.h">
-      <Filter>Precom</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineDepthBufferManager.h">
       <Filter>Resources\99Manager</Filter>
     </ClInclude>
