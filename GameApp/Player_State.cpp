@@ -78,7 +78,7 @@ StateInfo Player::Jump_Start(StateInfo _state)
 {
 	ChangeAnimation("Cup-Jump");
 
-	Move(0.f, 1.f, 0.1f);
+	Move(0.f, 10.f, 0.1f);
 
 	return StateInfo();
 }
@@ -100,7 +100,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 		return "Hit";
 	}
 
-	if (true == KeyState_Dash_) //임시로 막음
+	if (true == KeyState_Dash_) 
 	{
 		GravitySpeed_ = 0.f;
 		return "Dash";
@@ -120,6 +120,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	 
 	if (false == ColState_Ground)
 	{
+		Move(float4(0.f, 400.f, 0.f), _DeltaTime);
 		GravityUpdate(_DeltaTime);
 	}
 

@@ -1,8 +1,11 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineCore.h>
 
 #include "WorldMapPlayer.h"
+#include "LoaddingScene.h"
+#include "Image.h"
 
 WorldMapPlayer::WorldMapPlayer() 
 	: State_(this)
@@ -16,6 +19,8 @@ WorldMapPlayer::WorldMapPlayer()
 	, KeyState_Left_(false)
 	, KeyState_Right_(false)
 	, KeyState_Chose_(false)
+	, AniState_Chose_End_(false)
+	, AniState_ScreenIris_End_(false)
 	, ColState_{}
 	, Dir_(AnimationDirection::Right)
 	, MoveDir_{}
@@ -196,6 +201,17 @@ void WorldMapPlayer::Walk_End()
 
 StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
 {
+	float4 pos = GetTransform()->GetWorldPosition();
+
+	Image* IrisImage = GetLevel()->CreateActor<Image>();
+	IrisImage->SetImageAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
+	IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
+	IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
+
+	//IrisImage->SetImageAnimationEndFunc<WorldMapPlayer>("ScreenIris", &WorldMapPlayer::SetAniStateScreenIrisEnd, this);
+	IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
+
 	SetChangeAnimation("Cup-Chose");
 
 	return StateInfo();
@@ -203,11 +219,41 @@ StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
 
 StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 {
+	if (true == AniState_Chose_End_)
+	{
+		/*if (true == AniState_ScreenIris_End_)
+		{*/
+			GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+			GameEngineCore::LevelChange("LoaddingScene");
+		//}
+	}
+
 	//에니메이션 종료후, 페이드
 	return StateInfo();
 }
 
 void WorldMapPlayer::Chose_End()
+{
+}
+
+StateInfo WorldMapPlayer::LevelChangeWait_Start(StateInfo _state)
+{
+
+
+	return StateInfo();
+}
+
+StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaTime)
+{
+	if (true == AniState_ScreenIris_End_)
+	{
+		GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+		GameEngineCore::LevelChange("LoaddingScene");
+	}
+	return StateInfo();
+}
+
+void WorldMapPlayer::LevelChangeWait_End()
 {
 }
 

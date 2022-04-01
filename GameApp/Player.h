@@ -125,6 +125,7 @@ private://Func
 
 	float4 GetBulletPoint();
 
+	void JumpUpdate(float _DeltaTime);
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
 

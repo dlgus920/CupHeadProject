@@ -16,7 +16,7 @@ public:
 	Map& operator=(const Map& _Other) = delete;
 	Map& operator=(Map&& _Other) noexcept = delete;
 
-	GameEngineImageRenderer* MapImage_;
+	//GameEngineImageRenderer* MapImage_;
 	GameEngineImageRenderer* CollisionMap_;
 
 	static float4 GetColor(GameEngineTransform* _Ptr, bool YRevers = true);

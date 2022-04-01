@@ -11,6 +11,7 @@
 #include <GameEngine/MouseActor.h>
 
 #include "Map.h"
+#include "Image.h"
 
 PlayLevel::PlayLevel() 
 {
@@ -25,31 +26,41 @@ void PlayLevel::LevelStart()
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Camera00)));
 
-	
 	{
 		//MouseActor* Actor = CreateActor<MouseActor>();
 		//Actor->GetUIRenderer()->SetRenderGroup(1000);  
 	}
 
 	{
-		{
-			Map* _Map = CreateActor<Map>();
+		
+		Image* BackImage = CreateActor<Image>();
+		BackImage->SetImageTexture("DicePalaceBack.png");
+		BackImage->SetAdjustImzgeSize();
+		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back10) });
 
-			_Map->MapImage_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
-			_Map->MapImage_->SetImage("DicePalaceMain.png");
-			_Map->MapImage_->GetTransform()->SetLocalScaling(1280.f, 720.f);
-			//_Map->MapImage_->SetAdjustImzgeSize();
 
-			// 1280 720
-			_Map->CollisionMap_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
-			_Map->CollisionMap_->SetImage("DicePalaceCol.png");
-			_Map->CollisionMap_->GetTransform()->SetLocalScaling(1280.f, 720.f);
-			//_Map->CollisionMap_->SetAdjustImzgeSize();
+		BackImage = CreateActor<Image>();
+		BackImage->SetImageTexture("DicePalaceMain.png");
+		BackImage->SetAdjustImzgeSize();
+		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back09) });
 
-			float4 mapsize = _Map->MapImage_->GetCurrentTexture()->GetMetaDataImageSize();
 
-			_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap00) });
-		}
+		Map* _Map = CreateActor<Map>();
+
+		//_Map->MapImage_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
+		//_Map->MapImage_->SetImage("DicePalaceMain.png");
+		//_Map->MapImage_->GetTransform()->SetLocalScaling(1280.f, 720.f);
+		////_Map->MapImage_->SetAdjustImzgeSize();
+
+		// 1280 720
+		_Map->CollisionMap_ = _Map->CreateTransformComponent<GameEngineImageRenderer>();
+		_Map->CollisionMap_->SetImage("DicePalaceCol.png");
+		_Map->CollisionMap_->GetTransform()->SetLocalScaling(1280.f, 720.f);
+
+		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap01) });
+
+
+		
 		//_Map->SetMapImage("DicePalaceMain.png", "DicePalaceCol.png");
 		// 
 		//_Map->SetMapImage("WorldMap_Background.png", "WorldMap_PixelCheckBackground.png", 1212, -939.5);
@@ -60,12 +71,12 @@ void PlayLevel::LevelStart()
 	{
 		Player* Actor = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Actor->GetTransform()->GetLocalPosition());
-		Actor->GetTransform()->SetLocalPosition(float4(900.f, -400.0f, static_cast<int>(ZOrder::Z01Actor01)));
+		Actor->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<int>(ZOrder::Z01Actor01)));
 	}
 
 	{
 		Monster* Actor = CreateActor<Monster>();
-		Actor->GetTransform()->SetLocalPosition(float4(670.f, -120.f, static_cast<int>(ZOrder::Z01Actor02)));
+		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<int>(ZOrder::Z01Actor02)));
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();
@@ -76,7 +87,7 @@ void PlayLevel::LevelStart()
 	//	Actor->GetTransform()->SetWorldPosition(float4(0.0f, 0.0f, 0.0f));
 	//}
 
-	SetDebug(false);
+	//SetDebug(false);
 }
 
 void PlayLevel::LevelUpdate(float _DeltaTime)

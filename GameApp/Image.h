@@ -24,9 +24,9 @@ private:	// member Var
 	GameEngineImageRenderer* ImageRenderer_;
 
 public:
-	void SetImageAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
-	void SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop /*= true*/);
 	void SetImageTexture(const std::string& _TextureName);
+	void SetImageAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
+	void SetImageAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop = true);
 
 	void SetImageLocalScaling(const float4& _Value);
 	void SetImageWorldScaling(const float4& _Value);

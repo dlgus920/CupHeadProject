@@ -22,6 +22,8 @@ void WorldMapPlayer::StateSetting()
 		&WorldMapPlayer::Walk_Update, &WorldMapPlayer::Walk_End);
 	State_.CreateState("Chose", &WorldMapPlayer::Chose_Start,
 		&WorldMapPlayer::Chose_Update, &WorldMapPlayer::Chose_End);
+	State_.CreateState("LevelChangeWait", &WorldMapPlayer::LevelChangeWait_Start,
+		&WorldMapPlayer::LevelChangeWait_Update, &WorldMapPlayer::LevelChangeWait_End);
 
 	State_.ChangeState("Idle");
 }
@@ -52,9 +54,9 @@ void WorldMapPlayer::AnimationSetting()
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down", 80, 86, 0.1f);
 	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Idle-Down-Right", 64, 67, 0.1f);
 
-	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Chose", 112, 123, 0.1f);
+	PlayerImageRenderer->CreateAnimation("WorldCuphead.png", "Cup-Chose", 112, 123, 0.1f, false);
 
-	PlayerImageRenderer->SetEndCallBack("Cup-Chose",std::bind(& WorldMapPlayer::PlayerImageRenderer,this));
+	PlayerImageRenderer->SetEndCallBack("Cup-Chose",std::bind(& WorldMapPlayer::SetAniStateChoseEnd,this));
 
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle-Down");
 }

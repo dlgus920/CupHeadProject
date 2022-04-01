@@ -47,7 +47,7 @@ void UserGame::Initialize()
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
 	LevelCreate<TitleScene>("Title");
-	//LevelCreate<PlayLevel>("Play");
+	LevelCreate<PlayLevel>("Play");
 	
 
 	LevelChange("Title");

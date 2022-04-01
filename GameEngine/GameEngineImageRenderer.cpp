@@ -116,6 +116,7 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 	}
 
 	CallFrame();
+
 	if (nullptr == FolderTextures_)
 	{
 		Renderer->ShaderHelper.SettingTexture("Tex", AnimationTexture_);

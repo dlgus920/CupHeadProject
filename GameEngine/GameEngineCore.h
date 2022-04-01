@@ -109,8 +109,21 @@ public:
 		return NewLevel;
 	}
 
+
+
 	static void LevelChange(const std::string& _Level);
 	static GameEngineLevel* LevelFind(const std::string& _Level);
+
+	template<typename LevelType>
+	static LevelType* LevelFind(const std::string& _Level)
+	{
+		std::map<std::string, GameEngineLevel*>::iterator FindIter = AllLevel_.find(_Level);
+		if (FindIter != AllLevel_.end())
+		{
+			return dynamic_cast<LevelType*> (FindIter->second);
+		}
+		return nullptr;
+	}
 
 private:
 	static GameEngineLevel* NextLevel_;

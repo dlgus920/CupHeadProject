@@ -65,6 +65,18 @@ public:
 		GetTransform()->SetLocalScaling(GetImageSize());
 	}
 
+	void SetAnimationReverse(std::string _animation)
+	{
+		Animation2D* ani = AllAnimations_.find(_animation)->second;
+
+		int framestart = ani->StartFrame_;
+		int frameend = ani->EndFrame_;
+
+		ani->StartFrame_ = frameend;
+		ani->EndFrame_ = framestart;
+		ani->CurFrame_ = frameend;
+	}
+
 	float4 GetImageSize()
 	{
 		if (nullptr != CurAnimation_)

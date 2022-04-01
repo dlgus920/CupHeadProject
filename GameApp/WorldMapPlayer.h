@@ -53,6 +53,7 @@ private:	// member Var
 	bool ColState_Chose_;
 
 	bool AniState_Chose_End_;
+	bool AniState_ScreenIris_End_;
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 
@@ -92,11 +93,20 @@ private:
 	StateInfo Chose_Update(StateInfo _state, float _DeltaTime);
 	void Chose_End();
 
+	StateInfo LevelChangeWait_Start(StateInfo _state);
+	StateInfo LevelChangeWait_Update(StateInfo _state, float _DeltaTime);
+	void LevelChangeWait_End();
+
 private:
-	const bool SetAniStateChoseEnd()
+	void SetAniStateChoseEnd()
 	{
 		AniState_Chose_End_ = true;
 	}
 
+	void SetAniStateScreenIrisEnd()
+	{
+		AniState_ScreenIris_End_ = true;
+	}
+	
 };
 

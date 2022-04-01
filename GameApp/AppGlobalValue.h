@@ -14,6 +14,7 @@ enum class CollisionGruop
 enum class ZOrder
 {
 	Z00Camera00,
+	Z00Fx00,
 	Z01Actor01,
 	Z01Actor02,
 	Z01Actor03,
@@ -35,6 +36,7 @@ enum class ZOrder
 	Z02Back09,
 	Z02Back10,
 	Z03Map00,
-	Z04CollisonMap00
+	Z04CollisonMap00,
+	Z04CollisonMap01
 
 };

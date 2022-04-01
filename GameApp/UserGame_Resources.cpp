@@ -156,6 +156,8 @@ void UserGame::ResourcesLoad()
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Loading");
 		
+		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
+
 		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
 		for (size_t i = 0; i < AllFile.size(); i++)
@@ -164,7 +166,17 @@ void UserGame::ResourcesLoad()
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
 		Texture->Cut(16, 3);
-		
+
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Loading");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
 	}
 
 	AppShaderLoad(); //TODO : 현재 문제 발생 주범
