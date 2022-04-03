@@ -147,39 +147,39 @@ private: //Update
 		
 private: 
 #pragma region State_
-	StateInfo Bomb_Start(StateInfo _state);
+	void Bomb_Start();
 	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
 	void Bomb_End();
 
-	StateInfo Death_Start(StateInfo _state);
+	void Death_Start();
 	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
 	void Death_End();
 
-	StateInfo Dash_Start(StateInfo _state);
+	void Dash_Start();
 	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
 	void Dash_End();
 
-	StateInfo Jump_Start(StateInfo _state);
+	void Jump_Start();
 	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
 	void Jump_End();
 
-	StateInfo Idle_Start(StateInfo _state);
+	void Idle_Start();
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 	void Idle_End();
 
-	StateInfo Walk_Start(StateInfo _state);
+	void Walk_Start();
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
 	void Walk_End();
 
-	StateInfo Duck_Start(StateInfo _state);
+	void Duck_Start();
 	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
 	void Duck_End();
 
-	StateInfo RockOn_Start(StateInfo _state);
+	void RockOn_Start();
 	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
 	void RockOn_End();
 
-	StateInfo Hit_Start(StateInfo _state);
+	void Hit_Start();
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
 	void Hit_End();
 #pragma endregion

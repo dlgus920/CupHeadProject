@@ -5,74 +5,45 @@
 #include "GameEngineTime.h"
 #include <map>
 
-// 분류 :
-// 용도 :
-// 설명 :
-
 class StateInfo
 {
 public:
 	std::string _NextState;
-	float Time;
 
 public:
 	StateInfo()
 		: _NextState("")
-		, Time(0.0f)
 	{
-
 	}
 
 	StateInfo(const char* _Name)
 		: _NextState(_Name)
-		, Time(0.0f)
 	{
-
 	}
-
-	StateInfo(const char* _Name, float _NextTime)
-		: _NextState(_Name)
-		, Time(_NextTime)
-	{
-
-	}
-
-
 
 	StateInfo(const std::string& _Name)
 		: _NextState(_Name)
-		, Time(0.0f)
 	{
-
 	}
-
-	StateInfo(const std::string& _Name, float _NextTime)
-		: _NextState(_Name)
-		, Time(_NextTime)
-	{
-
-	}
-
 };
 
-
-
-// 전환된다 진행된다
 template<typename FSMType>
 class GameEngineFSM
 {
 	class State : public GameEngineObjectNameBase
 	{
-		// 이렇게 전방선언 할수도 있다.
 		friend class GameEngineFSM;
 
 	public:
 		GameEngineFSM* parent_;
 
-		float StateTime; // 이 스테이트에 진입한지 몇초가 됐다.
-		StateInfo(FSMType::* StateStart)(StateInfo _Ptr);
+		void(FSMType::* StateStart)();
 		StateInfo(FSMType::* StateUpdate)(StateInfo _Ptr, float DeltaTime);
 		void(FSMType::* StateEnd)();
+
+		//std::function<void(StateInfo)> UpdateFunc_;
+		//std::function<void> StartFunc_;
+		//std::function<void> EndFunc_;
 
 	public:
 
@@ -89,8 +60,7 @@ class GameEngineFSM
 				return;
 			}
 #endif // _DEBUG
-			(parent_->ObjectPtr_->*StateStart)({ GetName(), 0.0f });
-			StateTime = 0.0f;
+			(parent_->ObjectPtr_->*StateStart)();
 		}
 
 		void CallUpdate(float _DeltaTime)
@@ -108,32 +78,26 @@ class GameEngineFSM
 			}
 #endif // _DEBUG
 
-			StateTime += GameEngineTime::GetInst().GetDeltaTime();
-			StateInfo Return = (parent_->ObjectPtr_->*StateUpdate)({GetName(), StateTime }, _DeltaTime);
-
-			if (Return._NextState.size() == 0)
-			{
-				return;
-			}
+			StateInfo Return = (parent_->ObjectPtr_->*StateUpdate)(GetName(), _DeltaTime);
 
 			if (Return._NextState == "")
 			{
 				return;
 			}
 #ifdef _DEBUG
+			//if (Return._NextState.size() == 0)
+			//{
+			//	return;
+			//}
+
 			if (nullptr == parent_->FindState(Return._NextState))
 			{
 				GameEngineDebug::AssertFalse();
 			}
 #endif // _DEBUG
-			// 넘어갈수 있는곳인데.
-			if (0 >= Return.Time)
-			{
-				parent_->ChangeState(Return._NextState);
-			}
 
-			// 넘어가는데 몇초를 기다려야 된다는것을 알게 되었다.
-			parent_->nextState_ = Return;
+			
+			parent_->ChangeState(Return._NextState);
 		}
 
 		void CallEnd()
@@ -151,7 +115,6 @@ class GameEngineFSM
 			}
 #endif // _DEBUG
 			(parent_->ObjectPtr_->*StateEnd)();
-			StateTime = 0.0f;
 		}
 
 	public:
@@ -162,7 +125,6 @@ class GameEngineFSM
 			: parent_(_parent)
 			, StateStart(nullptr)
 			, StateUpdate(nullptr)
-			, StateTime(0.0f)
 		{
 
 		}
@@ -211,7 +173,7 @@ public:		//delete operator
 
 
 public:
-	void CreateState(const std::string& _name, StateInfo(FSMType::* _StartFunc)(StateInfo), StateInfo(FSMType::* _UpdateFunc)(StateInfo, float), void(FSMType::* _EndFunc)())
+	void CreateState(const std::string& _name, void(FSMType::* _StartFunc)(), StateInfo(FSMType::* _UpdateFunc)(StateInfo, float), void(FSMType::* _EndFunc)())
 	{
 #ifdef _DEBUG
 		if (nullptr != FindState(_name))

@@ -38,7 +38,7 @@ Player::Player() :
 	TimeCheck_(0.f),
 	DistTimeCheck_(0.f),
 	GravitySpeed_(0.f),
-	GravityAcc_(5.f),
+	GravityAcc_(2.f),
 	PrevAniSize_{}
 {
 }
@@ -52,19 +52,18 @@ void Player::Start()
 {
 	ComponentSetting();
 	AnimationSetting();
-	KeySetting();
-	StateSetting();
-
-	ChangeShootFunc(&Player::ShootDefalutBullet);
-
-	//SetScale(x *= -1, y, z); 가로 뒤집기
-	Dir_ = AnimationDirection::Right;
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
 
 	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 	PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 	PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 
+	KeySetting();
+	StateSetting();
+
+	Dir_ = AnimationDirection::Right;
+
+	ChangeShootFunc(&Player::ShootDefalutBullet);
 
 	State_.ChangeState("Idle");
 }
@@ -179,10 +178,12 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
+
 void Player::ChangeShootFunc(void(Player::* _FrameFunc)(float4))
 {
 	BulletShootFunc_ = std::bind(_FrameFunc, this, std::placeholders::_1);
 }
+
 void Player::ShootGuidedBullet(float4 _Dir)
 {
 	// 소환된 방향으로 나가되, 자체적으로 주변 적을 찾아 알아서 이동하게 해줌

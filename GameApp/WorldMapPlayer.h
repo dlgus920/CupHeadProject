@@ -81,19 +81,19 @@ private: // Func
 	void SetChangeAnimation(std::string _animation);
 
 private:
-	StateInfo Idle_Start(StateInfo _state);
+	void Idle_Start();
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 	void Idle_End();
 
-	StateInfo Walk_Start(StateInfo _state);
+	void Walk_Start();
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
 	void Walk_End();
 
-	StateInfo Chose_Start(StateInfo _state);
+	void Chose_Start();
 	StateInfo Chose_Update(StateInfo _state, float _DeltaTime);
 	void Chose_End();
 
-	StateInfo LevelChangeWait_Start(StateInfo _state);
+	void LevelChangeWait_Start();
 	StateInfo LevelChangeWait_Update(StateInfo _state, float _DeltaTime);
 	void LevelChangeWait_End();
 

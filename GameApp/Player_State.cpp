@@ -4,11 +4,9 @@
 //#include <GameEngine/GameEngineImageRenderer.h>
 
 
-StateInfo Player::Idle_Start(StateInfo _state)
+void Player::Idle_Start()
 {
 	ChangeAnimation("Cup-Idle");
-
-	return StateInfo();
 }
 StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 {
@@ -36,11 +34,9 @@ void Player::Idle_End()
 {
 }
 
-StateInfo Player::Walk_Start(StateInfo _state)
+void Player::Walk_Start()
 {
 	// 각기 다른 에니메이션 재생
-
-	return StateInfo();
 }
 StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 {
@@ -74,13 +70,11 @@ void Player::Walk_End()
 {
 }
 
-StateInfo Player::Jump_Start(StateInfo _state)
+void Player::Jump_Start()
 {
 	ChangeAnimation("Cup-Jump");
 
 	Move(0.f, 10.f, 0.1f);
-
-	return StateInfo();
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
@@ -120,8 +114,14 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	 
 	if (false == ColState_Ground)
 	{
-		Move(float4(0.f, 400.f, 0.f), _DeltaTime);
-		GravityUpdate(_DeltaTime);
+		GravitySpeed_ -= GravityAcc_;
+
+		if (GravitySpeed_ < -600.f)
+		{
+			GravitySpeed_ = -600.f;
+		}
+
+		Move(float4(0.f, 400.f + GravitySpeed_, 0.f), _DeltaTime);
 	}
 
 	if (KeyState_Right_)
@@ -143,11 +143,9 @@ void Player::Jump_End()
 
 }
 
-StateInfo Player::Duck_Start(StateInfo _state)
+void Player::Duck_Start()
 {
 	ChangeAnimation("Cup-Duck-Idle");
-
-	return StateInfo();
 }
 
 StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
@@ -173,9 +171,8 @@ void Player::Duck_End()
 {
 }
 
-StateInfo Player::RockOn_Start(StateInfo _state)
+void Player::RockOn_Start()
 {
-	return StateInfo();
 }
 
 StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
@@ -187,18 +184,25 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 
 	if (true == KeyState_Shoot_)
 	{
+		float4 dir;
+
 		if (true == KeyState_Up_)
 		{
-			if (KeyState_Left_ ||
-				KeyState_Right_)
+			if (KeyState_Left_)
 			{
 				ChangeAnimation("Cup-Shoot-Up-Str");
-				return StateInfo();
+				dir = float4::UPLEFT;
+			}
+
+			else if (KeyState_Right_)
+			{
+				ChangeAnimation("Cup-Shoot-Up-Str");
+				dir = float4::UPRIGHT;
 			}
 			else
 			{
 				ChangeAnimation("Cup-Shoot-Up");
-				return StateInfo();
+				dir = float4::UP;
 			}
 		}
 
@@ -207,33 +211,52 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 			if (KeyState_Left_)
 			{
 				ChangeAnimation("Cup-Shoot-Down-Str");
-				return StateInfo();
-				//SpawnBullet(BulletType_,float4::LEFT);
+				dir = float4::DOWNLEFT;
 			}
+
+			else if(KeyState_Right_)
+			{
+				ChangeAnimation("Cup-Shoot-Down-Str");
+				dir = float4::DOWNRIGHT;
+			}
+
 			else
 			{
 				ChangeAnimation("Cup-Shoot-Down");
-				return StateInfo();
+				dir = float4::DOWN;
 			}
 		}
-		ChangeAnimation("Cup-Shoot-Str");
-		return StateInfo();
+
+		else
+		{
+			ChangeAnimation("Cup-Shoot-Str");
+
+			if (Dir_ == AnimationDirection::Right)
+			{
+				dir = float4::RIGHT;
+			}
+			else
+			{
+				dir = float4::LEFT;
+			}
+		}
+
+		BulletShootFunc_(dir);
 	}
 
 	else if(false == KeyState_Shoot_)
 	{
 		if (true == KeyState_Up_)
 		{
-			if (KeyState_Left_||
+			if (KeyState_Left_ ||
 				KeyState_Right_)
 			{
-				ChangeAnimation("Cup-RockOn-Up-Str");
-				return StateInfo();
+				ChangeAnimation("Cup-RockOn-Up-Str");			
 			}
+
 			else
 			{
-				ChangeAnimation("Cup-RockOn-Up");
-				return StateInfo();
+				ChangeAnimation("Cup-RockOn-Up");				
 			}
 		}
 
@@ -243,17 +266,18 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 				KeyState_Right_)
 			{
 				ChangeAnimation("Cup-RockOn-Down-Str");
-				return StateInfo();
-
 			}
+
 			else
 			{
 				ChangeAnimation("Cup-RockOn-Down");
-				return StateInfo();
 			}
 		}
-		ChangeAnimation("Cup-RockOn-Str");
-		return StateInfo();
+
+		else
+		{
+			ChangeAnimation("Cup-RockOn-Str");
+		}
 	}
 	
 	return StateInfo();
@@ -263,11 +287,10 @@ void Player::RockOn_End()
 {
 }
 
-StateInfo Player::Bomb_Start(StateInfo _state)
+void Player::Bomb_Start()
 {
 	ChangeAnimation("Cup-Bomb");
 
-	return StateInfo();
 }
 
 StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
@@ -282,10 +305,9 @@ void Player::Bomb_End()
 {
 }
 
-StateInfo Player::Death_Start(StateInfo _state)
+void Player::Death_Start()
 {
 	State_Update_ = false;
-	return StateInfo();
 }
 
 StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
@@ -306,7 +328,7 @@ void Player::Death_End()
 {
 }
 
-StateInfo Player::Hit_Start(StateInfo _state)
+void Player::Hit_Start()
 {
 	if (true == ColState_Ground)
 	{
@@ -319,7 +341,6 @@ StateInfo Player::Hit_Start(StateInfo _state)
 
 	TimeCheck_ = 0.f;
 	GravitySpeed_ = 0.f;
-	return StateInfo();
 }
 
 StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
@@ -342,12 +363,10 @@ void Player::Hit_End()
 {
 }
 
-StateInfo Player::Dash_Start(StateInfo _state)
+void Player::Dash_Start()
 {
 	ChangeAnimation("Cup-Dash");
 	TimeCheck_ = 0.f;
-
-	return StateInfo();
 }
 
 StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)

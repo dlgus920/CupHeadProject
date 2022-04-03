@@ -82,12 +82,10 @@ std::string WorldMapPlayer::CheckState()
 	return CurState_;
 }
 
-StateInfo WorldMapPlayer::Idle_Start(StateInfo _state)
+void WorldMapPlayer::Idle_Start()
 {
 	//ChangeAnimation("Cup-Idle-Down");
 	SetChangeAnimation("Cup-Idle-Down-Right");
-
-	return StateInfo();
 }
 
 StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
@@ -133,9 +131,8 @@ void WorldMapPlayer::Idle_End()
 {
 }
 
-StateInfo WorldMapPlayer::Walk_Start(StateInfo _state)
+void WorldMapPlayer::Walk_Start()
 {
-	return StateInfo();
 }
 
 StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
@@ -199,7 +196,7 @@ void WorldMapPlayer::Walk_End()
 {
 }
 
-StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
+void WorldMapPlayer::Chose_Start()
 {
 	float4 pos = GetTransform()->GetWorldPosition();
 
@@ -213,8 +210,6 @@ StateInfo WorldMapPlayer::Chose_Start(StateInfo _state)
 	IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
 
 	SetChangeAnimation("Cup-Chose");
-
-	return StateInfo();
 }
 
 StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
@@ -236,11 +231,8 @@ void WorldMapPlayer::Chose_End()
 {
 }
 
-StateInfo WorldMapPlayer::LevelChangeWait_Start(StateInfo _state)
+void WorldMapPlayer::LevelChangeWait_Start()
 {
-
-
-	return StateInfo();
 }
 
 StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaTime)
