@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include "Map.h"
+#include "Image.h"
 #include "GameEngine/GameEngineCollision.h"
 
 void Player::Update(float _DeltaTime)
@@ -29,6 +30,8 @@ void Player::Update(float _DeltaTime)
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
 	//State_Update_는 State_.Update중에 설정함
+
+
 }
 
 void Player::StateUpdate(float _DeltaTime)

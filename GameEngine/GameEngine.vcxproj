@@ -71,6 +71,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineImageShotWindow.h" />
     <ClInclude Include="GameEngineIndexBuffer.h">
       <SubType>
       </SubType>
@@ -84,6 +85,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineLevelControlWindow.h" />
     <ClInclude Include="GameEngineMesh.h">
       <SubType>
       </SubType>
@@ -239,6 +241,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineImageShotWindow.cpp" />
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <SubType>
       </SubType>
@@ -252,6 +255,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineLevelControlWindow.cpp" />
     <ClCompile Include="GameEngineMesh.cpp">
       <SubType>
       </SubType>

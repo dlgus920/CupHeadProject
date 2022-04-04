@@ -14,6 +14,7 @@
 #include "GameEngineUIRenderer.h"
 #include "GameEngineGUI.h"
 
+
 CameraActor* GameEngineLevel::GetMainCameraActor()
 {
 	return MainCameraActor_;
@@ -33,8 +34,7 @@ CameraComponent* GameEngineLevel::GetUICamera()
 {
 	return UICameraActor_->GetCamera();
 }
-GameEngineLevel::GameEngineLevel() 
-	: IsDebug_(true)
+GameEngineLevel::GameEngineLevel()
 {
 }
 
@@ -51,12 +51,12 @@ GameEngineLevel::~GameEngineLevel()
 				delete Actor;
 				Actor = nullptr;
 			}
-			
+
 		}
 	}
 }
 
-void GameEngineLevel::Init() 
+void GameEngineLevel::Init()
 {
 	MainCameraActor_ = CreateActor<CameraActor>();
 	UICameraActor_ = CreateActor<CameraActor>();
@@ -78,7 +78,8 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 				continue;
 			}
 
-			Actor->Update(_DeltaTime); 
+			// 위치바꾸고
+			Actor->Update(_DeltaTime);
 			Actor->UpdateComponent(_DeltaTime);
 		}
 	}
@@ -109,21 +110,16 @@ void GameEngineLevel::LevelChangeStartActorEvent()
 	}
 }
 
-void GameEngineLevel::Render() 
+void GameEngineLevel::Render()
 {
 	GameEngineDevice::RenderStart();
 
 	MainCameraActor_->GetCamera()->ClearCameraTarget();
 	UICameraActor_->GetCamera()->ClearCameraTarget();
 	MainCameraActor_->GetCamera()->Render();
-
-	//if (true == IsDebug_)
-	//{
 	MainCameraActor_->GetCamera()->DebugRender();
-	//}
 
 	UICameraActor_->GetCamera()->Render();
-
 
 	GameEngineDevice::GetBackBufferTarget()->Merge(MainCameraActor_->GetCamera()->GetCameraRenderTarget());
 	GameEngineDevice::GetBackBufferTarget()->Merge(UICameraActor_->GetCamera()->GetCameraRenderTarget());
@@ -133,9 +129,11 @@ void GameEngineLevel::Render()
 
 	// 충돌체 랜더링이 무조건 화면에 뚫고 나와야하는 애들은
 	GameEngineDevice::RenderEnd();
+
+
 }
 
-void GameEngineLevel::Release(float _DeltaTime) 
+void GameEngineLevel::Release(float _DeltaTime)
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -149,6 +147,7 @@ void GameEngineLevel::Release(float _DeltaTime)
 
 	MainCameraActor_->GetCamera()->ReleaseRenderer();
 	UICameraActor_->GetCamera()->ReleaseRenderer();
+
 
 	// 콜리전 삭제
 	{
@@ -229,12 +228,12 @@ void GameEngineLevel::Release(float _DeltaTime)
 // 	RendererList_[_Order].push_back(_Renderer);
 
 
-void GameEngineLevel::LevelChangeStartEvent() 
+void GameEngineLevel::LevelChangeStartEvent()
 {
 
 }
 
-void GameEngineLevel::LevelChangeEndEvent() 
+void GameEngineLevel::LevelChangeEndEvent()
 {
 
 }

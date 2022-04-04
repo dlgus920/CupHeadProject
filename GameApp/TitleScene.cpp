@@ -48,10 +48,20 @@ void TitleScene::LevelStart()
 
 void TitleScene::LevelUpdate(float _DeltaTime)
 {
+
+	//if (WM_ACTIVATE)
+	//{
+	//	int a = 0;
+	//}
+
 	if (GameEngineInput::GetInst().Down("Next"))
 	{
-		GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("WorldMap");;
+		GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
+
+		dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
+
 		GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+
 		//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 		GameEngineCore::LevelChange("LoaddingScene");
 		//TODO : 로딩씬 생성후 죽이기 or 초기화 작업

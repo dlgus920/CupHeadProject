@@ -110,13 +110,6 @@ void GameEngineCore::MainLoop()
 	CurrentLevel_->ActorUpdate(GameEngineTime::GetInst().GetDeltaTime());
 	CurrentLevel_->Render();
 	CurrentLevel_->Release(GameEngineTime::GetInst().GetDeltaTime());
-
-
-
-
-	// 오브젝트 루프
-
-	//MainCore_->GameLoop();
 }
 
 void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)

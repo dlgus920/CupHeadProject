@@ -14,7 +14,7 @@ private:	// member Var
 	GameEngineObjectBase* parent_;
 
 public:
-	bool IsNull() 
+	bool IsNull()
 	{
 		return nullptr == this;
 	}
@@ -53,6 +53,11 @@ public:
 		isDeath_ = true;
 	}
 
+	void OnOffChange()
+	{
+		isUpdate_ = !isUpdate_;
+	}
+
 	void On()
 	{
 		isUpdate_ = true;
@@ -83,7 +88,7 @@ public:
 		return isDebug_;
 	}
 
-	void SetOrder(int _Order) 
+	void SetOrder(int _Order)
 	{
 		Order_ = _Order;
 	}
@@ -97,6 +102,7 @@ public:
 	{
 		return isUpdate_; // 부모도 켜져있어야
 	}
+
 
 public:
 	GameEngineObjectBase(); // default constructer 디폴트 생성자

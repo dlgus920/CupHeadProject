@@ -8,6 +8,7 @@
 #include "GameEngineRenderTarget.h"
 
 GameEngineRenderTarget* GameEngineUIRenderer::FontTarget_ = nullptr;
+int GameEngineUIRenderer::UIRendererCount = 0;
 
 
 
@@ -16,11 +17,13 @@ GameEngineUIRenderer::GameEngineUIRenderer()
 	, PrintText_("")
 	, FontPivot_(float4::ZERO)
 {
+	++UIRendererCount;
 }
 
 GameEngineUIRenderer::~GameEngineUIRenderer()
 {
-	if (nullptr != FontTarget_)
+	--UIRendererCount;
+	if (0 == UIRendererCount && nullptr != FontTarget_)
 	{
 		delete FontTarget_;
 		FontTarget_ = nullptr;
@@ -34,7 +37,8 @@ void GameEngineUIRenderer::Start()
 	SetRenderingPipeLine("TextureUI");
 	ImageRendererStart();
 
-	if (nullptr == FontTarget_)
+	if (nullptr == FontTarget_
+		&& UIRendererCount == 1)
 	{
 		FontTarget_ = new GameEngineRenderTarget();
 		FontTarget_->Create(GameEngineWindow::GetInst().GetSize(), float4::NONE);

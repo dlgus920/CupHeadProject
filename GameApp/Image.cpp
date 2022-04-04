@@ -16,7 +16,8 @@ Image::~Image() // default destructer 디폴트 소멸자
 
 void Image::Start()
 {
-	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
+	//ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
+	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 }
 
 void Image::Update(float _DeltaTime)

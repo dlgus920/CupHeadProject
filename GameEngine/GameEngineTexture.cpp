@@ -95,13 +95,15 @@ void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc)
 		CreateShaderResourceView();
 	}
 
+
 	if (_Desc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
 		CreateDepthStencilView();
 	}
+
 }
 
-void GameEngineTexture::Create(ID3D11Texture2D* _Texture2D) 
+void GameEngineTexture::Create(ID3D11Texture2D* _Texture2D)
 {
 	if (nullptr == _Texture2D)
 	{
@@ -120,12 +122,12 @@ ID3D11RenderTargetView* GameEngineTexture::CreateRenderTargetView()
 		// GameEngineDebug::MsgBoxError("RenderTargetView OverLap Create Error");
 		return RenderTargetView_;
 	}
-	
+
 	if (S_OK != GameEngineDevice::GetDevice()->CreateRenderTargetView(Texture2D_, nullptr, &RenderTargetView_))
 	{
 		GameEngineDebug::MsgBoxError("RenderTargetView Create Error");
 	}
-	
+
 	return RenderTargetView_;
 }
 
@@ -145,7 +147,7 @@ ID3D11ShaderResourceView* GameEngineTexture::CreateShaderResourceView()
 	return ShaderResourceView_;
 }
 
-ID3D11DepthStencilView* GameEngineTexture::CreateDepthStencilView() 
+ID3D11DepthStencilView* GameEngineTexture::CreateDepthStencilView()
 {
 	if (nullptr != DepthStencilView_)
 	{
@@ -160,6 +162,7 @@ ID3D11DepthStencilView* GameEngineTexture::CreateDepthStencilView()
 
 	return DepthStencilView_;
 }
+
 
 void GameEngineTexture::Load(const std::string& _Path)
 {
@@ -182,7 +185,7 @@ void GameEngineTexture::Load(const std::string& _Path)
 	{
 		GameEngineDebug::MsgBoxError("로드할수 없는 이미지 포맷입니다" + Extension);
 	}
-	else 
+	else
 	{
 		if (S_OK != DirectX::LoadFromWICFile(wPath.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, Image_))
 		{
@@ -217,11 +220,6 @@ void GameEngineTexture::PushCutIndex(const float4& _Size, const float4& _Pos)
 
 void GameEngineTexture::Cut(int _x, int _y)
 {
-	TextureScale_ = float4(TextureDesc_.Width, TextureDesc_.Height);
-	TextureScale_.x /= _x;
-	TextureScale_.y /= _y;
-
-
 	// UV값은 무조건
 	// 1.0f 라고 봐야죠?
 	// 

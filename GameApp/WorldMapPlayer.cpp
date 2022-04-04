@@ -218,7 +218,7 @@ StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 	{
 		/*if (true == AniState_ScreenIris_End_)
 		{*/
-			GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("Play");
 			GameEngineCore::LevelChange("LoaddingScene");
 		//}
 	}
@@ -239,7 +239,7 @@ StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaT
 {
 	if (true == AniState_ScreenIris_End_)
 	{
-		GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+		dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("Play");
 		GameEngineCore::LevelChange("LoaddingScene");
 	}
 	return StateInfo();

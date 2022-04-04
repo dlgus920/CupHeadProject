@@ -91,6 +91,9 @@
     <Filter Include="Imgui\Code">
       <UniqueIdentifier>{aef6972d-a46f-4781-913b-d44a70c0bf1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui\EngineWindow">
+      <UniqueIdentifier>{2c173fda-f054-44bb-94fc-c1903f58c407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -281,10 +284,16 @@
     <ClInclude Include="GameEngineGUI.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderWindow.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
     <ClInclude Include="EngineGlovalValue.h" />
+    <ClInclude Include="GameEngineImageShotWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineLevelControlWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -458,11 +467,17 @@
     <ClCompile Include="GameEngineGUI.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderWindow.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="MouseActor.cpp">
       <Filter>Object\EngineActor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineImageShotWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineLevelControlWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

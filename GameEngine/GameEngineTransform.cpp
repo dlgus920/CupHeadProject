@@ -324,12 +324,15 @@ void GameEngineTransform::SetLocalScaling(const float _ValueX, const float _Valu
 		TransformData_.vLocalScaling_ = _Value;
 		TransformData_.vWorldScaling_ = _Value;
 		AllChildCalculationScaling();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vLocalScaling_ = _Value;
 	CalculationWorldScaling();
 	AllChildCalculationScaling();
+
+	TransformUpdate();
 }
 
 void GameEngineTransform::SetWorldScaling(const float _ValueX, const float _ValueY, const float _ValueZ)
@@ -340,12 +343,15 @@ void GameEngineTransform::SetWorldScaling(const float _ValueX, const float _Valu
 		TransformData_.vLocalScaling_ = _Value;
 		TransformData_.vWorldScaling_ = _Value;
 		AllChildCalculationScaling();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vWorldScaling_ = _Value;
 	CalculationLocalScaling();
 	AllChildCalculationScaling();
+
+	TransformUpdate();
 }
 
 void GameEngineTransform::SetLocalRotation(const float _ValueX, const float _ValueY, const float _ValueZ)
@@ -356,12 +362,15 @@ void GameEngineTransform::SetLocalRotation(const float _ValueX, const float _Val
 		TransformData_.vLocalRotation_ = _Value;
 		TransformData_.vWorldRotation_ = _Value;
 		AllChildCalculationRotation();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vLocalRotation_ = _Value;
 	CalculationWorldRotation();
 	AllChildCalculationRotation();
+
+	TransformUpdate();
 }
 
 void GameEngineTransform::SetWorldRotation(const float _ValueX, const float _ValueY, const float _ValueZ)
@@ -372,12 +381,15 @@ void GameEngineTransform::SetWorldRotation(const float _ValueX, const float _Val
 		TransformData_.vLocalRotation_ = _Value;
 		TransformData_.vWorldRotation_ = _Value;
 		AllChildCalculationRotation();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vWorldRotation_ = _Value;
 	CalculationLocalRotation();
 	AllChildCalculationRotation();
+
+	TransformUpdate();
 }
 
 void GameEngineTransform::SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ)
@@ -388,26 +400,33 @@ void GameEngineTransform::SetLocalPosition(const float _ValueX, const float _Val
 		TransformData_.vLocalPosition_ = _Value;
 		TransformData_.vWorldPosition_ = _Value;
 		AllChildCalculationPosition();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vLocalPosition_ = _Value;
 	CalculationWorldPosition();
 	AllChildCalculationPosition();
+
+	TransformUpdate();
 }
 
 void GameEngineTransform::SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ)
 {
 	float4 _Value = { _ValueX , _ValueY , _ValueZ };
+
 	if (nullptr == Parent_)
 	{
 		TransformData_.vLocalPosition_ = _Value;
 		TransformData_.vWorldPosition_ = _Value;
 		AllChildCalculationPosition();
+		TransformUpdate();
 		return;
 	}
 
 	TransformData_.vWorldPosition_ = _Value;
 	CalculationLocalPosition();
 	AllChildCalculationRotation();
+
+	TransformUpdate();
 }

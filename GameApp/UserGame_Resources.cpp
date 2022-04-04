@@ -126,11 +126,11 @@ void UserGame::ResourcesLoad()
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
-		Texture->Cut(1,8);
+		Texture->Cut(8,1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
-		Texture->Cut(1, 4);
+		Texture->Cut(4, 1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
-		Texture->Cut(1, 6);
+		Texture->Cut(6, 1);
 	}
 
 	{	

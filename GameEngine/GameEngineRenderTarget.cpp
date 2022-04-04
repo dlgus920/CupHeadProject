@@ -34,7 +34,7 @@ GameEngineRenderTarget::GameEngineRenderTarget(GameEngineRenderTarget&& _other) 
 
 }
 
-void GameEngineRenderTarget::Clear() 
+void GameEngineRenderTarget::Clear()
 {
 	for (size_t i = 0; i < RenderTargetViews_.size(); i++)
 	{
@@ -49,6 +49,7 @@ void GameEngineRenderTarget::Clear()
 
 void GameEngineRenderTarget::Create(const std::string _TextureName, float4 _ClearColor)
 {
+
 	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(_TextureName);
 	if (nullptr == FindTexture)
 	{
@@ -56,6 +57,7 @@ void GameEngineRenderTarget::Create(const std::string _TextureName, float4 _Clea
 	}
 
 	FindTexture->CreateRenderTargetView();
+	FindTexture->CreateShaderResourceView();
 
 	Create(FindTexture, _ClearColor);
 }
@@ -71,14 +73,6 @@ void GameEngineRenderTarget::Create(float4 _Size, float4 _ClearColor)
 	Create(NewTexture, _ClearColor);
 }
 
-void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearColor)
-{
-	Textures_.push_back(_Texture);
-	RenderTargetViews_.push_back(_Texture->GetRenderTargetView());
-	ShaderResourcesViews_.push_back(*_Texture->GetShaderResourcesView());
-	ClearColor_.push_back(_ClearColor);
-}
-
 void GameEngineRenderTarget::CreateDepthBuffer(float4 _Scale)
 {
 	if (nullptr != DepthBuffer_)
@@ -90,8 +84,18 @@ void GameEngineRenderTarget::CreateDepthBuffer(float4 _Scale)
 	DepthBuffer_->Create(_Scale);
 }
 
-void GameEngineRenderTarget::Setting(int _Index) 
+void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearColor)
 {
+	Textures_.push_back(_Texture);
+	RenderTargetViews_.push_back(_Texture->GetRenderTargetView());
+	ShaderResourcesViews_.push_back(*_Texture->GetShaderResourcesView());
+	ClearColor_.push_back(_ClearColor);
+}
+
+
+void GameEngineRenderTarget::Setting(int _Index)
+{
+
 	if (0 >= RenderTargetViews_.size())
 	{
 		GameEngineDebug::MsgBoxError("Render Target Setting Error Size Zero");
@@ -128,6 +132,7 @@ void GameEngineRenderTarget::Merge(GameEngineRenderTarget* _Other, int _Index)
 	Pipe_->Reset();
 	Res_.ReSet();
 }
+
 
 void GameEngineRenderTarget::Copy(GameEngineRenderTarget* _Other)
 {

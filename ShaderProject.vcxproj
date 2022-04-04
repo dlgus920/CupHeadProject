@@ -141,6 +141,7 @@
   <ItemGroup>
     <FxCompile Include="Color.fx" />
     <FxCompile Include="CbufferHeader.fx" />
+    <FxCompile Include="EngineResources\Shader\ProgressBar.fx" />
     <FxCompile Include="EngineResources\Shader\TargetMerge.fx" />
     <FxCompile Include="Texture.fx" />
   </ItemGroup>

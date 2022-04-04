@@ -30,7 +30,7 @@ protected:
 	void OnGUI() override;
 
 public:
-	void ClaerRenderTarget() 
+	void ClaerRenderTarget()
 	{
 		DrawRenderTarget_.clear();
 	}
@@ -42,6 +42,7 @@ public:
 
 private:
 	std::vector<RenderTargetDrawData> DrawRenderTarget_;
+	std::list<class GameEngineImageShotWindow*> ImageShot_;
 
 };
 

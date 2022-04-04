@@ -12,6 +12,7 @@
 
 #include "Map.h"
 #include "Image.h"
+#include "Bullet.h"
 
 PlayLevel::PlayLevel() 
 {
@@ -68,14 +69,14 @@ void PlayLevel::LevelStart()
 	}
 
 	{
-		Player* Actor = CreateActor<Player>();
-		GetMainCameraActor()->GetTransform()->SetWorldPosition(Actor->GetTransform()->GetLocalPosition());
-		Actor->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<int>(ZOrder::Z01Actor01)));
+		Player_ = CreateActor<Player>();
+		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
+		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<int>(ZOrder::Z01Actor02)));
 	}
 
 	{
 		Monster* Actor = CreateActor<Monster>();
-		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<int>(ZOrder::Z01Actor02)));
+		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<int>(ZOrder::Z01Actor03)));
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();
@@ -86,12 +87,19 @@ void PlayLevel::LevelStart()
 	//	Actor->GetTransform()->SetWorldPosition(float4(0.0f, 0.0f, 0.0f));
 	//}
 
+	GameEngineInput::GetInst().CreateKey("TEST", VK_LSHIFT);
 	//SetDebug(false);
 }
 
 void PlayLevel::LevelUpdate(float _DeltaTime)
 {
-
+	if (GameEngineInput::GetInst().Press("TEST"))
+	{
+		Bullet_Defalut* Bullet = CreateActor<Bullet_Defalut>();
+		float4 pos = Player_->GetTransform()->GetWorldPosition();
+		Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z01Actor01));
+		Bullet->SetMoveDir(float4::RIGHT);
+	}
 }
 void PlayLevel::LevelChangeEndEvent()
 {

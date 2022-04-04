@@ -153,22 +153,6 @@ const std::string Player::CheckState()
 	return CurState_;
 }
 
-//void Player::Shoot(float4 ShootDir)
-//{
-//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-//	NewBullet->SetMoveDir(ShootDir);
-//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-//	NewBullet->Release(1.0f);
-//}
-//
-//void Player::Shoot(float ShootDirX, float ShootDirY)
-//{
-//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-//	NewBullet->SetMoveDir(float4(ShootDirX, ShootDirY, 0.f));
-//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-//	NewBullet->Release(1.0f);
-//}
-
 void Player::Move(float4 MoveDir, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
@@ -199,7 +183,15 @@ void Player::ShootSpreadBullet(float4 _Dir)
 void Player::ShootDefalutBullet(float4 _Dir)
 {
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
+	float4 pos = GetTransform()->GetWorldPosition();
+	Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00));
 	Bullet->SetMoveDir(_Dir);
+	if (_Dir.x < 0)
+	{
+		Bullet->GetTransform()->SetHorizenInvertTransform();
+	}
+	
+	
 }
 //
 //const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)

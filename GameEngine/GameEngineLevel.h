@@ -25,6 +25,7 @@ class GameEngineLevel : public GameEngineObjectNameBase
 	friend class GameEngineCore;
 	friend class GameEngineRenderer;
 	friend class GameEngineCollision;
+	friend class GameEngineLevelControlWindow;
 
 public:
 	// constrcuter destructer
@@ -45,11 +46,11 @@ public:
 
 private:
 	std::map<int, std::list<GameEngineActor*>> ActorList_;	
+	CameraActor* MainCameraActor_;
+	CameraActor* UICameraActor_;
+
 	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
 
-	CameraActor* MainCameraActor_;
-	// std::list<CameraActor*> Ä¿½ºÅÒCamera;
-	CameraActor* UICameraActor_;
 
 	bool IsDebug_;
 

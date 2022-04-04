@@ -25,6 +25,8 @@ private:
 
 public:
 
+private:
+	class Player* Player_;
 
 };
 

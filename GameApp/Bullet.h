@@ -10,6 +10,7 @@ class GameEngineImageRenderer;
 class Bullet : public GameEngineActor
 {
 	friend class Player;
+	friend class PlayLevel;
 public:
 	// constrcuter destructer
 	Bullet();
