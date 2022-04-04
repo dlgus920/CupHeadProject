@@ -6,8 +6,7 @@
 
 Bullet::Bullet() :
 	MoveDir_(),
-	BulletHitBox_(nullptr),
-	ImageRenderer_(nullptr)
+	BulletHitBox_(nullptr)
 {
 }
 

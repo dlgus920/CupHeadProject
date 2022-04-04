@@ -10,26 +10,14 @@ void Player::KeySetting()
 	GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
 	GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
 	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
-	GameEngineInput::GetInst().CreateKey("Jump", 'Z');
+	GameEngineInput::GetInst().CreateKey("Fire2", 'Z');
 	GameEngineInput::GetInst().CreateKey("Fire", 'X');
-	GameEngineInput::GetInst().CreateKey("RockOn", 'C');
-	GameEngineInput::GetInst().CreateKey("Dash", VK_LSHIFT);
-	//GameEngineInput::GetInst().CreateKey("Bomb", 'V');
-	//GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
 }
 
 void Player::StateSetting()
 {
 	State_.CreateState("Idle", &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);
 	State_.CreateState("Walk", &Player::Walk_Start, &Player::Walk_Update, &Player::Walk_End);
-	//State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
-	//State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
-	//State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
-
-	//State_.CreateState("Bomb", &Player::Bomb_Start, &Player::Bomb_Update, &Player::Bomb_End);
-	//State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
-	//State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
-	//State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
 
 }
 

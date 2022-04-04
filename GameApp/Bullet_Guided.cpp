@@ -16,13 +16,6 @@ Bullet_Guided::~Bullet_Guided()
 
 void Bullet_Guided::Start()
 {
-	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
-	//ImageRenderer_->CreateAnimation();
-
-	//BulletHitBox_ = CreateTransformComponent<GameEngineCollision>();
-	//BulletHitBox_->SetCollisionType(CollisionType::Rect);
-	//BulletHitBox_->SetCollisionGroup(static_cast<int>(CollisionGruop::Bullet));
-
 }
 
 void Bullet_Guided::Update(float _DeltaTime)

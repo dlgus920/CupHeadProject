@@ -39,7 +39,7 @@ void PlayLevel::LevelStart()
 
 void PlayLevel::LevelUpdate(float _DeltaTime)
 {
-	if (GameEngineInput::GetInst().Press("TEST"))
+	if (GameEngineInput::GetInst().Down("TEST"))
 	{
 		Bullet_Defalut* Bullet = CreateActor<Bullet_Defalut>();
 		float4 pos = Player_->GetTransform()->GetWorldPosition();

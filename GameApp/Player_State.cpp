@@ -34,6 +34,24 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 
 		BulletShootFunc_(dir);
 	}
+
+	else if(KeyState_Shoot2_)
+	{
+		float4 dir;
+		ChangeAnimation("Cup-Shoot-Str");
+
+		if (Dir_ == AnimationDirection::Left)
+		{
+			dir = float4::LEFT;
+		}
+		else
+		{
+			dir = float4::RIGHT;
+		}
+
+		BulletShootFunc_(dir);
+	}
+
 	else
 	{
 		ChangeAnimation("Cup-Idle");
@@ -75,6 +93,24 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 		BulletShootFunc_(dir);
 	}
+
+	else if (KeyState_Shoot2_)
+	{
+		float4 dir;
+		ChangeAnimation("Cup-Shoot-Str");
+
+		if (Dir_ == AnimationDirection::Left)
+		{
+			dir = float4::LEFT;
+		}
+		else
+		{
+			dir = float4::RIGHT;
+		}
+
+		BulletShootFunc_(dir);
+	}
+
 	else
 	{
 		ChangeAnimation("Cup-Walk");

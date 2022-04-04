@@ -65,6 +65,7 @@ private: //Member
 	bool KeyState_Right_;
 
 	bool KeyState_Shoot_;
+	bool KeyState_Shoot2_;
 
 	bool KeyState_RockOn_;
 	bool KeyState_Bomb;

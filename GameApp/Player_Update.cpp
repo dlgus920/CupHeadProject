@@ -26,7 +26,8 @@ void Player::KeyUpdate()
 {
 	KeyState_Left_ = GameEngineInput::GetInst().Press("MoveLeft");
 	KeyState_Right_ = GameEngineInput::GetInst().Press("MoveRight");
-	KeyState_Shoot_ = GameEngineInput::GetInst().Press("Fire");
+	KeyState_Shoot_ = GameEngineInput::GetInst().Down("Fire");
+	KeyState_Shoot2_ = GameEngineInput::GetInst().Press("Fire2");
 
 	//if (KeyState_Left_ && !KeyState_Right_)
 	//{

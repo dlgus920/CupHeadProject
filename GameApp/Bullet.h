@@ -23,7 +23,6 @@ public:
 
 protected:
 	GameEngineCollision* BulletHitBox_;
-	GameEngineImageRenderer* ImageRenderer_;
 	float4 MoveDir_;
 
 protected:
@@ -59,7 +58,7 @@ protected:
 	}
 };
 
-class Bullet_Defalut : public Bullet
+class Bullet_Defalut : public GameEngineActor
 {
 public:
 	// constrcuter destructer
@@ -71,9 +70,19 @@ public:
 	Bullet_Defalut& operator=(const Bullet_Defalut& _Other) = delete;
 	Bullet_Defalut& operator=(Bullet_Defalut&& _Other) = delete;
 
+private:
+	GameEngineImageRenderer* ImageRenderer_;
+	float4 MoveDir_;
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+public:
+	void SetMoveDir(float4 _MoveDir)
+	{
+		MoveDir_ = _MoveDir;
+	}
 };
 
 class Bullet_Spread : public Bullet

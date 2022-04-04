@@ -12,7 +12,6 @@ Bullet_Spread::~Bullet_Spread()
 
 void Bullet_Spread::Start()
 {
-	Bullet::Start();
 }
 
 void Bullet_Spread::Update(float _DeltaTime)
