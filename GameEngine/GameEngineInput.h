@@ -65,7 +65,7 @@ public: // static Func
     static bool Press(const std::string& _Name);
     static bool Free(const std::string& _Name);
 
-    static void HideCursor()
+    static void HideCursor() 
     {
         ShowCursor(false);
     }

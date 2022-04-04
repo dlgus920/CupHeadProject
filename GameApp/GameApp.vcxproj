@@ -180,15 +180,7 @@
     <ClCompile Include="Bullet_Defalut.cpp" />
     <ClCompile Include="Bullet_Guided.cpp" />
     <ClCompile Include="Bullet_Spread.cpp" />
-    <ClCompile Include="Dice.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -197,14 +189,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="King_Dice.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="LoaddingScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MainLoading.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -252,18 +236,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Precompile.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Store.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="StoryScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="TopUI.cpp">
       <SubType>
       </SubType>
@@ -281,46 +253,20 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="UserGame_Resources_Shader.cpp" />
-    <ClCompile Include="WorldMapPlayer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="WorldMapPlayer_Setting.cpp" />
-    <ClCompile Include="WorldMapPlayer_Update.cpp" />
-    <ClCompile Include="WorldMapScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dice.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Effect.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
-    <ClInclude Include="GameObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="Image.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="King_Dice.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="LoaddingScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MainLoading.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -339,18 +285,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
-    <ClInclude Include="Store.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="StoryScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TopUI.h">
       <SubType>
       </SubType>
@@ -364,14 +298,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="UserGame_Resources_Shader.h" />
-    <ClInclude Include="WorldMapPlayer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="WorldMapScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

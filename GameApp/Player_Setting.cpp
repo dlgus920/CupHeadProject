@@ -22,52 +22,20 @@ void Player::StateSetting()
 {
 	State_.CreateState("Idle", &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);
 	State_.CreateState("Walk", &Player::Walk_Start, &Player::Walk_Update, &Player::Walk_End);
-	State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
-	State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
-	State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
+	//State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
+	//State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
+	//State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
 
-	State_.CreateState("Bomb", &Player::Bomb_Start, &Player::Bomb_Update, &Player::Bomb_End);
-	State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
-	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
-	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
+	//State_.CreateState("Bomb", &Player::Bomb_Start, &Player::Bomb_Update, &Player::Bomb_End);
+	//State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
+	//State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
+	//State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
 
 }
 
 void Player::ComponentSetting()
 {
-	{
-		//GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
-		//Renderer->SetRenderingPipeLine("Color");
-		//Renderer->GetTransform()->SetLocalScaling({ 100.0f, 20.0f, 1.0f });
-		//Renderer->GetTransform()->SetLocalPosition({ 0.0f, 80.0f, -20.0f });
-		//Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f));
-	}
-
-	{
-		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		
-		//PlayerImageRenderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f)); //색상 오버레이
-		//PlayerImageRenderer->SetAlpha(0.5f); //알파
-	}
-
-	{
-		//BulletPoint_ = CreateTransformComponent<GameEngineTransform>();
-		//BulletPoint_->SetLocalPosition(float4{ 50.f,0.f,1.f });
-	}
-
-	{
-		PlayerCollision = CreateTransformComponent<GameEngineCollision>();
-		PlayerCollision->SetCollisionType(CollisionType::Rect);
-		PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
-
-		//PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
-	}
-
-	{
-		PlayerHitBox = CreateTransformComponent<GameEngineCollision>();
-		PlayerHitBox->SetCollisionType(CollisionType::Rect);
-		PlayerHitBox->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerHitBox));
-	}
+	PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 }
 
 void Player::AnimationSetting()

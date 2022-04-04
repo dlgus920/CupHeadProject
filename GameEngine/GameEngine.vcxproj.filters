@@ -74,22 +74,28 @@
       <UniqueIdentifier>{ec267598-7fd7-4284-8db8-501a2d034fef}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Component\Collision">
-      <UniqueIdentifier>{2e5d139d-c79c-4dea-bc13-c6f85d340cb4}</UniqueIdentifier>
+      <UniqueIdentifier>{ccf5bfdb-cb2e-427e-998b-e72386d881ec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Global">
-      <UniqueIdentifier>{af4668ed-0b44-49df-bccd-300117f53cc3}</UniqueIdentifier>
+      <UniqueIdentifier>{8337512c-fc63-42fd-9567-fb4f8891a98f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debug">
-      <UniqueIdentifier>{b8a4d78f-115c-4f84-a1a0-06be70d553e4}</UniqueIdentifier>
+      <UniqueIdentifier>{2aacbe61-bd16-4841-b1d6-de38598dcac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Contents">
+      <UniqueIdentifier>{73ba42bb-b048-4e84-b1dd-29d8e3172d22}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lib\FW1Font">
-      <UniqueIdentifier>{7ee6f744-b7e7-496f-9f41-cd9771d3c7c7}</UniqueIdentifier>
+      <UniqueIdentifier>{0c80c47d-8799-439f-9195-86c9ca35252c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Imgui">
-      <UniqueIdentifier>{bd6bc85a-d559-4e4a-af65-8804aeeb2da2}</UniqueIdentifier>
+      <UniqueIdentifier>{87bbd737-da67-4980-8363-b527afd74831}</UniqueIdentifier>
     </Filter>
     <Filter Include="Imgui\Code">
-      <UniqueIdentifier>{aef6972d-a46f-4781-913b-d44a70c0bf1f}</UniqueIdentifier>
+      <UniqueIdentifier>{a71abea1-7461-4f8e-9ddb-c41656850331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui\EngineWindow">
+      <UniqueIdentifier>{981fe642-306c-4b00-8f7f-cfa988f2e5bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +200,9 @@
     <ClInclude Include="GameEngineInput.h">
       <Filter>Control</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineUIRenderer.h">
+      <Filter>Object\Component\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="GameEngineImageRenderer.h">
       <Filter>Object\Component\Renderer\Sub</Filter>
     </ClInclude>
@@ -206,11 +215,11 @@
     <ClInclude Include="GameEngineResourcesManager.h">
       <Filter>Resources\99Manager\ResMinimal</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineBlendManager.h">
-      <Filter>Resources\99Manager</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineBlend.h">
       <Filter>Resources\02Image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineBlendManager.h">
+      <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFolderTextureManager.h">
       <Filter>Resources\99Manager</Filter>
@@ -221,49 +230,40 @@
     <ClInclude Include="GameEngineCollision.h">
       <Filter>Object\Component\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="EngineVertex.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="Enums.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineDebugRenderData.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineDepthBufferManager.h">
-      <Filter>Resources\99Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineDepthStencilManager.h">
-      <Filter>Resources\99Manager</Filter>
+    <ClInclude Include="EngineVertex.h">
+      <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineDepthStencil.h">
       <Filter>Resources\03Setting</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineDepthStencilManager.h">
+      <Filter>Resources\99Manager</Filter>
+    </ClInclude>
     <ClInclude Include="GameEngineDepthBuffer.h">
       <Filter>Resources\02Image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDepthBufferManager.h">
+      <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="MouseActor.h">
       <Filter>Object\EngineActor</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineFontManager.h">
-      <Filter>Resources\99Manager</Filter>
+    <ClInclude Include="GameEngineFSM.h">
+      <Filter>Object\Contents</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFont.h">
       <Filter>Resources\02Image</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineUIRenderer.h">
-      <Filter>Object\Component\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="imconfig.h">
-      <Filter>Imgui\Code</Filter>
+    <ClInclude Include="GameEngineFontManager.h">
+      <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="imgui.h">
-      <Filter>Imgui\Code</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_dx11.h">
-      <Filter>Imgui\Code</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_win32.h">
       <Filter>Imgui\Code</Filter>
     </ClInclude>
     <ClInclude Include="imgui_internal.h">
@@ -281,10 +281,24 @@
     <ClInclude Include="GameEngineGUI.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderWindow.h">
-      <Filter>Imgui</Filter>
+    <ClInclude Include="imconfig.h">
+      <Filter>Imgui\Code</Filter>
     </ClInclude>
-    <ClInclude Include="EngineGlovalValue.h" />
+    <ClInclude Include="imgui_impl_dx11.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>Imgui\Code</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineImageShotWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineLevelControlWindow.h">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -388,6 +402,9 @@
     <ClCompile Include="GameEngineInput.cpp">
       <Filter>Control</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineUIRenderer.cpp">
+      <Filter>Object\Component\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="GameEngineImageRenderer.cpp">
       <Filter>Object\Component\Renderer\Sub</Filter>
     </ClCompile>
@@ -397,11 +414,11 @@
     <ClCompile Include="GameEngineSamplerManager.cpp">
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineBlendManager.cpp">
-      <Filter>Resources\99Manager</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineBlend.cpp">
       <Filter>Resources\02Image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineBlendManager.cpp">
+      <Filter>Resources\99Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFolderTextureManager.cpp">
       <Filter>Resources\99Manager</Filter>
@@ -416,37 +433,34 @@
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineCore_Resources.cpp" />
-    <ClCompile Include="GameEngineDepthBufferManager.cpp">
-      <Filter>Resources\99Manager</Filter>
+    <ClCompile Include="GameEngineDepthStencil.cpp">
+      <Filter>Resources\03Setting</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineDepthStencilManager.cpp">
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineDepthStencil.cpp">
-      <Filter>Resources\03Setting</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineDepthBuffer.cpp">
+      <Filter>Resources\02Image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthBufferManager.cpp">
+      <Filter>Resources\99Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseActor.cpp">
+      <Filter>Object\EngineActor</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFSM.cpp">
+      <Filter>Object\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFont.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFontManager.cpp">
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineFont.cpp">
-      <Filter>Resources\02Image</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineUIRenderer.cpp">
-      <Filter>Object\Component\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="imgui.cpp">
       <Filter>Imgui\Code</Filter>
     </ClCompile>
     <ClCompile Include="imgui_draw.cpp">
-      <Filter>Imgui\Code</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_dx11.cpp">
-      <Filter>Imgui\Code</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_win32.cpp">
       <Filter>Imgui\Code</Filter>
     </ClCompile>
     <ClCompile Include="imgui_tables.cpp">
@@ -458,11 +472,20 @@
     <ClCompile Include="GameEngineGUI.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderWindow.cpp">
-      <Filter>Imgui</Filter>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <Filter>Imgui\Code</Filter>
     </ClCompile>
-    <ClCompile Include="MouseActor.cpp">
-      <Filter>Object\EngineActor</Filter>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>Imgui\Code</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineImageShotWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineLevelControlWindow.cpp">
+      <Filter>Imgui\EngineWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,9 @@ GameEngineTransformComponent::~GameEngineTransformComponent()
 {
 }
 
+
+
+
 void GameEngineTransformComponent::AttachTransform(GameEngineTransform* _Parent)
 {
 	Transform_.AttachTransform(_Parent);

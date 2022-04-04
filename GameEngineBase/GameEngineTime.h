@@ -2,14 +2,21 @@
 #include <Windows.h>
 // #include <chrono>
 
+struct TimeEvent
+{
+	float Time_;
+	std::function<void()> Event_;
+};
+
+
 // 분류 :
 // 용도 :
 // 설명 :
 class GameEngineTime
 {
-
 private:
 	static GameEngineTime* Inst;
+
 
 public:
 	static GameEngineTime& GetInst()
@@ -32,11 +39,8 @@ private:
 	LARGE_INTEGER endCheck_;
 	double deltaTime_;
 
-
-
-	double CheckTime_;
-	int Frame_;
-	int FPS_;
+	std::list<TimeEvent*> AllEvent_;
+	std::list<TimeEvent*> AddEvent_;
 
 public:
 	// 여기에 이렇게 헤더에 구현한 이유
@@ -50,12 +54,6 @@ public:
 	{
 		return static_cast<float>(deltaTime_);
 	}
-
-	int GetFPS()
-	{
-		return FPS_;
-	}
-
 public:
 	GameEngineTime(); // default constructer 디폴트 생성자
 	~GameEngineTime(); // default destructer 디폴트 소멸자
@@ -71,5 +69,6 @@ public:		//delete operator
 public:		//member Func
 	void TimeCheckReset();
 	void TimeCheck();
+	void AddTimeEvent(float _Time, std::function<void()> _Event);
 };
 

@@ -31,5 +31,7 @@ protected:
 private:
 	CameraComponent* Camera_;
 
+
+
 };
 

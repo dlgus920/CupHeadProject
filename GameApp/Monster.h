@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineFSM.h>
 
-class Monster : public GameObject
+class Monster : public GameEngineActor
 {
 public:
 	// constrcuter destructer

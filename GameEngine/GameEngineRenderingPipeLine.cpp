@@ -42,7 +42,7 @@ void GameEngineRenderingPipeLine::SetInputAssembler1VertexBufferSetting(const st
 
 }
 
-void GameEngineRenderingPipeLine::SetInputAssembler1InputLayOutSetting(const std::string& _Name)
+void GameEngineRenderingPipeLine::SetInputAssembler1InputLayOutSetting(const std::string& _Name) 
 {
 	InputLayOutVertexShader_ = GameEngineVertexShaderManager::GetInst().Find(_Name);
 
@@ -53,7 +53,7 @@ void GameEngineRenderingPipeLine::SetInputAssembler1InputLayOutSetting(const std
 	}
 }
 
-void GameEngineRenderingPipeLine::SetInputAssembler2IndexBufferSetting(const std::string& _Name)
+void GameEngineRenderingPipeLine::SetInputAssembler2IndexBufferSetting(const std::string& _Name) 
 {
 	IndexBuffer_ = GameEngineIndexBufferManager::GetInst().Find(_Name);
 
@@ -64,7 +64,7 @@ void GameEngineRenderingPipeLine::SetInputAssembler2IndexBufferSetting(const std
 	}
 }
 
-void GameEngineRenderingPipeLine::SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY _Topology)
+void GameEngineRenderingPipeLine::SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY _Topology) 
 {
 	Topology_ = _Topology;
 }
@@ -81,7 +81,7 @@ void GameEngineRenderingPipeLine::SetVertexShader(const std::string& _Name)
 	}
 }
 
-void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name)
+void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name) 
 {
 	Rasterizer_ = GameEngineRasterizerManager::GetInst().Find(_Name);
 
@@ -92,7 +92,7 @@ void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name)
 	}
 }
 
-void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name)
+void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name) 
 {
 	PixelShader_ = GameEnginePixelShaderManager::GetInst().Find(_Name);
 
@@ -115,7 +115,7 @@ void GameEngineRenderingPipeLine::SetOutputMergerBlend(const std::string& _Name)
 
 }
 
-void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string& _Name)
+void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string& _Name) 
 {
 	DepthStencil_ = GameEngineDepthStencilManager::GetInst().Find(_Name);
 	if (nullptr == DepthStencil_)
@@ -125,19 +125,19 @@ void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string&
 	}
 }
 
-void GameEngineRenderingPipeLine::InputAssembler1()
+void GameEngineRenderingPipeLine::InputAssembler1() 
 {
 	VertexBuffer_->Setting();
 	InputLayOutVertexShader_->InputLayOutSetting();
 }
 
-void GameEngineRenderingPipeLine::InputAssembler2()
+void GameEngineRenderingPipeLine::InputAssembler2() 
 {
 	IndexBuffer_->Setting();
 	GameEngineDevice::GetContext()->IASetPrimitiveTopology(Topology_);
 }
 
-void GameEngineRenderingPipeLine::VertexShader()
+void GameEngineRenderingPipeLine::VertexShader() 
 {
 	VertexShader_->Setting();
 }
@@ -154,13 +154,13 @@ void GameEngineRenderingPipeLine::PixelShader()
 	PixelShader_->Setting();
 }
 
-void GameEngineRenderingPipeLine::OutPutMerger()
+void GameEngineRenderingPipeLine::OutPutMerger() 
 {
 	Blend_->Setting();
 	DepthStencil_->Setting();
 }
 
-void GameEngineRenderingPipeLine::RenderingPipeLineSetting()
+void GameEngineRenderingPipeLine::RenderingPipeLineSetting() 
 {
 	// input¾î¼Àºí·¯ ´Ü°è
 	InputAssembler1();
@@ -176,14 +176,14 @@ void GameEngineRenderingPipeLine::RenderingPipeLineSetting()
 	OutPutMerger();
 }
 
-void GameEngineRenderingPipeLine::Rendering()
+void GameEngineRenderingPipeLine::Rendering() 
 {
 	RenderingPipeLineSetting();
 
 	GameEngineDevice::GetContext()->DrawIndexed(IndexBuffer_->GetIndexCount(), 0, 0);
 }
 
-void GameEngineRenderingPipeLine::Reset()
+void GameEngineRenderingPipeLine::Reset() 
 {
 	Blend_->Reset();
 	DepthStencil_->Reset();

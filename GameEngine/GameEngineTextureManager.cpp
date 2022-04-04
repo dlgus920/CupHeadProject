@@ -50,6 +50,7 @@ GameEngineTexture* GameEngineTextureManager::Create(const std::string& _Name, ID
 
 GameEngineTexture* GameEngineTextureManager::Load(const std::string& _Path)
 {
+
 	return Load(GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
 }
 

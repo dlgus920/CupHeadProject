@@ -53,6 +53,11 @@ public:
 		isDeath_ = true;
 	}
 
+	void OnOffChange()
+	{
+		isUpdate_ = !isUpdate_;
+	}
+
 	void On()
 	{
 		isUpdate_ = true;
@@ -97,6 +102,7 @@ public:
 	{
 		return isUpdate_; // 부모도 켜져있어야
 	}
+
 
 public:
 	GameEngineObjectBase(); // default constructer 디폴트 생성자

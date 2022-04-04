@@ -42,6 +42,7 @@ public:
 
 	void Load(const std::string& _Path);
 
+
 	GameEngineTexture(); // default constructer 디폴트 생성자
 	~GameEngineTexture(); // default destructer 디폴트 소멸자
 
@@ -60,28 +61,18 @@ private:		//delete operator
 	ID3D11DepthStencilView* DepthStencilView_;
 	DirectX::ScratchImage Image_;
 
-	float4 TextureScale_;
-
 public:
 	bool IsCut();
 	void Cut(int _x, int _y);
 	void PushCutIndex(const float4& _Size, const float4& _Pos);
 	float4 GetCutData(int _Index);
 
-	inline float4 GetTextureSize()
+	inline float4 GetTextureSize() 
 	{
 		return float4(static_cast<float>(TextureDesc_.Width), static_cast<float>(TextureDesc_.Height));
 	}
 
-	inline const float4 GetTextureScale()
-	{
-		return TextureScale_;
-	}
-
 	float4 GetPixel(int _X, int _y);
-
-	//custom
-	const float4 GetMetaDataImageSize();
 
 private:
 	std::vector<float4> CutList_;

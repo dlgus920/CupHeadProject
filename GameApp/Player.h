@@ -11,21 +11,6 @@ enum class AnimationDirection
 	Left
 };
 
-enum class KeyDir
-{	
-	None,
-	Right,
-	Right_Up,
-	Right_Down,
-	Left,
-	Left_Up,
-	Left_Down,
-	Up_Left,
-	Up_Right,
-	Down_Left,
-	Down_Right,
-};
-
 enum class BulletType
 {
 	Default,
@@ -98,7 +83,6 @@ private: //Member
 	// 현재 보고 있는 방향
 	BulletType BulletType_;
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
-	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	//float4 MoveDir_;
 
@@ -147,22 +131,6 @@ private: //Update
 		
 private: 
 #pragma region State_
-	void Bomb_Start();
-	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
-	void Bomb_End();
-
-	void Death_Start();
-	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
-	void Death_End();
-
-	void Dash_Start();
-	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
-	void Dash_End();
-
-	void Jump_Start();
-	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
-	void Jump_End();
-
 	void Idle_Start();
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 	void Idle_End();
@@ -170,18 +138,6 @@ private:
 	void Walk_Start();
 	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
 	void Walk_End();
-
-	void Duck_Start();
-	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
-	void Duck_End();
-
-	void RockOn_Start();
-	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
-	void RockOn_End();
-
-	void Hit_Start();
-	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
-	void Hit_End();
 #pragma endregion
 
 

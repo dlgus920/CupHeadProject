@@ -43,7 +43,8 @@ void WorldMapScene::LevelStart()
 
 		// 1280 720
 		_Map->GetCollisionMap()->SetImage("WorldMap_PixelCheckBackground.png");
-		_Map->GetCollisionMap()->SetAdjustImzgeSize();
+		_Map->GetTransform()->SetLocalScaling(float4{ 2424,1879,1.f });
+		//_Map->GetCollisionMap()->SetAdjustImzgeSize();
 	
 		_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
 
@@ -57,14 +58,12 @@ void WorldMapScene::LevelStart()
 		Object* WorldMapPoint = CreateActor<Object>();
 		WorldMapPoint->GetImageRenderer()->SetImage("world_platforming_icon_0001.png");
 
-		float4 size = WorldMapPoint->GetImageRenderer()->GetImageSize();
+		WorldMapPoint->GetImageRenderer()->GetTransform()->SetLocalScaling(float4{100.f,100.f,1.f});
+		WorldMapPoint->GetObjectCollision()->GetTransform()->SetLocalScaling(float4{ 100.f,100.f,1.f });
 
-		WorldMapPoint->GetImageRenderer()->GetTransform()->SetLocalScaling(size);
-		WorldMapPoint->GetObjectCollision()->GetTransform()->SetLocalScaling(size);
-
-		WorldMapPoint->GetObjectCollision()->SetCollisionGroup(CollisionGruop::StagePoint);
-		WorldMapPoint->GetObjectCollision()->SetCollisionType(CollisionType::Rect);
-		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
+		//WorldMapPoint->GetObjectCollision()->SetCollisionGroup(CollisionGruop::StagePoint);
+		//WorldMapPoint->GetObjectCollision()->SetCollisionType(CollisionType::Rect);
+		//WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
 	}
 
 	{

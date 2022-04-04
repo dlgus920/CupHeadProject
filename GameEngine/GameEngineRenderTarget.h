@@ -25,11 +25,10 @@ private:	// member Var
 	GameEngineShaderResHelper Res_;
 
 public:
-	static GameEngineRenderTarget* GetLastRenderTarget()
+	static GameEngineRenderTarget* GetLastRenderTarget() 
 	{
 		return LastRenderTarget;
 	}
-
 	static GameEngineDepthBuffer* GetLastDepthBuffer()
 	{
 		return LastDepthBuffer;
@@ -40,6 +39,12 @@ public:
 		return ShaderResourcesViews_[_Index];
 	}
 
+	inline float4 GetTextureSize(size_t _Index)
+	{
+		return Textures_[_Index]->GetTextureSize();
+	}
+
+
 	void Clear();
 
 	// -1이면 전부다 세팅하라는 의미가 됩니다.
@@ -48,11 +53,11 @@ public:
 
 public:
 	void Create(const std::string _TextureName, float4 _ClearColor);
+
 	void Create(float4 _Scale, float4 _ClearColor);
 	void Create(GameEngineTexture* _Texture, float4 _ClearColor);
 
 	void CreateDepthBuffer(float4 _Scale);
-
 
 public:
 	GameEngineRenderTarget(); // default constructer 디폴트 생성자
@@ -69,7 +74,6 @@ private:		//delete operator
 public:
 	// 기존에 그려진 그림 위에 이 랜더타겟의 그림을 합친다.
 	void Merge(GameEngineRenderTarget* _Other, int _Index = 0);
-
 
 	// 기존에 뭐가 그려졌든 그걸 지우고. 넣어준걸로 바꾼다.
 	void Copy(GameEngineRenderTarget* _Other);

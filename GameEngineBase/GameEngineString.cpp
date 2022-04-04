@@ -17,6 +17,8 @@ GameEngineString::GameEngineString(GameEngineString&& _other) noexcept  // defau
 
 }
 
+
+
 std::string GameEngineString::toupper(const std::string& _Text)
 {
 	std::string Text = _Text;
@@ -49,7 +51,7 @@ void GameEngineString::AnsiToUnicode(const std::string& _Text, std::wstring& _Ou
 
 // u8""
 
-void GameEngineString::UniCodeToUTF8(const std::wstring& _Text, std::string& _Out)
+void GameEngineString::UniCodeToUTF8(const std::wstring& _Text, std::string& _Out) 
 {
 	int Size = WideCharToMultiByte(CP_UTF8, 0, _Text.c_str(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, nullptr);
 
@@ -79,7 +81,7 @@ void GameEngineString::AnsiToUTF8(const std::string& _Text, std::string& _Out)
 	UniCodeToUTF8(WString, _Out);
 }
 
-std::string GameEngineString::AnsiToUTF8Return(const std::string& _Text)
+std::string GameEngineString::AnsiToUTF8Return(const std::string& _Text) 
 {
 	std::wstring WString;
 	std::string Result;

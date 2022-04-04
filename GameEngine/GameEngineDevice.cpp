@@ -3,8 +3,8 @@
 #include "GameEngineWindow.h"
 #include "GameEngineTextureManager.h"
 #include "GameEngineRenderTargetManager.h"
-#include "GameEngineRenderTarget.h"
 #include "GameEngineDepthBufferManager.h"
+#include "GameEngineRenderTarget.h"
 #include "GameEngineDepthBuffer.h"
 
 GameEngineDevice* GameEngineDevice::Inst = new GameEngineDevice();
@@ -18,6 +18,7 @@ GameEngineRenderTarget* GameEngineDevice::GetBackBufferTarget()
 {
 	return BackBufferTarget_;
 }
+
 
 ID3D11Device* GameEngineDevice::GetDevice() 
 {
@@ -99,7 +100,7 @@ void GameEngineDevice::Initialize()
 		GameEngineDebug::MsgBoxError("D3D11 Not FEATURE LEVEL 11 ERROR");
 	}
 
-	//CreateSwapChain();
+	// CreateSwapChain();
 }
 
 void GameEngineDevice::CreateSwapChain()
@@ -191,6 +192,8 @@ void GameEngineDevice::CreateSwapChain()
 
 	GameEngineTextureManager::GetInst().Create("BackBuffer", BackBufferTexture);
 	BackBufferTarget_ = GameEngineRenderTargetManager::GetInst().Create("BackBuffer", "BackBuffer", float4::BLUE);
+
+	// DepthBuffer_ = GameEngineDepthBufferManager::GetInst().Create("DeviceDepthBuffer", GameEngineWindow::GetInst().GetSize());
 }
 
 void GameEngineDevice::RenderStart()
@@ -202,7 +205,7 @@ void GameEngineDevice::RenderStart()
 	BackBufferTarget_->Setting();
 }
 
-void GameEngineDevice::ShaderReset()
+void GameEngineDevice::ShaderReset() 
 {
 	Context_->VSSetShader(nullptr, nullptr, 0);
 	Context_->HSSetShader(nullptr, nullptr, 0);

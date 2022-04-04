@@ -27,8 +27,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineGlovalValue.h" />
     <ClInclude Include="EngineVertex.h" />
+    <ClInclude Include="GameEngineDebugRenderData.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
@@ -36,7 +39,10 @@
     </ClInclude>
     <ClInclude Include="GameEngineBlend.h" />
     <ClInclude Include="GameEngineBlendManager.h" />
-    <ClInclude Include="GameEngineCollision.h" />
+    <ClInclude Include="GameEngineCollision.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineComponent.h">
       <SubType>
       </SubType>
@@ -53,24 +59,49 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineDebugRenderData.h" />
-    <ClInclude Include="GameEngineDepthBuffer.h" />
-    <ClInclude Include="GameEngineDepthBufferManager.h" />
-    <ClInclude Include="GameEngineDepthStencil.h" />
-    <ClInclude Include="GameEngineDepthStencilManager.h" />
+    <ClInclude Include="GameEngineDepthBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineDepthBufferManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineDepthStencil.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineDepthStencilManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineDevice.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineFolderTexture.h" />
     <ClInclude Include="GameEngineFolderTextureManager.h" />
-    <ClInclude Include="GameEngineFont.h" />
-    <ClInclude Include="GameEngineFontManager.h" />
-    <ClInclude Include="GameEngineGUI.h" />
+    <ClInclude Include="GameEngineFont.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineFontManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineFSM.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineGUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineImageRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineImageShotWindow.h" />
     <ClInclude Include="GameEngineIndexBuffer.h">
       <SubType>
       </SubType>
@@ -81,6 +112,10 @@
     </ClInclude>
     <ClInclude Include="GameEngineInput.h" />
     <ClInclude Include="GameEngineLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineLevelControlWindow.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -121,7 +156,10 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderWindow.h" />
+    <ClInclude Include="GameEngineRenderWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineSampler.h" />
     <ClInclude Include="GameEngineSamplerManager.h">
       <SubType>
@@ -178,7 +216,10 @@
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="MouseActor.h" />
+    <ClInclude Include="MouseActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -197,13 +238,21 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineCore_Resources.cpp" />
+    <ClCompile Include="GameEngineDebugRenderData.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineBlend.cpp" />
     <ClCompile Include="GameEngineBlendManager.cpp" />
-    <ClCompile Include="GameEngineCollision.cpp" />
+    <ClCompile Include="GameEngineCollision.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineComponent.cpp">
       <SubType>
       </SubType>
@@ -220,25 +269,49 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineCore_Resources.cpp" />
-    <ClCompile Include="GameEngineDebugRenderData.cpp" />
-    <ClCompile Include="GameEngineDepthBuffer.cpp" />
-    <ClCompile Include="GameEngineDepthBufferManager.cpp" />
-    <ClCompile Include="GameEngineDepthStencil.cpp" />
-    <ClCompile Include="GameEngineDepthStencilManager.cpp" />
+    <ClCompile Include="GameEngineDepthBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthBufferManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthStencil.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthStencilManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineDevice.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineFolderTexture.cpp" />
     <ClCompile Include="GameEngineFolderTextureManager.cpp" />
-    <ClCompile Include="GameEngineFont.cpp" />
-    <ClCompile Include="GameEngineFontManager.cpp" />
-    <ClCompile Include="GameEngineGUI.cpp" />
+    <ClCompile Include="GameEngineFont.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineFontManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineFSM.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineImageRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineImageShotWindow.cpp" />
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <SubType>
       </SubType>
@@ -249,6 +322,10 @@
     </ClCompile>
     <ClCompile Include="GameEngineInput.cpp" />
     <ClCompile Include="GameEngineLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineLevelControlWindow.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -289,7 +366,10 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderWindow.cpp" />
+    <ClCompile Include="GameEngineRenderWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineSampler.cpp" />
     <ClCompile Include="GameEngineSamplerManager.cpp">
       <SubType>
@@ -343,7 +423,10 @@
     <ClCompile Include="imgui_impl_win32.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="MouseActor.cpp" />
+    <ClCompile Include="MouseActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>
@@ -394,6 +477,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -401,12 +485,14 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -414,6 +500,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

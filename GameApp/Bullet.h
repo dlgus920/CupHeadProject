@@ -10,6 +10,7 @@ class GameEngineImageRenderer;
 class Bullet : public GameEngineActor
 {
 	friend class Player;
+	friend class PlayLevel;
 public:
 	// constrcuter destructer
 	Bullet();
@@ -47,10 +48,10 @@ protected:
 		Death();
 	}
 
-	const bool BulletCollisionCheck(CollisionGruop _CollisionGruop)
-	{
-		return BulletHitBox_->Collision(static_cast<int>(_CollisionGruop));
-	}
+	//const bool BulletCollisionCheck(CollisionGruop _CollisionGruop)
+	//{
+	//	return BulletHitBox_->Collision(static_cast<int>(_CollisionGruop));
+	//}
 
 	void SetMoveDir(float4 _MoveDir)
 	{

@@ -44,8 +44,8 @@ void Bullet::BulletMove(float4 _Pos)
 
 void Bullet::BulletScale(float _x, float _y)
 {
-	BulletHitBox_->GetTransform()->SetLocalScaling(_x,_y);
-	ImageRenderer_->GetTransform()->SetLocalScaling(_x, _y);
+	//BulletHitBox_->GetTransform()->SetLocalScaling(_x,_y);
+	//ImageRenderer_->GetTransform()->SetLocalScaling(_x, _y);
 }
 
 void Bullet::BulletSort(float _Zorder)

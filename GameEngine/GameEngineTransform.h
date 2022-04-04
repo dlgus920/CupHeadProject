@@ -14,7 +14,7 @@ public:
 	DirectX::BoundingBox AABB; // 회전이 고려하면 안되는 박스
 	DirectX::BoundingOrientedBox OBB; // 회전한 박스
 
-	CollisionData()
+	CollisionData() 
 		: OBB()
 	{
 
@@ -43,7 +43,7 @@ public:
 	float4x4 View_;
 	float4x4 Projection_;
 
-	float4x4 WVP;
+	float4x4 WVP_;
 
 public:
 	TransformData() 
@@ -69,9 +69,9 @@ public:
 		WorldWorld_ *= Parent_;
 	}
 
-	void CalWVP()
+	void WVPCalculation()
 	{
-		WVP = WorldWorld_ * View_ * Projection_;
+		WVP_ = WorldWorld_ * View_ * Projection_;
 	}
 
 	void RootCalculation() 
@@ -124,12 +124,9 @@ public:
 	float4 GetWorldUpVector() { return TransformData_.WorldWorld_.vy.NormalizeReturn3D(); }
 	float4 GetLocalUpVector() { return TransformData_.LocalWorld_.vy.NormalizeReturn3D(); }
 
-	void SetHorizenInvertTransform();
-
 	void SetLocalScaling(const float4& _Value);
 	void SetWorldScaling(const float4& _Value);
 
-	// 무모건 디그리
 	void SetLocalRotation(const float4& _Value);
 	void SetWorldRotation(const float4& _Value);
 
@@ -165,29 +162,6 @@ public:
 	{
 		SetWorldPosition(TransformData_.vWorldPosition_ + _Value * GameEngineTime::GetInst().GetDeltaTime());
 	}
-	
-public:
-	//custom func
-	void SetWorldZPosition(float Zvalue);
-	void SetLocalZPosition(float Zvalue);
-
-
-
-
-
-
-
-	//
-	//void SetLocalDeltaTimeMove(const float4& _Value, float DeltaTime_)
-	//{
-	//	SetLocalPosition(TransformData_.vLocalPosition_ + _Value * DeltaTime_);
-	//}
-
-	//void SetWorldDeltaTimeMove(const float4& _Value, float DeltaTime_)
-	//{
-	//	SetWorldPosition(TransformData_.vWorldPosition_ + _Value * DeltaTime_);
-	//}
-	//
 
 	void DetachChildTransform(GameEngineTransform* _Child);
 	void AttachTransform(GameEngineTransform* _Transform);
@@ -197,14 +171,7 @@ public:
 		return TransformData_;
 	}
 
-	void SetLocalScaling(const float _ValueX, const float _ValueY, const float _ValueZ = 1.f);
-	void SetWorldScaling(const float _ValueX, const float _ValueY, const float _ValueZ = 1.f);
-	void SetLocalRotation(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
-	void SetWorldRotation(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
-	void SetLocalPosition(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
-	void SetWorldPosition(const float _ValueX, const float _ValueY, const float _ValueZ = 0.f);
-
-	const CollisionData& GetCollisionData()
+	const CollisionData& GetCollisionData() 
 	{
 		return ColData_;
 	}
@@ -231,6 +198,7 @@ protected:
 	GameEngineTransform* Parent_;
 	std::vector<GameEngineTransform*> Childs_;
 
+
 private:
 	void AllChildCalculationScaling();
 	void AllChildCalculationRotation();
@@ -244,8 +212,5 @@ private:
 
 	void CalculationLocalPosition();
 	void CalculationWorldPosition();
-
-
-
 };
 

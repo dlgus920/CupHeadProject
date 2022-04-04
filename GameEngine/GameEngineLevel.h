@@ -13,18 +13,23 @@
 //	// 파이프라인
 //	// 쉐이더 헬퍼가 한쌍이어야 한다.
 //};
+
 class CameraActor;
 class CameraComponent;
 class GameEngineActor;
 class GameEngineRenderer;
-class GameEngineTransform;
+class GameEngineTransform; 
 class GameEngineCollision;
 class GameEngineDebugRenderData;
 class GameEngineLevel : public GameEngineObjectNameBase
 {
+	friend class GameEngineLevelControlWindow;
 	friend class GameEngineCore;
 	friend class GameEngineRenderer;
 	friend class GameEngineCollision;
+
+private:
+
 
 public:
 	// constrcuter destructer
@@ -43,52 +48,22 @@ public:
 	CameraActor* GetUICameraActor();
 	CameraComponent* GetUICamera();
 
-private:
-	std::map<int, std::list<GameEngineActor*>> ActorList_;	
-	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
+	void AddTimeEvent(float _Time, std::function<void()> _Event);
 
+protected:
+
+private:
+	std::map<int, std::list<GameEngineActor*>> ActorList_;
 	CameraActor* MainCameraActor_;
-	// std::list<CameraActor*> 커스텀Camera;
 	CameraActor* UICameraActor_;
 
-	bool IsDebug_;
+	std::list<TimeEvent*> AllEvent_;
+	std::list<TimeEvent*> AddEvent_;
 
-public:
-
-	void ActorUpdate(float _DeltaTime);
-	void Render();
-	void Release(float _DeltaTime);
-
-	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
-	void PushCollision(GameEngineCollision* _Collision, int _Group);
-	
-	virtual void LevelStart() = 0;
-	virtual void LevelUpdate(float _DeltaTime) = 0;
-	virtual void LevelChangeEndEvent() = 0;
-	virtual void LevelChangeStartEvent() = 0;
-
-////////////////////////////////////////////////////// Renderer
-
-private:
 	void Init();
 
-	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
-//	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
-	void LevelChangeEndActorEvent();
-	void LevelChangeStartActorEvent();
-
-	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
-	{
-		return CollisionList_[_Group];
-	}
-
+	void TimeEventUpdate();
 public:
-
-	void SetDebug(bool _Debug)
-	{
-		IsDebug_ = _Debug;
-	}
-
 	template<typename ActorType>
 	ActorType* CreateActor(int _UpdateOrder = 0)
 	{
@@ -104,10 +79,42 @@ public:
 		return dynamic_cast<ActorType*>(NewActor);
 	}
 
+	void ActorUpdate(float _DeltaTime);
+	void Render();
+	void Release(float _DeltaTime);
+
+	virtual void LevelStart() = 0;
+	virtual void LevelUpdate(float _DeltaTime) = 0;
+	virtual void LevelChangeEndEvent() = 0;
+	virtual void LevelChangeStartEvent() = 0;
+
+
+
+	//////////////////////////////////////////////////////// collision:
+private:
+	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
+
+
+	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group) 
+	{
+		return CollisionList_[_Group];
+	}
+
+	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
+
+	void LevelChangeEndActorEvent();
+	void LevelChangeStartActorEvent();
+
+	// 다른애가 이걸 가릴수 있나요?
+
+public:
+	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
+
 	template<typename UserEnumType>
 	void PushCollision(GameEngineCollision* _Collision, UserEnumType _Group)
 	{
 		PushCollision(_Collision, static_cast<int>(_Group));
 	}
 
+	void PushCollision(GameEngineCollision* _Collision, int _Group);
 };

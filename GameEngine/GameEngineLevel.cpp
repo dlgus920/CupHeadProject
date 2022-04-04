@@ -14,6 +14,7 @@
 #include "GameEngineUIRenderer.h"
 #include "GameEngineGUI.h"
 
+
 CameraActor* GameEngineLevel::GetMainCameraActor()
 {
 	return MainCameraActor_;
@@ -33,13 +34,28 @@ CameraComponent* GameEngineLevel::GetUICamera()
 {
 	return UICameraActor_->GetCamera();
 }
-GameEngineLevel::GameEngineLevel() 
-	: IsDebug_(true)
+GameEngineLevel::GameEngineLevel()
 {
 }
 
 GameEngineLevel::~GameEngineLevel()
 {
+	for (auto& Event : AddEvent_)
+	{
+		delete Event;
+	}
+
+	AddEvent_.clear();
+
+
+	for (auto& Event : AllEvent_)
+	{
+		delete Event;
+	}
+
+	AllEvent_.clear();
+
+
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
 		std::list<GameEngineActor*>& Actors = Pair.second;
@@ -51,12 +67,12 @@ GameEngineLevel::~GameEngineLevel()
 				delete Actor;
 				Actor = nullptr;
 			}
-			
+
 		}
 	}
 }
 
-void GameEngineLevel::Init() 
+void GameEngineLevel::Init()
 {
 	MainCameraActor_ = CreateActor<CameraActor>();
 	UICameraActor_ = CreateActor<CameraActor>();
@@ -67,6 +83,8 @@ void GameEngineLevel::Init()
 
 void GameEngineLevel::ActorUpdate(float _DeltaTime)
 {
+	TimeEventUpdate();
+
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
 		std::list<GameEngineActor*>& Actors = Pair.second;
@@ -78,13 +96,14 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 				continue;
 			}
 
-			Actor->Update(_DeltaTime); 
+			// 위치바꾸고
+			Actor->Update(_DeltaTime);
 			Actor->UpdateComponent(_DeltaTime);
 		}
 	}
 }
 
-void GameEngineLevel::LevelChangeEndActorEvent()
+void GameEngineLevel::LevelChangeEndActorEvent() 
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -96,7 +115,7 @@ void GameEngineLevel::LevelChangeEndActorEvent()
 		}
 	}
 }
-void GameEngineLevel::LevelChangeStartActorEvent()
+void GameEngineLevel::LevelChangeStartActorEvent() 
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -109,21 +128,16 @@ void GameEngineLevel::LevelChangeStartActorEvent()
 	}
 }
 
-void GameEngineLevel::Render() 
+void GameEngineLevel::Render()
 {
 	GameEngineDevice::RenderStart();
 
 	MainCameraActor_->GetCamera()->ClearCameraTarget();
 	UICameraActor_->GetCamera()->ClearCameraTarget();
 	MainCameraActor_->GetCamera()->Render();
-
-	//if (true == IsDebug_)
-	//{
 	MainCameraActor_->GetCamera()->DebugRender();
-	//}
 
 	UICameraActor_->GetCamera()->Render();
-
 
 	GameEngineDevice::GetBackBufferTarget()->Merge(MainCameraActor_->GetCamera()->GetCameraRenderTarget());
 	GameEngineDevice::GetBackBufferTarget()->Merge(UICameraActor_->GetCamera()->GetCameraRenderTarget());
@@ -133,9 +147,11 @@ void GameEngineLevel::Render()
 
 	// 충돌체 랜더링이 무조건 화면에 뚫고 나와야하는 애들은
 	GameEngineDevice::RenderEnd();
+
+
 }
 
-void GameEngineLevel::Release(float _DeltaTime) 
+void GameEngineLevel::Release(float _DeltaTime)
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -149,6 +165,7 @@ void GameEngineLevel::Release(float _DeltaTime)
 
 	MainCameraActor_->GetCamera()->ReleaseRenderer();
 	UICameraActor_->GetCamera()->ReleaseRenderer();
+
 
 	// 콜리전 삭제
 	{
@@ -229,12 +246,12 @@ void GameEngineLevel::Release(float _DeltaTime)
 // 	RendererList_[_Order].push_back(_Renderer);
 
 
-void GameEngineLevel::LevelChangeStartEvent() 
+void GameEngineLevel::LevelChangeStartEvent()
 {
 
 }
 
-void GameEngineLevel::LevelChangeEndEvent() 
+void GameEngineLevel::LevelChangeEndEvent()
 {
 
 }
@@ -253,7 +270,44 @@ void GameEngineLevel::ChangeCollisionGroup(int _Group, GameEngineCollision* _Col
 	CollisionList_[_Collision->GetOrder()].push_back(_Collision);
 }
 
-void GameEngineLevel::PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type)
+void GameEngineLevel::PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type) 
 {
 	MainCameraActor_->GetCamera()->PushDebugRender(_Transform, _Type);
+}
+
+void GameEngineLevel::AddTimeEvent(float _Time, std::function<void()> _Event) 
+{
+	AddEvent_.push_back(new TimeEvent{ _Time, _Event });
+}
+
+void GameEngineLevel::TimeEventUpdate()
+{
+	for (auto& Event : AddEvent_)
+	{
+		AllEvent_.push_back(Event);
+	}
+	AddEvent_.clear();
+
+	for (auto& Event : AllEvent_)
+	{
+		Event->Time_ -= GameEngineTime::GetInst().GetDeltaTime();
+		if (0 >= Event->Time_)
+		{
+			Event->Event_();
+		}
+	}
+
+	std::list<TimeEvent*>::iterator StartIter = AllEvent_.begin();
+	std::list<TimeEvent*>::iterator EndIter = AllEvent_.end();
+
+	for (; StartIter != EndIter; )
+	{
+		if (0 >= (*StartIter)->Time_)
+		{
+			delete* StartIter;
+			StartIter = AllEvent_.erase(StartIter);
+			continue;
+		}
+		++StartIter;
+	}
 }

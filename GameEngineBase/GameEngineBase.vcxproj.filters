@@ -41,9 +41,6 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineDirectory.h" />
-    <ClInclude Include="GameEngineFSM.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -86,9 +83,6 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineDirectory.cpp" />
-    <ClCompile Include="GameEngineFSM.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -127,9 +121,6 @@
     <Filter Include="String">
       <UniqueIdentifier>{449ccbeb-02fe-409a-8c5a-974793385175}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Logic">
-      <UniqueIdentifier>{e22ec43d-9d23-40a4-b76a-f7c44a39bffd}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ThirdParty\x64\Release\FMOD\fmod.dll">
@@ -138,10 +129,10 @@
     <CopyFileToFolders Include="..\ThirdParty\x64\Release\FMOD\fmod_vc.lib">
       <Filter>Lib\FMOD\Release</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL_vc.lib">
+    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL.dll">
       <Filter>Lib\FMOD\Debug</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL.dll">
+    <CopyFileToFolders Include="..\ThirdParty\x64\Debug\FMOD\fmodL_vc.lib">
       <Filter>Lib\FMOD\Debug</Filter>
     </CopyFileToFolders>
   </ItemGroup>

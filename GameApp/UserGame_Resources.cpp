@@ -2,13 +2,14 @@
 #include "UserGame.h"
 #include <GameEngine\EngineVertex.h>
 #include "UserGame_Resources_Shader.h"
+#include <GameEngine\GameEngineFontManager.h>
 
 
 void UserGame::ResourcesLoad()
 {
 	{
 		GameEngineDirectory SoundDir;
-		SoundDir.MoveParent(GV_GAMEFILENAME);
+		SoundDir.MoveParent("CupHeadProject");
 		SoundDir.MoveChild("Resources");
 		SoundDir.MoveChild("Sound");
 
@@ -22,7 +23,7 @@ void UserGame::ResourcesLoad()
 
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 
@@ -40,7 +41,7 @@ void UserGame::ResourcesLoad()
 
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("World");
@@ -75,7 +76,7 @@ void UserGame::ResourcesLoad()
 		//Title
 
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 
@@ -86,7 +87,7 @@ void UserGame::ResourcesLoad()
 		//Folder Load
 
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Monster");
@@ -97,7 +98,7 @@ void UserGame::ResourcesLoad()
 
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("CharactorSprite");
@@ -114,7 +115,7 @@ void UserGame::ResourcesLoad()
 
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Bullet");
@@ -126,16 +127,16 @@ void UserGame::ResourcesLoad()
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
-		Texture->Cut(1,8);
+		Texture->Cut(8,1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
-		Texture->Cut(1, 4);
+		Texture->Cut(4, 1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
-		Texture->Cut(1, 6);
+		Texture->Cut(6, 1);
 	}
 
 	{	
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("TitleScreen");
@@ -151,7 +152,7 @@ void UserGame::ResourcesLoad()
 	}
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Loading");
@@ -171,7 +172,7 @@ void UserGame::ResourcesLoad()
 
 	{
 		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveParent("CupHeadProject");
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Loading");
@@ -179,30 +180,6 @@ void UserGame::ResourcesLoad()
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
 	}
 
-	AppShaderLoad(); //TODO : 현재 문제 발생 주범
-
-	/*{
-		GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("Color");
-		Pipe->SetInputAssembler1VertexBufferSetting("Rect");
-		Pipe->SetInputAssembler1InputLayOutSetting("Color_VS");
-		Pipe->SetVertexShader("Color_VS");
-		Pipe->SetInputAssembler2IndexBufferSetting("Rect");
-		Pipe->SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		Pipe->SetRasterizer("EngineBaseRasterizer");
-		Pipe->SetPixelShader("Color_PS");
-		Pipe->SetOutputMergerBlend("AlphaBlend");
-	}
-
-	{
-		GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("Texture");
-		Pipe->SetInputAssembler1VertexBufferSetting("Rect");
-		Pipe->SetInputAssembler1InputLayOutSetting("Texture_VS");
-		Pipe->SetVertexShader("Texture_VS");
-		Pipe->SetInputAssembler2IndexBufferSetting("Rect");
-		Pipe->SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		Pipe->SetRasterizer("EngineBaseRasterizer");
-		Pipe->SetPixelShader("Texture_PS");
-		Pipe->SetOutputMergerBlend("AlphaBlend");
-	}*/
+	AppShaderLoad(); 
 
 }

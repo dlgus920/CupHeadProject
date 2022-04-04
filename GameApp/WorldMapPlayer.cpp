@@ -112,17 +112,17 @@ StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 	}
 	// 실시간 업데이트가 너무 빨라 여기까지 오지를 못함,
 	// MoveDir_이 float4::UPLEFT상태로 유지가 안됨 ㅋㅋㅋㅋ
-	else if (MoveDir_ == float4::UPLEFT ||
-		MoveDir_ == float4::UPRIGHT)
-	{
-		SetChangeAnimation("Cup-Idle-Up-Right");
-	}
+	//else if (MoveDir_ == float4::UPLEFT ||
+	//	MoveDir_ == float4::UPRIGHT)
+	//{
+	//	SetChangeAnimation("Cup-Idle-Up-Right");
+	//}
 
-	else if (MoveDir_ == float4::DOWNLEFT ||
-		MoveDir_ == float4::DOWNRIGHT)
-	{
-		SetChangeAnimation("Cup-Idle-Down-Right");
-	}
+	//else if (MoveDir_ == float4::DOWNLEFT ||
+	//	MoveDir_ == float4::DOWNRIGHT)
+	//{
+	//	SetChangeAnimation("Cup-Idle-Down-Right");
+	//}
 
 	return StateInfo();
 }
@@ -158,34 +158,34 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 		SetChangeAnimation("Cup-Walk-Right");
 	}
 
-	else if (MoveDir_ == float4::UPLEFT ||
-			MoveDir_ == float4::UPRIGHT)
-	{
-		SetChangeAnimation("Cup-Walk-Up-Right");
-	}
+	//else if (MoveDir_ == float4::UPLEFT ||
+	//		MoveDir_ == float4::UPRIGHT)
+	//{
+	//	SetChangeAnimation("Cup-Walk-Up-Right");
+	//}
 
-	else if (MoveDir_ == float4::DOWNLEFT ||
-			MoveDir_ == float4::DOWNRIGHT)
-	{
-		SetChangeAnimation("Cup-Walk-Down-Right");
-	}
+	//else if (MoveDir_ == float4::DOWNLEFT ||
+	//		MoveDir_ == float4::DOWNRIGHT)
+	//{
+	//	SetChangeAnimation("Cup-Walk-Down-Right");
+	//}
 	
-	if (ColState_.b_Up != 0 && MoveDir_.y > 0)
-	{
-		return StateInfo();
-	}
-	if (ColState_.b_Down != 0 && MoveDir_.y < 0)
-	{
-		return StateInfo();
-	}
-	if (ColState_.b_Left != 0 && MoveDir_.x < 0)
-	{
-		return StateInfo();
-	}
-	if (ColState_.b_Right != 0 && MoveDir_.x > 0)
-	{
-		return StateInfo();
-	}
+	//if (ColState_.b_Up != 0 && MoveDir_.y > 0)
+	//{
+	//	return StateInfo();
+	//}
+	//if (ColState_.b_Down != 0 && MoveDir_.y < 0)
+	//{
+	//	return StateInfo();
+	//}
+	//if (ColState_.b_Left != 0 && MoveDir_.x < 0)
+	//{
+	//	return StateInfo();
+	//}
+	//if (ColState_.b_Right != 0 && MoveDir_.x > 0)
+	//{
+	//	return StateInfo();
+	//}
 
 	Move(MoveDir_ * 300.f, _DeltaTime);
 	
@@ -202,8 +202,8 @@ void WorldMapPlayer::Chose_Start()
 
 	Image* IrisImage = GetLevel()->CreateActor<Image>();
 	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
-	IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
-	IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
+	//IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	//IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
 	IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
 
 	//IrisImage->SetImageAnimationEndFunc<WorldMapPlayer>("ScreenIris", &WorldMapPlayer::SetAniStateScreenIrisEnd, this);
@@ -218,7 +218,7 @@ StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 	{
 		/*if (true == AniState_ScreenIris_End_)
 		{*/
-			GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("Play");
 			GameEngineCore::LevelChange("LoaddingScene");
 		//}
 	}
@@ -239,7 +239,7 @@ StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaT
 {
 	if (true == AniState_ScreenIris_End_)
 	{
-		GameEngineCore::LevelFind<LoaddingScene>("LoaddingScene")->SetLoaddingNextLevel("Play");
+		dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("Play");
 		GameEngineCore::LevelChange("LoaddingScene");
 	}
 	return StateInfo();

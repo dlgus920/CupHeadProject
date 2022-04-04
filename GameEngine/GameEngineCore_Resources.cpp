@@ -15,7 +15,7 @@ void GameEngineCore::EngineResourcesLoad()
 {
 	{
 		GameEngineDirectory EngineTextureDir;
-		EngineTextureDir.MoveParent(GV_GAMEFILENAME);
+		EngineTextureDir.MoveParent("CupHeadProject");
 		EngineTextureDir.MoveChild("EngineResources");
 		EngineTextureDir.MoveChild("Texture");
 
@@ -29,7 +29,7 @@ void GameEngineCore::EngineResourcesLoad()
 
 	{
 		GameEngineDirectory Dir;
-		Dir.MoveParent(GV_GAMEFILENAME);
+		Dir.MoveParent("CupHeadProject");
 		Dir.MoveChild("EngineResources");
 		Dir.MoveChild("Shader");
 
@@ -196,7 +196,7 @@ void GameEngineCore::EngineResourcesCreate()
 			RectVertex[0] = { float4({ -1.0f, 1.0f, 0.0f }),float4({ 0.0f, 0.0f }) };
 			RectVertex[1] = { float4({ 1.0f, 1.0f, 0.0f }), float4({ 1.0f, 0.0f }) };
 			RectVertex[2] = { float4({ 1.0f, -1.0f, 0.0f }), float4({ 1.0f, 1.0f }) };
-			RectVertex[3] = { float4({ -1.0f, -1.0f, 0.0f }),  float4({ 0.0f, 1.0f }) };
+			RectVertex[3] = { float4({ -1.0f, -1.0f, 0.0f }),  float4({ 0.0f, 1.0f })};
 		}
 
 		GameEngineVertexBufferManager::GetInst().Create("FullRect", RectVertex, D3D11_USAGE::D3D11_USAGE_DEFAULT);
@@ -249,7 +249,7 @@ void GameEngineCore::EngineResourcesCreate()
 
 
 	{
-		D3D11_DEPTH_STENCIL_DESC DepthInfo = { 0 };
+		D3D11_DEPTH_STENCIL_DESC DepthInfo = {0};
 
 		DepthInfo.DepthEnable = true;
 		DepthInfo.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;

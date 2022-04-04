@@ -30,13 +30,13 @@ void WorldMapPlayer::StateSetting()
 
 void WorldMapPlayer::ComponentSetting()
 {
-	PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-	PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
+	//PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+	//PlayerImageRenderer->GetTransform()->SetLocalScaling({ 100.0f, 100.0f, 1.0f });
 
-	PlayerCollision = CreateTransformComponent<GameEngineCollision>();
-	PlayerCollision->SetCollisionType(CollisionType::Rect);
-	PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
-	PlayerCollision->GetTransform()->SetLocalScaling({ 50.f, 50.f, 1.0f });
+	//PlayerCollision = CreateTransformComponent<GameEngineCollision>();
+	//PlayerCollision->SetCollisionType(CollisionType::Rect);
+	//PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+	//PlayerCollision->GetTransform()->SetLocalScaling({ 50.f, 50.f, 1.0f });
 
 }
 

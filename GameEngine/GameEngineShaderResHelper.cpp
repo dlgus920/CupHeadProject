@@ -17,7 +17,7 @@ GameEngineShaderResHelper::~GameEngineShaderResHelper()
 	Clear();
 }
 
-void GameEngineShaderResHelper::Clear()
+void GameEngineShaderResHelper::Clear() 
 {
 	for (auto& Setting : AllTextureData_)
 	{
@@ -65,7 +65,8 @@ bool GameEngineShaderResHelper::IsConstantBuffer(const std::string& _SettingName
 	return true;
 }
 
-void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineRenderingPipeLine* _Pipe)
+
+void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineRenderingPipeLine* _Pipe) 
 {
 	// 두번한다는 생각은 안하겠습니다.
 	Clear();
@@ -178,6 +179,28 @@ void GameEngineShaderResHelper::ReSet()
 
 }
 
+
+void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture) 
+{
+	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
+
+	if (FindIter == AllTextureData_.end())
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
+		return;
+	}
+
+	if (nullptr == _Texture)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + _Texture->GetName());
+		return;
+	}
+
+
+	FindIter->second->Res_ = _Texture;
+
+}
+
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, const std::string& _ImageName)
 {
 	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
@@ -198,26 +221,4 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 	}
 
 	FindIter->second->Res_ = FindTexture;
-}
-
-
-void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture)
-{
-	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
-
-	if (FindIter == AllTextureData_.end())
-	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
-		return;
-	}
-
-	if (nullptr == _Texture)
-	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + _Texture->GetName());
-		return;
-	}
-
-
-	FindIter->second->Res_ = _Texture;
-
 }

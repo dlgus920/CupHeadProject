@@ -12,53 +12,21 @@ class GameEngineActor : public GameEngineObjectNameBase
 	friend GameEngineLevel;
 
 public:
+
+	// constrcuter destructer
 	GameEngineActor();
 	~GameEngineActor();
 
+	// delete Function
 	GameEngineActor(const GameEngineActor& _Other) = delete;
 	GameEngineActor(GameEngineActor&& _Other) noexcept = delete;
 	GameEngineActor& operator=(const GameEngineActor& _Other) = delete;
 	GameEngineActor& operator=(GameEngineActor&& _Other) noexcept = delete;
 
-public:
 	bool IsDestroyed_;
 	float DeathTime_;
 
-	GameEngineTransform* GetTransform()
-	{
-		return &Transform_;
-	}
-
-private:
-	GameEngineTransform Transform_;
-	GameEngineLevel* Level_;
-	// Status
-	std::list<GameEngineComponent*> ComponentList_;
-	std::list<GameEngineTransformComponent*> TransformComponentList_;
-
-protected:
-	virtual void Start() {}
-	virtual void Update(float _DeltaTime) {}
-	virtual void ReleaseEvent() {}
-	virtual void LevelChangeEndEvent() {}
-	virtual void LevelChangeStartEvent() {}
-
-private:
-	void SetLevel(GameEngineLevel* Level);
-	void UpdateComponent(float _DeltaTime);
-	void ComponentRelease();
-	void ReleaseUpdate(float _DeltaTime);
-
-public:
-	//custom
-
-	template <typename Level>
-	Level* GetLevel()
-	{
-		return dynamic_cast<Level*>(Level_);
-	}
-
-	GameEngineLevel* GetLevel()
+	GameEngineLevel* GetLevel() 
 	{
 		return Level_;
 	}
@@ -69,7 +37,7 @@ public:
 		{
 			Death();
 		}
-		else
+		else 
 		{
 			IsDestroyed_ = true;
 			DeathTime_ = _Time;
@@ -79,7 +47,7 @@ public:
 	template<typename ComponentType>
 	ComponentType* CreateComponent(int _Order = 0)
 	{
-		GameEngineComponent* NewComponent = new ComponentType();
+		GameEngineComponent* NewComponent = new ComponentType(); 
 		NewComponent->SetParent(this);
 		NewComponent->SetOrder(_Order);
 		NewComponent->InitComponent(this);
@@ -88,7 +56,7 @@ public:
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
 
-template<typename ComponentType>
+	template<typename ComponentType>
 	ComponentType* CreateTransformComponent(int _Order = 0)
 	{
 		// 업캐스팅을 이용해서 컴파일 에러를 낼것이다.
@@ -121,5 +89,40 @@ template<typename ComponentType>
 		NewComponent->Start();
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
+
+protected:
+	virtual void Start() {}
+	virtual void Update(float _DeltaTime) {}
+	virtual void ReleaseEvent() {}
+	virtual void LevelChangeEndEvent() {}
+	virtual void LevelChangeStartEvent() {}
+
+
+	// 트랜스폼을 변화시킨다는걸 기본적으로 생각할겁니다.
+
+////////////////////////
+
+public:
+	GameEngineTransform* GetTransform() 
+	{
+		return &Transform_;
+	}
+
+private:
+	GameEngineTransform Transform_;
+	GameEngineLevel* Level_;
+
+	// Status
+	std::list<GameEngineComponent*> ComponentList_;
+
+	std::list<GameEngineTransformComponent*> TransformComponentList_;
+
+	void SetLevel(GameEngineLevel* Level);
+
+	void UpdateComponent(float _DeltaTime);
+
+	void ComponentRelease();
+
+	void ReleaseUpdate(float _DeltaTime);
 };
 

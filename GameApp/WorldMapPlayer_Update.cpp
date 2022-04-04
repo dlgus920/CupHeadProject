@@ -40,74 +40,74 @@ void WorldMapPlayer::KeyUpdate()
 	{
 		if (KeyState_Left_ && !KeyState_Right_)
 		{
-			if (Dir_ == AnimationDirection::Right)
-				GetTransform()->SetHorizenInvertTransform();
+			//if (Dir_ == AnimationDirection::Right)
+			//	GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Left;
 
-			MoveDir_ = float4::DOWNLEFT;
+			//MoveDir_ = float4::DOWNLEFT;
 		}
 
 		else if (KeyState_Right_ && !KeyState_Left_)
 		{
-			if (Dir_ == AnimationDirection::Left)
-				GetTransform()->SetHorizenInvertTransform();
+			//if (Dir_ == AnimationDirection::Left)
+			//	GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Right;
 
-			MoveDir_ = float4::DOWNRIGHT;
+			//MoveDir_ = float4::DOWNRIGHT;
 		}
 
-		else
-			MoveDir_ = float4::DOWN;
+		//else
+			//MoveDir_ = float4::DOWN;
 	}
 
 	else if (KeyState_Up_ && !KeyState_Down_)
 	{
 		if (KeyState_Left_ && !KeyState_Right_)
 		{
-			if (Dir_ == AnimationDirection::Right)
-				GetTransform()->SetHorizenInvertTransform();
+			//if (Dir_ == AnimationDirection::Right)
+			//	GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Left;
 
-			MoveDir_ = float4::UPLEFT;
+			//MoveDir_ = float4::UPLEFT;
 		}
 
 		else if (KeyState_Right_ && !KeyState_Left_)
 		{
-			if (Dir_ == AnimationDirection::Left)
-				GetTransform()->SetHorizenInvertTransform();
+			//if (Dir_ == AnimationDirection::Left)
+			//	GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Right;
 
-			MoveDir_ = float4::UPRIGHT;
+			//MoveDir_ = float4::UPRIGHT;
 		}
 
-		else
-			MoveDir_ = float4::UP;
+		//else
+			//MoveDir_ = float4::UP;
 	}
 
 	else if (KeyState_Left_ && !KeyState_Right_)
 	{
-		if (Dir_ == AnimationDirection::Right)
-			GetTransform()->SetHorizenInvertTransform();
+		//if (Dir_ == AnimationDirection::Right)
+		//	GetTransform()->SetHorizenInvertTransform();
 		Dir_ = AnimationDirection::Left;
 
-		MoveDir_ = float4::LEFT;
+		//MoveDir_ = float4::LEFT;
 	}
 
 	else if (KeyState_Right_ && !KeyState_Left_)
 	{
-		if (Dir_ == AnimationDirection::Left)
-			GetTransform()->SetHorizenInvertTransform();
+		//if (Dir_ == AnimationDirection::Left)
+		//	GetTransform()->SetHorizenInvertTransform();
 		Dir_ = AnimationDirection::Right;
 
-		MoveDir_ = float4::RIGHT;
+		//MoveDir_ = float4::RIGHT;
 	}
 }
 
 void WorldMapPlayer::CollisonUpdate()
 {
-	ColState_ = Map::PixelCollisionTransform(PlayerCollision->GetTransform(), 10);
+	//ColState_ = Map::PixelCollisionTransform(PlayerCollision->GetTransform(), 10);
 
-	ColState_Chose_ = PlayerCollision->Collision(static_cast<int>(CollisionGruop::StagePoint));
+	//ColState_Chose_ = PlayerCollision->Collision(static_cast<int>(CollisionGruop::StagePoint));
 
 	//float4 Color = Map::GetColor(GetTransform());
 

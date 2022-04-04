@@ -1,8 +1,9 @@
 #pragma once
-#include "UIBase.h"
+#include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
-class TopUI : public UIBase
+class GameEngineUIRenderer;
+class TopUI : public GameEngineActor
 {
 public:
 	// constrcuter destructer
@@ -16,9 +17,12 @@ public:
 	TopUI& operator=(TopUI&& _Other) noexcept = delete;
 
 protected:
+	GameEngineUIRenderer* TopRenderer;
+	float Time;
 
 private:
 	void Start() override;
+	void Update(float _Time) override;
 
 };
 

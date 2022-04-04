@@ -4,21 +4,21 @@
 #include "GameEngineFolderTextureManager.h"
 #include "GameEngineFolderTexture.h"
 
-void GameEngineImageRenderer::Animation2D::CallStart()
+void GameEngineImageRenderer::Animation2D::CallStart() 
 {
 	for (auto& CallBack : StartCallBack_)
 	{
 		CallBack();
 	}
 }
-void GameEngineImageRenderer::Animation2D::CallEnd()
+void GameEngineImageRenderer::Animation2D::CallEnd() 
 {
 	for (auto& CallBack : EndCallBack_)
 	{
 		CallBack();
 	}
 }
-void GameEngineImageRenderer::Animation2D::CallFrame()
+void GameEngineImageRenderer::Animation2D::CallFrame() 
 {
 	for (auto& CallBack : FrameCallBack_)
 	{
@@ -39,7 +39,7 @@ void GameEngineImageRenderer::Animation2D::CallFrame()
 	}
 }
 
-void GameEngineImageRenderer::Animation2D::Reset()
+void GameEngineImageRenderer::Animation2D::Reset() 
 {
 	IsEnd = false;
 	CurTime_ = InterTime_;
@@ -110,36 +110,36 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 	{
 		FrameUpdate();
 	}
-	else
+	else 
 	{
 		ReverseFrameUpdate();
 	}
 
 	CallFrame();
-
 	if (nullptr == FolderTextures_)
 	{
 		Renderer->ShaderHelper.SettingTexture("Tex", AnimationTexture_);
 		Renderer->CurTexture = AnimationTexture_;
 		Renderer->SetIndex(CurFrame_);
-	}
-	else
+	} else 
 	{
-		Renderer->CutData = float4(0, 0, 1, 1);
+		Renderer->CutData = float4(0,0,1,1);
 		Renderer->ShaderHelper.SettingTexture("Tex", FolderTextures_->GetTextureIndex(CurFrame_));
 	}
+
+	
 
 }
 
 /// ///////////////////////////////////////////////////////////////////
 
-GameEngineImageRenderer::GameEngineImageRenderer()
+GameEngineImageRenderer::GameEngineImageRenderer() 
 	: CutData(0, 0, 1, 1)
 	, CurAnimation_(nullptr)
 {
 }
 
-GameEngineImageRenderer::~GameEngineImageRenderer()
+GameEngineImageRenderer::~GameEngineImageRenderer() 
 {
 	for (auto& Animation : AllAnimations_)
 	{
@@ -165,13 +165,10 @@ void GameEngineImageRenderer::ImageRendererStart()
 	ShaderHelper.SettingConstantBufferLink("TextureCutData", CutData);
 
 	ResultColor = float4::ONE;
-	ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor); // 색상 합성
-
-	//TODO : 모든 얘한테 다 주던가 각자 따로 만들게끔 설계하기
-
+	ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor);
 }
 
-void GameEngineImageRenderer::SetIndex(const int Index)
+void GameEngineImageRenderer::SetIndex(const int Index) 
 {
 	if (nullptr == CurTexture)
 	{
@@ -187,7 +184,7 @@ void GameEngineImageRenderer::SetIndex(const int Index)
 
 }
 
-void GameEngineImageRenderer::SetImage(const std::string& _ImageName)
+void GameEngineImageRenderer::SetImage(const std::string& _ImageName) 
 {
 	CurTexture = GameEngineTextureManager::GetInst().Find(_ImageName);
 
@@ -243,7 +240,7 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 	}
 
 	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().Find(_FolderTexName);
-
+	
 	if (nullptr == FolderTexture)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 폴더 텍스처를 세팅하려고 했습니다..");
@@ -285,7 +282,7 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	{
 		return;
 	}
-
+	
 	CurAnimation_ = FindIter->second;
 
 	CurAnimation_->Reset();

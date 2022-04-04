@@ -17,7 +17,7 @@ private:
 	static GameEngineWindow* Inst;
 
 public:
-	static GameEngineWindow& GetInst()
+	static GameEngineWindow& GetInst() 
 	{
 		return *Inst;
 	}

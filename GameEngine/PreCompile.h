@@ -10,4 +10,3 @@
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngineBase/GameEngineMath.h>
 
-#include "EngineGlovalValue.h"

@@ -45,7 +45,8 @@ private:
 	static IDXGISwapChain* SwapChain_;
 
 	static GameEngineRenderTarget* BackBufferTarget_;
-
+	
+	// static GameEngineDepthBuffer* DepthBuffer_;
 
 public:
 	static GameEngineRenderTarget* GetBackBufferTarget();

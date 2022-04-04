@@ -5,9 +5,8 @@
 #include <memory>
 #include "GameEngineRenderingSettingData.h"
 #include "GameEngine/GameEngineShader.h"
-#include "GameEngineRenderingPipeLine.h"
-#include "GameEngineVertexShader.h"
-#include "GameEnginePixelShader.h"
+
+
 
 class GameEngineRenderingPipeLine;
 class GameEngineTexture;
@@ -27,7 +26,7 @@ public:
 
 	// delete Function
 	//GameEngineShaderResHelper(const GameEngineShaderResHelper& _Other) = delete;
-	//GameEngineShaderResHelper(GameEngineShaderResHelper&& _Other) noexcept = delete;
+	// GameEngineShaderResHelper(GameEngineShaderResHelper&& _Other) noexcept = delete;
 	//GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
 	//GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
 
@@ -95,8 +94,9 @@ public:
 
 	void SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture);
 
-	void Setting();
 	void ReSet();
+	void Setting();
+
 protected:
 
 private:

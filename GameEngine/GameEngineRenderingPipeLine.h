@@ -76,6 +76,7 @@ public:
 
 	void Reset();
 
+
 public:
 	GameEngineRenderingPipeLine(); // default constructer 디폴트 생성자
 	~GameEngineRenderingPipeLine(); // default destructer 디폴트 소멸자

@@ -8,18 +8,30 @@ GameEngineTime* GameEngineTime::Inst = new GameEngineTime();
 GameEngineTime::GameEngineTime()
 {
 	TimeCheckReset();
-}
+}   
 
 GameEngineTime::~GameEngineTime()
 {
+	for (auto& Event : AddEvent_)
+	{
+		delete Event;
+	}
+
+	AddEvent_.clear();
+
+
+	for (auto& Event : AllEvent_)
+	{
+		delete Event;
+	}
+
+	AllEvent_.clear();
 }
 
 GameEngineTime::GameEngineTime(const GameEngineTime&& _Other)
 	: timeCount_(_Other.timeCount_),
 	startCheck_(_Other.startCheck_),
-	endCheck_(_Other.endCheck_),
-	Frame_(0),
-	FPS_(0)
+	endCheck_(_Other.endCheck_)
 {
 }
 
@@ -38,29 +50,37 @@ void GameEngineTime::TimeCheck()
 	deltaTime_ = static_cast<double>((endCheck_.QuadPart - startCheck_.QuadPart)) / static_cast<double>(timeCount_.QuadPart);
 	startCheck_.QuadPart = endCheck_.QuadPart;
 
-
-	if (deltaTime_ >= 0.1f)
+	for (auto& Event : AddEvent_)
 	{
-		std::string Text = std::to_string(deltaTime_) + "\n";
-		OutputDebugStringA(Text.c_str());
+		AllEvent_.push_back(Event);
+	}
+	AddEvent_.clear();
+
+	for (auto& Event : AllEvent_)
+	{
+		Event->Time_ -= deltaTime_;
+		if (0 >= Event->Time_)
+		{
+			Event->Event_();
+		}
 	}
 
-	if (deltaTime_ > 0.016666666666666)
+	std::list<TimeEvent*>::iterator StartIter = AllEvent_.begin();
+	std::list<TimeEvent*>::iterator EndIter = AllEvent_.end();
+
+	for (; StartIter != EndIter; )
 	{
-		deltaTime_ = 0.016666666666666;
+		if (0 >= (*StartIter)->Time_)
+		{
+			delete *StartIter;
+			StartIter = AllEvent_.erase(StartIter);
+			continue;
+		}
+		++StartIter;
 	}
+}
 
-#ifdef _DEBUG
-	++Frame_;
-
-	CheckTime_ += deltaTime_;
-
-	if (CheckTime_ >= 1.f)
-	{
-		FPS_ = Frame_;
-		Frame_ = 0;
-		CheckTime_ = 0;
-	}
-#endif // _DEBUG
-
+void GameEngineTime::AddTimeEvent(float _Time, std::function<void()> _Event) 
+{
+	AddEvent_.push_back(new TimeEvent{ _Time, _Event });
 }

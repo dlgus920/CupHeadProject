@@ -32,8 +32,8 @@ private:
 	//custom func
 	//Precission 계수 만큼 정확한 충돌체크가 가능하지만 느려짐
 public:
-	static float4 PixelCollisionTransform(GameEngineTransform* _Transform, int Precission_coefficient = 10);
-	static float4 PixelCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
+	//static float4 PixelCollisionTransform(GameEngineTransform* _Transform, int Precission_coefficient = 10);
+	//static float4 PixelCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
 
 
 protected:

@@ -33,7 +33,6 @@ Player::Player() :
 	PlayerCollision(nullptr),
 	PlayerImageRenderer(nullptr),
 	BulletType_(BulletType::Default),
-	KeyDir_(KeyDir::None),
 	Dir_(AnimationDirection::Right),
 	TimeCheck_(0.f),
 	DistTimeCheck_(0.f),
@@ -54,9 +53,7 @@ void Player::Start()
 	AnimationSetting();
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
 
-	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+	PlayerImageRenderer->GetTransform()->SetLocalScaling(float4{280.f,280.f,1.f});
 
 	KeySetting();
 	StateSetting();
@@ -71,9 +68,6 @@ void Player::Start()
 void Player::ChangeAnimation(std::string _animation)
 {
 	PlayerImageRenderer->SetChangeAnimation(_animation);
-	//PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetCurrentTexture()->GetTextureSize());
-	//TODO: 근데 이거 혹시 안 잘라진 텍스처 크기 그대로 가져오나?
-	// 아무래도 텍스처가 지 크기를 가지고 있는데 좋을거같다.
 }
 
 StateInfo Player::ChangeState()
@@ -153,22 +147,6 @@ const std::string Player::CheckState()
 	return CurState_;
 }
 
-//void Player::Shoot(float4 ShootDir)
-//{
-//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-//	NewBullet->SetMoveDir(ShootDir);
-//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-//	NewBullet->Release(1.0f);
-//}
-//
-//void Player::Shoot(float ShootDirX, float ShootDirY)
-//{
-//	Bullet* NewBullet = GetLevel()->CreateActor<Bullet>();
-//	NewBullet->SetMoveDir(float4(ShootDirX, ShootDirY, 0.f));
-//	NewBullet->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-//	NewBullet->Release(1.0f);
-//}
-
 void Player::Move(float4 MoveDir, float _DeltaTime)
 {
 	GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
@@ -199,64 +177,10 @@ void Player::ShootSpreadBullet(float4 _Dir)
 void Player::ShootDefalutBullet(float4 _Dir)
 {
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
+	float4 pos = GetTransform()->GetWorldPosition();
+	Bullet->GetTransform()->SetLocalPosition(float4{ pos.x, pos.y, 0.3f });
 	Bullet->SetMoveDir(_Dir);
 }
-//
-//const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
-//{
-//	Move(_MoveDist, _DeltaTime);
-//	
-//	float4 Color = Map::GetColor(GetTransform());
-//
-//	if (Color == float4::BLACK)
-//	{
-//		Move(0.f,10.f,1.f);
-//		Color = Map::GetColor(GetTransform());
-//
-//		if (Color == float4::BLACK)
-//		{
-//			Move(0.f, -10.f, 1.f);
-//			Move(-_MoveDist, _DeltaTime);
-//
-//			return false;
-//		}
-//
-//		else
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return true;
-//}
-//
-//const bool Player::MapCollisionMove(float DirX, float DirY, float _DeltaTime)
-//{
-//	Move(DirX, DirY,_DeltaTime);
-//
-//	float4 Color = Map::GetColor(GetTransform());
-//
-//	if (Color == float4::BLACK)
-//	{
-//		Move(0.f, 10.f, 1.f);
-//		Color = Map::GetColor(GetTransform());
-//
-//		if (Color == float4::BLACK)
-//		{
-//			Move(0.f, -10.f, 1.f);
-//			Move(-DirX, -DirY, _DeltaTime);
-//
-//			return false;
-//		}
-//
-//		else
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return true;
-//}
 
 float4 Player::GetBulletPoint()
 {

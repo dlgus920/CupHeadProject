@@ -49,7 +49,7 @@ void GameEngineTexture::Create(
 )
 {
 
-	D3D11_TEXTURE2D_DESC TextureInfo = { 0, };
+	D3D11_TEXTURE2D_DESC TextureInfo = {0,};
 	TextureInfo.ArraySize = 1;
 	TextureInfo.Width = _TextureSize.uix();
 	TextureInfo.Height = _TextureSize.uiy();
@@ -63,7 +63,7 @@ void GameEngineTexture::Create(
 	{
 		TextureInfo.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	}
-	else
+	else 
 	{
 		TextureInfo.CPUAccessFlags = 0;
 	}
@@ -73,7 +73,7 @@ void GameEngineTexture::Create(
 	Create(TextureInfo);
 }
 
-void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc)
+void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc) 
 {
 	TextureDesc_ = _Desc;
 
@@ -95,10 +95,12 @@ void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc)
 		CreateShaderResourceView();
 	}
 
+
 	if (_Desc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
 		CreateDepthStencilView();
 	}
+	
 }
 
 void GameEngineTexture::Create(ID3D11Texture2D* _Texture2D) 
@@ -161,6 +163,7 @@ ID3D11DepthStencilView* GameEngineTexture::CreateDepthStencilView()
 	return DepthStencilView_;
 }
 
+
 void GameEngineTexture::Load(const std::string& _Path)
 {
 	GameEngineFile NewFile = GameEngineFile(_Path);
@@ -215,13 +218,8 @@ void GameEngineTexture::PushCutIndex(const float4& _Size, const float4& _Pos)
 	CutList_.push_back(CutUv);
 }
 
-void GameEngineTexture::Cut(int _x, int _y)
+void GameEngineTexture::Cut(int _x, int _y) 
 {
-	TextureScale_ = float4(TextureDesc_.Width, TextureDesc_.Height);
-	TextureScale_.x /= _x;
-	TextureScale_.y /= _y;
-
-
 	// UV값은 무조건
 	// 1.0f 라고 봐야죠?
 	// 
@@ -261,13 +259,12 @@ float4 GameEngineTexture::GetCutData(int _Index)
 	return CutList_[_Index];
 }
 
-bool GameEngineTexture::IsCut()
+bool GameEngineTexture::IsCut() 
 {
 	return CutList_.size() != 0;
 }
 
-
-float4 GameEngineTexture::GetPixel(int _x, int _y)
+float4 GameEngineTexture::GetPixel(int _x, int _y) 
 {
 	// 1111
 	// RGBA
@@ -307,11 +304,4 @@ float4 GameEngineTexture::GetPixel(int _x, int _y)
 	unsigned char A = Color[3];
 
 	return float4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
-}
-
-const float4 GameEngineTexture::GetMetaDataImageSize()
-{
-	float4 Size = { static_cast<float>(Image_.GetMetadata().width),static_cast<float>(Image_.GetMetadata().height) , 0.f,0.f};
-
-	return Size;
 }

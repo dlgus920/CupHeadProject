@@ -56,20 +56,6 @@ public:
 		std::function<void(GameEngineCollision*)> _CallBack
 	);
 
-	//Custom Func
-	bool Collision(int _OtherGroup);
-	GameEngineCollision* CollisionPtr(int _OtherGroup);
-
-	//custom
-
-	void SetCollisionType(CollisionType _CollisionType)
-	{
-		CollisionType_ = _CollisionType;
-	}
-
-	//Custom Member
-	CollisionType CollisionType_;
-
 	void SphereToSphereCollision(int _OtherGroup, std::function<void(GameEngineCollision*)> _CallBack);
 
 
