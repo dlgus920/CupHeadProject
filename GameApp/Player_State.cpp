@@ -41,7 +41,7 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 
 		if (ShootingInterTime_ >= 0.2f)
 		{
-			BulletShootFunc_(BulletInfo_);
+			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
 		}
 	}
@@ -86,7 +86,7 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 		if (ShootingInterTime_ >= 0.2f)
 		{
-			BulletShootFunc_(BulletInfo_);
+			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
 		}
 	}
@@ -190,7 +190,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 
 		if (ShootingInterTime_ >= 0.2f)
 		{
-			BulletShootFunc_(BulletInfo_);
+			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
 		}
 	}
@@ -304,7 +304,7 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 
 		if (ShootingInterTime_ >= 0.2f)
 		{
-			BulletShootFunc_(BulletInfo_);
+			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
 		}
 

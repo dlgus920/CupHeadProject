@@ -28,7 +28,12 @@ void Bullet::SetBulletInfo(BulletInfo _BulletInfo)
 {
 	BulletInfo_ = _BulletInfo;
 
+
 	float degree = float4::DegreeDot3DToACosAngle(float4::RIGHT, _BulletInfo.MoveDir_);
+	if (_BulletInfo.MoveDir_.y < 0.f)
+	{
+		degree *= -1.f;
+	}
 	
 	//float degree = atanf(_BulletInfo.MoveDir_.y / _BulletInfo.MoveDir_.x);
 	//degree *= GameEngineMath::RadianToDegree;

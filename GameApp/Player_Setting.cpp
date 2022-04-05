@@ -73,9 +73,11 @@ void Player::ComponentSetting()
 
 	{
 		BulletPointOrigin_ = CreateTransformComponent<PositionComponent>();
+		BulletPointOrigin_->GetTransform()->SetLocalPosition(float4{ 0.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) });
 
 		BulletPoint_ = CreateTransformComponent<PositionComponent>(BulletPointOrigin_->GetTransform());
-		BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,-50.f,static_cast<int>(ZOrder::Z00Fx00) });
+		//BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
+		BulletPoint_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
 	}
 
 }

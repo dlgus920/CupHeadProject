@@ -17,6 +17,7 @@ enum class ZOrder
 {
 	Z00Camera00,
 	Z00Fx00,
+	Z00Bullet01,
 	Z01Actor01,
 	Z01Actor02,
 	Z01Actor03,

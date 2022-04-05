@@ -34,7 +34,7 @@ Player::Player() :
 	PlayerCollision(nullptr),
 	PlayerImageRenderer(nullptr),
 	BulletType_(BulletType::Default),
-	KeyDir_(KeyDir::None),
+	ShootingDir_(),
 	Dir_(AnimationDirection::Right),
 	TimeCheck_(0.f),
 	ShootingInterTime_(0.f),
@@ -65,11 +65,22 @@ void Player::Start()
 
 	Dir_ = AnimationDirection::Right;
 
-	BulletInfo_.BulletSpeed_ = 600.f;
+	BulletInfo_.BulletSpeed_ = 0.f;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
 	State_.ChangeState("Idle");
+
+	//ShootingPos_[static_cast<int>(ShootingDir::Right)] =		float4{ 50.f,-50.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Right_Up)] =		float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Right_Down)] =	float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Left)] =			float4{ -50.f,-50.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Left_Up)] =		float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Left_Down)] =	float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Up_Left)] =		float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Up_Right)] =		float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Down_Left)] =	float4{ 0.f,0.f,0.f };
+	//ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] =	float4{ 0.f,0.f,0.f };
 }
 
 void Player::ChangeAnimation(std::string _animation)
@@ -187,30 +198,41 @@ void Player::ShootSpreadBullet()
 void Player::ShootDefalutBullet()
 {
 	{
-		if (Dir_ == AnimationDirection::Left)
+		//if (Dir_ == AnimationDirection::Left)
+		//{
+		//	BulletPoint_->GetTransform()->SetLocalPosition(float4 { -50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
+
+		//	float degree = atanf(BulletInfo_.MoveDir_.y / -BulletInfo_.MoveDir_.x);
+		//	degree *= GameEngineMath::RadianToDegree;
+
+		//	BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+		//}
+		//else
+		//{
+		//	BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
+
+		//	float degree = atanf(BulletInfo_.MoveDir_.y / BulletInfo_.MoveDir_.x);
+		//	degree *= GameEngineMath::RadianToDegree;
+
+		//	BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+		//}
+
+		float degree = float4::DegreeDot3DToACosAngle(float4::RIGHT, BulletInfo_.MoveDir_);
+		if (BulletInfo_.MoveDir_.y < 0.f)
 		{
-			BulletPoint_->GetTransform()->SetLocalPosition(float4 { -50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
-
-			float degree = atanf(BulletInfo_.MoveDir_.y / -BulletInfo_.MoveDir_.x);
-			degree *= GameEngineMath::RadianToDegree;
-
-			BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+			degree *= -1.f;
 		}
-		else
-		{
-			BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
 
-			float degree = atanf(BulletInfo_.MoveDir_.y / BulletInfo_.MoveDir_.x);
-			degree *= GameEngineMath::RadianToDegree;
+		BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
 
-			BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
-		}
 	}
 
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
-	float4 pos = GetTransform()->GetWorldPosition();
-	//Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00));
-	Bullet->GetTransform()->SetWorldPosition(GetBulletPoint());
+
+	float4 pos = BulletPoint_->GetTransform()->GetWorldPosition();
+	pos.z = static_cast<int>(ZOrder::Z00Bullet01);
+
+	Bullet->GetTransform()->SetWorldPosition(pos);
 	Bullet->SetBulletInfo(BulletInfo_);
 	//if (_BulletInfo.MoveDir_.x < 0)
 	//{

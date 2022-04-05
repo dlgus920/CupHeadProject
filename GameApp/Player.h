@@ -12,9 +12,8 @@ enum class AnimationDirection
 	Left
 };
 
-enum class KeyDir
+enum class ShootingDir
 {	
-	None,
 	Right,
 	Right_Up,
 	Right_Down,
@@ -102,10 +101,12 @@ private: //Member
 	BulletType BulletType_;
 	BulletInfo BulletInfo_;
 
-	float4 ShootingDir_;
+	//float4 ShootingDir_;
+
+	float4 ShootingPos_[10];
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
-	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
+	ShootingDir				ShootingDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	//float4 MoveDir_;
 
