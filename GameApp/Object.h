@@ -5,7 +5,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
-class Object : public Image
+class Object : public GameEngineActor
 {
 public:
 	Object(); 
@@ -16,17 +16,24 @@ public:
 	Object& operator=(const Object& _other) = delete; 
 	Object& operator=(const Object&& _other) = delete; 
 
-private:	// member Var
-	void Start() final;
-	void Update(float _DeltaTime) final;
+protected:	// member Var
+	virtual void Start();
+	virtual void Update(float _DeltaTime);
 
-private:
+protected:
 	GameEngineCollision* ObjectCollision_;
+	GameEngineImageRenderer* ObjectRenderer_;
+
 public:
 
 	GameEngineCollision* GetObjectCollision()
 	{
 		return ObjectCollision_;
+	}
+
+	GameEngineImageRenderer* GetObjectRenderer()
+	{
+		return ObjectRenderer_;
 	}
 
 };

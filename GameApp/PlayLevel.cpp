@@ -12,7 +12,6 @@
 
 #include "Map.h"
 #include "Image.h"
-#include "Bullet.h"
 
 PlayLevel::PlayLevel() 
 {
@@ -87,19 +86,10 @@ void PlayLevel::LevelStart()
 	//	Actor->GetTransform()->SetWorldPosition(float4(0.0f, 0.0f, 0.0f));
 	//}
 
-	GameEngineInput::GetInst().CreateKey("TEST", VK_LSHIFT);
-	//SetDebug(false);
 }
 
 void PlayLevel::LevelUpdate(float _DeltaTime)
 {
-	if (GameEngineInput::GetInst().Press("TEST"))
-	{
-		Bullet_Defalut* Bullet = CreateActor<Bullet_Defalut>();
-		float4 pos = Player_->GetTransform()->GetWorldPosition();
-		Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z01Actor01));
-		Bullet->SetMoveDir(float4::RIGHT);
-	}
 }
 void PlayLevel::LevelChangeEndEvent()
 {

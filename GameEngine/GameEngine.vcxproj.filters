@@ -284,7 +284,6 @@
     <ClInclude Include="GameEngineGUI.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="EngineGlovalValue.h" />
     <ClInclude Include="GameEngineImageShotWindow.h">
       <Filter>Imgui\EngineWindow</Filter>
     </ClInclude>
@@ -293,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="GameEngineRenderWindow.h">
       <Filter>Imgui\EngineWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineGlovalValue.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

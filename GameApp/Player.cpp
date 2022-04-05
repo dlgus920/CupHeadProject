@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include "PositionComponent.h"
 
 #include "Player.h"
 #include "Bullet.h"
@@ -36,6 +37,7 @@ Player::Player() :
 	KeyDir_(KeyDir::None),
 	Dir_(AnimationDirection::Right),
 	TimeCheck_(0.f),
+	ShootingInterTime_(0.f),
 	DistTimeCheck_(0.f),
 	GravitySpeed_(0.f),
 	GravityAcc_(2.f),
@@ -62,6 +64,8 @@ void Player::Start()
 	StateSetting();
 
 	Dir_ = AnimationDirection::Right;
+
+	BulletInfo_.BulletSpeed_ = 600.f;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
@@ -163,36 +167,138 @@ void Player::Move(float DirX, float DirY, float _DeltaTime)
 	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
 
-void Player::ChangeShootFunc(void(Player::* _FrameFunc)(float4))
+void Player::ChangeShootFunc(void(Player::* _FrameFunc)())
 {
-	BulletShootFunc_ = std::bind(_FrameFunc, this, std::placeholders::_1);
+	BulletShootFunc_ = std::bind(_FrameFunc, this);
 }
 
-void Player::ShootGuidedBullet(float4 _Dir)
+void Player::ShootGuidedBullet()
 {
 	// 소환된 방향으로 나가되, 자체적으로 주변 적을 찾아 알아서 이동하게 해줌
 
 	Bullet_Guided* Bullet = GetLevel()->CreateActor<Bullet_Guided>();
-	Bullet->SetMoveDir(_Dir);
+	Bullet->SetBulletInfo(BulletInfo_);
 }
-void Player::ShootSpreadBullet(float4 _Dir)
+void Player::ShootSpreadBullet()
 {
 	Bullet_Spread* Bullet = GetLevel()->CreateActor<Bullet_Spread>();
-	Bullet->SetMoveDir(_Dir);
+	Bullet->SetBulletInfo(BulletInfo_);
 }
-void Player::ShootDefalutBullet(float4 _Dir)
+void Player::ShootDefalutBullet()
 {
+	{
+		if (Dir_ == AnimationDirection::Left)
+		{
+			BulletPoint_->GetTransform()->SetLocalPosition(float4 { -50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
+
+			float degree = atanf(BulletInfo_.MoveDir_.y / -BulletInfo_.MoveDir_.x);
+			degree *= GameEngineMath::RadianToDegree;
+
+			BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+		}
+		else
+		{
+			BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
+
+			float degree = atanf(BulletInfo_.MoveDir_.y / BulletInfo_.MoveDir_.x);
+			degree *= GameEngineMath::RadianToDegree;
+
+			BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+		}
+	}
+
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
 	float4 pos = GetTransform()->GetWorldPosition();
-	Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00));
-	Bullet->SetMoveDir(_Dir);
-	if (_Dir.x < 0)
-	{
-		Bullet->GetTransform()->SetHorizenInvertTransform();
-	}
+	//Bullet->GetTransform()->SetWorldPosition(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00));
+	Bullet->GetTransform()->SetWorldPosition(GetBulletPoint());
+	Bullet->SetBulletInfo(BulletInfo_);
+	//if (_BulletInfo.MoveDir_.x < 0)
+	//{
+	//	Bullet->GetTransform()->SetHorizenInvertTransform();
+	//}
 	
 	
 }
+
+float4 Player::GetBulletPoint()
+{
+	return BulletPoint_->GetTransform()->GetWorldPosition();
+}
+
+void Player::GravityUpdate(float _DeltaTime)
+{
+	GravitySpeed_ -= GravityAcc_;
+
+	if (GravitySpeed_ < -800.f)
+	{
+		GravitySpeed_ = -800.f;
+	}
+
+	Move(float4(0.f, GravitySpeed_, 0.f), _DeltaTime);
+}
+
+void Player::GravityClear()
+{
+	GravitySpeed_ = 0.f;
+}
+
+void Player::CheckShootDir()
+{
+	if (KeyState_Down_ && !KeyState_Up_)
+	{
+		if (KeyState_Left_ && !KeyState_Right_)
+		{
+			Dir_ = AnimationDirection::Left;
+
+			BulletInfo_.MoveDir_ = float4::DOWNLEFT;
+		}
+
+		else if (KeyState_Right_ && !KeyState_Left_)
+		{
+			Dir_ = AnimationDirection::Right;
+
+			BulletInfo_.MoveDir_ = float4::DOWNRIGHT;
+		}
+
+		else
+			BulletInfo_.MoveDir_ = float4::DOWN;
+	}
+
+	else if (KeyState_Up_ && !KeyState_Down_)
+	{
+		if (KeyState_Left_ && !KeyState_Right_)
+		{
+			Dir_ = AnimationDirection::Left;
+
+			BulletInfo_.MoveDir_ = float4::UPLEFT;
+		}
+
+		else if (KeyState_Right_ && !KeyState_Left_)
+		{
+			Dir_ = AnimationDirection::Right;
+
+			BulletInfo_.MoveDir_ = float4::UPRIGHT;
+		}
+
+		else
+			BulletInfo_.MoveDir_ = float4::UP;
+	}
+
+	else if (KeyState_Left_ && !KeyState_Right_)
+	{
+		Dir_ = AnimationDirection::Left;
+
+		BulletInfo_.MoveDir_ = float4::LEFT;
+	}
+
+	else if (KeyState_Right_ && !KeyState_Left_)
+	{
+		Dir_ = AnimationDirection::Right;
+
+		BulletInfo_.MoveDir_ = float4::RIGHT;
+	}
+}
+
 //
 //const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
 //{
@@ -250,27 +356,6 @@ void Player::ShootDefalutBullet(float4 _Dir)
 //	return true;
 //}
 
-float4 Player::GetBulletPoint()
-{
-	return BulletPoint_->GetLocalPosition();
-}
-
-void Player::GravityUpdate(float _DeltaTime)
-{
-	GravitySpeed_ -= GravityAcc_;
-
-	if (GravitySpeed_ < -800.f)
-	{
-		GravitySpeed_ = -800.f;
-	}
-
-	Move(float4(0.f, GravitySpeed_, 0.f), _DeltaTime);
-}
-
-void Player::GravityClear()
-{
-	GravitySpeed_ = 0.f;
-}
 
 
 

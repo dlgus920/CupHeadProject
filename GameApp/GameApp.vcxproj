@@ -184,10 +184,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <SubType>
       </SubType>
@@ -211,6 +207,10 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PerryObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -242,6 +242,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PositionComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Precompile.h</PrecompiledHeaderFile>
@@ -251,6 +255,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precompile.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Precompile.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="StagePoint.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="Store.cpp">
       <SubType>
@@ -297,10 +305,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Effect.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
     <ClInclude Include="GameObject.h">
@@ -330,6 +334,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PerryObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -338,7 +346,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PositionComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="StagePoint.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Store.h">
       <SubType>
       </SubType>

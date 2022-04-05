@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include "PositionComponent.h"
+
 #include "Player.h"
 #include "Bullet.h"
 
@@ -68,6 +70,14 @@ void Player::ComponentSetting()
 		PlayerHitBox->SetCollisionType(CollisionType::Rect);
 		PlayerHitBox->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerHitBox));
 	}
+
+	{
+		BulletPointOrigin_ = CreateTransformComponent<PositionComponent>();
+
+		BulletPoint_ = CreateTransformComponent<PositionComponent>(BulletPointOrigin_->GetTransform());
+		BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,-50.f,static_cast<int>(ZOrder::Z00Fx00) });
+	}
+
 }
 
 void Player::AnimationSetting()

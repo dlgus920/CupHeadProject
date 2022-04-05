@@ -41,7 +41,7 @@ public:
 	void SetAnimationFrame(int Frame);
 	
 public:
-GameEngineImageRenderer* GetImageRenderer()
+	GameEngineImageRenderer* GetImageRenderer()
 	{
 		return ImageRenderer_;
 	}

@@ -5,9 +5,8 @@
 #include "Bullet.h"
 
 Bullet::Bullet() :
-	MoveDir_(),
-	BulletHitBox_(nullptr),
-	ImageRenderer_(nullptr)
+	BulletCollision_(nullptr),
+	BulletRenderer_(nullptr)
 {
 }
 
@@ -16,40 +15,26 @@ Bullet::~Bullet()
 }
 
 void Bullet::Start()
-{	
-}
-
-void Bullet::TransformUpdate()
 {
+	BulletRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
+	BulletCollision_ = CreateTransformComponent<GameEngineCollision>();
 }
 
 void Bullet::Update(float _DeltaTime)
 {
 }
 
-void Bullet::ReleaseEvent()
+void Bullet::SetBulletInfo(BulletInfo _BulletInfo)
 {
+	BulletInfo_ = _BulletInfo;
+
+	float degree = float4::DegreeDot3DToACosAngle(float4::RIGHT, _BulletInfo.MoveDir_);
 	
-}
+	//float degree = atanf(_BulletInfo.MoveDir_.y / _BulletInfo.MoveDir_.x);
+	//degree *= GameEngineMath::RadianToDegree;
 
-void Bullet::BulletRotate(float4 _Rot)
-{
-	GetTransform()->SetLocalRotation(_Rot);
-}
-
-void Bullet::BulletMove(float4 _Pos)
-{
-	GetTransform()->SetLocalPosition(_Pos);
-}
-
-void Bullet::BulletScale(float _x, float _y)
-{
-	BulletHitBox_->GetTransform()->SetLocalScaling(_x,_y);
-	ImageRenderer_->GetTransform()->SetLocalScaling(_x, _y);
-}
-
-void Bullet::BulletSort(float _Zorder)
-{
+	BulletRenderer_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+	BulletCollision_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
 }
 
 

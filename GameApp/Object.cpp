@@ -13,8 +13,7 @@ Object::~Object() // default destructer 디폴트 소멸자
 
 void Object::Start()
 {
-	Image::Start();
-
+	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 	ObjectCollision_ = CreateTransformComponent<GameEngineCollision>();
 }
 

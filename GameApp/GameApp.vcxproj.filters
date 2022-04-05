@@ -92,11 +92,17 @@
     <ClCompile Include="WorldMapPlayer_Update.cpp">
       <Filter>Actor\Player\WorldMap</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Actor\Image\Object</Filter>
+    <ClCompile Include="PositionComponent.cpp">
+      <Filter>GameComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Actor\Image\Effect</Filter>
+    <ClCompile Include="PerryObject.cpp">
+      <Filter>Actor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Actor\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="StagePoint.cpp">
+      <Filter>Actor\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,9 +169,6 @@
     <Filter Include="Actor\MOB\Base">
       <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Image\Effect">
-      <UniqueIdentifier>{b5fcffc5-2aa1-48c2-9007-d3427ecb9332}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level\04. PlayLevel\Stage">
       <UniqueIdentifier>{8044c92d-1e39-4d66-af65-ef813ee737a8}</UniqueIdentifier>
     </Filter>
@@ -175,8 +178,14 @@
     <Filter Include="Level\04. PlayLevel\MIniStage">
       <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Image\Object">
+    <Filter Include="GameComponent">
+      <UniqueIdentifier>{bf49a85c-e35e-450e-8ada-b49c5ab368fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object">
       <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object\Base">
+      <UniqueIdentifier>{1d59a653-daa2-4573-9f39-d927ad516bcb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,12 +255,18 @@
     <ClInclude Include="WorldMapPlayer.h">
       <Filter>Actor\Player\WorldMap</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Actor\Image\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Actor\Image\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="AppGlobalValue.h" />
+    <ClInclude Include="PositionComponent.h">
+      <Filter>GameComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PerryObject.h">
+      <Filter>Actor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Actor\Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="StagePoint.h">
+      <Filter>Actor\Object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,22 @@
 // Ό³Έν :
 class GameEngineImageRenderer;
 
+struct BulletInfo
+{
+	BulletInfo()
+		: BulletSpeed_(0.f)
+		, MoveDir_(float4::ZERO)
+	{}
+	BulletInfo(float4 _MoveDIr, float _BulletSpeed)
+	{
+		MoveDir_ = _MoveDIr;
+		BulletSpeed_ = _BulletSpeed;
+	}
+
+	float4 MoveDir_;
+	float BulletSpeed_;
+};
+
 class Bullet : public GameEngineActor
 {
 	friend class Player;
@@ -22,23 +38,17 @@ public:
 	Bullet& operator=(Bullet&& _Other) = delete;
 
 protected:
-	GameEngineCollision* BulletHitBox_;
-	GameEngineImageRenderer* ImageRenderer_;
-	float4 MoveDir_;
+	GameEngineImageRenderer* BulletRenderer_;
+	GameEngineCollision* BulletCollision_;
+
+	BulletInfo BulletInfo_;
 
 protected:
 	virtual void Start();
-	virtual void TransformUpdate();
 	virtual void Update(float _DeltaTime);
-	virtual void ReleaseEvent();
 
 protected:
-	void BulletRotate(float4 _Rot);
-	void BulletMove(float4 _Pos);
-	void BulletScale(float _x, float _y);
-	void BulletSort(float _Zorder);
-
-protected:
+	void SetBulletInfo(BulletInfo _BulletInfo);
 
 	template<typename EffectType>
 	void BulletCollisionSpawnEffect(CollisionGruop _CollisionGruop)
@@ -50,13 +60,9 @@ protected:
 
 	const bool BulletCollisionCheck(CollisionGruop _CollisionGruop)
 	{
-		return BulletHitBox_->Collision(static_cast<int>(_CollisionGruop));
+		return BulletCollision_->Collision(static_cast<int>(_CollisionGruop));
 	}
 
-	void SetMoveDir(float4 _MoveDir)
-	{
-		MoveDir_ = _MoveDir;
-	}
 };
 
 class Bullet_Defalut : public Bullet

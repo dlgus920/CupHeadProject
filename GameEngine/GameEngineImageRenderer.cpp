@@ -287,7 +287,7 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	}
 
 	CurAnimation_ = FindIter->second;
-
+	ShaderHelper.SettingTexture("Tex", CurAnimation_->GetCurAnimation());
 	CurAnimation_->Reset();
 	CurAnimation_->CallStart();
 }

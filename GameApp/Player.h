@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
 #include "Bullet.h"
+#include "PositionComponent.h"
 
 class GameEngineImageRenderer;
 
@@ -50,10 +51,10 @@ private:
 private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-	GameEngineTransform* BulletPoint_;
+	PositionComponent* BulletPoint_;
+	PositionComponent* BulletPointOrigin_;
 
 	GameEngineFSM<Player> State_;
-	//GameEngineFSM<Player> AnimationState_;
 
 	GameEngineTransform* Camera_;
 
@@ -65,6 +66,8 @@ private: //Member
 
 	float TimeCheck_;
 	float DistTimeCheck_;
+
+	float ShootingInterTime_;
 
 	float GravitySpeed_;
 	float GravityAcc_;
@@ -97,6 +100,10 @@ private: //Member
 
 	// 현재 보고 있는 방향
 	BulletType BulletType_;
+	BulletInfo BulletInfo_;
+
+	float4 ShootingDir_;
+
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 	KeyDir					KeyDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
@@ -104,7 +111,7 @@ private: //Member
 
 	std::string CurState_;
 
-	std::function<void(float4)> BulletShootFunc_;
+	std::function<void()> BulletShootFunc_;
 
 private: //Legacy
 	void Start() override;
@@ -122,16 +129,18 @@ private://Func
 	//const bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
 	// 10픽셀 차이로 맵의 곡선을 넘을 수 있나 체크하고 이동함(못하면 안함), 근데 이거 필요한가? 컵헤드 곡선맵 있나?, 월드맵에서?
 
-	void ChangeShootFunc(void(Player::* _FrameFunc)(float4));
+	void ChangeShootFunc(void(Player::* _FrameFunc)());
 
-	void ShootGuidedBullet(float4 _Dir);
-	void ShootSpreadBullet(float4 _Dir);
-	void ShootDefalutBullet(float4 _Dir);
+	void ShootGuidedBullet();
+	void ShootSpreadBullet();
+	void ShootDefalutBullet();
 
 	float4 GetBulletPoint();
 
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
+
+	void CheckShootDir();
 
 private: //Setting
 	void KeySetting();
@@ -182,6 +191,8 @@ private:
 	void Hit_Start();
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
 	void Hit_End();
+
+
 #pragma endregion
 
 

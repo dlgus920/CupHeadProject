@@ -54,14 +54,20 @@ void Player::KeyUpdate()
 	if (KeyState_Left_ && !KeyState_Right_)
 	{
 		if (Dir_ == AnimationDirection::Right)
+		{
 			GetTransform()->SetHorizenInvertTransform();
+			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ -50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
+		}
 		Dir_ = AnimationDirection::Left;
 	}
 
 	else if (KeyState_Right_ && !KeyState_Left_)
 	{
 		if (Dir_ == AnimationDirection::Left)
+		{
 			GetTransform()->SetHorizenInvertTransform();
+			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
+		}
 		Dir_ = AnimationDirection::Right;
 	}
 

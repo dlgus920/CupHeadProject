@@ -190,7 +190,8 @@ void GameEngineDevice::CreateSwapChain()
 	}
 
 	GameEngineTextureManager::GetInst().Create("BackBuffer", BackBufferTexture);
-	BackBufferTarget_ = GameEngineRenderTargetManager::GetInst().Create("BackBuffer", "BackBuffer", float4::BLUE);
+	BackBufferTarget_ = GameEngineRenderTargetManager::GetInst().Create("BackBuffer", "BackBuffer",
+		float4{ 0.38823529411764705882352941176471 ,0.6078431372549019607843137254902 ,0.81176470588235294117647058823529,0.f });
 }
 
 void GameEngineDevice::RenderStart()

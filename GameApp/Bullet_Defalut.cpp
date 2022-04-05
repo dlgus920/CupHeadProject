@@ -13,21 +13,14 @@ Bullet_Defalut::~Bullet_Defalut()
 
 void Bullet_Defalut::Start()
 {
-	//{
-	//	BulletHitBox_ = CreateTransformComponent<GameEngineCollision>();
-	//	BulletHitBox_->SetCollisionType(CollisionType::Rect);
-	//	BulletHitBox_->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerHitBox));
-	//}
+	Bullet::Start();
 
-	{
-		ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
-		ImageRenderer_->CreateAnimation("Bullet_Default.png", "Idle", 0, 5, 0.1f);
-		ImageRenderer_->SetEndCallBack("Idle",std::bind(&Bullet_Defalut::Death,this));
-	}
+	BulletRenderer_->CreateAnimation("Bullet_Default.png", "Idle", 0, 5, 0.1f);
+	BulletRenderer_->SetEndCallBack("Idle", std::bind(&Bullet_Defalut::Death, this));
 
-	ImageRenderer_->SetChangeAnimation("Idle");
+	BulletRenderer_->SetChangeAnimation("Idle");
 
-	ImageRenderer_->SetAdjustImzgeSize();
+	BulletRenderer_->SetAdjustImzgeSize();
 }
 
 void Bullet_Defalut::Update(float _DeltaTime)
@@ -37,5 +30,6 @@ void Bullet_Defalut::Update(float _DeltaTime)
 	//	BulletCollisionSpawnEffect<Bullet>(CollisionGruop::Player);
 	//}
 
-	GetTransform()->SetWorldMove(MoveDir_ * 600.f* _DeltaTime);
+	GetTransform()->SetWorldMove
+	(BulletInfo_.MoveDir_ * BulletInfo_ .BulletSpeed_* _DeltaTime);
 }
