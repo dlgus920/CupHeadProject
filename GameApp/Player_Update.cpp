@@ -76,6 +76,7 @@ void Player::KeyUpdate()
 void Player::CollisonUpdate()
 {
 	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
 
 	ColState_Ground = Map::PixelCollisionTransform(PlayerCollision, 10).b_Down;
 }

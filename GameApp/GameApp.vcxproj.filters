@@ -77,7 +77,7 @@
     <ClCompile Include="King_Dice.cpp">
       <Filter>Actor\MOB</Filter>
     </ClCompile>
-    <ClCompile Include="Dice.cpp">
+    <ClCompile Include="DicePaclace.cpp">
       <Filter>Level\04. PlayLevel\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Store.cpp">
@@ -95,14 +95,17 @@
     <ClCompile Include="PositionComponent.cpp">
       <Filter>GameComponent</Filter>
     </ClCompile>
-    <ClCompile Include="PerryObject.cpp">
-      <Filter>Actor\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Actor\Object\Base</Filter>
     </ClCompile>
     <ClCompile Include="StagePoint.cpp">
       <Filter>Actor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PerryObjectDice.cpp">
+      <Filter>Actor\Object\ParryObject\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapPlayer_State.cpp">
+      <Filter>Actor\Player\WorldMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +190,12 @@
     <Filter Include="Actor\Object\Base">
       <UniqueIdentifier>{1d59a653-daa2-4573-9f39-d927ad516bcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Object\ParryObject">
+      <UniqueIdentifier>{4709b944-ae14-4f87-b162-5a022a821ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Object\ParryObject\Dice">
+      <UniqueIdentifier>{29436531-16e9-4d60-943c-c00c788e250d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -246,7 +255,7 @@
     <ClInclude Include="King_Dice.h">
       <Filter>Actor\MOB</Filter>
     </ClInclude>
-    <ClInclude Include="Dice.h">
+    <ClInclude Include="DicePaclace.h">
       <Filter>Level\04. PlayLevel\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Store.h">
@@ -259,14 +268,14 @@
     <ClInclude Include="PositionComponent.h">
       <Filter>GameComponent</Filter>
     </ClInclude>
-    <ClInclude Include="PerryObject.h">
-      <Filter>Actor\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Actor\Object\Base</Filter>
     </ClInclude>
     <ClInclude Include="StagePoint.h">
       <Filter>Actor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PerryObjectDice.h">
+      <Filter>Actor\Object\ParryObject\Dice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

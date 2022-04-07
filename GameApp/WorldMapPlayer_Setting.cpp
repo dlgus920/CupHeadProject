@@ -1,8 +1,6 @@
 #include "PreCompile.h"
 #include "WorldMapPlayer.h"
 
-#include <GameEngine/GameEngineImageRenderer.h>
-#include <GameEngine/GameEngineCollision.h>
 
 void WorldMapPlayer::KeySetting()
 {

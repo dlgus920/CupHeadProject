@@ -1,7 +1,5 @@
 #include "PreCompile.h"
 #include "WorldMapPlayer.h"
-#include "Map.h"
-#include <GameEngine/GameEngineCollision.h>
 
 void WorldMapPlayer::Update(float _DeltaTime)
 {
@@ -107,7 +105,13 @@ void WorldMapPlayer::CollisonUpdate()
 {
 	ColState_ = Map::PixelCollisionTransform(PlayerCollision->GetTransform(), 10);
 
-	ColState_Chose_ = PlayerCollision->Collision(static_cast<int>(CollisionGruop::StagePoint));
+	GameEngineCollision* Collision = PlayerCollision->CollisionPtr
+	(static_cast<int>(CollisionGruop::StagePoint));
+
+	if (nullptr != Collision)
+	{
+		ColState_Chose_ = dynamic_cast<StagePoint*>(Collision->GetActor());
+	}
 
 	//float4 Color = Map::GetColor(GetTransform());
 

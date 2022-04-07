@@ -1,6 +1,12 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
+#include <GameEngine/GameEngineImageRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
+
+#include "Image.h"
+#include "Map.h"
+#include "StagePoint.h"
 
 class GameEngineImageRenderer;
 
@@ -50,10 +56,10 @@ private:	// member Var
 	//bool ColState_;
 
 	float4 ColState_;
-	bool ColState_Chose_;
+	class StagePoint* ColState_Chose_;
 
 	bool AniState_Chose_End_;
-	bool AniState_ScreenIris_End_;
+	//bool AniState_ScreenIris_End_;
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 
@@ -80,6 +86,8 @@ private: // Func
 
 	void SetChangeAnimation(std::string _animation);
 
+	void ChangeScene(std::string _Scene);
+
 private:
 	void Idle_Start();
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
@@ -101,11 +109,6 @@ private:
 	void SetAniStateChoseEnd()
 	{
 		AniState_Chose_End_ = true;
-	}
-
-	void SetAniStateScreenIrisEnd()
-	{
-		AniState_ScreenIris_End_ = true;
 	}
 	
 };

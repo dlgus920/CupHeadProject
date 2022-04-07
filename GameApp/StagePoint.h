@@ -13,9 +13,27 @@ protected:		// delete constructer
 	StagePoint& operator=(const StagePoint& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	StagePoint& operator=(const StagePoint&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 private:	// member Var
+	std::string NextScene_;
 
 public:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+	void SetNextScene(std::string _NextScene)
+	{
+		NextScene_ = _NextScene;
+	}
+
+	const std::string GetNextScene()
+	{
+#ifdef _DEBUG
+		if (NextScene_.empty())
+		{
+			GameEngineDebug::MsgBoxError("다음씬을 지정하지 않음");
+		}
+#endif // _DEBUG
+
+		return NextScene_;
+	}
 };
 

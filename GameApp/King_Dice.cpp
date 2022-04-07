@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include "King_Dice.h"
 
-King_Dice::King_Dice() // default constructer 디폴트 생성자
+King_Dice::King_Dice()
+	: State_(this)
+	
 {
 }
 
@@ -13,17 +15,18 @@ void King_Dice::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle","KDIce-idle",0.1);
-	}
+		MonsterImageRenderer->CreateAnimationFolder("KDIce-idle", "KDIce-idle", 0.04);
+		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 950.f, 480.0f, 1.0f });
 
-	float4 MonsterSize; //temp
+		//MonsterImageRenderer->GetTransform()->SetLocalPosition();
+	}
 
 	//{
 	//	MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
 	//	MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
 	//}
 
-	MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
+	MonsterImageRenderer->SetChangeAnimation("KDIce-idle");
 }
 
 void King_Dice::Update(float _DeltaTime)

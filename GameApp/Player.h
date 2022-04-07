@@ -47,6 +47,10 @@ private:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+private: //Legacy
+	void Start() override;
+	void Update(float _DeltaTime) override;
+
 private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
@@ -58,7 +62,9 @@ private: //Member
 	GameEngineTransform* Camera_;
 
 	GameEngineCollision* PlayerHitBox;
+
 	GameEngineCollision* PlayerMovingCollision;
+
 	GameEngineCollision* PlayerCollision;
 
 	float4 PrevAniSize_;
@@ -92,6 +98,7 @@ private: //Member
 
 	bool ColState_Ground;
 	bool ColState_Hit_;
+	bool ColState_Parry_;
 	
 	//무적시간 판별 여부
 	bool  HitInvince_;
@@ -114,14 +121,10 @@ private: //Member
 
 	std::function<void()> BulletShootFunc_;
 
-private: //Legacy
-	void Start() override;
-	void Update(float _DeltaTime) override;
-
-private://Func
-	void ChangeAnimation(std::string _animation);
-	StateInfo ChangeState();
+private: //Func
 	const std::string CheckState();
+
+	void ChangeAnimation(std::string _animation);
 
 	void Move(float4 MoveDir, float _DeltaTime); // Cold 하게 무브만 함
 	void Move(float DirX, float DirY, float _DeltaTime);
@@ -143,6 +146,10 @@ private://Func
 
 	void CheckShootDir();
 
+private: //Effect
+	void EffectDust();
+
+
 private: //Setting
 	void KeySetting();
 	void StateSetting();
@@ -155,7 +162,7 @@ private: //Update
 	void CollisonUpdate();
 	void ImageScaleUpdate();
 		
-private: 
+private: //State
 #pragma region State_
 	void Bomb_Start();
 	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
@@ -164,10 +171,6 @@ private:
 	void Death_Start();
 	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
 	void Death_End();
-
-	void Dash_Start();
-	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
-	void Dash_End();
 
 	void Jump_Start();
 	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
@@ -193,21 +196,27 @@ private:
 	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
 	void Hit_End();
 
+	void Dash_Start();
+	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
+	void Dash_End();
+
+	void Parry_Start();
+	StateInfo Parry_Update(StateInfo _state, float _DeltaTime);
+	void Parry_End();
 
 #pragma endregion
 
-
 public: //Inline
-	void SetStateUpdateOn()
+	inline void SetStateUpdateOn()
 	{
 		State_Update_ = true;
 	}
-	void SetStateUpdateOff()
+	inline void SetStateUpdateOff()
 	{
 		State_Update_ = false;
 	}
 
-	const std::string GetCurState()
+	inline const std::string GetCurState()
 	{
 		return State_.GetName();
 	}

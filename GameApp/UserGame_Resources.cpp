@@ -92,7 +92,19 @@ void UserGame::ResourcesLoad()
 		TextureDir.MoveChild("Monster");
 		TextureDir.MoveChild("KingDice(Boss)");
 
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
+		Texture->Cut(10, 8);
+
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-idle"));
+
+
 	}
 
 	{
@@ -110,6 +122,8 @@ void UserGame::ResourcesLoad()
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
 		Texture->Cut(20, 20);
+		Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
+		Texture->Cut(8, 1);
 	}
 
 	{

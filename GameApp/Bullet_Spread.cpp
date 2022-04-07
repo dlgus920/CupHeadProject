@@ -18,3 +18,7 @@ void Bullet_Spread::Start()
 void Bullet_Spread::Update(float _DeltaTime)
 {
 }
+
+void Bullet_Spread::Death()
+{
+}

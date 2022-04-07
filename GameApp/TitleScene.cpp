@@ -44,6 +44,8 @@ void TitleScene::LevelStart()
 		Image_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
+
+	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
 }
 
 void TitleScene::LevelUpdate(float _DeltaTime)
@@ -56,7 +58,7 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 
 	if (GameEngineInput::GetInst().Down("Next"))
 	{
-		GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
+		//슬슬 스레드 구현 필요성이 생김
 
 		dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
 

@@ -1,7 +1,10 @@
 #include "PreCompile.h"
 #include "Object.h"
 
-Object::Object() // default constructer 디폴트 생성자
+Object::Object()
+	: ObjectCollision_(nullptr)
+	, ObjectRenderer_(nullptr)
+
 {
 
 }

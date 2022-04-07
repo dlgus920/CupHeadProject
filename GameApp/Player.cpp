@@ -6,42 +6,44 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Map.h"
+#include "Image.h"
 
-Player::Player() :
-	State_(this),
-	//AnimationState_(this),
-	KeyState_Update_(true),
-	ColState_Update_(true),
-	State_Update_(true),
-	KeyState_Up_(false),
-	KeyState_Down_(false),
-	KeyState_Left_(false),
-	KeyState_Right_(false),
-	KeyState_RockOn_(false),
-	KeyState_Shoot_(false),
-	KeyState_Bomb(false),
-	KeyState_Jump_(false),
-	KeyState_Hit_(false),
-	KeyState_Dash_(false),
-	ColState_Ground(false),
-	ColState_Hit_(false),
-	HitInvince_(false),
-	HitInvinceTime_(0.f),
-	Camera_(nullptr),
-	BulletPoint_(nullptr),
-	PlayerHitBox(nullptr),
-	PlayerMovingCollision(nullptr),
-	PlayerCollision(nullptr),
-	PlayerImageRenderer(nullptr),
-	BulletType_(BulletType::Default),
-	ShootingDir_(),
-	Dir_(AnimationDirection::Right),
-	TimeCheck_(0.f),
-	ShootingInterTime_(0.f),
-	DistTimeCheck_(0.f),
-	GravitySpeed_(0.f),
-	GravityAcc_(2.f),
-	PrevAniSize_{}
+Player::Player() 
+	: State_(this)
+	, KeyState_Update_(true)
+	, ColState_Update_(true)
+	, State_Update_(true)
+	, KeyState_Up_(false)
+	, KeyState_Down_(false)
+	, KeyState_Left_(false)
+	, KeyState_Right_(false)
+	, KeyState_RockOn_(false)
+	, KeyState_Shoot_(false)
+	, KeyState_Bomb(false)
+	, KeyState_Jump_(false)
+	, KeyState_Hit_(false)
+	, KeyState_Dash_(false)
+	, ColState_Ground(false)
+	, ColState_Hit_(false)
+	, ColState_Parry_(false)
+	, HitInvince_(false)
+	, HitInvinceTime_(0.f)
+	, Camera_(nullptr)
+	, BulletPoint_(nullptr)
+	, BulletPointOrigin_(nullptr)
+	, PlayerHitBox(nullptr)
+	, PlayerMovingCollision(nullptr)
+	, PlayerCollision(nullptr)
+	, PlayerImageRenderer(nullptr)
+	, BulletType_(BulletType::Default)
+	, ShootingDir_()
+	, Dir_(AnimationDirection::Right)
+	, TimeCheck_(0.f)
+	, ShootingInterTime_(0.f)
+	, DistTimeCheck_(0.f)
+	, GravitySpeed_(0.f)
+	, GravityAcc_(2.f)
+	, PrevAniSize_{}
 {
 }
 
@@ -65,12 +67,11 @@ void Player::Start()
 
 	Dir_ = AnimationDirection::Right;
 
-	BulletInfo_.BulletSpeed_ = 0.f;
+	BulletInfo_.BulletSpeed_ = 600.f;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
 	State_.ChangeState("Idle");
-
 	//ShootingPos_[static_cast<int>(ShootingDir::Right)] =		float4{ 50.f,-50.f,0.f };
 	//ShootingPos_[static_cast<int>(ShootingDir::Right_Up)] =		float4{ 0.f,0.f,0.f };
 	//ShootingPos_[static_cast<int>(ShootingDir::Right_Down)] =	float4{ 0.f,0.f,0.f };
@@ -91,81 +92,45 @@ void Player::ChangeAnimation(std::string _animation)
 	// 아무래도 텍스처가 지 크기를 가지고 있는데 좋을거같다.
 }
 
-StateInfo Player::ChangeState()
+const std::string Player::CheckState()
 {
+	if (true == ColState_Parry_)
+	{
+		return "Parry";
+	}
 	if (true == ColState_Hit_)
 	{
-		State_.ChangeState("Hit");
 		return "Hit";
 	}
 	else if (true == KeyState_Bomb)
 	{
-		State_.ChangeState("Bomb");
 		return "Bomb";
 	}
 	else if (true == KeyState_Jump_)
 	{
-		State_.ChangeState("Jump");
 		return "Jump";
 	}
 	else if (true == KeyState_Dash_)
 	{
-		State_.ChangeState("Dash");
 		return "Dash";
 	}
 	else if (true == KeyState_RockOn_)
 	{
-		State_.ChangeState("RockOn");
 		return "RockOn";
 	}
 	else if (true == KeyState_Down_)
 	{
-		State_.ChangeState("Duck");
 		return "Duck";
 	}
 	else if (true == KeyState_Right_ || true == KeyState_Left_)
 	{
-		State_.ChangeState("Walk");
 		return "Walk";
-	}
-}
-
-const std::string Player::CheckState()
-{
-	if (true == ColState_Hit_)
-	{
-		CurState_ = "Hit";
-	}
-	else if (true == KeyState_Bomb)
-	{
-		CurState_ = "Bomb";
-	}
-	else if (true == KeyState_Jump_)
-	{
-		CurState_ = "Jump";
-	}
-	else if (true == KeyState_Dash_)
-	{
-		CurState_ = "Dash";
-	}
-	else if (true == KeyState_RockOn_)
-	{
-		CurState_ = "RockOn";
-	}
-	else if (true == KeyState_Down_)
-	{
-		CurState_ = "Duck";
-	}
-	else if (true == KeyState_Right_ || true == KeyState_Left_)
-	{
-		CurState_ = "Walk";
 	}
 	else
 	{
-		CurState_ = "Idle";
+		return "Idle";
 	}
-
-	return CurState_;
+	return "";
 }
 
 void Player::Move(float4 MoveDir, float _DeltaTime)
@@ -198,25 +163,6 @@ void Player::ShootSpreadBullet()
 void Player::ShootDefalutBullet()
 {
 	{
-		//if (Dir_ == AnimationDirection::Left)
-		//{
-		//	BulletPoint_->GetTransform()->SetLocalPosition(float4 { -50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
-
-		//	float degree = atanf(BulletInfo_.MoveDir_.y / -BulletInfo_.MoveDir_.x);
-		//	degree *= GameEngineMath::RadianToDegree;
-
-		//	BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
-		//}
-		//else
-		//{
-		//	BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f, -50.f, static_cast<int>(ZOrder::Z00Fx00) });
-
-		//	float degree = atanf(BulletInfo_.MoveDir_.y / BulletInfo_.MoveDir_.x);
-		//	degree *= GameEngineMath::RadianToDegree;
-
-		//	BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
-		//}
-
 		float degree = float4::DegreeDot3DToACosAngle(float4::RIGHT, BulletInfo_.MoveDir_);
 		if (BulletInfo_.MoveDir_.y < 0.f)
 		{
@@ -224,7 +170,6 @@ void Player::ShootDefalutBullet()
 		}
 
 		BulletPointOrigin_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
-
 	}
 
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();
@@ -234,12 +179,12 @@ void Player::ShootDefalutBullet()
 
 	Bullet->GetTransform()->SetWorldPosition(pos);
 	Bullet->SetBulletInfo(BulletInfo_);
-	//if (_BulletInfo.MoveDir_.x < 0)
-	//{
-	//	Bullet->GetTransform()->SetHorizenInvertTransform();
-	//}
-	
-	
+
+	Image* Birth = GetLevel()->CreateActor<Image>();
+	Birth->ImageCreateAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.1, false);
+	Birth->SetReserveDeath("Birth");
+	Birth->SetAdjustImzgeSize();
+	Birth->GetTransform()->SetWorldPosition(pos);
 }
 
 float4 Player::GetBulletPoint()
@@ -320,64 +265,3 @@ void Player::CheckShootDir()
 		BulletInfo_.MoveDir_ = float4::RIGHT;
 	}
 }
-
-//
-//const bool Player::MapCollisionMove(float4 _MoveDist, float _DeltaTime)
-//{
-//	Move(_MoveDist, _DeltaTime);
-//	
-//	float4 Color = Map::GetColor(GetTransform());
-//
-//	if (Color == float4::BLACK)
-//	{
-//		Move(0.f,10.f,1.f);
-//		Color = Map::GetColor(GetTransform());
-//
-//		if (Color == float4::BLACK)
-//		{
-//			Move(0.f, -10.f, 1.f);
-//			Move(-_MoveDist, _DeltaTime);
-//
-//			return false;
-//		}
-//
-//		else
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return true;
-//}
-//
-//const bool Player::MapCollisionMove(float DirX, float DirY, float _DeltaTime)
-//{
-//	Move(DirX, DirY,_DeltaTime);
-//
-//	float4 Color = Map::GetColor(GetTransform());
-//
-//	if (Color == float4::BLACK)
-//	{
-//		Move(0.f, 10.f, 1.f);
-//		Color = Map::GetColor(GetTransform());
-//
-//		if (Color == float4::BLACK)
-//		{
-//			Move(0.f, -10.f, 1.f);
-//			Move(-DirX, -DirY, _DeltaTime);
-//
-//			return false;
-//		}
-//
-//		else
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return true;
-//}
-
-
-
-

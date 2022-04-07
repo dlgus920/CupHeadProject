@@ -180,7 +180,7 @@
     <ClCompile Include="Bullet_Defalut.cpp" />
     <ClCompile Include="Bullet_Guided.cpp" />
     <ClCompile Include="Bullet_Spread.cpp" />
-    <ClCompile Include="Dice.cpp">
+    <ClCompile Include="DicePaclace.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -210,7 +210,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PerryObject.cpp">
+    <ClCompile Include="PerryObjectDice.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -294,6 +294,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer_Setting.cpp" />
+    <ClCompile Include="WorldMapPlayer_State.cpp" />
     <ClCompile Include="WorldMapPlayer_Update.cpp" />
     <ClCompile Include="WorldMapScene.cpp">
       <SubType>
@@ -301,7 +302,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dice.h">
+    <ClInclude Include="DicePaclace.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -334,7 +335,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PerryObject.h">
+    <ClInclude Include="PerryObjectDice.h">
       <SubType>
       </SubType>
     </ClInclude>

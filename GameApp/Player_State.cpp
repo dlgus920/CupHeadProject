@@ -56,6 +56,7 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Idle_End()
 {
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::Walk_Start()
@@ -110,6 +111,7 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Walk_End()
 {
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::Jump_Start()
@@ -120,50 +122,50 @@ void Player::Jump_Start()
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
-	//TODO : 점프하고 올라갈때 내려갈때를 flag 하여 하단, 상단 컬리전을 키고 끈다.
-
-	//std::string state = CheckState();
-
-	//if (state != "Walk" || state != "Jump")
-	//{
-	//	GravitySpeed_ = 0.f;
-	//	return state;
-	//}
-
 	if (true == ColState_Hit_)
 	{
-		GravitySpeed_ = 0.f;
+		//GravitySpeed_ = 0.f;
 		return "Hit";
 	}
 
 	if (true == KeyState_Dash_) 
 	{
-		GravitySpeed_ = 0.f;
+		//GravitySpeed_ = 0.f;
 		return "Dash";
 	}
 
 	if (true == KeyState_Bomb)
 	{
-		GravitySpeed_ = 0.f;
+		//GravitySpeed_ = 0.f;
 		return "Bomb";
 	}
 
 	if (true == ColState_Ground)
 	{
-		GravitySpeed_ = 0.f;
+		//GravitySpeed_ = 0.f;
 		return "Idle";
 	}
 	 
 	if (false == ColState_Ground)
 	{
-		GravitySpeed_ -= GravityAcc_;
+		//GravitySpeed_ -= GravityAcc_;
 
-		if (GravitySpeed_ < -600.f)
+		//if (GravitySpeed_ < -600.f)
+		//{
+		//	GravitySpeed_ = -600.f;
+		//}
+
+		TimeCheck_ += _DeltaTime;
+
+		if (TimeCheck_ < 0.5f)
 		{
-			GravitySpeed_ = -600.f;
+			Move(float4(0.f, 400.f, 0.f), _DeltaTime);
 		}
 
-		Move(float4(0.f, 400.f + GravitySpeed_, 0.f), _DeltaTime);
+		else if (TimeCheck_ > 1.f)
+		{
+			Move(float4(0.f, -400.f, 0.f), _DeltaTime);
+		}
 	}
 
 	if (KeyState_Right_)
@@ -203,8 +205,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
-	GravitySpeed_ = 0.f;
-
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::Duck_Start()
@@ -231,6 +232,7 @@ StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Duck_End()
 {
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::RockOn_Start()
@@ -352,6 +354,7 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::RockOn_End()
 {
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::Bomb_Start()
@@ -368,6 +371,7 @@ StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Bomb_End()
 {
+	TimeCheck_ = 0.f;
 }
 
 void Player::Death_Start()
@@ -422,6 +426,7 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Hit_End()
 {
+	TimeCheck_ = 0.f;
 }
 
 void Player::Dash_Start()
@@ -431,9 +436,8 @@ void Player::Dash_Start()
 }
 StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 {
-	Move(100.f,0.f,_DeltaTime);
+	Move(600.f,0.f,_DeltaTime);
 	TimeCheck_ += _DeltaTime;
-
 
 	if(TimeCheck_ > 1.f)
 	{
@@ -443,5 +447,19 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 	return StateInfo();
 }
 void Player::Dash_End()
+{
+	TimeCheck_ = 0.f;
+}
+
+void Player::Parry_Start()
+{
+}
+
+StateInfo Player::Parry_Update(StateInfo _state, float _DeltaTime)
+{
+	return StateInfo();
+}
+
+void Player::Parry_End()
 {
 }

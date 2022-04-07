@@ -55,6 +55,7 @@ private:
 				return FolderTextures_->GetTextureIndex(index);
 
 			GameEngineDebug::MsgBoxError("존재하지 않는 텍스처");
+			return nullptr;
 		}
 	};
 
@@ -104,6 +105,13 @@ public:
 		{
 			return CurTexture->GetMetaDataImageSize();
 		}
+
+#ifdef _DEBUG
+		GameEngineDebug::MsgBoxError("이미지가 지정되지 않았습니다.");
+
+#endif // _DEBUG
+
+		return float4::ZERO;
 	}
 
 

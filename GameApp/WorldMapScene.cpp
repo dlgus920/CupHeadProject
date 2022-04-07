@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "WorldMapScene.h"
-#include "WorldMapPlayer.h"
+
+#include "LoaddingScene.h"
+#include "DicePaclace.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
@@ -13,6 +15,8 @@
 #include "Map.h"
 #include "Object.h"
 #include "StagePoint.h"
+#include "WorldMapPlayer.h"
+
 
 WorldMapScene::WorldMapScene() // default constructer 디폴트 생성자
 {
@@ -50,6 +54,8 @@ void WorldMapScene::LevelStart()
 	{
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
 		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
+
+		WorldMapPoint->SetNextScene("DicePaclace");
 	}
 
 	{
@@ -62,6 +68,10 @@ void WorldMapScene::LevelStart()
 	//	TopUI* Actor = CreateActor<TopUI>();
 	//	Actor->GetTransform()->SetWorldPosition(float4(0.0f, 0.0f, 0.0f));
 	//}
+	{
+		GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+
+	}
 }
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
@@ -78,5 +88,21 @@ void WorldMapScene::LevelChangeStartEvent()
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+
+}
+
+void WorldMapScene::ChangeScene(std::string _Scene)
+{
+#ifdef _DEBUG
+	if (nullptr == GameEngineCore::LevelFind(_Scene))
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
+	}
+#endif // _DEBUG
+
+	dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
+		->SetLoaddingNextLevel(_Scene);
+
+	GameEngineCore::LevelChange("LoaddingScene");
 
 }

@@ -80,6 +80,8 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+private:
+	void Death();
 };
 
 class Bullet_Spread : public Bullet
@@ -97,6 +99,8 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+private:
+	void Death();
 };
 
 class Bullet_Guided : public Bullet

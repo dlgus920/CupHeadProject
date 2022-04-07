@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+#include "WorldMapPlayer.h"
 
 // Ό³Έν :
 class WorldMapScene : public GameEngineLevel
@@ -25,4 +26,8 @@ private:
 	void LevelChangeEndEvent() override;
 	void LevelChangeStartEvent() override;
 
+private:
+	void ChangeScene(std::string _Scene);
+
+	friend void WorldMapPlayer::ChangeScene(std::string _Scene);
 };

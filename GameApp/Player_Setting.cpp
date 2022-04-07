@@ -32,6 +32,7 @@ void Player::StateSetting()
 	State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
 	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
 	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
+	State_.CreateState("Parry", &Player::Parry_Start, &Player::Parry_Update, &Player::Parry_End);
 
 }
 
@@ -40,8 +41,6 @@ void Player::ComponentSetting()
 	{
 		//GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
 		//Renderer->SetRenderingPipeLine("Color");
-		//Renderer->GetTransform()->SetLocalScaling({ 100.0f, 20.0f, 1.0f });
-		//Renderer->GetTransform()->SetLocalPosition({ 0.0f, 80.0f, -20.0f });
 		//Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f));
 	}
 
@@ -50,11 +49,6 @@ void Player::ComponentSetting()
 		
 		//PlayerImageRenderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f)); //색상 오버레이
 		//PlayerImageRenderer->SetAlpha(0.5f); //알파
-	}
-
-	{
-		//BulletPoint_ = CreateTransformComponent<GameEngineTransform>();
-		//BulletPoint_->SetLocalPosition(float4{ 50.f,0.f,1.f });
 	}
 
 	{
@@ -76,8 +70,8 @@ void Player::ComponentSetting()
 		BulletPointOrigin_->GetTransform()->SetLocalPosition(float4{ 0.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) });
 
 		BulletPoint_ = CreateTransformComponent<PositionComponent>(BulletPointOrigin_->GetTransform());
-		//BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
-		BulletPoint_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
+		BulletPoint_->GetTransform()->SetLocalPosition(float4{ 0.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
+		//BulletPoint_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,static_cast<int>(ZOrder::Z00Bullet01) });
 	}
 
 }
@@ -150,6 +144,9 @@ void Player::AnimationSetting()
 		}
 	}
 
-	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Dash", 20, 27, 0.1f);
+	//Dash
+	{
+		PlayerImageRenderer->CreateAnimation("Cup_Dash.png", "Cup-Dash", 0, 7, 0.1f);
+	}
 	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Death", 140, 154, 0.1f);
 }

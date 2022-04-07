@@ -33,3 +33,14 @@ void Bullet_Defalut::Update(float _DeltaTime)
 	GetTransform()->SetWorldMove
 	(BulletInfo_.MoveDir_ * BulletInfo_ .BulletSpeed_* _DeltaTime);
 }
+
+void Bullet_Defalut::Death()
+{
+	Image* Birth = GetLevel()->CreateActor<Image>();
+	Birth->ImageCreateAnimation("Bullet_Default_Death.png", "Death", 0, 5, 0.1, false);
+	Birth->SetReserveDeath("Death");
+	Birth->SetAdjustImzgeSize();
+	Birth->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
+
+	Bullet::Death();
+}
