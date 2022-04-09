@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Map.h"
 //#include <GameEngine/GameEngineImageRenderer.h>
 
 
@@ -118,7 +119,7 @@ void Player::Jump_Start()
 {
 	ChangeAnimation("Cup-Jump");
 
-	Move(0.f, 10.f, 0.1f);
+	Move(0.f, 10.f, 0.f);
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
@@ -140,14 +141,14 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 		return "Bomb";
 	}
 
-	if (true == ColState_Ground)
-	{
-		//GravitySpeed_ = 0.f;
-		return "Idle";
-	}
+	//if (true == ColState_Ground)
+	//{
+	//	//GravitySpeed_ = 0.f;
+	//	return "Idle";
+	//}
 	 
-	if (false == ColState_Ground)
-	{
+	//if (false == ColState_Ground)
+	//{
 		//GravitySpeed_ -= GravityAcc_;
 
 		//if (GravitySpeed_ < -600.f)
@@ -165,8 +166,25 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 		else if (TimeCheck_ > 1.f)
 		{
 			Move(float4(0.f, -400.f, 0.f), _DeltaTime);
+
+			if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+			{
+				Move(float4(0.f, 200.f, 0.f), _DeltaTime);
+				if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+				{
+					Move(float4(0.f, 100.f, 0.f), _DeltaTime);
+					
+				}
+			}
+
+			if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+			{
+				TimeCheck_ = 0.f;
+				//GravitySpeed_ = 0.f;
+				return "Idle";
+			}
 		}
-	}
+	//}
 
 	if (KeyState_Right_)
 	{
@@ -205,6 +223,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
+	TimeCheck_ = 0.f;
 	ShootingInterTime_ = 0.f;
 }
 
@@ -221,11 +240,28 @@ StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
 
 	if (KeyState_Shoot_)
 	{
+		ShootingInterTime_ += _DeltaTime;
+
 		ChangeAnimation("Cup-Duck-Shoot");
+		if (Dir_ == AnimationDirection::Right)
+		{
+			BulletInfo_.MoveDir_ = float4::RIGHT;
+		}
+		else
+		{
+			BulletInfo_.MoveDir_ = float4::LEFT;
+		}
+
+		if (ShootingInterTime_ >= 0.2f)
+		{
+			BulletShootFunc_();
+			ShootingInterTime_ = 0.f;
+		}
 	}
 	else
 	{
 		ChangeAnimation("Cup-Duck-Idle");
+		ShootingInterTime_ = 0.f;
 	}
 
 	return StateInfo();
@@ -436,7 +472,14 @@ void Player::Dash_Start()
 }
 StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 {
-	Move(600.f,0.f,_DeltaTime);
+	if ((Dir_ == AnimationDirection::Right))
+	{
+		Move(600.f, 0.f, _DeltaTime);
+	}
+	else
+	{
+		Move(-600.f, 0.f, _DeltaTime);
+	}
 	TimeCheck_ += _DeltaTime;
 
 	if(TimeCheck_ > 1.f)

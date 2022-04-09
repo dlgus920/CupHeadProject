@@ -15,11 +15,13 @@ void Player::Update(float _DeltaTime)
 		KeyUpdate();
 	}
 
-	if (true == ColState_Update_)
+	if (true == ColState_Update_) // 정교화를 위해 호출시점을 바꿀 필요가 있음
 	{
 		CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
+		GroundCollisonUpdate();
+		ParryCollisonUpdate();
+		HitCollisonUpdate();
 	}
-
 	if (true == State_Update_)
 	{
 		StateUpdate(_DeltaTime);
@@ -49,7 +51,7 @@ void Player::KeyUpdate()
 	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
 	KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
 	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
-	//KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
+	KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 
 	if (KeyState_Left_ && !KeyState_Right_)
 	{
@@ -76,9 +78,29 @@ void Player::KeyUpdate()
 void Player::CollisonUpdate()
 {
 	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+
+	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
+}
+
+const bool Player::GroundCollisonUpdate()
+{
+	ColState_Ground = Map::PixelCollisionTransform(PlayerCollision, 10).b_Down;
+
+	return ColState_Ground;
+}
+
+const bool Player::ParryCollisonUpdate()
+{
 	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
 
-	ColState_Ground = Map::PixelCollisionTransform(PlayerCollision, 10).b_Down;
+	return ColState_Parry_;
+}
+
+const bool Player::HitCollisonUpdate()
+{
+	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+
+	return ColState_Hit_;
 }
 
 void Player::ImageScaleUpdate() //아직 미사용

@@ -54,9 +54,6 @@ private: //Legacy
 private: //Member
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-	PositionComponent* BulletPoint_;
-	PositionComponent* BulletPointOrigin_;
-
 	GameEngineFSM<Player> State_;
 
 	GameEngineTransform* Camera_;
@@ -111,9 +108,9 @@ private: //Member
 	//float4 ShootingDir_;
 
 	float4 ShootingPos_[10];
+	ShootingDir				ShootingDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
-	ShootingDir				ShootingDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 
 	//float4 MoveDir_;
 
@@ -144,7 +141,8 @@ private: //Func
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
 
-	void CheckShootDir();
+	const ShootingDir CheckShootDir();
+	const float4 GetShootPos();
 
 private: //Effect
 	void EffectDust();
@@ -160,6 +158,11 @@ private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate();
 	void CollisonUpdate();
+
+	const bool GroundCollisonUpdate();
+	const bool ParryCollisonUpdate();
+	const bool HitCollisonUpdate();
+
 	void ImageScaleUpdate();
 		
 private: //State
