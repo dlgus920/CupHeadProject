@@ -21,16 +21,20 @@ void King_Dice::Start()
 		//MonsterImageRenderer->GetTransform()->SetLocalPosition();
 	}
 
-	//{
-	//	MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
-	//	MonsterHitBox->CreateCollision<CollisionGruop>(CollisionType::Rect, CollisionGruop::Bullet, MonsterSize);
-	//}
+	{
+		MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
+		MonsterHitBox->SetCollisionType(CollisionType::Rect);
+		MonsterHitBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
+		MonsterHitBox->GetTransform()->SetLocalScaling(float4{200.f,200.f,1.f});
+	}
 
 	MonsterImageRenderer->SetChangeAnimation("KDIce-idle");
 }
 
 void King_Dice::Update(float _DeltaTime)
 {
+	GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
+
 }
 
 

@@ -66,6 +66,9 @@ private: //Member
 
 	float4 PrevAniSize_;
 
+	const float C_AnimationInterTime_ = 0.05;
+	const float C_JumpSpeed_ = 800.f;
+
 	float TimeCheck_;
 	float DistTimeCheck_;
 
@@ -73,6 +76,10 @@ private: //Member
 
 	float GravitySpeed_;
 	float GravityAcc_;
+
+
+	float JumpAcc_;
+	float JumpAccSpeed_;
 
 		// state
 	bool KeyState_Update_;
@@ -97,6 +104,9 @@ private: //Member
 	bool ColState_Hit_;
 	bool ColState_Parry_;
 	
+	int HP;
+	int ParryCount;
+
 	//무적시간 판별 여부
 	bool  HitInvince_;
 	float HitInvinceTime_;
@@ -109,7 +119,6 @@ private: //Member
 
 	float4 ShootingPos_[10];
 	ShootingDir				ShootingDir_; // 현재 누르고 있는 키 방향 (대각선포함)
-
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
 
 	//float4 MoveDir_;
@@ -136,12 +145,9 @@ private: //Func
 	void ShootSpreadBullet();
 	void ShootDefalutBullet();
 
-	float4 GetBulletPoint();
-
 	void GravityUpdate(float _DeltaTime);
 	void GravityClear();
 
-	const ShootingDir CheckShootDir();
 	const float4 GetShootPos();
 
 private: //Effect
@@ -149,6 +155,7 @@ private: //Effect
 
 
 private: //Setting
+	void DefalutSetting();
 	void KeySetting();
 	void StateSetting();
 	void ComponentSetting();

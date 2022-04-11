@@ -17,10 +17,10 @@ const float4 float4::LEFT = { -1.0f, 0.0f };
 const float4 float4::RIGHT = { 1.0f, 0.0f };
 const float4 float4::UP = { 0.0f, 1.0f };
 const float4 float4::DOWN = { 0.0f, -1.0f };
-const float4 float4::UPLEFT = { -0.70710f, 0.70710f };
-const float4 float4::UPRIGHT = { 0.70710f, 0.70710f };
-const float4 float4::DOWNLEFT = { -0.70710f, -0.70710f };
-const float4 float4::DOWNRIGHT = { 0.70710f, -0.70710f };
+const float4 float4::LEFTUP = { -0.70710f, 0.70710f };
+const float4 float4::RIGHTUP = { 0.70710f, 0.70710f };
+const float4 float4::LEFTDOWN = { -0.70710f, -0.70710f };
+const float4 float4::RIGHTDOWN = { 0.70710f, -0.70710f };
 
 
 

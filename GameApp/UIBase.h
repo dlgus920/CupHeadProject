@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include "Player.h"
 
 // Ό³Έν :
 class UIBase : public GameEngineActor
@@ -17,11 +18,12 @@ public:
 
 protected:
 
+
+
+
 protected:
 	virtual void Start() ;
-	virtual void TransformUpdate() ;
 	virtual void Update(float _DeltaTime) ;
-	virtual void ReleaseEvent() ;
 
 };
 

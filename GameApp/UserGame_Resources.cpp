@@ -36,6 +36,28 @@ void UserGame::ResourcesLoad()
 		Texture->Cut(8, 8);
 	}
 
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("UI");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bottom_HP.png");
+		Texture->Cut(6, 6);
+
+		Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Dia.png");
+		Texture->Cut(6, 1);
+
+		Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Spade.png");
+		Texture->Cut(6, 1);
+	}
 	// World Map
 
 	{

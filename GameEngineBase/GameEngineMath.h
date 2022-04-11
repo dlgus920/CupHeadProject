@@ -20,10 +20,10 @@ public:
 	static const float4 UP;
 	static const float4 DOWN;
 
-	static const float4 UPLEFT;
-	static const float4 UPRIGHT;
-	static const float4 DOWNLEFT;
-	static const float4 DOWNRIGHT;
+	static const float4 LEFTUP;
+	static const float4 RIGHTUP;
+	static const float4 LEFTDOWN;
+	static const float4 RIGHTDOWN;
 
 
 	static const float4 RED;

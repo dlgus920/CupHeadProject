@@ -15,14 +15,6 @@ void UIBase::Start()
 {
 }
 
-void UIBase::TransformUpdate()
-{
-}
-
 void UIBase::Update(float _DeltaTime)
-{
-}
-
-void UIBase::ReleaseEvent()
 {
 }

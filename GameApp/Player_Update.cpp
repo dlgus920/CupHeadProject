@@ -6,6 +6,8 @@
 
 void Player::Update(float _DeltaTime)
 {
+	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+
 	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
 
 	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
@@ -17,7 +19,7 @@ void Player::Update(float _DeltaTime)
 
 	if (true == ColState_Update_) // 정교화를 위해 호출시점을 바꿀 필요가 있음
 	{
-		CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
+		//CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
 		GroundCollisonUpdate();
 		ParryCollisonUpdate();
 		HitCollisonUpdate();
@@ -27,7 +29,7 @@ void Player::Update(float _DeltaTime)
 		StateUpdate(_DeltaTime);
 	}
 
-	ImageScaleUpdate();
+	//ImageScaleUpdate();
 
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
@@ -77,7 +79,7 @@ void Player::KeyUpdate()
 
 void Player::CollisonUpdate()
 {
-	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Monster));
 
 	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
 }
@@ -98,7 +100,7 @@ const bool Player::ParryCollisonUpdate()
 
 const bool Player::HitCollisonUpdate()
 {
-	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Bullet));
+	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Monster));
 
 	return ColState_Hit_;
 }
@@ -113,7 +115,7 @@ void Player::ImageScaleUpdate() //아직 미사용
 
 		PlayerImageRenderer->GetTransform()->SetLocalScaling(size);
 		PlayerCollision->GetTransform()->SetLocalScaling(size);
-		PlayerHitBox->GetTransform()->SetLocalScaling(size);
+		//PlayerHitBox->GetTransform()->SetLocalScaling(size);
 	}
 
 }

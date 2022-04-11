@@ -12,6 +12,8 @@
 #include "King_Dice.h"
 #include "Player.h"
 
+#include "Bottom_Card.h"
+
 DicePaclace::DicePaclace() // default constructer 디폴트 생성자
 {
 
@@ -25,7 +27,7 @@ DicePaclace::~DicePaclace() // default destructer 디폴트 소멸자
 void DicePaclace::LevelStart()
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Camera00)));
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
 
 	{
 		//MouseActor* Actor = CreateActor<MouseActor>();
@@ -33,17 +35,22 @@ void DicePaclace::LevelStart()
 	}
 
 	{
+		Bottom_Card_ = CreateActor<Bottom_Card>();
+		Bottom_Card_->GetTransform()->SetWorldPosition(float4{ 50.f,-600.f,static_cast<float>(ZOrder::Z00UI) });
+	}
 
-		//Image* BackImage = CreateActor<Image>();
-		//BackImage->ImageSetImage("DicePalaceBack.png");
-		//BackImage->SetAdjustImzgeSize();
-		//BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back10) });
+	{
+
+		Image* BackImage = CreateActor<Image>();
+		BackImage->ImageSetImage("DicePalaceBack.png");
+		BackImage->SetAdjustImzgeSize();
+		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back10) });
 
 
-		//BackImage = CreateActor<Image>();
-		//BackImage->ImageSetImage("DicePalaceMain.png");
-		//BackImage->SetAdjustImzgeSize();
-		//BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z02Back09) });
+		BackImage = CreateActor<Image>();
+		BackImage->ImageSetImage("DicePalaceMain.png");
+		BackImage->SetAdjustImzgeSize();
+		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
 
 		Map* _Map = CreateActor<Map>();
@@ -57,7 +64,7 @@ void DicePaclace::LevelStart()
 		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
 		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(1280.f, 720.f);
 
-		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap01) });
+		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 
 
 
@@ -71,12 +78,12 @@ void DicePaclace::LevelStart()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<int>(ZOrder::Z01Actor02)));
+		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor02)));
 	}
 
 	{
 		King_Dice* Actor = CreateActor<King_Dice>();
-		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<int>(ZOrder::Z01Actor03)));
+		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<float>(ZOrder::Z01Actor03)));
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();

@@ -16,6 +16,7 @@ private:	// member Var
 	class PerryObjectDice* PerryObjectDice_;
 	class King_Dice* King_Dice_;
 	class Player* Player_;
+	class Bottom_Card* Bottom_Card_;
 
 private:
 	void LevelStart() override;

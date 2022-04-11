@@ -104,17 +104,22 @@ void GameEngineImageRenderer::Animation2D::ReverseFrameUpdate()
 
 void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 {
-	CurTime_ -= _DeltaTime;
 
-	if (StartFrame_ < EndFrame_)
+	if (InterTime_ != 999999.f)
 	{
-		FrameUpdate();
-	}
-	else
-	{
-		ReverseFrameUpdate();
-	}
+		CurTime_ -= _DeltaTime;
 
+		if (StartFrame_ < EndFrame_)
+		{
+
+			FrameUpdate();
+
+		}
+		else
+		{
+			ReverseFrameUpdate();
+		}
+	}
 	CallFrame();
 
 	if (nullptr == FolderTextures_)

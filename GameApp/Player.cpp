@@ -40,8 +40,12 @@ Player::Player()
 	, ShootingInterTime_(0.f)
 	, DistTimeCheck_(0.f)
 	, GravitySpeed_(0.f)
+	, JumpAccSpeed_(0.f)
+	, JumpAcc_(0.f)
 	, GravityAcc_(2.f)
 	, PrevAniSize_{}
+	, HP(0)
+	, ParryCount(0)
 {
 }
 
@@ -49,37 +53,15 @@ Player::~Player()
 {
 }
 
-
 void Player::Start()
 {
 	ComponentSetting();
 	AnimationSetting();
-	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
-
-	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerHitBox->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-
 	KeySetting();
 	StateSetting();
 
-	Dir_ = AnimationDirection::Right;
+	DefalutSetting();
 
-	BulletInfo_.BulletSpeed_ = 600.f;
-
-	ChangeShootFunc(&Player::ShootDefalutBullet);
-
-	State_.ChangeState("Idle");
-	ShootingPos_[static_cast<int>(ShootingDir::Right)] =		float4{ 80.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Right_Down)] =	float4{ 70.f,-100.f,static_cast<int>(ZOrder::Z00Bullet01)};
-	ShootingPos_[static_cast<int>(ShootingDir::Left)] =			float4{ -80.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Left_Down)] =	float4{ -70.f,-100.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Left_Up)] =		float4{ -70.f,-10.f,static_cast<int>(ZOrder::Z00Bullet01)};
-	ShootingPos_[static_cast<int>(ShootingDir::Right_Up)] =		float4{ 70.f,-10.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Up_Left)] =		float4{ -25.f,35.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Up_Right)] =		float4{ 25.f,35.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Down_Left)] =	float4{ -25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] =	float4{ 25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
 }
 
 void Player::ChangeAnimation(std::string _animation)
@@ -166,9 +148,8 @@ void Player::ShootDefalutBullet()
 
 	Bullet->GetTransform()->SetWorldPosition(Pos);
 	Bullet->SetBulletInfo(BulletInfo_);
-
 	Image* Birth = GetLevel()->CreateActor<Image>();
-	Birth->ImageCreateAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.1, false);
+	Birth->ImageCreateAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.05, false);
 	Birth->SetReserveDeath("Birth");
 	Birth->SetAdjustImzgeSize();
 	Birth->GetTransform()->SetWorldPosition(Pos);
@@ -191,113 +172,13 @@ void Player::GravityClear()
 	GravitySpeed_ = 0.f;
 }
 
-const ShootingDir Player::CheckShootDir()
-{
-	if (KeyState_Down_ && !KeyState_Up_)
-	{
-		if (Dir_ == AnimationDirection::Left)
-		{
-			if (true == KeyState_Left_)
-			{
-				BulletInfo_.MoveDir_ = float4::DOWN;
-				ShootingDir_ = ShootingDir::Left_Down;
-
-				return ShootingDir_;
-			}
-			else
-			{
-				BulletInfo_.MoveDir_ = float4::DOWNLEFT;
-				ShootingDir_ = ShootingDir::Down_Left;
-
-				return ShootingDir_;
-			}
-		}
-
-		else if (Dir_ == AnimationDirection::Right)
-		{
-			if (true == KeyState_Right_)
-			{
-				BulletInfo_.MoveDir_ = float4::DOWN;
-				ShootingDir_ = ShootingDir::Right_Down;
-
-				return ShootingDir_;
-			}
-			else
-			{
-				BulletInfo_.MoveDir_ = float4::DOWNRIGHT;
-				ShootingDir_ = ShootingDir::Down_Right;
-
-				return ShootingDir_;
-			}
-		}
-	}
-
-	else if (KeyState_Up_ && !KeyState_Down_)
-	{
-		if (Dir_ == AnimationDirection::Left)
-		{
-			if (true == KeyState_Left_)
-			{
-				BulletInfo_.MoveDir_ = float4::UPLEFT;
-				ShootingDir_ = ShootingDir::Left_Up;
-
-				return ShootingDir_;
-			}
-			else
-			{
-				BulletInfo_.MoveDir_ = float4::UP;
-				ShootingDir_ = ShootingDir::Up_Left;
-
-				return ShootingDir_;
-			}
-		}
-
-		else if (Dir_ == AnimationDirection::Right)
-		{
-			if (true == KeyState_Right_)
-			{
-				BulletInfo_.MoveDir_ = float4::UPRIGHT;
-				ShootingDir_ = ShootingDir::Right_Up;
-
-				return ShootingDir_;
-			}
-			else
-			{
-				BulletInfo_.MoveDir_ = float4::UP;
-				ShootingDir_ = ShootingDir::Up_Right;
-
-				return ShootingDir_;
-			}
-		}
-	}
-
-	else if (Dir_ == AnimationDirection::Left)
-	{
-		BulletInfo_.MoveDir_ = float4::LEFT;
-		ShootingDir_ = ShootingDir::Left;
-
-		return ShootingDir_;
-	}
-
-	else if (Dir_ == AnimationDirection::Right)
-	{
-		BulletInfo_.MoveDir_ = float4::RIGHT;
-		ShootingDir_ = ShootingDir::Right;
-
-		return ShootingDir_;
-	}
-}
-
 const float4 Player::GetShootPos()
 {
-	ShootingDir _ShootingDir = CheckShootDir();
-
 	float4 orginPos = GetTransform()->GetWorldPosition();
 
-	const float4 retPos = { ShootingPos_[static_cast<int>(_ShootingDir)].x + orginPos.x,
-					ShootingPos_[static_cast<int>(_ShootingDir)].y + orginPos.y,
-					ShootingPos_[static_cast<int>(_ShootingDir)].z};
-
+	const float4 retPos = { ShootingPos_[static_cast<int>(ShootingDir_)].x + orginPos.x,
+					ShootingPos_[static_cast<int>(ShootingDir_)].y + orginPos.y,
+					ShootingPos_[static_cast<int>(ShootingDir_)].z};
 
 	return retPos;
 }

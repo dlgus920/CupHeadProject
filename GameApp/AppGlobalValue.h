@@ -9,6 +9,8 @@ enum class CollisionGruop
 	PlayerMoving,
 	Bullet,
 	Parry,
+	MonsterHitBox,
+	Monster,
 	UI
 };
 
@@ -16,6 +18,7 @@ enum class ZOrder
 {
 	Z00Camera00,
 	Z00Fx00,
+	Z00UI,
 	Z00Bullet01,
 	Z01Actor01,
 	Z01Actor02,

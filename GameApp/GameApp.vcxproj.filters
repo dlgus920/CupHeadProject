@@ -107,6 +107,12 @@
     <ClCompile Include="WorldMapPlayer_State.cpp">
       <Filter>Actor\Player\WorldMap</Filter>
     </ClCompile>
+    <ClCompile Include="Bottom_Card.cpp">
+      <Filter>Actor\UI\Bottom</Filter>
+    </ClCompile>
+    <ClCompile Include="Bottom_HP.cpp">
+      <Filter>Actor\UI\Bottom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -196,6 +202,9 @@
     <Filter Include="Actor\Object\ParryObject\Dice">
       <UniqueIdentifier>{29436531-16e9-4d60-943c-c00c788e250d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\UI\Bottom">
+      <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -276,6 +285,12 @@
     </ClInclude>
     <ClInclude Include="PerryObjectDice.h">
       <Filter>Actor\Object\ParryObject\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Bottom_HP.h">
+      <Filter>Actor\UI\Bottom</Filter>
+    </ClInclude>
+    <ClInclude Include="Bottom_Card.h">
+      <Filter>Actor\UI\Bottom</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

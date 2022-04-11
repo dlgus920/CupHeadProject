@@ -42,6 +42,7 @@ protected:
 	GameEngineCollision* BulletCollision_;
 
 	BulletInfo BulletInfo_;
+	float BulletLifeTile_;
 
 protected:
 	virtual void Start();
@@ -49,14 +50,6 @@ protected:
 
 protected:
 	void SetBulletInfo(BulletInfo _BulletInfo);
-
-	template<typename EffectType>
-	void BulletCollisionSpawnEffect(CollisionGruop _CollisionGruop)
-	{
-		EffectType* Effect = GetLevel()->CreateActor<EffectType>();
-
-		Death();
-	}
 
 	const bool BulletCollisionCheck(CollisionGruop _CollisionGruop)
 	{
@@ -81,7 +74,7 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 private:
-	void Death();
+	void BulletDeath();
 };
 
 class Bullet_Spread : public Bullet
@@ -100,7 +93,7 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 private:
-	void Death();
+	void BulletDeath();
 };
 
 class Bullet_Guided : public Bullet

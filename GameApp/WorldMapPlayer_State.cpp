@@ -35,14 +35,14 @@ StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 	}
 	// 실시간 업데이트가 너무 빨라 여기까지 오지를 못함,
 	// MoveDir_이 float4::UPLEFT상태로 유지가 안됨 ㅋㅋㅋㅋ
-	else if (MoveDir_ == float4::UPLEFT ||
-		MoveDir_ == float4::UPRIGHT)
+	else if (MoveDir_ == float4::LEFTUP ||
+		MoveDir_ == float4::RIGHTUP)
 	{
 		SetChangeAnimation("Cup-Idle-Up-Right");
 	}
 
-	else if (MoveDir_ == float4::DOWNLEFT ||
-		MoveDir_ == float4::DOWNRIGHT)
+	else if (MoveDir_ == float4::LEFTDOWN ||
+		MoveDir_ == float4::RIGHTDOWN)
 	{
 		SetChangeAnimation("Cup-Idle-Down-Right");
 	}
@@ -81,14 +81,14 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 		SetChangeAnimation("Cup-Walk-Right");
 	}
 
-	else if (MoveDir_ == float4::UPLEFT ||
-		MoveDir_ == float4::UPRIGHT)
+	else if (MoveDir_ == float4::LEFTUP ||
+		MoveDir_ == float4::RIGHTUP)
 	{
 		SetChangeAnimation("Cup-Walk-Up-Right");
 	}
 
-	else if (MoveDir_ == float4::DOWNLEFT ||
-		MoveDir_ == float4::DOWNRIGHT)
+	else if (MoveDir_ == float4::LEFTDOWN ||
+		MoveDir_ == float4::RIGHTDOWN)
 	{
 		SetChangeAnimation("Cup-Walk-Down-Right");
 	}

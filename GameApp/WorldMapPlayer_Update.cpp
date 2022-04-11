@@ -42,7 +42,7 @@ void WorldMapPlayer::KeyUpdate()
 				GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Left;
 
-			MoveDir_ = float4::DOWNLEFT;
+			MoveDir_ = float4::LEFTDOWN;
 		}
 
 		else if (KeyState_Right_ && !KeyState_Left_)
@@ -51,7 +51,7 @@ void WorldMapPlayer::KeyUpdate()
 				GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Right;
 
-			MoveDir_ = float4::DOWNRIGHT;
+			MoveDir_ = float4::RIGHTDOWN;
 		}
 
 		else
@@ -66,7 +66,7 @@ void WorldMapPlayer::KeyUpdate()
 				GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Left;
 
-			MoveDir_ = float4::UPLEFT;
+			MoveDir_ = float4::LEFTUP;
 		}
 
 		else if (KeyState_Right_ && !KeyState_Left_)
@@ -75,7 +75,7 @@ void WorldMapPlayer::KeyUpdate()
 				GetTransform()->SetHorizenInvertTransform();
 			Dir_ = AnimationDirection::Right;
 
-			MoveDir_ = float4::UPRIGHT;
+			MoveDir_ = float4::RIGHTUP;
 		}
 
 		else

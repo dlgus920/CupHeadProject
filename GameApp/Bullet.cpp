@@ -6,7 +6,8 @@
 
 Bullet::Bullet() :
 	BulletCollision_(nullptr),
-	BulletRenderer_(nullptr)
+	BulletRenderer_(nullptr),
+	BulletLifeTile_(0.f)
 {
 }
 
