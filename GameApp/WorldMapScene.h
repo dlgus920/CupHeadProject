@@ -21,6 +21,7 @@ public:
 private:	// member Var
 
 private:
+	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent() override;

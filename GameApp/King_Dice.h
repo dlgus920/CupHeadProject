@@ -26,5 +26,9 @@ private:	// member Var
 	void Update(float _DeltaTime) override;
 
 public:
+	void Intro();
+	void Idle();
+	void Attack();
+
 };
 

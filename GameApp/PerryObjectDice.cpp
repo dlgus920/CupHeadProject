@@ -21,26 +21,25 @@ void PerryObjectDice::Start()
 	ObjectCollision_->SetCollisionType(CollisionType::Rect);
 	ObjectCollision_->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
-	ObjectRenderer_->GetTransform()->SetLocalScaling(float4{ 50.f,50.f,1.f });
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Idle",50,73,true);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Idle",50,73,0.05,true);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Rolling1-1",0,4, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Rolling1-2",20,22, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Rolling1-1",0,4, 0.05, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Rolling1-2",20,22, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice", "Rolling2-1", 5, 9, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice", "Rolling2-2", 23, 25, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling2-1", 5, 9, 0.05, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling2-2", 23, 25, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice", "Rolling3-1", 10, 14, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice", "Rolling3-2", 26, 28, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-1", 10, 14, 0.05, false);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-2", 26, 28, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Death",40,57,false);// 57프레임 도달시 업데이트 멈춤
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Death",40,57, 0.05,false);// 57프레임 도달시 업데이트 멈춤
 	ObjectRenderer_->SetFrameCallBack("Death",57,std::bind(&PerryObjectDice::Off, this));
 
 
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Num1",50,73,true);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Num2",50,73,true);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice","Num3",50,73,true);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);
+	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num3",50,73, 0.05,true);
 
 	ObjectRenderer_->SetFrameCallBack("Idle",0,std::bind(&PerryObjectDice::Num1, this));
 	ObjectRenderer_->SetFrameCallBack("Idle",7, std::bind(&PerryObjectDice::Num2, this));
@@ -53,30 +52,33 @@ void PerryObjectDice::Start()
 	ObjectRenderer_->SetEndCallBack("Rolling1-2", std::bind(&PerryObjectDice::RollingEnd, this));
 	ObjectRenderer_->SetEndCallBack("Rolling2-2", std::bind(&PerryObjectDice::RollingEnd, this));
 	ObjectRenderer_->SetEndCallBack("Rolling3-2", std::bind(&PerryObjectDice::RollingEnd, this));
+
+	ObjectRenderer_->SetChangeAnimation("Idle");
+	ObjectRenderer_->SetAdjustImzgeSize();
 }
 
 void PerryObjectDice::Update(float _DeltaTime)
 {
-	if (false == IsCollision_)
-	{
-		if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))
-		{
-			switch (DiceNumber_)
-			{
-			case DiceNumber::Num1:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			case DiceNumber::Num2:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			case DiceNumber::Num3:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			}
+	//if (false == IsCollision_)
+	//{
+	//	if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))
+	//	{
+	//		switch (DiceNumber_)
+	//		{
+	//		case DiceNumber::Num1:
+	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+	//			break;
+	//		case DiceNumber::Num2:
+	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+	//			break;
+	//		case DiceNumber::Num3:
+	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+	//			break;
+	//		}
 
-			IsCollision_ = true;
-		}
-	}
+	//		IsCollision_ = true;
+	//	}
+	//}
 }
 
 void PerryObjectDice::Resset() //Spawn과 동시에 Resset 해야함

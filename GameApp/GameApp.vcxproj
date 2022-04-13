@@ -310,10 +310,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bottom_Card.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="Bottom_Card.h" />
     <ClInclude Include="Bottom_HP.h">
       <SubType>
       </SubType>

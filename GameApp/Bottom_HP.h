@@ -14,13 +14,24 @@ private:
 	Bottom_HP& operator=(const Bottom_HP&& _other) = delete;
 
 private:
-	GameEngineImageRenderer* UIRenderer_;
-	Player* Player_;
+	class GameEngineImageRenderer* HPBarRenderer_;
+
+	int CurHP_;
 
 	// 피통은 별 상관 없으니 즉각적으로 처리
 
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+public:
+	void HPIncrease();
+
+	void HPDecrease();
+
+	const int GetCurHP()
+	{
+		return CurHP_;
+	}
 };
 

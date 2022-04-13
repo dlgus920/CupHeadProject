@@ -17,6 +17,10 @@ LoaddingScene::~LoaddingScene() // default destructer 디폴트 소멸자
 
 }
 
+void LoaddingScene::LevelResourcesLoad()
+{
+}
+
 void LoaddingScene::LevelStart()
 {	
 	{

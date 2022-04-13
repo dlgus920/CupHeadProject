@@ -36,6 +36,11 @@ private:
 			CurFrame_ = _Index;
 		}
 
+		const int GetCurrentIndex()
+		{
+			return CurFrame_;
+		}
+
 		void Reset();
 		void CallStart();
 		void CallEnd();
@@ -150,6 +155,11 @@ public:
 	inline GameEngineTexture* GetCurrentAnimationTexture(int index = 0)
 	{
 		return CurAnimation_->GetCurAnimation(index);
+	}
+
+	inline Animation2D* GetCurrentAnimation()
+	{
+		return CurAnimation_;
 	}
 
 	inline std::string GetCurrentAnimationName()

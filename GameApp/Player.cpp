@@ -27,12 +27,15 @@ Player::Player()
 	, ColState_Hit_(false)
 	, ColState_Parry_(false)
 	, HitInvince_(false)
+	, WalkState_Changed_(false)
 	, HitInvinceTime_(0.f)
 	, Camera_(nullptr)
 	, PlayerHitBox(nullptr)
 	, PlayerMovingCollision(nullptr)
 	, PlayerCollision(nullptr)
 	, PlayerImageRenderer(nullptr)
+	, Bottom_Card_(nullptr)
+	, Bottom_HP_(nullptr)
 	, BulletType_(BulletType::Default)
 	, ShootingDir_()
 	, Dir_(AnimationDirection::Right)
@@ -40,9 +43,6 @@ Player::Player()
 	, ShootingInterTime_(0.f)
 	, DistTimeCheck_(0.f)
 	, GravitySpeed_(0.f)
-	, JumpAccSpeed_(0.f)
-	, JumpAcc_(0.f)
-	, GravityAcc_(2.f)
 	, PrevAniSize_{}
 	, HP(0)
 	, ParryCount(0)
@@ -74,17 +74,20 @@ void Player::ChangeAnimation(std::string _animation)
 
 const std::string Player::CheckState()
 {
-	if (true == ColState_Parry_)
-	{
-		return "Parry";
-	}
+	//if (true == ColState_Parry_)
+	//{
+	//	return "Parry";
+	//}
 	if (true == ColState_Hit_)
 	{
 		return "Hit";
 	}
 	else if (true == KeyState_Bomb)
 	{
-		return "Bomb";
+		if (Bottom_Card_->GetCardCount() != 0)
+		{
+			return "Bomb";
+		}
 	}
 	else if (true == KeyState_Jump_)
 	{
@@ -157,8 +160,6 @@ void Player::ShootDefalutBullet()
 
 void Player::GravityUpdate(float _DeltaTime)
 {
-	GravitySpeed_ -= GravityAcc_;
-
 	if (GravitySpeed_ < -800.f)
 	{
 		GravitySpeed_ = -800.f;

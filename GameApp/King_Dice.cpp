@@ -15,7 +15,8 @@ void King_Dice::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		MonsterImageRenderer->CreateAnimationFolder("KDIce-idle", "KDIce-idle", 0.04);
+		MonsterImageRenderer->CreateAnimationFolder("KDIce-Idle", "KDIce-Idle", 0.04);
+		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04);
 		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 950.f, 480.0f, 1.0f });
 
 		//MonsterImageRenderer->GetTransform()->SetLocalPosition();
@@ -28,13 +29,27 @@ void King_Dice::Start()
 		MonsterHitBox->GetTransform()->SetLocalScaling(float4{200.f,200.f,1.f});
 	}
 
-	MonsterImageRenderer->SetChangeAnimation("KDIce-idle");
+	MonsterImageRenderer->SetChangeAnimation("KDIce-Intro");
 }
 
 void King_Dice::Update(float _DeltaTime)
 {
 	GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
 
+}
+
+void King_Dice::Intro()
+{
+	MonsterImageRenderer->SetChangeAnimation("KDIce-Intro");
+}
+
+void King_Dice::Idle()
+{
+	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+}
+
+void King_Dice::Attack()
+{
 }
 
 

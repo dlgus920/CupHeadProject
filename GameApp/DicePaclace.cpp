@@ -12,8 +12,6 @@
 #include "King_Dice.h"
 #include "Player.h"
 
-#include "Bottom_Card.h"
-
 DicePaclace::DicePaclace() // default constructer 디폴트 생성자
 {
 
@@ -21,6 +19,72 @@ DicePaclace::DicePaclace() // default constructer 디폴트 생성자
 
 DicePaclace::~DicePaclace() // default destructer 디폴트 소멸자
 {
+
+}
+
+void DicePaclace::LevelResourcesLoad()
+{
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Monster");
+		TextureDir.MoveChild("KingDice(Boss)");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
+		Texture->Cut(10, 8);
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("CharactorSprite");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
+		Texture->Cut(20, 20);
+		Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
+		Texture->Cut(8, 1);
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Bullet");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
+		Texture->Cut(8, 1);
+		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
+		Texture->Cut(4, 1);
+		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
+		Texture->Cut(6, 1);
+	}
 
 }
 
@@ -34,10 +98,7 @@ void DicePaclace::LevelStart()
 		//Actor->GetUIRenderer()->SetRenderGroup(1000);  
 	}
 
-	{
-		Bottom_Card_ = CreateActor<Bottom_Card>();
-		Bottom_Card_->GetTransform()->SetWorldPosition(float4{ 50.f,-600.f,static_cast<float>(ZOrder::Z00UI) });
-	}
+
 
 	{
 
@@ -87,6 +148,10 @@ void DicePaclace::LevelStart()
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();
+	}
+	{
+		PerryObjectDice* PerryDice = CreateActor<PerryObjectDice>();
+		PerryDice ->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor02)));
 	}
 
 	//{

@@ -1,6 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
-#include "Player.h"
+#include <GameEngine/GameEngineImageRenderer.h>
 
 // Ό³Έν :
 class UIBase : public GameEngineActor
@@ -17,13 +17,19 @@ public:
 	UIBase& operator=(UIBase&& _Other) noexcept = delete;
 
 protected:
-
+	class Player* Player_;
 
 
 
 protected:
 	virtual void Start() ;
 	virtual void Update(float _DeltaTime) ;
+
+protected:
+	void SetUIPlayer(Player* _Player)
+	{
+		Player_ = _Player;
+	}
 
 };
 

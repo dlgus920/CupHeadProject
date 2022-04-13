@@ -75,54 +75,64 @@ void Player::Idle_End()
 
 void Player::Walk_Start()
 {
+	
 	// 각기 다른 에니메이션 재생
 }
 StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 {
-	if (CheckState() != "Walk")
+	if (true == WalkState_Changed_)
 	{
-		return CheckState();
+		ChangeAnimation("Cup-Walk-Turn");
+
+		GetTransform()->SetHorizenInvertTransform();
 	}
 
-	if (KeyState_Shoot_)
+	if (false == WalkState_Changed_)
 	{
-		ShootingInterTime_ += _DeltaTime;
-
-		ChangeAnimation("Cup-Walk-Shoot-Str");
-
-		if (Dir_ == AnimationDirection::Left)
+		if (CheckState() != "Walk")
 		{
-			BulletInfo_.MoveDir_ = float4::LEFT;
-			ShootingDir_ = ShootingDir::Left;
+			return CheckState();
+		}
+
+		if (KeyState_Shoot_)
+		{
+			ShootingInterTime_ += _DeltaTime;
+
+			ChangeAnimation("Cup-Walk-Shoot-Str");
+
+			if (Dir_ == AnimationDirection::Left)
+			{
+				BulletInfo_.MoveDir_ = float4::LEFT;
+				ShootingDir_ = ShootingDir::Left;
+			}
+			else
+			{
+				BulletInfo_.MoveDir_ = float4::RIGHT;
+				ShootingDir_ = ShootingDir::Right;
+			}
+
+			if (ShootingInterTime_ >= 0.2f)
+			{
+				BulletShootFunc_();
+				ShootingInterTime_ = 0.f;
+			}
 		}
 		else
 		{
-			BulletInfo_.MoveDir_ = float4::RIGHT;
-			ShootingDir_ = ShootingDir::Right;
-		}
-
-		if (ShootingInterTime_ >= 0.2f)
-		{
-			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
+
+			ChangeAnimation("Cup-Walk");
+		}
+
+		if (KeyState_Right_)
+		{
+			Move(400.f, 0.f, _DeltaTime);
+		}
+		else
+		{
+			Move(-400.f, 0.f, _DeltaTime);
 		}
 	}
-	else
-	{
-		ShootingInterTime_ = 0.f;
-
-		ChangeAnimation("Cup-Walk");
-	}
-
-	if (KeyState_Right_)
-	{
-		Move(400.f, 0.f, _DeltaTime);
-	}
-	else
-	{
-		Move(-400.f, 0.f, _DeltaTime);
-	}
-
 	return StateInfo();
 }
 void Player::Walk_End()
@@ -135,127 +145,195 @@ void Player::Jump_Start()
 	ChangeAnimation("Cup-Jump");
 
 	Move(0.f, 10.f, 0.f);
+
+	Jumpend_ = false;
+	LongJump_ = false;
+
+	Parry_ = false;
+
+	JumpSpeed_ = 0.f;
+	TimeCheck_ = 0.f;
+
+	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
+
+	ShootingInterTime_ = 0.f;
+
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
+	//TODO :: 언젠가 점프 더 부드럽게 다듬을것
+
 	if (true == ColState_Hit_)
 	{
 		TimeCheck_ = 0.f;
-		JumpAccSpeed_ = 50.f;
 		return "Hit";
 	}
 
 	if (true == KeyState_Dash_) 
 	{
 		TimeCheck_ = 0.f;
-		JumpAccSpeed_ = 50.f;
 		return "Dash";
 	}
 
 	if (true == KeyState_Bomb)
 	{
 		TimeCheck_ = 0.f;
-		JumpAccSpeed_ = 50.f;
 		return "Bomb";
 	}
 
 	TimeCheck_ += _DeltaTime;
 
-	if (true == KeyState_Jump_)
+	if (true == ColState_Parry_)
 	{
-		JumpAccSpeed_ -= JumpAcc_;
-
-		if (TimeCheck_ < 0.4f)
+		if (false == Parry_)
 		{
-			Move(float4(0.f, C_JumpSpeed_, 0.f), _DeltaTime);
-		}
-
-		else if (TimeCheck_ >= 0.4f && TimeCheck_ < 0.6f)
-		{
-			Move(float4(0.f, 0.f, 0.f), _DeltaTime);
-		}
-
-		else if (TimeCheck_ >= 0.6f)
-		{
-			Move(float4(0.f, -C_JumpSpeed_, 0.f), _DeltaTime);
-			if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+			if (GameEngineInput::GetInst().Down("Jump"))
 			{
+				Parry_ = true; // 페리중이다.
+
+				Bottom_Card_->Increase();
+				
+				Jumpend_ = false;
+				LongJump_ = false;
+				JumpSpeed_ = 0.f;
 				TimeCheck_ = 0.f;
-				return "Idle";
 			}
 		}
 	}
 
-	else
+	if (true == Parry_)
 	{
-		JumpAccSpeed_ -= JumpAcc_;
+		if (TimeCheck_ < 0.35f)
+		{
+			//JumpAcc_ = C_JumpSpeed0_ / 0.35f;
+			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+		}
 
+		else if (TimeCheck_ >= 0.35f)
+		{
+			if (false == Jumpend_)
+			{
+				Jumpend_ = true;
+				JumpSpeed_ = 0.f;
+			}
+
+			Parry_ = false;
+		}
+	}
+
+
+
+	if (false == Parry_)
+	{
 		if (TimeCheck_ < 0.2f)
 		{
-			Move(float4(0.f, C_JumpSpeed_, 0.f), _DeltaTime);
-		}
-
-		else if (TimeCheck_ >= 0.2f && TimeCheck_ < 0.4f)
-		{
-			Move(float4(0.f, 0.f, 0.f), _DeltaTime);
-		}
-
-		else if (TimeCheck_ >= 0.4f)
-		{
-			Move(float4(0.f, -C_JumpSpeed_, 0.f), _DeltaTime);
-
-			if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+			if (true == KeyState_Jump_Press)
 			{
-				TimeCheck_ = 0.f;
-				return "Idle";
+				LongJump_ = true;
+			}
+			else
+			{
+				LongJump_ = false;
+			}
+			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+		}
+
+		else if(TimeCheck_ >= 0.2f)
+		{
+			if (true == LongJump_)
+			{
+				if (TimeCheck_ < 0.40f)
+				{
+					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+				}
+
+				else if (TimeCheck_ < 0.55f)
+				{
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+				}
+
+				if (TimeCheck_ >= 0.65f)
+				{
+					if (false == Jumpend_)
+					{
+						Jumpend_ = true;
+						JumpSpeed_ = 0.f;
+					}
+
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
+
+					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+					{
+						TimeCheck_ = 0.f;
+						return "Idle";
+					}
+				}
+				/*if (TimeCheck_ < 0.35)
+				{
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+				}
+
+				else if (TimeCheck_ <0.7f && TimeCheck_ >= 0.7f)
+				{
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					if (false == Jumpend_)
+					{
+						Jumpend_ = true;
+						JumpSpeed_ = 0.f;
+					}
+
+					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
+
+					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+					{
+						TimeCheck_ = 0.f;
+						return "Idle";
+					}
+				}*/
+			}
+
+			else if (false == LongJump_)
+			{
+				//TODO:: 여ㅣ서 0.35초 만큼의 ACC 조정이 필요해짐
+				if (TimeCheck_ < 0.35f)
+				{	
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+				}
+
+				if (TimeCheck_ >= 0.35f)
+				{
+					if (false == Jumpend_)
+					{
+						Jumpend_ = true;
+						JumpSpeed_ = 0.f;
+					}
+
+					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
+
+					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+					{
+						TimeCheck_ = 0.f;
+						return "Idle";
+					}
+				}
 			}
 		}
 	}
-
-
-
-	//if (TimeCheck_ < 0.3f)
-	//{		
-	//	Move(float4(0.f, 600.f, 0.f), _DeltaTime);
-		//}
-
-		//if ((true == KeyState_Jump_)&& TimeCheck_ >= 0.3f && TimeCheck_ <= 0.6f)
-		//{
-		//	Move(float4(0.f, 600.f, 0.f), _DeltaTime);
-		//}
-
-		//if (TimeCheck_ > 0.6f)
-		//{
-		//	Move(float4(0.f, -600.f, 0.f), _DeltaTime);
-
-		//	if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
-		//	{
-		//		Move(float4(0.f, 200.f, 0.f), _DeltaTime);
-		//		if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
-		//		{
-		//			Move(float4(0.f, 100.f, 0.f), _DeltaTime);
-		//			
-		//		}
-		//	}
-
-		//	if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
-		//	{
-		//		TimeCheck_ = 0.f;
-		//		//GravitySpeed_ = 0.f;
-		//		return "Idle";
-		//	}
-		//}
-	//}
 
 	if (KeyState_Right_)
 	{
-		Move(400.f,0.f,_DeltaTime);
+		Move(C_MoveSpeed_,0.f,_DeltaTime);
 	}
 	else if (KeyState_Left_)
 	{
-		Move(-400.f,0.f,_DeltaTime);
+		Move(-C_MoveSpeed_,0.f,_DeltaTime);
 	}
-
 	if (KeyState_Shoot_)
 	{
 		ShootingInterTime_ += _DeltaTime;
@@ -286,8 +364,6 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
-	TimeCheck_ = 0.f;
-	ShootingInterTime_ = 0.f;
 }
 
 void Player::Duck_Start()
@@ -535,14 +611,20 @@ void Player::Hit_Start()
 		ChangeAnimation("Cup-Hit-Air");
 	}
 
+	Bottom_HP_->HPDecrease();
 	TimeCheck_ = 0.f;
 	GravitySpeed_ = 0.f;
 }
 StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 {
+	if (Bottom_HP_->GetCurHP() == 0)
+	{
+		return "Death";
+	}
+
 	TimeCheck_ += _DeltaTime;
 
-	GravitySpeed_ += GravityAcc_;
+	//GravitySpeed_ += GravityAcc_;
 	Move(float4(0.f, -200.f + GravitySpeed_, 0.f), _DeltaTime);
 
 	//if aniend && ground
@@ -570,11 +652,11 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 {
 	if ((Dir_ == AnimationDirection::Right))
 	{
-		Move(600.f, 0.f, _DeltaTime);
+		Move(C_DashSpeed_, 0.f, _DeltaTime);
 	}
 	else
 	{
-		Move(-600.f, 0.f, _DeltaTime);
+		Move(-C_DashSpeed_, 0.f, _DeltaTime);
 	}
 	TimeCheck_ += _DeltaTime;
 

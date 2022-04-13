@@ -16,6 +16,7 @@ public:
 	TitleScene& operator=(TitleScene&& _Other) = delete;
 
 protected:
+	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent() override;

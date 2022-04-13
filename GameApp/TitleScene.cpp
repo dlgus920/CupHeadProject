@@ -17,6 +17,10 @@ TitleScene::~TitleScene()
 {
 }
 
+void TitleScene::LevelResourcesLoad()
+{
+}
+
 void TitleScene::LevelStart()
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);

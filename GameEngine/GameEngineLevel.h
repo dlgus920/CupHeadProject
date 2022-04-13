@@ -63,6 +63,7 @@ public:
 	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type);
 	void PushCollision(GameEngineCollision* _Collision, int _Group);
 	
+	virtual void LevelResourcesLoad() = 0;
 	virtual void LevelStart() = 0;
 	virtual void LevelUpdate(float _DeltaTime) = 0;
 	virtual void LevelChangeEndEvent() = 0;

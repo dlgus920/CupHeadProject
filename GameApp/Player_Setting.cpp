@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Bullet.h"
 
+
 void Player::DefalutSetting()
 {
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
@@ -16,8 +17,6 @@ void Player::DefalutSetting()
 	Dir_ = AnimationDirection::Right;
 
 	BulletInfo_.BulletSpeed_ = 1000.f;
-	JumpAcc_ = 2.f;
-	JumpAccSpeed_ = 200.f;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
@@ -37,6 +36,14 @@ void Player::DefalutSetting()
 
 	ShootingPos_[static_cast<int>(ShootingDir::Down_Left)] = float4{ -25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
 	ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] = float4{ 25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
+
+	{
+		Bottom_Card_ = GetLevel()->CreateActor<Bottom_Card>();
+		Bottom_Card_->GetTransform()->SetWorldPosition(float4{ 110.f,-700.f,static_cast<float>(ZOrder::Z00UI) });
+
+		Bottom_HP_ = GetLevel()->CreateActor<Bottom_HP>();
+		Bottom_HP_->GetTransform()->SetWorldPosition(float4{ 50.f,-700.f,static_cast<float>(ZOrder::Z00UI) });
+	}
 }
 
 void Player::KeySetting()
@@ -109,7 +116,7 @@ void Player::AnimationSetting()
 	}
 	// JUMP
 	{
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump", 20, 27, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump", 20, 27, 0.166f);
 	}
 
 	{
@@ -137,7 +144,9 @@ void Player::AnimationSetting()
 			}
 		}
 		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk", 40, 55, C_AnimationInterTime_);
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, 0.1f);
+
+		PlayerImageRenderer->SetEndCallBack("Cup-Walk-Turn", std::bind(&Player::WalkState_Changed_End,this));
 	}
 
 	//IDLE

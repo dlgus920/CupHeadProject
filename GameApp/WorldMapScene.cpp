@@ -28,6 +28,10 @@ WorldMapScene::~WorldMapScene() // default destructer 디폴트 소멸자
 
 }
 
+void WorldMapScene::LevelResourcesLoad()
+{
+}
+
 void WorldMapScene::LevelStart()
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);

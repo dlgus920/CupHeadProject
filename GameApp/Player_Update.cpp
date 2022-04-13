@@ -51,7 +51,8 @@ void Player::KeyUpdate()
 	KeyState_Down_ = GameEngineInput::GetInst().Press("MoveDown");
 	KeyState_Shoot_ = GameEngineInput::GetInst().Press("Fire");
 	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
-	KeyState_Jump_ = GameEngineInput::GetInst().Press("Jump");
+	KeyState_Jump_ = GameEngineInput::GetInst().Down("Jump");
+	KeyState_Jump_Press = GameEngineInput::GetInst().Press("Jump");
 	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
 	KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 
@@ -60,6 +61,7 @@ void Player::KeyUpdate()
 		if (Dir_ == AnimationDirection::Right)
 		{
 			GetTransform()->SetHorizenInvertTransform();
+			WalkState_Changed_ = true;
 			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ -50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
 		}
 		Dir_ = AnimationDirection::Left;
@@ -70,6 +72,7 @@ void Player::KeyUpdate()
 		if (Dir_ == AnimationDirection::Left)
 		{
 			GetTransform()->SetHorizenInvertTransform();
+			WalkState_Changed_ = true;
 			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
 		}
 		Dir_ = AnimationDirection::Right;

@@ -1,8 +1,12 @@
 #pragma once
+
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
 #include "Bullet.h"
 #include "PositionComponent.h"
+
+#include "Bottom_Card.h"
+#include "Bottom_HP.h"
 
 class GameEngineImageRenderer;
 
@@ -52,7 +56,11 @@ private: //Legacy
 	void Update(float _DeltaTime) override;
 
 private: //Member
+
 	GameEngineImageRenderer* PlayerImageRenderer;
+
+	Bottom_Card* Bottom_Card_;
+	Bottom_HP* Bottom_HP_;
 
 	GameEngineFSM<Player> State_;
 
@@ -67,21 +75,39 @@ private: //Member
 	float4 PrevAniSize_;
 
 	const float C_AnimationInterTime_ = 0.05;
-	const float C_JumpSpeed_ = 800.f;
+	const float C_MoveSpeed_ = 400.f;
+	const float C_DashSpeed_ = 600.f;
+	const float C_JumpSpeed0_ = 1600.f;
+	float JumpAcc_;
+
+	float JumpSpeed_;
+
+	bool Jumpend_;
+	bool LongJump_;
+	bool Parry_;
+
+	const float C_GravityAcc_ = 3.81;
+	float GravitySpeed_;
+
+
 
 	float TimeCheck_;
 	float DistTimeCheck_;
 
 	float ShootingInterTime_;
 
-	float GravitySpeed_;
-	float GravityAcc_;
 
 
-	float JumpAcc_;
-	float JumpAccSpeed_;
+
 
 		// state
+	bool WalkState_Changed_;
+
+	void WalkState_Changed_End()
+	{
+		WalkState_Changed_ = false;
+	}
+
 	bool KeyState_Update_;
 	bool ColState_Update_;
 	bool State_Update_;
@@ -96,6 +122,7 @@ private: //Member
 	bool KeyState_RockOn_;
 	bool KeyState_Bomb;
 	bool KeyState_Jump_;
+	bool KeyState_Jump_Press;
 
 	bool KeyState_Hit_;
 	bool KeyState_Dash_;

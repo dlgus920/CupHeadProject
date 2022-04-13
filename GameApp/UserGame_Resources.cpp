@@ -50,7 +50,7 @@ void UserGame::ResourcesLoad()
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bottom_HP.png");
-		Texture->Cut(6, 6);
+		Texture->Cut(6, 2);
 
 		Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Dia.png");
 		Texture->Cut(6, 1);
@@ -104,70 +104,69 @@ void UserGame::ResourcesLoad()
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
 	}
 
-	{
-		//Folder Load
+	//{
+	//	//Folder Load
 
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Monster");
-		TextureDir.MoveChild("KingDice(Boss)");
+	//	GameEngineDirectory TextureDir;
+	//	TextureDir.MoveParent(GV_GAMEFILENAME);
+	//	TextureDir.MoveChild("Resources");
+	//	TextureDir.MoveChild("Image");
+	//	TextureDir.MoveChild("Monster");
+	//	TextureDir.MoveChild("KingDice(Boss)");
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+	//	std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}
 
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
-		Texture->Cut(10, 8);
+	//	GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
+	//	Texture->Cut(10, 8);
 
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-idle"));
+	//	GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
+	//	GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
+	//}
 
+	//{
+	//	GameEngineDirectory TextureDir;
+	//	TextureDir.MoveParent(GV_GAMEFILENAME);
+	//	TextureDir.MoveChild("Resources");
+	//	TextureDir.MoveChild("Image");
+	//	TextureDir.MoveChild("CharactorSprite");
 
-	}
+	//	std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("CharactorSprite");
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}
+	//	GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
+	//	Texture->Cut(20, 20);
+	//	Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
+	//	Texture->Cut(8, 1);
+	//}
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+	//{
+	//	GameEngineDirectory TextureDir;
+	//	TextureDir.MoveParent(GV_GAMEFILENAME);
+	//	TextureDir.MoveChild("Resources");
+	//	TextureDir.MoveChild("Image");
+	//	TextureDir.MoveChild("Bullet");
 
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
-		Texture->Cut(20, 20);
-		Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
-		Texture->Cut(8, 1);
-	}
+	//	std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Bullet");
-
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
-		Texture->Cut(8,1);
-		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
-		Texture->Cut(4, 1);
-		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
-		Texture->Cut(6, 1);
-	}
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}
+	//	GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
+	//	Texture->Cut(8,1);
+	//	Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
+	//	Texture->Cut(4, 1);
+	//	Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
+	//	Texture->Cut(6, 1);
+	//}
 
 	{	
 		GameEngineDirectory TextureDir;

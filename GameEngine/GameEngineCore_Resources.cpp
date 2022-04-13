@@ -325,7 +325,17 @@ void GameEngineCore::EngineResourcesCreate()
 		Pipe->SetOutputMergerDepthStencil("BaseDepthOff");
 	}
 
-
+	{
+		GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("ProgressBar");
+		Pipe->SetInputAssembler1VertexBufferSetting("Rect");
+		Pipe->SetInputAssembler1InputLayOutSetting("ProgressBar_VS");
+		Pipe->SetVertexShader("ProgressBar_VS");
+		Pipe->SetInputAssembler2IndexBufferSetting("Rect");
+		Pipe->SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		Pipe->SetRasterizer("EngineBaseRasterizer");
+		Pipe->SetPixelShader("ProgressBar_PS");
+		Pipe->SetOutputMergerBlend("AlphaBlend");
+	}
 
 
 }
