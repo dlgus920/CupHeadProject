@@ -144,7 +144,7 @@ void Player::AnimationSetting()
 			}
 		}
 		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk", 40, 55, C_AnimationInterTime_);
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, 0.1f);
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, 0.05f);
 
 		PlayerImageRenderer->SetEndCallBack("Cup-Walk-Turn", std::bind(&Player::WalkState_Changed_End,this));
 	}

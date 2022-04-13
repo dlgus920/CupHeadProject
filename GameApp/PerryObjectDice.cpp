@@ -17,7 +17,7 @@ void PerryObjectDice::Start()
 {
 	Object::Start();
 
-	ObjectCollision_->GetTransform()->SetLocalScaling(float4{ 50.f,50.f,1.f });
+	ObjectCollision_->GetTransform()->SetLocalScaling(float4{75.f,75.f,1.f });
 	ObjectCollision_->SetCollisionType(CollisionType::Rect);
 	ObjectCollision_->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
@@ -59,6 +59,7 @@ void PerryObjectDice::Start()
 
 void PerryObjectDice::Update(float _DeltaTime)
 {
+	GetLevel()->PushDebugRender(ObjectCollision_->GetTransform(), CollisionType::Rect);\
 	//if (false == IsCollision_)
 	//{
 	//	if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))

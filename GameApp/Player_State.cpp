@@ -83,8 +83,6 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 	if (true == WalkState_Changed_)
 	{
 		ChangeAnimation("Cup-Walk-Turn");
-
-		GetTransform()->SetHorizenInvertTransform();
 	}
 
 	if (false == WalkState_Changed_)
@@ -205,7 +203,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	{
 		if (TimeCheck_ < 0.35f)
 		{
-			//JumpAcc_ = C_JumpSpeed0_ / 0.35f;
+			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 		}
 
@@ -220,8 +218,6 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 			Parry_ = false;
 		}
 	}
-
-
 
 	if (false == Parry_)
 	{
@@ -271,29 +267,6 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 						return "Idle";
 					}
 				}
-				/*if (TimeCheck_ < 0.35)
-				{
-					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
-					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
-				}
-
-				else if (TimeCheck_ <0.7f && TimeCheck_ >= 0.7f)
-				{
-					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
-					if (false == Jumpend_)
-					{
-						Jumpend_ = true;
-						JumpSpeed_ = 0.f;
-					}
-
-					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
-
-					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
-					{
-						TimeCheck_ = 0.f;
-						return "Idle";
-					}
-				}*/
 			}
 
 			else if (false == LongJump_)

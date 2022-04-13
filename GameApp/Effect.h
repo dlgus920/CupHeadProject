@@ -16,19 +16,24 @@ enum class EffectType
 class Effect : public GameEngineActor
 {
 public:
-	Effect(); // default constructer 디폴트 생성자
-	~Effect(); // default destructer 디폴트 소멸자
-
-	Effect(const Effect& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	Effect(Effect&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
-	Effect& operator=(const Effect& _other) = delete; // default Copy operator 디폴트 대입 연산자
-	Effect& operator=(const Effect&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
+	Effect(); 
+	~Effect();
 
 private:
-	EffectType EffectType_;
+	Effect(const Effect& _other) = delete; 
+	Effect(Effect&& _other) = delete; 
+	Effect& operator=(const Effect& _other) = delete; 
+	Effect& operator=(const Effect&& _other) = delete;
 
-protected:
-	virtual void Start();
-	virtual void Update(float _DeltaTime);
+private:
+	GameEngineImageRenderer* ImageRenderer_;
+
+private:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+
+public:
+	void SetDust();
+
 };
 
