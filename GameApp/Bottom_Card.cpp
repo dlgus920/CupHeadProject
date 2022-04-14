@@ -34,10 +34,10 @@ void Bottom_Card::Start()
 		UICard_[i]->SetChangeAnimation("BottomCard_Dia");
 
 
-		UICard_[i]->SetRenderingPipeLine("ProgressBar");
+		//UICard_[i]->SetRenderingPipeLine("ProgressBar");
 
-		UICard_[i]->ShaderHelper.SettingConstantBufferLink("ProgressBarCBuffer", ProgressBarData_);
-		UICard_[i]->ShaderHelper.SettingConstantBufferLink("TextureCutData", CutData_);
+		//UICard_[i]->ShaderHelper.SettingConstantBufferLink("ProgressBarCBuffer", ProgressBarData_);
+		//UICard_[i]->ShaderHelper.SettingConstantBufferLink("TextureCutData", CutData_);
 
 		//float4 ResultColor_ = float4::ONE;
 		//UICard_[i]->ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor_);
@@ -81,9 +81,6 @@ void Bottom_Card::Update(float _DeltaTime)
 
 	//	// curcount에 맞는 렌더러가 위로 올라옴
 	//}
-
-
-
 }
 
 void Bottom_Card::Increase()

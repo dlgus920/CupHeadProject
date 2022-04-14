@@ -22,20 +22,20 @@ void Player::DefalutSetting()
 
 	State_.ChangeState("Idle");
 
-	ShootingPos_[static_cast<int>(ShootingDir::Right)] = float4{ 80.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Left)] = float4{ -80.f,-50.f,static_cast<int>(ZOrder::Z00Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Right)] = float4{ 80.f,-50.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Left)] = float4{ -80.f,-50.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
-	ShootingPos_[static_cast<int>(ShootingDir::Right_Down)] = float4{ 70.f,-100.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Left_Down)] = float4{ -70.f,-100.f,static_cast<int>(ZOrder::Z00Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Right_Down)] = float4{ 70.f,-100.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Left_Down)] = float4{ -70.f,-100.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
-	ShootingPos_[static_cast<int>(ShootingDir::Left_Up)] = float4{ -70.f,-10.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Right_Up)] = float4{ 70.f,-10.f,static_cast<int>(ZOrder::Z00Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Left_Up)] = float4{ -70.f,-10.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Right_Up)] = float4{ 70.f,-10.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
-	ShootingPos_[static_cast<int>(ShootingDir::Up_Left)] = float4{ -25.f,35.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Up_Right)] = float4{ 25.f,35.f,static_cast<int>(ZOrder::Z00Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Up_Left)] = float4{ -25.f,35.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Up_Right)] = float4{ 25.f,35.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
-	ShootingPos_[static_cast<int>(ShootingDir::Down_Left)] = float4{ -25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
-	ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] = float4{ 25.f,-130.f,static_cast<int>(ZOrder::Z00Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Down_Left)] = float4{ -25.f,-130.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
+	ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] = float4{ 25.f,-130.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
 	{
 		Bottom_Card_ = GetLevel()->CreateActor<Bottom_Card>();

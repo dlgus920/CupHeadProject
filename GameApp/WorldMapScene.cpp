@@ -64,7 +64,7 @@ void WorldMapScene::LevelStart()
 
 	{
 		WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
-		WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor01)));
+		WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 	}
 

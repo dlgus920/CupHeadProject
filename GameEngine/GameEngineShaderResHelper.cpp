@@ -123,7 +123,6 @@ void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineShader* _Shader)
 			GameEngineDebug::MsgBoxError("같은 이름의 텍스처가 이미 존재합니다." + Texture.second);
 		}
 	}
-
 }
 
 void GameEngineShaderResHelper::Setting() 
@@ -136,7 +135,6 @@ void GameEngineShaderResHelper::Setting()
 			GameEngineDebug::MsgBoxError("다음의 상수버퍼가 세팅되지 않았습니다. >>> " + Setting.first);
 		}
 		
-
 		Setting.second->ChangeData();
 		Setting.second->ShaderSetting();
 	}
@@ -150,7 +148,6 @@ void GameEngineShaderResHelper::Setting()
 	{
 		Setting.second->ShaderSetting();
 	}
-
 }
 
 void GameEngineShaderResHelper::ReSet()

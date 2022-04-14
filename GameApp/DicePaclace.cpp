@@ -139,7 +139,7 @@ void DicePaclace::LevelStart()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor02)));
+		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor00Player01)));
 	}
 
 	{
