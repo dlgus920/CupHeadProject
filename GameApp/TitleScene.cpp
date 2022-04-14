@@ -19,6 +19,31 @@ TitleScene::~TitleScene()
 
 void TitleScene::LevelResourcesLoad()
 {
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("TitleScreen");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("title_screen_background.png");
+		Texture->Cut(8, 8);
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
+	}
 }
 
 void TitleScene::LevelStart()

@@ -30,6 +30,47 @@ WorldMapScene::~WorldMapScene() // default destructer 디폴트 소멸자
 
 void WorldMapScene::LevelResourcesLoad()
 {
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("World");
+		TextureDir.MoveChild("Background");
+
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+		}
+
+		TextureDir.MoveParent("World");
+		TextureDir.MoveChild("Cuphead");
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("WorldCuphead.png");
+			Texture->Cut(16, 8);
+		}
+
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Loading");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
+	}
 }
 
 void WorldMapScene::LevelStart()

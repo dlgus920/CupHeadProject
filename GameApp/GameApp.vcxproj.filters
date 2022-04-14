@@ -113,6 +113,9 @@
     <ClCompile Include="Bottom_HP.cpp">
       <Filter>Actor\UI\Bottom</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Actor\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -205,6 +208,9 @@
     <Filter Include="Actor\UI\Bottom">
       <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Effect">
+      <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -291,6 +297,9 @@
     </ClInclude>
     <ClInclude Include="Bottom_Card.h">
       <Filter>Actor\UI\Bottom</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Actor\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,11 +14,29 @@ LoaddingScene::LoaddingScene() :
 
 LoaddingScene::~LoaddingScene() // default destructer 디폴트 소멸자
 {
-
 }
 
 void LoaddingScene::LevelResourcesLoad()
 {
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Loading");
+
+		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
+		Texture->Cut(16, 3);
+
+	}
 }
 
 void LoaddingScene::LevelStart()

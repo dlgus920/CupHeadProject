@@ -139,16 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <FxCompile Include="Color.fx" />
     <FxCompile Include="EngineResources\Shader\CbufferHeader.fx" />
+    <FxCompile Include="EngineResources\Shader\Color.fx" />
+    <FxCompile Include="EngineResources\Shader\ProgressBar.fx" />
     <FxCompile Include="EngineResources\Shader\TargetMerge.fx" />
-    <FxCompile Include="Texture.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ProgressBar.fx">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <FxCompile Include="EngineResources\Shader\Texture.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

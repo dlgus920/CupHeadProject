@@ -192,6 +192,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GameObject.cpp">
       <SubType>
       </SubType>
@@ -321,6 +322,7 @@
     </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="GameObject.h">
       <SubType>
       </SubType>
