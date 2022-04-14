@@ -74,9 +74,6 @@
     <ClCompile Include="Bullet_Guided.cpp">
       <Filter>Actor\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="King_Dice.cpp">
-      <Filter>Actor\MOB</Filter>
-    </ClCompile>
     <ClCompile Include="DicePaclace.cpp">
       <Filter>Level\04. PlayLevel\Stage</Filter>
     </ClCompile>
@@ -117,7 +114,10 @@
       <Filter>Actor\Effect</Filter>
     </ClCompile>
     <ClCompile Include="King_Dice_State.cpp">
-      <Filter>Actor\MOB</Filter>
+      <Filter>Actor\MOB\King_Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="King_Dice.cpp">
+      <Filter>Actor\MOB\King_Dice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +214,12 @@
     <Filter Include="Actor\Effect">
       <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\MOB\King_Dice">
+      <UniqueIdentifier>{dbbfae0a-79c1-4863-b751-004ce6407b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\MOB\King_Dice\Card">
+      <UniqueIdentifier>{b3886b81-9ee2-4f77-b769-5329b341474c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -270,9 +276,6 @@
     <ClInclude Include="Map.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="King_Dice.h">
-      <Filter>Actor\MOB</Filter>
-    </ClInclude>
     <ClInclude Include="DicePaclace.h">
       <Filter>Level\04. PlayLevel\Stage</Filter>
     </ClInclude>
@@ -303,6 +306,9 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Actor\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="King_Dice.h">
+      <Filter>Actor\MOB\King_Dice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

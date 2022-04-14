@@ -55,18 +55,54 @@ void DicePaclace::LevelResourcesLoad()
 		TextureDir.MoveChild("Monster");
 		TextureDir.MoveChild("KingDice(Boss)");
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
 		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
+			Texture->Cut(10, 8);
+
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Defeat"));
 		}
 
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
-		Texture->Cut(10, 8);
+		TextureDir.MoveChild("KDice-Attack");
 
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Birth"));
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Birth"));
+
+
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Card_Club.png");
+			Texture->Cut(7, 3);
+
+			Texture = GameEngineTextureManager::GetInst().Find("Card_Hraet.png");
+			Texture->Cut(7, 3);
+		}
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Monster");
+		TextureDir.MoveChild("KingDice(Boss)");
+		
 	}
 
 	{

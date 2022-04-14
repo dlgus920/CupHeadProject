@@ -3,6 +3,7 @@
 
 King_Dice::King_Dice()
 	: State_(this)
+	, BattleState_(this)
 	, MonsterImageRenderer(nullptr)
 	, MonsterHitBox(nullptr)
 	, MonsterHitBoxHand(nullptr)
@@ -20,6 +21,13 @@ void King_Dice::Start()
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Idle", "KDIce-Idle", 0.04);
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04,false);
+
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04,false);
+		MonsterImageRenderer->SetEndCallBack("KDice-Attack-Body-Birth", std::bind(&King_Dice::HandIdle, this));
+
+
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Idle", "KDice-Attack-Body-Idle", 0.04,false);
+
 		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 1440.f, 750.0f, 1.0f });
 		MonsterImageRenderer->GetTransform()->SetLocalZPosition(static_cast<int>(ZOrder::Z01Actor03));
 
@@ -48,6 +56,29 @@ void King_Dice::Start()
 		State_.CreateState("Attack", &King_Dice::Attack_Start, &King_Dice::Attack_Update, &King_Dice::Attack_End_);
 		State_.CreateState("Chop", &King_Dice::Chop_Start, &King_Dice::Chop_Update, &King_Dice::Chop_End_);
 		State_.CreateState("Defeat", &King_Dice::Defeat_Start, &King_Dice::Defeat_Update, &King_Dice::Defeat_End_);
+
+		BattleState_.CreateState("BattleState_Battle",&King_Dice::BattleState_Battle_Start,&King_Dice::BattleState_Battle_Update,&King_Dice::BattleState_Battle_End);
+		BattleState_.CreateState("BattleState_Dice",&King_Dice::BattleState_Dice_Start,&King_Dice::BattleState_Dice_Update,&King_Dice::BattleState_Dice_End);
+	}
+
+	{
+		Hand_.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+
+		Hand_.Collision = CreateTransformComponent<GameEngineCollision>();
+		Hand_.Collision->SetCollisionType(CollisionType::Rect);
+		Hand_.Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
+
+		Hand_.ImageRenderer->CreateAnimationFolder("KDice-Attack-Hand-Birth", "KDice-Attack-Hand-Birth", 0.04);
+		Hand_.ImageRenderer->SetEndCallBack("KDice-Attack-Hand-Birth", std::bind(&King_Dice::Hand::HandIdle, &Hand_));
+
+		Hand_.ImageRenderer->CreateAnimationFolder("KDice-Attack-Hand-Idle", "KDice-Attack-Hand-Idle", 0.04, false);
+
+		Hand_.HandSetLocalPosition(float4{ -500.f ,-650.f, 1.f });
+
+		Hand_.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,650.f, 1.f });
+		Hand_.Collision->GetTransform()->SetLocalScaling(float4{ 500.f,650.f, 1.f });
+
+		Hand_.HandOff();
 	}
 
 	Intro();
@@ -75,9 +106,17 @@ void King_Dice::Idle()
 }
 
 void King_Dice::Attack()
-
-
 {
 }
 
+void King_Dice::HandBirth()
+{
+}
 
+void King_Dice::HandIdle()
+{
+	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
+
+	Hand_.HandOn();
+	Hand_.HandBirth();
+}

@@ -17,10 +17,66 @@ public:
 
 private:
 	GameEngineFSM<King_Dice> State_;
+	GameEngineFSM<King_Dice> BattleState_;
 	GameEngineCollision* MonsterHitBox;
 	GameEngineCollision* MonsterHitBoxHand;
 	GameEngineCollision* MonsterCollision;
 	GameEngineImageRenderer* MonsterImageRenderer;
+	
+	struct Hand
+	{
+		Hand()
+			: Collision(nullptr)
+			, ImageRenderer(nullptr)
+			, IsAttacking_(false)
+		{
+		}
+		~Hand()
+		{
+		}
+
+		GameEngineCollision* Collision;
+		GameEngineImageRenderer* ImageRenderer;
+		bool IsAttacking_;
+
+		void HandSetLocalPosition(float4 _Pos)
+		{
+			Collision->GetTransform()->SetLocalPosition(_Pos);
+			ImageRenderer->GetTransform()->SetLocalPosition(_Pos);
+		}
+
+		void  HandOff()
+		{
+			Collision->Off();
+			ImageRenderer->Off();
+			IsAttacking_ = false;
+		}
+
+		void  HandOn()
+		{
+			Collision->On();
+			ImageRenderer->On();
+		}
+
+		void HandIdle()
+		{
+			ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
+			IsAttacking_ = true;
+		}
+
+		void HandBirth()
+		{
+			ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
+			IsAttacking_ = false;
+		}
+
+		//void HandReset()
+		//{
+		//	ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
+		//}
+	};
+
+	Hand Hand_;
 
 private:	// member Var
 	void Start() override;
@@ -47,13 +103,23 @@ private:
 	StateInfo Chop_Update(StateInfo _StateInfo, float _DeltaTime);
 	void Chop_End_();
 
+	void BattleState_Battle_Start();
+	StateInfo BattleState_Battle_Update(StateInfo _StateInfo, float _DeltaTime);
+	void BattleState_Battle_End();
 
+	void BattleState_Dice_Start();
+	StateInfo BattleState_Dice_Update(StateInfo _StateInfo, float _DeltaTime);
+	void BattleState_Dice_End();
 
-	
 public:
 	void Intro();
 	void Idle();
 	void Attack();
+
+
+private:
+	void HandBirth();
+	void HandIdle();
 
 };
 
