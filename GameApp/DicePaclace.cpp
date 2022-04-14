@@ -167,7 +167,8 @@ void DicePaclace::LevelStart()
 
 	{
 		King_Dice* Actor = CreateActor<King_Dice>();
-		Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<float>(ZOrder::Z01Actor03)));
+		//Actor->GetTransform()->SetWorldPosition(float4(670.f, -120.f, static_cast<float>(ZOrder::Z01Actor03)));
+		Actor->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
 		//float4 texsize = Actor->GetTextureSize();
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();

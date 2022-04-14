@@ -75,7 +75,7 @@ private: //Member
 	float4 PrevAniSize_;
 
 	const float C_AnimationInterTime_ = 0.05;
-	const float C_MoveSpeed_ = 400.f;
+	const float C_MoveSpeed_ = 500.f;
 	const float C_DashSpeed_ = 600.f;
 	const float C_JumpSpeed0_ = 1600.f;
 	float JumpAcc_;

@@ -13,17 +13,22 @@ void WorldMapPlayer::KeySetting()
 
 void WorldMapPlayer::StateSetting()
 {
-	
+	State_.CreateState("Entry", &WorldMapPlayer::Entry_Start,
+		&WorldMapPlayer::Entry_Update, &WorldMapPlayer::Entry_End);
+
 	State_.CreateState("Idle", &WorldMapPlayer::Idle_Start,
 		&WorldMapPlayer::Idle_Update, &WorldMapPlayer::Idle_End);
+
 	State_.CreateState("Walk", &WorldMapPlayer::Walk_Start,
 		&WorldMapPlayer::Walk_Update, &WorldMapPlayer::Walk_End);
+
 	State_.CreateState("Chose", &WorldMapPlayer::Chose_Start,
 		&WorldMapPlayer::Chose_Update, &WorldMapPlayer::Chose_End);
+
 	State_.CreateState("LevelChangeWait", &WorldMapPlayer::LevelChangeWait_Start,
 		&WorldMapPlayer::LevelChangeWait_Update, &WorldMapPlayer::LevelChangeWait_End);
 
-	State_.ChangeState("Idle");
+	State_.ChangeState("Entry");
 }
 
 void WorldMapPlayer::ComponentSetting()

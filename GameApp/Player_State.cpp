@@ -85,12 +85,13 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 		ChangeAnimation("Cup-Walk-Turn");
 	}
 
+	if (CheckState() != "Walk")
+	{
+		return CheckState();
+	}
+
 	if (false == WalkState_Changed_)
 	{
-		if (CheckState() != "Walk")
-		{
-			return CheckState();
-		}
 
 		if (KeyState_Shoot_)
 		{
@@ -189,6 +190,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
+				ChangeAnimation("Cup-Jump-Parry");
+
 				Bottom_Card_->Increase();
 				
 				Jumpend_ = false;
@@ -239,18 +242,18 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 		{
 			if (true == LongJump_)
 			{
-				if (TimeCheck_ < 0.40f)
+				if (TimeCheck_ < 0.30f)
 				{
 					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 				}
 
-				else if (TimeCheck_ < 0.55f)
+				else if (TimeCheck_ < 0.45f)
 				{
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 				}
 
-				if (TimeCheck_ >= 0.65f)
+				if (TimeCheck_ >= 0.55f)
 				{
 					if (false == Jumpend_)
 					{

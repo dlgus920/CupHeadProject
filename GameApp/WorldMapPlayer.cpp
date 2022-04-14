@@ -21,6 +21,7 @@ WorldMapPlayer::WorldMapPlayer()
 	, Dir_(AnimationDirection::Right)
 	, MoveDir_{}
 	, CurState_{}
+	, TimeCheck_(0.f)
 {
 }
 
@@ -45,6 +46,11 @@ void WorldMapPlayer::SetChangeAnimation(std::string _animation)
 void WorldMapPlayer::ChangeScene(std::string _Scene)
 {
 	GetLevel<WorldMapScene>()->ChangeScene(_Scene);
+}
+
+void WorldMapPlayer::Entry()
+{
+	State_.ChangeState("Entry");
 }
 
 void WorldMapPlayer::Move(float4 MoveDir, float _DeltaTime)

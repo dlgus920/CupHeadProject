@@ -35,7 +35,7 @@ private:	// member Var
 	GameEngineCollision* PlayerCollision;
 	GameEngineFSM<WorldMapPlayer> State_;
 
-
+	float TimeCheck_;
 
 	float4 MoveDir_;
 
@@ -88,7 +88,14 @@ private: // Func
 
 	void ChangeScene(std::string _Scene);
 
+public:
+	void Entry();
+
 private:
+	void Entry_Start();
+	StateInfo Entry_Update(StateInfo _state, float _DeltaTime);
+	void Entry_End();
+
 	void Idle_Start();
 	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
 	void Idle_End();

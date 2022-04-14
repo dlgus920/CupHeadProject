@@ -117,6 +117,8 @@ void Player::AnimationSetting()
 	// JUMP
 	{
 		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump", 20, 27, 0.166f);
+
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump-Parry", 120, 127, 0.166f);
 	}
 
 	{

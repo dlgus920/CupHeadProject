@@ -5,10 +5,30 @@
 
 #include "WorldMapScene.h"
 
+void WorldMapPlayer::Entry_Start()
+{
+	SetChangeAnimation("Cup-Idle-Down");
+}
+
+StateInfo WorldMapPlayer::Entry_Update(StateInfo _state, float _DeltaTime)
+{
+	TimeCheck_ += _DeltaTime;
+	if (TimeCheck_ > 1.f)
+	{
+		return "Idle";
+	}
+
+	return StateInfo();
+}
+
+void WorldMapPlayer::Entry_End()
+{
+	TimeCheck_ = 0.f;
+}
+
 void WorldMapPlayer::Idle_Start()
 {
-	//ChangeAnimation("Cup-Idle-Down");
-	SetChangeAnimation("Cup-Idle-Down-Right");
+	SetChangeAnimation("Cup-Idle-Down");
 }
 
 StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)

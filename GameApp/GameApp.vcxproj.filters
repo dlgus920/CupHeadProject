@@ -116,6 +116,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Actor\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="King_Dice_State.cpp">
+      <Filter>Actor\MOB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">

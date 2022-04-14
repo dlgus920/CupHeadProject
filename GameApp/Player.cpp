@@ -151,10 +151,11 @@ void Player::ShootDefalutBullet()
 
 	Bullet->GetTransform()->SetWorldPosition(Pos);
 	Bullet->SetBulletInfo(BulletInfo_);
+
 	Image* Birth = GetLevel()->CreateActor<Image>();
+	Birth->GetTransform()->SetLocalScaling(float4{ 140.f,140.f,1.f });
 	Birth->ImageCreateAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.05, false);
 	Birth->SetReserveDeath("Birth");
-	Birth->SetAdjustImzgeSize();
 	Birth->GetTransform()->SetWorldPosition(Pos);
 }
 
