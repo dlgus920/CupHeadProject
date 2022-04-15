@@ -23,5 +23,9 @@ protected:
 	void LevelChangeStartEvent() override;
 
 private:
+	class Image* FadeImage_;
+
+	bool TobeNext_;
+	float BlendRate_;
 };
 

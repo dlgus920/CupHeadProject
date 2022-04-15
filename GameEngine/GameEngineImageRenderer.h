@@ -41,6 +41,11 @@ private:
 			return CurFrame_;
 		}
 
+		const bool IsAnimationEnd()
+		{
+			return IsEnd;
+		}
+
 		void Reset();
 		void CallStart();
 		void CallEnd();
@@ -64,8 +69,18 @@ private:
 		}
 	};
 
+
+
 public:
 	//custom
+	void SetResultColor(float4 _ResultColor)
+	{
+		ResultColor = _ResultColor;
+	}
+
+	const bool GetCurAnimation_End();
+	const bool GetCurAnimation_End(std::string Animation_Name);
+
 	void SetAdjustImzgeSize()
 	{
 		GetTransform()->SetLocalScaling(GetImageSize());

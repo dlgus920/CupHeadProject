@@ -23,6 +23,9 @@ private:
 	GameEngineCollision* MonsterCollision;
 	GameEngineImageRenderer* MonsterImageRenderer;
 	
+	int CardCount_;
+	float TimeCheck_;
+
 	struct Hand
 	{
 		Hand()
@@ -37,7 +40,13 @@ private:
 
 		GameEngineCollision* Collision;
 		GameEngineImageRenderer* ImageRenderer;
+	private:
 		bool IsAttacking_;
+	public:
+		const bool HandIsAttacking()
+		{
+			return IsAttacking_;
+		}
 
 		void HandSetLocalPosition(float4 _Pos)
 		{
@@ -45,7 +54,7 @@ private:
 			ImageRenderer->GetTransform()->SetLocalPosition(_Pos);
 		}
 
-		void  HandOff()
+		void HandOff()
 		{
 			Collision->Off();
 			ImageRenderer->Off();

@@ -138,9 +138,40 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 
 /// ///////////////////////////////////////////////////////////////////
 
+const bool GameEngineImageRenderer::GetCurAnimation_End()
+{
+#ifdef _DEBUG
+	if (nullptr == CurAnimation_)
+	{
+		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
+	}
+#endif // _DEBUG
+
+
+	return CurAnimation_->IsAnimationEnd();
+}
+
+const bool GameEngineImageRenderer::GetCurAnimation_End(std::string Animation_Name)
+{
+#ifdef _DEBUG
+	if (nullptr == CurAnimation_)
+	{
+		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
+	}
+
+	if (CurAnimation_->GetName() != Animation_Name)
+	{
+		GameEngineDebug::MsgBoxError("현재 에니메이션이 일치하지 않음");
+	}
+#endif // _DEBUG
+
+	return CurAnimation_->IsAnimationEnd();
+}
+
 GameEngineImageRenderer::GameEngineImageRenderer()
 	: CutData(0, 0, 1, 1)
 	, CurAnimation_(nullptr)
+	, CurTexture(nullptr)
 {
 }
 

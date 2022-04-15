@@ -1,15 +1,18 @@
 #include "PreCompile.h"
 #include "TitleScene.h"
 #include "LoaddingScene.h"
-#include "WorldMapScene.h"
 
 #include "Image.h"
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
+
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCore.h>
 
 TitleScene::TitleScene()
+	: TobeNext_(false)
+	, FadeImage_(nullptr)
+	, BlendRate_(0.f)
 {
 }
 
@@ -74,6 +77,14 @@ void TitleScene::LevelStart()
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
 
+	{
+		FadeImage_ = CreateActor<Image>();
+		FadeImage_->ImageSetImage("title_screen_background.png");
+		FadeImage_->SetAdjustImzgeSize();
+		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
+		FadeImage_->SetBlendColor(float4{ 0.f,0.f,0.f,0.f });
+	}
+
 	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
 }
 
@@ -85,22 +96,31 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 	//	int a = 0;
 	//}
 
-	if (GameEngineInput::GetInst().Down("Next"))
+	if (false == TobeNext_)
 	{
-		//슬슬 스레드 구현 필요성이 생김
+		if (GameEngineInput::GetInst().Down("Next"))
+		{
+			TobeNext_ = true;
+		}
+	}
+	else
+	{
+		BlendRate_ += _DeltaTime;
 
-		dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
+		if (BlendRate_ >= 1.f)
+		{
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
 
-		GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
-
-		//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
-		GameEngineCore::LevelChange("LoaddingScene");
-		//TODO : 로딩씬 생성후 죽이기 or 초기화 작업
+			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
+			GameEngineCore::LevelChange("LoaddingScene");
+			//TODO : 로딩씬 생성후 죽이기 or 초기화 작업
+		}
+		FadeImage_->SetBlendColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
 }
 
 void TitleScene::LevelChangeEndEvent()
-{
+
 	//Death();
 }
 

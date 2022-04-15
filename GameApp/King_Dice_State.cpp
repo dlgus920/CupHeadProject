@@ -8,6 +8,13 @@ void King_Dice::Intro_Start()
 }
 StateInfo King_Dice::Intro_Update(StateInfo _StateInfo, float _DeltaTime)
 {
+#ifdef _DEBUG
+	if (true == MonsterImageRenderer->GetCurAnimation_End("KDIce-Intro"))
+	{
+		return "Idle";
+	}
+#endif // _DEBUG
+
 	return StateInfo();
 }
 void King_Dice::Intro_End_()
@@ -16,7 +23,7 @@ void King_Dice::Intro_End_()
 
 void King_Dice::Idle_Start()
 {
-
+	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
 }
 StateInfo King_Dice::Idle_Update(StateInfo _StateInfo, float _DeltaTime)
 {
@@ -26,7 +33,7 @@ void King_Dice::Idle_End_()
 {
 }
 
-void King_Dice::Attack_Start()
+void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
 	MonsterHitBox->On();
@@ -34,12 +41,30 @@ void King_Dice::Attack_Start()
 }
 StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 {
-	if (true == Hand_.IsAttacking_)
+#ifdef _DEBUG
+	//if (true == MonsterImageRenderer->GetCurAnimation_End("KDice-Attack-Body-Birth"))
+	if (true == MonsterImageRenderer->GetCurAnimation_End())
 	{
-		// 카드 생성, 발사
+		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
+		Hand_.HandIdle();
+		Hand_.HandOn();
 	}
+#endif // _DEBUG
 
-
+	if (true == Hand_.HandIsAttacking())
+	{
+		//TimeCheck_ += _DeltaTime;
+		//if (TimeCheck_ > 0.5f)
+		//{
+		//	// 카드 생성, 발사
+		//	CardCount_++;
+		//	if (CardCount_ > 10)
+		//	{
+		//		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-End");
+		//		Hand_.HandOff();
+		//	}
+		//}
+	}
 	return StateInfo();
 }
 void King_Dice::Attack_End_()

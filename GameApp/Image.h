@@ -57,5 +57,10 @@ public:
 	{
 		ImageRenderer_->SetFrameCallBack(_Name, _Index, std::bind(_FrameFunc, Obj));
 	}
+
+	void SetBlendColor(float4 _ResultColor)
+	{
+		ImageRenderer_->SetResultColor(_ResultColor);
+	}
 };
 
