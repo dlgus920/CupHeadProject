@@ -120,7 +120,7 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 }
 
 void TitleScene::LevelChangeEndEvent()
-
+{
 	//Death();
 }
 

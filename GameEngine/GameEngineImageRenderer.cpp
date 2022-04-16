@@ -159,11 +159,11 @@ const bool GameEngineImageRenderer::GetCurAnimation_End(std::string Animation_Na
 		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
 	}
 
+#endif // _DEBUG
 	if (CurAnimation_->GetName() != Animation_Name)
 	{
-		GameEngineDebug::MsgBoxError("현재 에니메이션이 일치하지 않음");
+		return false;
 	}
-#endif // _DEBUG
 
 	return CurAnimation_->IsAnimationEnd();
 }

@@ -20,71 +20,56 @@ private:
 	GameEngineFSM<King_Dice> BattleState_;
 	GameEngineCollision* MonsterHitBox;
 	GameEngineCollision* MonsterHitBoxHand;
-	GameEngineCollision* MonsterCollision;
 	GameEngineImageRenderer* MonsterImageRenderer;
 	
+	std::string IdleNextState_;
+
 	int CardCount_;
 	float TimeCheck_;
 
+	bool IsDiceTime_;
+
+	bool AniEnd_Intro_;
+	bool AniEnd_Attack_Body_Birth_;
+	bool AniEnd_Attack_Body_End_;
+
+	bool AniEnd_Attack_Hand_Birth_;
+
+	enum class Hand_Dir
+	{
+		Right,
+		Left
+	};
+
 	struct Hand
 	{
-		Hand()
-			: Collision(nullptr)
-			, ImageRenderer(nullptr)
-			, IsAttacking_(false)
-		{
-		}
-		~Hand()
-		{
-		}
+		Hand();
+		~Hand();
 
 		GameEngineCollision* Collision;
 		GameEngineImageRenderer* ImageRenderer;
-	private:
+		Hand_Dir Hand_Dir_;
 		bool IsAttacking_;
-	public:
-		const bool HandIsAttacking()
-		{
-			return IsAttacking_;
-		}
 
-		void HandSetLocalPosition(float4 _Pos)
-		{
-			Collision->GetTransform()->SetLocalPosition(_Pos);
-			ImageRenderer->GetTransform()->SetLocalPosition(_Pos);
-		}
-
-		void HandOff()
-		{
-			Collision->Off();
-			ImageRenderer->Off();
-			IsAttacking_ = false;
-		}
-
-		void  HandOn()
-		{
-			Collision->On();
-			ImageRenderer->On();
-		}
-
-		void HandIdle()
-		{
-			ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
-			IsAttacking_ = true;
-		}
-
-		void HandBirth()
-		{
-			ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
-			IsAttacking_ = false;
-		}
-
-		//void HandReset()
-		//{
-		//	ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
-		//}
+		void HandSetHorizenInvertTransform();
+		void HandOff();
+		void HandOn();
+		void HandIdle();
+		void HandEnd();
+		void HandBirth();
 	};
 
+	struct Card
+	{
+		Card();
+		~Card();
+
+		GameEngineImageRenderer* ImageRenderer;
+		GameEngineCollision* Collision;
+		void CardMove(float4 Move);
+	};
+
+	std::vector<Card> Cardvector_;
 	Hand Hand_;
 
 private:	// member Var
@@ -126,9 +111,70 @@ public:
 	void Attack();
 
 
-private:
+private:	
+	void HandSwitching();
+	void HandRight();
+	void HandLeft();
+
 	void HandBirth();
 	void HandIdle();
+
+	void SpawnCard();
+	void CardUpdate(float _DeltaTime);
+	void CardClear();
+
+private:
+
+#ifdef _DEBUG
+	void AniEnd_Intro()
+	{
+		AniEnd_Intro_ = true;
+	}
+	void AniEnd_Attack_Body_Birth()
+	{
+		AniEnd_Attack_Body_Birth_ = true;
+	}
+	void AniEnd_Attack_Body_End()
+	{
+		AniEnd_Attack_Body_End_ = true;
+	}
+	void AniEnd_Attack_Hand_Birth()
+	{
+		AniEnd_Attack_Hand_Birth_ = true;
+	}
+#endif // _DEBUG
+
+#ifndef _DEBUG
+	void AniEnd_Intro()
+	{
+		State_.ChangeState("Idle");
+	}
+	void AniEnd_Attack_Body_Birth()
+	{
+		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
+
+		Hand_.HandOn();
+		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
+
+		Hand_.IsAttacking_ = true;
+	}
+	void AniEnd_Attack_Body_End()
+	{
+		State_.ChangeState("Idle");
+	}
+	void AniEnd_Attack_Hand_Birth()
+	{
+		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
+	}
+#endif // _DEBUG
+
+	void AniEnd_Reset()
+	{
+		AniEnd_Intro_ = false;
+		AniEnd_Attack_Body_Birth_ = false;
+		AniEnd_Attack_Body_End_ = false;
+		AniEnd_Attack_Hand_Birth_ = false;
+	}
 
 };
 

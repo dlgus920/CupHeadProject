@@ -217,9 +217,6 @@
     <Filter Include="Actor\MOB\King_Dice">
       <UniqueIdentifier>{dbbfae0a-79c1-4863-b751-004ce6407b47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\MOB\King_Dice\Card">
-      <UniqueIdentifier>{b3886b81-9ee2-4f77-b769-5329b341474c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
