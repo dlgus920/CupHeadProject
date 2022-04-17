@@ -136,7 +136,7 @@ private: //Member
 
 	//무적시간 판별 여부
 	bool  HitInvince_;
-	float HitInvinceTime_;
+	const float HitInvinceTime_ = 1.f;
 
 	// 현재 보고 있는 방향
 	BulletType BulletType_;

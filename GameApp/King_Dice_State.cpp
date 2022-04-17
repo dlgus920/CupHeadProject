@@ -41,7 +41,6 @@ void King_Dice::Idle_End_()
 
 void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
-
 	CardClear();
 
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
@@ -80,11 +79,18 @@ StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 	{
 		TimeCheck_ += _DeltaTime;
 
-		if (TimeCheck_ > 0.5f)
+		if (TimeCheck_ > 0.4f)
 		{
 			CardCount_++;
 
-			SpawnCard();
+			if ((CardCount_ % 3) == 0)
+			{
+				SpawnParryCard();
+			}
+			else
+			{
+				SpawnCard();
+			}
 
 			if (CardCount_ > 10)
 			{

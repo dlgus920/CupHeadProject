@@ -120,6 +120,7 @@ private:
 	void HandIdle();
 
 	void SpawnCard();
+	void SpawnParryCard();
 	void CardUpdate(float _DeltaTime);
 	void CardClear();
 

@@ -105,7 +105,7 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 	}
 	else
 	{
-		BlendRate_ += _DeltaTime;
+		BlendRate_ += _DeltaTime*2;
 
 		if (BlendRate_ >= 1.f)
 		{

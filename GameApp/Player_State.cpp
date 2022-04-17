@@ -13,6 +13,20 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 {
 	//StateUpdate(_DeltaTime);
 
+	if (true == HitInvince_)
+	{
+		//반짝임 효과
+
+		TimeCheck_ += _DeltaTime;
+
+		//컬리젼 해제
+
+		if (HitInvinceTime_ <= TimeCheck_)
+		{
+			HitInvince_ = false;
+			//반짝임 효과 해제
+		}
+	}
 
 	if (CheckState() != "Idle")
 	{
@@ -587,30 +601,39 @@ void Player::Hit_Start()
 		ChangeAnimation("Cup-Hit-Air");
 	}
 
+	HitInvince_ = true;
+
 	Bottom_HP_->HPDecrease();
 	TimeCheck_ = 0.f;
-	GravitySpeed_ = 0.f;
+
+	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
 }
 StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 {
-	if (Bottom_HP_->GetCurHP() == 0)
-	{
-		return "Death";
-	}
+	//if (Bottom_HP_->GetCurHP() == 0)
+	//{
+	//	return "Death";
+	//}
 
 	TimeCheck_ += _DeltaTime;
 
-	//GravitySpeed_ += GravityAcc_;
-	Move(float4(0.f, -200.f + GravitySpeed_, 0.f), _DeltaTime);
-
-	//if aniend && ground
-	if(TimeCheck_ > 1.f)
+	if (TimeCheck_ < 0.35f)
 	{
-		if (true == ColState_Ground)
+		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+	}
+
+	else if (TimeCheck_ >= 0.35f)
+	{
+		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+	}
+	//if aniend && ground
+	if (true == ColState_Ground)
 		{
 			return CheckState();
 		}
-	}
+	
 
 	return StateInfo();
 }
