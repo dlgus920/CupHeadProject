@@ -3,6 +3,8 @@
 
 #include <GameEngineBase/GameEngineRandom.h>
 
+#include "PerryObjectDice.h"
+
 King_Dice::King_Dice()
 	: State_(this)
 	, BattleState_(this)
@@ -41,7 +43,7 @@ void King_Dice::Start()
 		MonsterImageRenderer->SetEndCallBack("KDice-Attack-Body-End", std::bind(&King_Dice::AniEnd_Attack_Body_End, this));
 
 		MonsterImageRenderer->GetTransform()->SetLocalScaling({ 1440.f, 750.0f, 1.0f });
-		MonsterImageRenderer->GetTransform()->SetLocalZPosition(static_cast<int>(ZOrder::Z01Actor03));
+		MonsterImageRenderer->GetTransform()->SetLocalPosition(float4(0.f, 0.f, static_cast<float>(ZOrder::Z01Actor03)));
 
 		Hand_.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		Hand_.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,650.f, 1.f });
@@ -86,6 +88,11 @@ void King_Dice::Start()
 
 		BattleState_.CreateState("BattleState_Battle",&King_Dice::BattleState_Battle_Start,&King_Dice::BattleState_Battle_Update,&King_Dice::BattleState_Battle_End);
 		BattleState_.CreateState("BattleState_Dice",&King_Dice::BattleState_Dice_Start,&King_Dice::BattleState_Dice_Update,&King_Dice::BattleState_Dice_End);
+	}
+
+	{
+		PerryObjectDice_ = GetLevel()-> CreateActor<PerryObjectDice>();
+		PerryObjectDice_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z01Actor05)));
 	}
 
 	BattleState_.ChangeState("BattleState_Dice");
@@ -179,14 +186,14 @@ void King_Dice::SpawnCard()
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -180.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
 		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
 	}
 	else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -180.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
 		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
 	}
 
@@ -209,18 +216,18 @@ void King_Dice::SpawnParryCard()
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
 		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
 	}
 	else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -170.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
 		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
 	}
 
-	_Card.Collision->GetTransform()->SetLocalScaling(float4{ 100.f,220.f, 1.f });
+	_Card.Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
 
 	Cardvector_.push_back(_Card);
 }

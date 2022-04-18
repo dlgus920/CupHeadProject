@@ -77,7 +77,7 @@ public:
 	void PushRenderer(int _Order, GameEngineRenderer* _Renderer);
 
 public:
-	void PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type);
+	void PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type, float4 _Color);
 	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
 
 protected:

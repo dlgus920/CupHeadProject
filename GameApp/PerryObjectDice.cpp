@@ -17,7 +17,7 @@ void PerryObjectDice::Start()
 {
 	Object::Start();
 
-	ObjectCollision_->GetTransform()->SetLocalScaling(float4{75.f,75.f,1.f });
+	ObjectCollision_->GetTransform()->SetLocalScaling(float4{100.f,100.f,1.f });
 	ObjectCollision_->SetCollisionType(CollisionType::Rect);
 	ObjectCollision_->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
@@ -45,9 +45,9 @@ void PerryObjectDice::Start()
 	ObjectRenderer_->SetFrameCallBack("Idle",7, std::bind(&PerryObjectDice::Num2, this));
 	ObjectRenderer_->SetFrameCallBack("Idle",15, std::bind(&PerryObjectDice::Num3, this));
 
-	ObjectRenderer_->SetEndCallBack("Rolling1-1", std::bind(&PerryObjectDice::Rolling1_1, this));
-	ObjectRenderer_->SetEndCallBack("Rolling2-1", std::bind(&PerryObjectDice::Rolling2_1, this));
-	ObjectRenderer_->SetEndCallBack("Rolling3-1", std::bind(&PerryObjectDice::Rolling3_1, this));
+	ObjectRenderer_->SetEndCallBack("Rolling1-1", std::bind(&PerryObjectDice::Rolling1_2, this));
+	ObjectRenderer_->SetEndCallBack("Rolling2-1", std::bind(&PerryObjectDice::Rolling2_2, this));
+	ObjectRenderer_->SetEndCallBack("Rolling3-1", std::bind(&PerryObjectDice::Rolling3_2, this));
 
 	ObjectRenderer_->SetEndCallBack("Rolling1-2", std::bind(&PerryObjectDice::RollingEnd, this));
 	ObjectRenderer_->SetEndCallBack("Rolling2-2", std::bind(&PerryObjectDice::RollingEnd, this));
@@ -60,26 +60,26 @@ void PerryObjectDice::Start()
 void PerryObjectDice::Update(float _DeltaTime)
 {
 	GetLevel()->PushDebugRender(ObjectCollision_->GetTransform(), CollisionType::Rect);\
-	//if (false == IsCollision_)
-	//{
-	//	if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))
-	//	{
-	//		switch (DiceNumber_)
-	//		{
-	//		case DiceNumber::Num1:
-	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-	//			break;
-	//		case DiceNumber::Num2:
-	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-	//			break;
-	//		case DiceNumber::Num3:
-	//			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-	//			break;
-	//		}
+	if (false == IsCollision_)
+	{
+		if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))
+		{
+			switch (DiceNumber_)
+			{
+			case DiceNumber::Num1:
+				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+				break;
+			case DiceNumber::Num2:
+				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+				break;
+			case DiceNumber::Num3:
+				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+				break;
+			}
 
-	//		IsCollision_ = true;
-	//	}
-	//}
+			IsCollision_ = true;
+		}
+	}
 }
 
 void PerryObjectDice::Resset() //Spawn과 동시에 Resset 해야함

@@ -146,7 +146,7 @@ void WorldMapPlayer::Chose_Start()
 	Image* IrisImage = GetLevel()->CreateActor<Image>();
 	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
 	IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
-	IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
+	IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 	IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
 
 	//IrisImage->SetImageAnimationEndFunc<WorldMapPlayer>("ScreenIris", &WorldMapPlayer::SetAniStateScreenIrisEnd, this);

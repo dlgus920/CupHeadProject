@@ -202,6 +202,16 @@ public:
 		ResultColor.a = _Value;
 	}
 
+	inline void AnimationStop()
+	{
+		IsPlay_ = false;
+	}
+
+	inline void AnimationPlay()
+	{
+		IsPlay_ = true;
+	}
+
 protected:
 	void ImageRendererStart();
 	void Update(float _DeltaTime) override;
@@ -212,6 +222,7 @@ private:
 
 	float4 ResultColor; //색상 합성용
 	float4 CutData;
+	bool IsPlay_;
 	GameEngineTexture* CurTexture;
 	void Start() override;
 

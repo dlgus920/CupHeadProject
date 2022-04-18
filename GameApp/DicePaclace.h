@@ -13,7 +13,6 @@ protected:		// delete constructer
 	DicePaclace& operator=(const DicePaclace&& _other) = delete; 
 
 private:	// member Var
-	class PerryObjectDice* PerryObjectDice_; 
 	class King_Dice* King_Dice_;
 	class Player* Player_;
 

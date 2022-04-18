@@ -16,7 +16,7 @@ public:
 	~GameEngineDebugRenderData();
 
 	// delete Function
-	GameEngineDebugRenderData(const GameEngineDebugRenderData& _Other)
+	GameEngineDebugRenderData(const GameEngineDebugRenderData& _Other) 
 		: Data_(_Other.Data_)
 		, ShaderHelper_(_Other.ShaderHelper_)
 		, PipeLine_(_Other.PipeLine_)

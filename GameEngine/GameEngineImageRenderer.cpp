@@ -105,23 +105,21 @@ void GameEngineImageRenderer::Animation2D::ReverseFrameUpdate()
 void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 {
 
-	if (InterTime_ != 999999.f)
+	if (true == Renderer->IsPlay_)
 	{
 		CurTime_ -= _DeltaTime;
-
-		if (StartFrame_ < EndFrame_)
-		{
-
-			FrameUpdate();
-
-		}
-		else
-		{
-			ReverseFrameUpdate();
-		}
 	}
-	CallFrame();
 
+	if (StartFrame_ < EndFrame_)
+	{
+		FrameUpdate();
+	}
+	else
+	{
+		ReverseFrameUpdate();
+	}
+
+	CallFrame();
 	if (nullptr == FolderTextures_)
 	{
 		Renderer->ShaderHelper.SettingTexture("Tex", AnimationTexture_);
@@ -133,7 +131,6 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 		Renderer->CutData = float4(0, 0, 1, 1);
 		Renderer->ShaderHelper.SettingTexture("Tex", FolderTextures_->GetTextureIndex(CurFrame_));
 	}
-
 }
 
 /// ///////////////////////////////////////////////////////////////////
@@ -172,6 +169,7 @@ GameEngineImageRenderer::GameEngineImageRenderer()
 	: CutData(0, 0, 1, 1)
 	, CurAnimation_(nullptr)
 	, CurTexture(nullptr)
+	, IsPlay_(true)
 {
 }
 
@@ -329,6 +327,7 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	}
 	CurAnimation_->Reset();
 	CurAnimation_->CallStart();
+	AnimationPlay();
 }
 
 void GameEngineImageRenderer::Update(float _DeltaTime)

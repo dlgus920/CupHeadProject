@@ -34,15 +34,19 @@ GameEngineCore::GameEngineCore(GameEngineCore&& _other) noexcept  // default RVa
 
 void GameEngineCore::EngineInitialize()
 {
+
 	GameEngineDevice::GetInst().Initialize();
 	EngineResourcesLoad();
 	EngineResourcesCreate();
 	GameEngineDevice::GetInst().CreateSwapChain();
 	// 엔진용 파이프라인
 
+
 	GameEngineGUI::GetInst()->Initialize();
 	// 기본 엔진 수준 리소스를 로드할 겁니다.
+
 	GameEngineCollision::Init();
+
 
 	GameEngineSoundManager::GetInst().Initialize();
 }
@@ -106,10 +110,27 @@ void GameEngineCore::MainLoop()
 		GameEngineDebug::MsgBoxError("현재 레벨이 존재하지 않습니다.");
 	}
 
-	CurrentLevel_->LevelUpdate(GameEngineTime::GetInst().GetDeltaTime());
-	CurrentLevel_->ActorUpdate(GameEngineTime::GetInst().GetDeltaTime());
-	CurrentLevel_->Render();
-	CurrentLevel_->Release(GameEngineTime::GetInst().GetDeltaTime());
+	float Time = GameEngineTime::GetInst().GetDeltaTime();
+
+	CurrentLevel_->LevelUpdate(Time);
+	CurrentLevel_->ActorUpdate(Time);
+	CurrentLevel_->Render(Time);
+	CurrentLevel_->Release(Time);
+
+
+	// 오브젝트 루프
+
+	//MainCore_->GameLoop();
+}
+
+
+
+void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
+{
+	GameEngineWindow::GetInst().CreateMainWindow("MainWindow", _RuntimeCore.StartWindowSize(), _RuntimeCore.StartWindowPos());
+
+	// 디바이스가 만들어져야 합니다.
+	// HWND 윈도우에서 제공하는 3D 라이브러리니까 WINDOW API를 기반으로 처리되어 있습니다.
 }
 
 void GameEngineCore::LevelDestroy(const std::string& _Level)
@@ -124,15 +145,6 @@ void GameEngineCore::LevelDestroy(const std::string& _Level)
 
 	AllLevel_.erase(AllLevel_.find(_Level));
 	delete Level;
-}
-
-void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
-{
-	GameEngineWindow::GetInst().CreateMainWindow("MainWindow", _RuntimeCore.StartWindowSize(), _RuntimeCore.StartWindowPos());
-
-	// 디바이스가 만들어져야 합니다.
-	// HWND 윈도우에서 제공하는 3D 라이브러리니까 WINDOW API를 기반으로 처리되어 있습니다.
-	//GameEngineDevice::GetInst().Initialize();
 }
 
 void GameEngineCore::Loop()

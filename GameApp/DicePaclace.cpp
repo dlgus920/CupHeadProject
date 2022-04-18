@@ -149,6 +149,10 @@ void DicePaclace::LevelResourcesLoad()
 
 void DicePaclace::LevelStart()
 {
+	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
+
+	//GetMainCameraActor()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
+
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
 
@@ -182,7 +186,7 @@ void DicePaclace::LevelStart()
 
 		// 1280 720
 		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
-		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(1280.f, 720.f);
+		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 
 		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 
@@ -209,10 +213,6 @@ void DicePaclace::LevelStart()
 		//float4 cutsize = Actor->GetCutSize();
 		//float4 TextureScale = Actor->GetTextureScale();
 	}
-	{
-		PerryObjectDice* PerryDice = CreateActor<PerryObjectDice>();
-		PerryDice ->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor02)));
-	}
 
 	//{
 	//	TopUI* Actor = CreateActor<TopUI>();
@@ -222,6 +222,10 @@ void DicePaclace::LevelStart()
 
 void DicePaclace::LevelUpdate(float _DeltaTime)
 {
+	if (true == GameEngineInput::GetInst().Down("FreeCameraOn"))
+	{
+		GetMainCameraActor()->FreeCameraModeSwitch();
+	}
 }
 
 void DicePaclace::LevelChangeEndEvent()
@@ -230,5 +234,5 @@ void DicePaclace::LevelChangeEndEvent()
 
 void DicePaclace::LevelChangeStartEvent()
 {
-	King_Dice_->Attack();
+	//King_Dice_->Attack();
 }

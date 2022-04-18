@@ -39,8 +39,8 @@ void Bullet::SetBulletInfo(BulletInfo _BulletInfo)
 	//float degree = atanf(_BulletInfo.MoveDir_.y / _BulletInfo.MoveDir_.x);
 	//degree *= GameEngineMath::RadianToDegree;
 
-	BulletRenderer_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
-	BulletCollision_->GetTransform()->SetLocalRotation(float4{ 0.f,0.f,degree });
+	BulletRenderer_->GetTransform()->SetLocalRotationDegree(float4{ 0.f,0.f,degree });
+	BulletCollision_->GetTransform()->SetLocalRotationDegree(float4{ 0.f,0.f,degree });
 }
 
 

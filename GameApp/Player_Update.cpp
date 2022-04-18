@@ -8,6 +8,15 @@ void Player::Update(float _DeltaTime)
 {
 	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
+	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::PINK);
+	}
+	else
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
+	}
+
 	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
 
 	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
@@ -17,13 +26,13 @@ void Player::Update(float _DeltaTime)
 		KeyUpdate();
 	}
 
-	if (true == ColState_Update_) // 정교화를 위해 호출시점을 바꿀 필요가 있음
-	{
-		//CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
-		GroundCollisonUpdate();
-		ParryCollisonUpdate();
-		HitCollisonUpdate();
-	}
+	//if (true == ColState_Update_) // 정교화를 위해 호출시점을 바꿀 필요가 있음
+	//{
+	//	//CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
+	//}
+	GroundCollisonUpdate();
+	ParryCollisonUpdate();
+	HitCollisonUpdate();
 	if (true == State_Update_)
 	{
 		StateUpdate(_DeltaTime);
@@ -35,6 +44,35 @@ void Player::Update(float _DeltaTime)
 
 	//State_Update_는 State_.Update중에 설정함
 
+	if (true == HitInvince_)
+	{
+		//반짝임 효과
+
+		HitInvinceTimeCheck_ += _DeltaTime;
+
+		PlayerHitBox->Off();
+		//컬리젼 해제
+
+		if (blit_)
+		{
+			PlayerImageRenderer->SetResultColor(float4{1.f,1.f,1.f,0.6f});
+			blit_ = false;
+		}
+		else
+		{
+			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
+			blit_ = true;
+		}
+
+		if (HitInvinceTime_ <= HitInvinceTimeCheck_)
+		{
+			PlayerHitBox->On();
+			HitInvince_ = false;
+			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
+			HitInvinceTimeCheck_ = 0.f;
+			//반짝임 효과 해제
+		}
+	}
 
 }
 
@@ -60,7 +98,7 @@ void Player::KeyUpdate()
 	{
 		if (Dir_ == AnimationDirection::Right)
 		{
-			GetTransform()->SetHorizenInvertTransform();
+			PlayerImageRenderer->GetTransform()->SetHorizenInvertTransform();
 			WalkState_Changed_ = true;
 			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ -50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
 		}
@@ -71,7 +109,7 @@ void Player::KeyUpdate()
 	{
 		if (Dir_ == AnimationDirection::Left)
 		{
-			GetTransform()->SetHorizenInvertTransform();
+			PlayerImageRenderer->GetTransform()->SetHorizenInvertTransform();
 			WalkState_Changed_ = true;
 			//BulletPoint_->GetTransform()->SetLocalPosition(float4{ 50.f,-75.f,static_cast<int>(ZOrder::Z00Fx00) });
 		}
@@ -80,23 +118,16 @@ void Player::KeyUpdate()
 
 }
 
-void Player::CollisonUpdate()
-{
-	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Monster));
-
-	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
-}
-
 const bool Player::GroundCollisonUpdate()
 {
-	ColState_Ground = Map::PixelCollisionTransform(PlayerCollision, 10).b_Down;
+	ColState_Ground = Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down;
 
 	return ColState_Ground;
 }
 
 const bool Player::ParryCollisonUpdate()
 {
-	ColState_Parry_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Parry));
+	ColState_Parry_ = PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry));
 
 	return ColState_Parry_;
 }
@@ -117,7 +148,7 @@ void Player::ImageScaleUpdate() //아직 미사용
 		PrevAniSize_ = size;
 
 		PlayerImageRenderer->GetTransform()->SetLocalScaling(size);
-		PlayerCollision->GetTransform()->SetLocalScaling(size);
+		PlayerMovingCollision->GetTransform()->SetLocalScaling(size);
 		//PlayerHitBox->GetTransform()->SetLocalScaling(size);
 	}
 

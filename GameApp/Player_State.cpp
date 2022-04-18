@@ -13,21 +13,6 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 {
 	//StateUpdate(_DeltaTime);
 
-	if (true == HitInvince_)
-	{
-		//반짝임 효과
-
-		TimeCheck_ += _DeltaTime;
-
-		//컬리젼 해제
-
-		if (HitInvinceTime_ <= TimeCheck_)
-		{
-			HitInvince_ = false;
-			//반짝임 효과 해제
-		}
-	}
-
 	if (CheckState() != "Idle")
 	{
 		return CheckState();
@@ -85,6 +70,7 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 void Player::Idle_End()
 {
 	ShootingInterTime_ = 0.f;
+	TimeCheck_ = 0.f;
 }
 
 void Player::Walk_Start()
@@ -161,15 +147,13 @@ void Player::Jump_Start()
 
 	Jumpend_ = false;
 	LongJump_ = false;
-
 	Parry_ = false;
-
 	JumpSpeed_ = 0.f;
 	TimeCheck_ = 0.f;
+	ShootingInterTime_ = 0.f;
 
 	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
 
-	ShootingInterTime_ = 0.f;
 
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
@@ -278,7 +262,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 					{
 						TimeCheck_ = 0.f;
 						return "Idle";
@@ -306,7 +290,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (Map::PixelCollisionTransform(PlayerCollision, 10).b_Down)
+					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 					{
 						TimeCheck_ = 0.f;
 						return "Idle";
@@ -354,6 +338,12 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
+	Jumpend_ = false;
+	LongJump_ = false;
+	Parry_ = false;
+	JumpSpeed_ = 0.f;
+	TimeCheck_ = 0.f;
+	ShootingInterTime_ = 0.f;
 }
 
 void Player::Duck_Start()
@@ -627,18 +617,20 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 	{
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
-	}
-	//if aniend && ground
-	if (true == ColState_Ground)
+
+		if (true == ColState_Ground)
 		{
 			return CheckState();
 		}
+	}
+	//if aniend && ground
 	
 
 	return StateInfo();
 }
 void Player::Hit_End()
 {
+	JumpSpeed_ = 0.f;
 	TimeCheck_ = 0.f;
 }
 

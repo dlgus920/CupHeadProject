@@ -13,6 +13,7 @@
 #include "GameEngineFont.h"
 #include "GameEngineUIRenderer.h"
 #include "GameEngineGUI.h"
+#include <GameEngine\GameEnginePostProcessRender.h>
 
 
 CameraActor* GameEngineLevel::GetMainCameraActor()
@@ -97,7 +98,7 @@ void GameEngineLevel::LevelChangeStartActorEvent()
 	}
 }
 
-void GameEngineLevel::Render()
+void GameEngineLevel::Render(float _DeltaTime)
 {
 	GameEngineDevice::RenderStart();
 
@@ -108,8 +109,25 @@ void GameEngineLevel::Render()
 
 	UICameraActor_->GetCamera()->Render();
 
+	{
+		std::vector<GameEnginePostProcessRender*>& PostCameraMergePrev = PostRender["CameraMergePrev"];
+		for (size_t i = 0; i < PostCameraMergePrev.size(); i++)
+		{
+			PostCameraMergePrev[i]->Effect(_DeltaTime);
+		}
+	}
+
 	GameEngineDevice::GetBackBufferTarget()->Merge(MainCameraActor_->GetCamera()->GetCameraRenderTarget());
 	GameEngineDevice::GetBackBufferTarget()->Merge(UICameraActor_->GetCamera()->GetCameraRenderTarget());
+
+	{
+		std::vector<GameEnginePostProcessRender*>& PostCameraMergeNext = PostRender["CameraMergeNext"];
+		for (size_t i = 0; i < PostCameraMergeNext.size(); i++)
+		{
+			PostCameraMergeNext[i]->Effect(_DeltaTime);
+		}
+	}
+
 
 	GameEngineGUI::GetInst()->GUIRenderStart();
 	GameEngineGUI::GetInst()->GUIRenderEnd();
@@ -239,13 +257,22 @@ void GameEngineLevel::ChangeCollisionGroup(int _Group, GameEngineCollision* _Col
 	CollisionList_[_Collision->GetOrder()].push_back(_Collision);
 }
 
-void GameEngineLevel::PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type)
+void GameEngineLevel::PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type, float4 _Color)
 {
-	MainCameraActor_->GetCamera()->PushDebugRender(_Transform, _Type);
+	MainCameraActor_->GetCamera()->PushDebugRender(_Transform, _Type, _Color);
 }
 
 void GameEngineLevel::AllClear()
 {
+	for (auto& Effects : PostRender)
+	{
+		for (auto& Effect : Effects.second)
+		{
+			delete Effect;
+		}
+	}
+
+
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
 		std::list<GameEngineActor*>& Actors = Pair.second;

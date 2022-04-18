@@ -42,16 +42,16 @@ void CameraComponent::CameraTransformUpdate()
 
 	switch (ProjectionMode_)
 	{
-	case ProjectionMode::Perspective:
-	{
-		GetTransform()->GetTransformData().Projection_.PerspectiveFovLH(FovAngleY_, CamSize_.x, CamSize_.y, NearZ_, FarZ_);
-		break;
-	}
-	case ProjectionMode::Orthographic:
-	{
-		GetTransform()->GetTransformData().Projection_.OrthographicLH(CamSize_.x, CamSize_.y, NearZ_, FarZ_);
-		break;
-	}
+		case ProjectionMode::Perspective:
+		{
+			GetTransform()->GetTransformData().Projection_.PerspectiveFovLH(FovAngleY_, CamSize_.x, CamSize_.y, NearZ_, FarZ_);
+			break;
+		}
+		case ProjectionMode::Orthographic:
+		{
+			GetTransform()->GetTransformData().Projection_.OrthographicLH(CamSize_.x, CamSize_.y, NearZ_, FarZ_);
+			break;
+		}
 	}
 }
 
@@ -188,28 +188,32 @@ void CameraComponent::PushRenderer(int _Order, GameEngineRenderer* _Renderer)
 	RendererList_[_Order].push_back(_Renderer);
 }
 
-void CameraComponent::PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type)
+void CameraComponent::PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type, float4 _Color)
 {
 	switch (_Type)
 	{
 	case CollisionType::Point2D:
 	{
 		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		DebugVector_[DebugRenderCount_].Color_ = _Color;
 		break;
 	}
 	case CollisionType::CirCle:
 	{
 		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		DebugVector_[DebugRenderCount_].Color_ = _Color;
 		break;
 	}
 	case CollisionType::Rect:
 	{
 		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		DebugVector_[DebugRenderCount_].Color_ = _Color;
 		break;
 	}
 	case CollisionType::OrientedRect:
 	{
 		DebugVector_[DebugRenderCount_].PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find("DebugRect");
+		DebugVector_[DebugRenderCount_].Color_ = _Color;
 		break;
 	}
 
@@ -245,7 +249,7 @@ void CameraComponent::Start()
 	{
 		DebugVector_[i].ShaderHelper_.ShaderResourcesCheck(Pipe->GetVertexShader());
 		DebugVector_[i].ShaderHelper_.ShaderResourcesCheck(Pipe->GetPixelShader());
-		DebugVector_[i].Color_ = float4::RED;
+		//DebugVector_[i].Color_ = float4::RED;
 		DebugVector_[i].ShaderHelper_.SettingConstantBufferLink("ResultColor", DebugVector_[i].Color_);
 		DebugVector_[i].ShaderHelper_.SettingConstantBufferLink("TransformData", DebugVector_[i].Data_);
 	}

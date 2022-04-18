@@ -32,6 +32,7 @@ protected:
 	float FontSize_;
 	float4 FontPivot_;
 	float4 Color_;
+
 	// 겹쳐서 사용하려고 하지 않겠죠?
 	static int UIRendererCount;
 	static GameEngineRenderTarget* FontTarget_;

@@ -30,7 +30,7 @@ protected:
 	void OnGUI() override;
 
 public:
-	void ClaerRenderTarget()
+	void ClaerRenderTarget() 
 	{
 		DrawRenderTarget_.clear();
 	}

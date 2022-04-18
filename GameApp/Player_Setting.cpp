@@ -12,7 +12,7 @@ void Player::DefalutSetting()
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
 
 	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
+	PlayerMovingCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 
 	Dir_ = AnimationDirection::Right;
 
@@ -92,11 +92,18 @@ void Player::ComponentSetting()
 	}
 
 	{
-		PlayerCollision = CreateTransformComponent<GameEngineCollision>();
-		PlayerCollision->SetCollisionType(CollisionType::Rect);
-		PlayerCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
-
+		PlayerMovingCollision = CreateTransformComponent<GameEngineCollision>();
+		PlayerMovingCollision->SetCollisionType(CollisionType::Rect);
+		PlayerMovingCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
 		//PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
+	}
+
+	{
+		PlayerParryCollision = CreateTransformComponent<GameEngineCollision>();
+		PlayerParryCollision->SetCollisionType(CollisionType::Rect);
+		PlayerParryCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		PlayerParryCollision->GetTransform()->SetLocalMove(float4{0.f,-75.f,0.f});
+		PlayerParryCollision->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
 	}
 
 	{
@@ -104,7 +111,9 @@ void Player::ComponentSetting()
 		PlayerHitBox->SetCollisionType(CollisionType::Rect);
 		PlayerHitBox->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerHitBox));
 		PlayerHitBox->GetTransform()->SetLocalMove(float4{0.f,-75.f,0.f});
-		PlayerHitBox->GetTransform()->SetLocalScaling(float4{50.f,100.f,1.f });
+		PlayerHitBox->GetTransform()->SetLocalScaling(float4{50.f,75.f,1.f });
+
+		PlayerHitBox->Off();
 	}
 }
 

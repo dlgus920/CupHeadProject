@@ -54,7 +54,7 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
     return 0;
 }
 
-GameEngineWindow::GameEngineWindow()
+GameEngineWindow::GameEngineWindow() 
     : className_("")
     , windowTitle_("")
     , windowhandle_(nullptr)
@@ -63,7 +63,7 @@ GameEngineWindow::GameEngineWindow()
 {
 }
 
-GameEngineWindow::~GameEngineWindow()
+GameEngineWindow::~GameEngineWindow() 
 {
     if (nullptr != windowhandle_)
     {
@@ -162,7 +162,7 @@ void GameEngineWindow::SetSizeAndPos(const float4& _size, const float4& _pos)
     SetWindowPos(windowhandle_, nullptr, _pos.ix(), _pos.iy(), Rc.right - Rc.left, Rc.bottom - Rc.top, 0);
 }
 
-void GameEngineWindow::Loop(void(*_loopFunc)())
+void GameEngineWindow::Loop(void(*_loopFunc)()) 
 {
     MSG msg;
     while (WindowOn)
@@ -187,7 +187,7 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
 
 
         }
-        else
+        else 
         {
 
             if (nullptr == _loopFunc)
@@ -201,3 +201,29 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
     }
 }
 
+
+
+bool GameEngineWindow::IsWindowRangeOut(const float4& _Pos) 
+{
+    if (0 > _Pos.x)
+    {
+        return true;
+    }
+
+    if (0 > _Pos.y)
+    {
+        return true;
+    }
+
+    if (_Pos.x > GetSize().x)
+    {
+        return true;
+    }
+
+    if (_Pos.y > GetSize().y)
+    {
+        return true;
+    }
+
+    return false;
+}

@@ -3,11 +3,11 @@
 #include <iostream>
 #include "GameEngineImageShotWindow.h"
 
-GameEngineRenderWindow::GameEngineRenderWindow()
+GameEngineRenderWindow::GameEngineRenderWindow() 
 {
 }
 
-GameEngineRenderWindow::~GameEngineRenderWindow()
+GameEngineRenderWindow::~GameEngineRenderWindow() 
 {
 }
 

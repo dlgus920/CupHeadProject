@@ -165,7 +165,7 @@ void King_Dice::BattleState_Battle_End()
 
 void King_Dice::BattleState_Dice_Start()
 {
-	IdleNextState_ = "Chop";
+	//IdleNextState_ = "Chop";
 
 	MonsterHitBox->Off();
 	MonsterHitBoxHand->Off();

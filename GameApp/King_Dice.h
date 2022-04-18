@@ -21,7 +21,9 @@ private:
 	GameEngineCollision* MonsterHitBox;
 	GameEngineCollision* MonsterHitBoxHand;
 	GameEngineImageRenderer* MonsterImageRenderer;
-	
+
+	class PerryObjectDice* PerryObjectDice_;
+
 	std::string IdleNextState_;
 
 	int CardCount_;

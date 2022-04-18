@@ -135,7 +135,7 @@ void WorldMapScene::LevelChangeStartEvent()
 
 	Image* IrisImage = CreateActor<Image>();
 	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
-	IrisImage->GetTransform()->SetLocalScaling(1280.f, 720.f);
+	IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 	IrisImage->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z00Fx00)));
 	IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
 

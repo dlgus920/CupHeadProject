@@ -22,7 +22,7 @@ GameEngineRenderTarget::~GameEngineRenderTarget() // default destructer 디폴트 �
 	{
 		delete ReleaseTextures_[i];
 	}
-
+	
 	if (nullptr != DepthBuffer_)
 	{
 		delete DepthBuffer_;
@@ -34,14 +34,14 @@ GameEngineRenderTarget::GameEngineRenderTarget(GameEngineRenderTarget&& _other) 
 
 }
 
-void GameEngineRenderTarget::Clear()
+void GameEngineRenderTarget::Clear(bool _Death /*= true*/) 
 {
 	for (size_t i = 0; i < RenderTargetViews_.size(); i++)
 	{
 		GameEngineDevice::GetContext()->ClearRenderTargetView(RenderTargetViews_[i], ClearColor_[i].Arr1D);
 	}
 
-	if (nullptr != DepthBuffer_)
+	if (nullptr != DepthBuffer_ && true == _Death)
 	{
 		GameEngineDevice::GetContext()->ClearDepthStencilView(DepthBuffer_->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
@@ -73,7 +73,7 @@ void GameEngineRenderTarget::Create(float4 _Size, float4 _ClearColor)
 	Create(NewTexture, _ClearColor);
 }
 
-void GameEngineRenderTarget::CreateDepthBuffer(float4 _Scale)
+void GameEngineRenderTarget::CreateDepthBuffer(float4 _Scale) 
 {
 	if (nullptr != DepthBuffer_)
 	{
@@ -93,7 +93,7 @@ void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearCo
 }
 
 
-void GameEngineRenderTarget::Setting(int _Index)
+void GameEngineRenderTarget::Setting(int _Index) 
 {
 
 	if (0 >= RenderTargetViews_.size())
@@ -115,17 +115,16 @@ void GameEngineRenderTarget::Setting(int _Index)
 	{
 		GameEngineDevice::GetContext()->OMSetRenderTargets(static_cast<UINT>(RenderTargetViews_.size()), &RenderTargetViews_[0], View);
 	}
-	else
+	else 
 	{
 		GameEngineDevice::GetContext()->OMSetRenderTargets(1, &RenderTargetViews_[_Index], View);
 	}
 }
 
-void GameEngineRenderTarget::Merge(GameEngineRenderTarget* _Other, int _Index)
+void GameEngineRenderTarget::Merge(GameEngineRenderTarget* _Other, int _Index) 
 {
 	// 나한테 그려라
 	Setting();
-
 	Res_.SettingTexture("Tex", _Other->Textures_[_Index]);
 	Res_.Setting();
 	Pipe_->Rendering();
@@ -134,7 +133,7 @@ void GameEngineRenderTarget::Merge(GameEngineRenderTarget* _Other, int _Index)
 }
 
 
-void GameEngineRenderTarget::Copy(GameEngineRenderTarget* _Other)
+void GameEngineRenderTarget::Copy(GameEngineRenderTarget* _Other) 
 {
 	Clear();
 	Merge(_Other);

@@ -70,9 +70,16 @@ private: //Member
 
 	GameEngineCollision* PlayerMovingCollision;
 
-	GameEngineCollision* PlayerCollision;
+	GameEngineCollision* PlayerParryCollision;
 
 	float4 PrevAniSize_;
+
+
+	bool blit_;
+
+	bool  HitInvince_;
+	float HitInvinceTimeCheck_;
+	const float HitInvinceTime_ = 1.f;
 
 	const float C_AnimationInterTime_ = 0.05;
 	const float C_MoveSpeed_ = 500.f;
@@ -135,8 +142,7 @@ private: //Member
 	int ParryCount;
 
 	//무적시간 판별 여부
-	bool  HitInvince_;
-	const float HitInvinceTime_ = 1.f;
+
 
 	// 현재 보고 있는 방향
 	BulletType BulletType_;
@@ -191,7 +197,6 @@ private: //Setting
 private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate();
-	void CollisonUpdate();
 
 	const bool GroundCollisonUpdate();
 	const bool ParryCollisonUpdate();

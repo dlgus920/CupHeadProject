@@ -25,7 +25,7 @@ private:	// member Var
 	GameEngineShaderResHelper Res_;
 
 public:
-	static GameEngineRenderTarget* GetLastRenderTarget()
+	static GameEngineRenderTarget* GetLastRenderTarget() 
 	{
 		return LastRenderTarget;
 	}
@@ -44,8 +44,13 @@ public:
 		return Textures_[_Index]->GetTextureSize();
 	}
 
+	inline GameEngineTexture* GetTexture(size_t _Index)
+	{
+		return Textures_[_Index];
+	}
 
-	void Clear();
+
+	void Clear(bool _Death = true);
 
 	// -1이면 전부다 세팅하라는 의미가 됩니다.
 	// 0~n은 그 인덱스 1개를 세팅하라는 의미가 됩니다.

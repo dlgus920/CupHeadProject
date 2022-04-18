@@ -54,7 +54,7 @@ void PlayLevel::LevelStart()
 
 		// 1280 720
 		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
-		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(1280.f, 720.f);
+		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 
 		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<int>(ZOrder::Z04CollisonMap01) });
 

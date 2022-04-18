@@ -46,12 +46,12 @@ void GameEngineUIRenderer::Start()
 
 		//FontResultTarget_ = new GameEngineRenderTarget();
 		//FontResultTarget_->Create(GameEngineWindow::GetInst().GetSize(), float4::NONE);
-
+		
 	}
 
 }
 
-void GameEngineUIRenderer::SetRenderGroup(int _Order)
+void GameEngineUIRenderer::SetRenderGroup(int _Order) 
 {
 	GetLevel()->GetUICamera()->ChangeRendererGroup(_Order, this);;
 }
@@ -72,7 +72,7 @@ void GameEngineUIRenderer::Render()
 	{
 		return;
 	}
-
+	
 	// À§
 	float4 ScreenSize = GameEngineWindow::GetInst().GetSize();
 
