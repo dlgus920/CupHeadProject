@@ -92,7 +92,9 @@ public:
 		AllLevel_[_Level]->Init();
 		AllLevel_[_Level]->LevelResourcesLoad();
 		AllLevel_[_Level]->LevelStart();
-	}
+	}	
+	
+	static void LevelDestroy(const std::string& _Level);
 
 	static GameEngineLevel* CurrentLevel()
 	{

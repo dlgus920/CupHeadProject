@@ -19,6 +19,13 @@ private:	// member Var
 	class Image* HourGlass_;
 	bool LoadEnd_;
 
+	float BlendRate_;
+	float TimeCheck_;
+
+	class GameEngineImageRenderer* FadeImage_;
+
+	bool CutIn_;
+
 protected:
 	void LevelResourcesLoad() override;
 	void LevelStart() override;

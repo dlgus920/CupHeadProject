@@ -6,9 +6,13 @@
 #include "WorldMapScene.h"
 #include "Image.h"
 
-LoaddingScene::LoaddingScene() :
-	NextScene_(),
-	LoadEnd_(false)
+LoaddingScene::LoaddingScene() 
+	: NextScene_()
+	, LoadEnd_(false)
+	, CutIn_(false)
+	, BlendRate_(0.f)
+	, TimeCheck_(0.f)
+	, FadeImage_(nullptr)
 {
 
 }
@@ -47,6 +51,15 @@ void LoaddingScene::LevelStart()
 		Back->ImageSetImage("Loading_background.png");
 		Back->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
 		Back->SetAdjustImzgeSize();
+
+		BlendRate_ = 1.f;
+
+		FadeImage_ = Back->CreateTransformComponent<GameEngineImageRenderer>();
+		FadeImage_->SetImage("title_screen_background.png");
+		FadeImage_->SetAdjustImzgeSize();
+		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
+		FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
 	}
 
 
@@ -55,16 +68,45 @@ void LoaddingScene::LevelStart()
 
 void LoaddingScene::LevelUpdate(float _DeltaTime)
 {
-	if (/* 로딩 끝*/true == LoadEnd_ || GameEngineInput::GetInst().Down("Next")) //TODO : 각각의 씬마다 Start가 완료됨을 알려줘야함, 모래시계 에니메이션은 쓰레드로 지 혼자 뺑이 치다가 Start가 완료되면 종료함
+	if (BlendRate_ >= 1.f)
 	{
-		GameEngineCore::LevelChange(NextScene_);
-
-		NextScene_.clear();
-		LoadEnd_ = false;
-		HourGlass_->Death();
-		HourGlass_ = nullptr;
-		//Death();
+		CutIn_ = true;
 	}
+
+	if (true == CutIn_)
+	{
+		BlendRate_ -= _DeltaTime * 2;
+
+		if (BlendRate_ < 0.f)
+		{
+			BlendRate_ = 0.f;
+
+			CutIn_ = false;
+		}
+		FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
+	}
+	else
+	{
+		TimeCheck_ += _DeltaTime;
+
+		if (TimeCheck_ > 2.f)
+		{
+			BlendRate_ += _DeltaTime * 2;
+
+			if (BlendRate_ >= 1.f || GameEngineInput::GetInst().Down("Next"))
+			{
+				GameEngineCore::LevelChange(NextScene_);
+
+				NextScene_.clear();
+				LoadEnd_ = false;
+				HourGlass_->Death();
+				HourGlass_ = nullptr;
+			}
+			FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		}
+	}
+	
 }
 
 void LoaddingScene::LevelChangeEndEvent()

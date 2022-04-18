@@ -173,6 +173,7 @@ public:
 
 
 
+	void Copy(const GameEngineTransform& _Other);
 
 
 

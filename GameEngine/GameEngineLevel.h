@@ -112,4 +112,5 @@ public:
 		PushCollision(_Collision, static_cast<int>(_Group));
 	}
 
+	void AllClear();
 };

@@ -430,3 +430,17 @@ void GameEngineTransform::SetWorldPosition(const float _ValueX, const float _Val
 
 	TransformUpdate();
 }
+
+void GameEngineTransform::Copy(const GameEngineTransform& _Other)
+{
+	TransformData_ = _Other.TransformData_;
+	ColData_ = _Other.ColData_;
+	Parent_ = _Other.Parent_;
+	Childs_ = _Other.Childs_;
+
+	AllChildCalculationScaling();
+	AllChildCalculationRotation();
+	AllChildCalculationPosition();
+
+	TransformUpdate();
+}

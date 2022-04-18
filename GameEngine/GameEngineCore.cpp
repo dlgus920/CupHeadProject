@@ -112,6 +112,20 @@ void GameEngineCore::MainLoop()
 	CurrentLevel_->Release(GameEngineTime::GetInst().GetDeltaTime());
 }
 
+void GameEngineCore::LevelDestroy(const std::string& _Level)
+{
+	GameEngineLevel* Level = LevelFind(_Level);
+
+	if (nullptr == Level)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 레벨을 지우려고 했습니다.");
+		return;
+	}
+
+	AllLevel_.erase(AllLevel_.find(_Level));
+	delete Level;
+}
+
 void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
 {
 	GameEngineWindow::GetInst().CreateMainWindow("MainWindow", _RuntimeCore.StartWindowSize(), _RuntimeCore.StartWindowPos());
