@@ -1,39 +1,24 @@
 #pragma once
-#include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineActor.h>
 
-enum class EffectType
-{
-	None,
-	Dust,
-	Shoot_Birth,
-	Shoot_Death,
-	SShoot_Birth,
-	SShoot_Death,
-	//inline 함수로 인스턴스하게 ㅏ용
-};
-
+class GameEngineImageRenderer;
 class Effect : public GameEngineActor
 {
 public:
-	Effect(); 
+	Effect();
 	~Effect();
 
 private:
-	Effect(const Effect& _other) = delete; 
-	Effect(Effect&& _other) = delete; 
-	Effect& operator=(const Effect& _other) = delete; 
+	Effect(const Effect& _other) = delete;
+	Effect(Effect&& _other) = delete;
+	Effect& operator=(const Effect& _other) = delete;
 	Effect& operator=(const Effect&& _other) = delete;
-
-private:
-	GameEngineImageRenderer* ImageRenderer_;
 
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
 public:
-	void SetDust();
-
+	GameEngineImageRenderer* AddImageAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
+	GameEngineImageRenderer* AddImageAnimationFolderActor(std::string _TextureName, std::string _AnimationName , float _InterTime, bool _Loop);
 };
-

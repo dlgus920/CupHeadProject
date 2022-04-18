@@ -1,30 +1,44 @@
 #include "PreCompile.h"
+#include <GameEngine/GameEngineImageRenderer.h>
+
 #include "Effect.h"
 
 Effect::Effect() 
-	: ImageRenderer_(nullptr)
 {
 }
 
-Effect::~Effect() // default destructer 디폴트 소멸자
+Effect::~Effect() 
 {
 }
 
 void Effect::Start()
 {
-	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 }
 
 void Effect::Update(float _DeltaTime)
 {
 }
 
-void Effect::SetDust()
+GameEngineImageRenderer* Effect::AddImageAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
 {
 	GameEngineImageRenderer* ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-	ImageRenderer->CreateAnimation("Dust.png", "Dust", 57, 58, 0.05f);
-	ImageRenderer->SetEndCallBack("Dust", std::bind(&Effect::Death, this));
-	ImageRenderer->SetChangeAnimation("Dust");
-	GetTransform()->SetLocalScaling(ImageRenderer->GetCurrentTexture()->GetMetaDataImageSize());
+
+	ImageRenderer->CreateAnimation(_TextureName, _AnimationName, _StartFrame, _EndFrame, _InterTime, _Loop);
+	ImageRenderer->SetEndCallBack(_AnimationName, std::bind(&Effect::Death, this));
+	ImageRenderer->SetChangeAnimation(_AnimationName);
+	ImageRenderer->SetAdjustImzgeSize();
+
+	return ImageRenderer;
 }
 
+GameEngineImageRenderer* Effect::AddImageAnimationFolderActor(std::string _TextureName, std::string _AnimationName, float _InterTime, bool _Loop)
+{
+	GameEngineImageRenderer* ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+
+	ImageRenderer->CreateAnimationFolder(_TextureName, _AnimationName, _InterTime, _Loop);
+	ImageRenderer->SetEndCallBack(_AnimationName, std::bind(&Effect::Death, this));
+	ImageRenderer->SetChangeAnimation(_AnimationName);
+	ImageRenderer->SetAdjustImzgeSize();
+
+	return ImageRenderer;
+}

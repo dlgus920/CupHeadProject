@@ -20,7 +20,7 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
-private:	// member Var
+private:	
 	GameEngineImageRenderer* ImageRenderer_;
 
 public:
