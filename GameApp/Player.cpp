@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngineBase/GameEngineRandom.h>
+
 #include "PositionComponent.h"
 
 #include "Player.h"
@@ -184,4 +186,45 @@ const float4 Player::GetShootPos()
 					ShootingPos_[static_cast<int>(ShootingDir_)].z};
 
 	return retPos;
+}
+
+void Player::EffectDust()
+{
+	GameEngineRandom ran;
+
+	int swit = ran.RandomInt(0, 5);
+
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>();
+
+	switch (swit)
+	{
+	case 0:	
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 0, 18, 0.04);
+		break;
+	case 1:
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 20, 39, 0.04);
+		break;
+	case 2:
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 40, 57, 0.04);
+		break;
+	case 3:
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 60, 78, 0.04);
+		break;
+	case 4:
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 80, 99, 0.04);
+		break;
+	case 5:
+		Dust->CreateAnimation("PlayerDust.png", "Dust", 100, 117, 0.04);
+		break;
+	}
+
+	Dust->SetEndCallBack("Dust", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("Dust");
+	Dust->SetAdjustImzgeSize();
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.y -= 75.f;
+	Pos.z += 1.f;
+	DustAct->GetTransform()->SetWorldPosition(Pos);
 }

@@ -122,6 +122,8 @@ void DicePaclace::LevelResourcesLoad()
 		Texture->Cut(20, 20);
 		Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
 		Texture->Cut(8, 1);
+		Texture = GameEngineTextureManager::GetInst().Find("PlayerDust.png");
+		Texture->Cut(20, 6);
 	}
 
 	{

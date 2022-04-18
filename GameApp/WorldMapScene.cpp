@@ -58,7 +58,12 @@ void WorldMapScene::LevelResourcesLoad()
 			}
 			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("WorldCuphead.png");
 			Texture->Cut(16, 8);
+
+			Texture = GameEngineTextureManager::GetInst().Find("Dust.png");
+			Texture->Cut(20, 6);
 		}
+
+
 	}
 
 	{

@@ -76,10 +76,19 @@ void WorldMapPlayer::Idle_End()
 
 void WorldMapPlayer::Walk_Start()
 {
+	TimeCheck_ = 0.f;
 }
 
 StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 {
+	TimeCheck_ -= _DeltaTime;
+
+	if (TimeCheck_ <= 0.f)
+	{
+		EffectDust();
+		TimeCheck_ = 0.3f;
+	}
+
 	if (CheckState() != "Walk")
 	{
 		return CheckState();
@@ -137,6 +146,7 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 
 void WorldMapPlayer::Walk_End()
 {
+	TimeCheck_ = 0.f;
 }
 
 void WorldMapPlayer::Chose_Start()

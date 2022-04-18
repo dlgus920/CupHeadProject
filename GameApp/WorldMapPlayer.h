@@ -88,6 +88,8 @@ private: // Func
 
 	void ChangeScene(std::string _Scene);
 
+	void EffectDust();
+
 public:
 	void Entry();
 

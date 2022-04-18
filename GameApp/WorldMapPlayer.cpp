@@ -1,5 +1,7 @@
 #include "PreCompile.h"
 
+#include <GameEngineBase/GameEngineRandom.h>
+
 #include "WorldMapPlayer.h"
 #include "WorldMapScene.h"
 
@@ -89,7 +91,46 @@ std::string WorldMapPlayer::CheckState()
 	return CurState_;
 }
 
+void WorldMapPlayer::EffectDust()
+{
+	GameEngineRandom ran;
 
+	int swit = ran.RandomInt(0, 5);
+
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>();
+
+	switch (swit)
+	{
+	case 0:
+		Dust->CreateAnimation("Dust.png", "Dust", 0, 18, 0.04);
+		break;
+	case 1:
+		Dust->CreateAnimation("Dust.png", "Dust", 20, 39, 0.04);
+		break;
+	case 2:
+		Dust->CreateAnimation("Dust.png", "Dust", 40, 57, 0.04);
+		break;
+	case 3:
+		Dust->CreateAnimation("Dust.png", "Dust", 60, 78, 0.04);
+		break;
+	case 4:
+		Dust->CreateAnimation("Dust.png", "Dust", 80, 99, 0.04);
+		break;
+	case 5:
+		Dust->CreateAnimation("Dust.png", "Dust", 100, 117, 0.04);
+		break;
+	}
+
+	Dust->SetEndCallBack("Dust", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("Dust");
+	Dust->SetAdjustImzgeSize();
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.z += 1.f;
+
+	DustAct->GetTransform()->SetWorldPosition(Pos);
+}
 
 
 

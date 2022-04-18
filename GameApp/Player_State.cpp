@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Map.h"
+
 //#include <GameEngine/GameEngineImageRenderer.h>
 
 
@@ -75,11 +76,19 @@ void Player::Idle_End()
 
 void Player::Walk_Start()
 {
-	
+	TimeCheck_ = 0.f;
 	// 각기 다른 에니메이션 재생
 }
 StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 {
+	TimeCheck_ -= _DeltaTime;
+
+	if (TimeCheck_ <= 0.f)
+	{
+		EffectDust();
+		TimeCheck_ = 0.3f;
+	}
+
 	if (true == WalkState_Changed_)
 	{
 		ChangeAnimation("Cup-Walk-Turn");
@@ -137,6 +146,7 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 void Player::Walk_End()
 {
 	ShootingInterTime_ = 0.f;
+	TimeCheck_ = 0.f;
 }
 
 void Player::Jump_Start()
@@ -154,7 +164,7 @@ void Player::Jump_Start()
 
 	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
 
-
+	EffectDust();
 }
 StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 {
