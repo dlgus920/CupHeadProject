@@ -139,7 +139,7 @@ void WorldMapScene::LevelChangeStartEvent()
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
 	Image* IrisImage = CreateActor<Image>();
-	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
+	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.05f);
 	IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 	IrisImage->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z00Fx00)));
 	IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
@@ -150,16 +150,58 @@ void WorldMapScene::LevelChangeStartEvent()
 
 void WorldMapScene::ChangeScene(std::string _Scene)
 {
+	NextScene_ = _Scene;
+	SetScreenIris(false);
+
+
+
+//#ifdef _DEBUG
+//	if (nullptr == GameEngineCore::LevelFind(_Scene))
+//	{
+//		GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
+//	}
+//#endif // _DEBUG
+//
+//	dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
+//		->SetLoaddingNextLevel(_Scene);
+//
+//	GameEngineCore::LevelChange("LoaddingScene");
+
+}
+
+void WorldMapScene::SetScreenIris(bool _In)
+{
+	float4 pos = GetMainCamera()->GetTransform()->GetWorldPosition();
+
+	//float4 pos = GetTransform()->GetWorldPosition();
+
+	IrisImage_ = CreateActor<Image>();
+	IrisImage_->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.055f);
+	IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+	IrisImage_->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
+	IrisImage_->SetImageAnimationEndFunc<WorldMapScene>("ScreenIris", &WorldMapScene::ScreenFadeEnd, this);
+
+	if (false == _In)
+	{
+		IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	}
+}
+
+void WorldMapScene::ScreenFadeEnd()
+{
+	ScreenFadeEnd_ = true;
+	IrisImage_->Death();
+
 #ifdef _DEBUG
-	if (nullptr == GameEngineCore::LevelFind(_Scene))
+	if (nullptr == GameEngineCore::LevelFind(NextScene_))
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
 	}
 #endif // _DEBUG
 
 	dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
-		->SetLoaddingNextLevel(_Scene);
+		->SetLoaddingNextLevel(NextScene_);
 
 	GameEngineCore::LevelChange("LoaddingScene");
-
 }

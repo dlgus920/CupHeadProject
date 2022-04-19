@@ -134,11 +134,17 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 		if (KeyState_Right_)
 		{
-			Move(400.f, 0.f, _DeltaTime);
+			if (ColState_Pixel_.b_Right == 0.f)
+			{
+				Move(400.f, 0.f, _DeltaTime);
+			}
 		}
 		else
 		{
-			Move(-400.f, 0.f, _DeltaTime);
+			if (ColState_Pixel_.b_Left == 0.f)
+			{
+				Move(-400.f, 0.f, _DeltaTime);
+			}
 		}
 	}
 	return StateInfo();
@@ -312,11 +318,17 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		Move(C_MoveSpeed_,0.f,_DeltaTime);
+		if (ColState_Pixel_.b_Right == 0.f)
+		{
+			Move(C_MoveSpeed_, 0.f, _DeltaTime);
+		}
 	}
 	else if (KeyState_Left_)
 	{
-		Move(-C_MoveSpeed_,0.f,_DeltaTime);
+		if (ColState_Pixel_.b_Left == 0.f)
+		{
+			Move(-C_MoveSpeed_, 0.f, _DeltaTime);
+		}
 	}
 	if (KeyState_Shoot_)
 	{
@@ -633,6 +645,21 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 			return CheckState();
 		}
 	}
+
+	if (HitDir_.x > 0.f)
+	{
+		if (ColState_Pixel_.b_Left == 0.f)
+		{
+			Move(-400.f, 0.f, _DeltaTime);
+		}
+	}
+	else if (HitDir_.x < 0.f)
+	{
+		if (ColState_Pixel_.b_Right == 0.f)
+		{
+			Move(400.f, 0.f, _DeltaTime);
+		}
+	}
 	//if aniend && ground
 	
 
@@ -643,6 +670,22 @@ void Player::Hit_End()
 	JumpSpeed_ = 0.f;
 	TimeCheck_ = 0.f;
 }
+#ifdef _DEBUG
+void Player::Update_DEBUG()
+{
+	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+
+	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::PINK);
+	}
+	else
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
+	}
+}
+#endif // _DEBUG
+
 
 void Player::Dash_Start()
 {

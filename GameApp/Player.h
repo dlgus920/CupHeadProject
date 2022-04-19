@@ -79,7 +79,7 @@ private: //Member
 
 	bool  HitInvince_;
 	float HitInvinceTimeCheck_;
-	const float HitInvinceTime_ = 1.f;
+	const float HitInvinceTime_ = 1.5f;
 
 	const float C_AnimationInterTime_ = 0.05;
 	const float C_MoveSpeed_ = 500.f;
@@ -131,13 +131,16 @@ private: //Member
 	bool KeyState_Jump_;
 	bool KeyState_Jump_Press;
 
-	bool KeyState_Hit_;
+	//bool KeyState_Hit_;
 	bool KeyState_Dash_;
 
 	bool ColState_Ground;
+	float4 ColState_Pixel_;
 	bool ColState_Hit_;
 	bool ColState_Parry_;
 	
+	float4 HitDir_;
+
 	int HP;
 	int ParryCount;
 
@@ -203,7 +206,11 @@ private: //Update
 	const bool HitCollisonUpdate();
 
 	void ImageScaleUpdate();
-		
+#ifdef _DEBUG
+	void Update_DEBUG();
+#endif // _DEBUG
+
+
 private: //State
 #pragma region State_
 	void Bomb_Start();

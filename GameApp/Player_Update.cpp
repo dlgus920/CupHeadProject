@@ -6,17 +6,6 @@
 
 void Player::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
-
-	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
-	{
-		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::PINK);
-	}
-	else
-	{
-		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
-	}
-
 	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
 
 	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
@@ -74,6 +63,9 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 
+#ifdef _DEBUG
+	Update_DEBUG();
+#endif // _DEBUG
 }
 
 void Player::StateUpdate(float _DeltaTime)
@@ -120,7 +112,8 @@ void Player::KeyUpdate()
 
 const bool Player::GroundCollisonUpdate()
 {
-	ColState_Ground = Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down;
+	ColState_Pixel_ = Map::PixelCollisionTransform(PlayerMovingCollision, 10);
+	ColState_Ground = ColState_Pixel_.b_Down;
 
 	return ColState_Ground;
 }
@@ -135,6 +128,14 @@ const bool Player::ParryCollisonUpdate()
 const bool Player::HitCollisonUpdate()
 {
 	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Monster));
+
+	if (true == ColState_Hit_)
+	{
+		float4 MonsterPos = PlayerHitBox->CollisionPtr(static_cast<int>(CollisionGruop::Monster))->GetTransform()->GetWorldPosition();
+
+		HitDir_ = MonsterPos - GetTransform()->GetWorldPosition();
+		//HitDir_.Normalize2D();
+	}
 
 	return ColState_Hit_;
 }

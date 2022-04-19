@@ -17,7 +17,9 @@ public:
 
 public:
 	class WorldMapPlayer* WorldMapPlayer_;
+	class Image* IrisImage_;
 
+	std::string NextScene_;
 private:	// member Var
 
 private:
@@ -31,4 +33,12 @@ private:
 	void ChangeScene(std::string _Scene);
 
 	friend void WorldMapPlayer::ChangeScene(std::string _Scene);
+
+	void SetScreenIris(bool _In);
+
+
+	void ScreenFadeEnd();
+	bool ScreenFadeEnd_;
+public:
+
 };

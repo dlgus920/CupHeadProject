@@ -9,7 +9,6 @@ void WorldMapPlayer::Entry_Start()
 {
 	SetChangeAnimation("Cup-Idle-Down");
 }
-
 StateInfo WorldMapPlayer::Entry_Update(StateInfo _state, float _DeltaTime)
 {
 	TimeCheck_ += _DeltaTime;
@@ -20,7 +19,6 @@ StateInfo WorldMapPlayer::Entry_Update(StateInfo _state, float _DeltaTime)
 
 	return StateInfo();
 }
-
 void WorldMapPlayer::Entry_End()
 {
 	TimeCheck_ = 0.f;
@@ -30,7 +28,6 @@ void WorldMapPlayer::Idle_Start()
 {
 	SetChangeAnimation("Cup-Idle-Down");
 }
-
 StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 {
 	if (CheckState() != "Idle")
@@ -69,7 +66,6 @@ StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 
 	return StateInfo();
 }
-
 void WorldMapPlayer::Idle_End()
 {
 }
@@ -78,7 +74,6 @@ void WorldMapPlayer::Walk_Start()
 {
 	TimeCheck_ = 0.f;
 }
-
 StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
@@ -143,7 +138,6 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	return StateInfo();
 }
-
 void WorldMapPlayer::Walk_End()
 {
 	TimeCheck_ = 0.f;
@@ -151,20 +145,19 @@ void WorldMapPlayer::Walk_End()
 
 void WorldMapPlayer::Chose_Start()
 {
-	float4 pos = GetTransform()->GetWorldPosition();
+	//float4 pos = GetTransform()->GetWorldPosition();
 
-	Image* IrisImage = GetLevel()->CreateActor<Image>();
-	IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.075f);
-	IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
-	IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-	IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
+	//Image* IrisImage = GetLevel()->CreateActor<Image>();
+	//IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.055f);
+	//IrisImage->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	//IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+	//IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
+	//IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
 
-	//IrisImage->SetImageAnimationEndFunc<WorldMapPlayer>("ScreenIris", &WorldMapPlayer::SetAniStateScreenIrisEnd, this);
-	IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
+	//TODO :: 현재 IrisImage, 월드맵 플레이어, 월드맵씬 셋간의 동기화가 이루어지지 않음, 동기화 진행후, 셋다 끝났을때 안정적으로 씬을 넘기도록 하기
 
 	SetChangeAnimation("Cup-Chose");
 }
-
 StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 {
 	if (true == AniState_Chose_End_)
@@ -174,7 +167,6 @@ StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 
 	return StateInfo();
 }
-
 void WorldMapPlayer::Chose_End()
 {
 }
@@ -182,12 +174,10 @@ void WorldMapPlayer::Chose_End()
 void WorldMapPlayer::LevelChangeWait_Start()
 {
 }
-
 StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaTime)
 {
 	return StateInfo();
 }
-
 void WorldMapPlayer::LevelChangeWait_End()
 {
 }

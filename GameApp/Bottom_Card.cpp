@@ -19,8 +19,6 @@ Bottom_Card::~Bottom_Card() // default destructer 디폴트 소멸자
 
 void Bottom_Card::Start()
 {	
-
-
 	CutData_ = { 20.f,17.f,0.f };
 
 

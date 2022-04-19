@@ -95,6 +95,8 @@ void Player::ComponentSetting()
 		PlayerMovingCollision = CreateTransformComponent<GameEngineCollision>();
 		PlayerMovingCollision->SetCollisionType(CollisionType::Rect);
 		PlayerMovingCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		//PlayerMovingCollision->GetTransform()->SetLocalMove(float4{ 0.f,-75.f,0.f });
+		PlayerMovingCollision->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
 		//PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
 	}
 
@@ -113,7 +115,7 @@ void Player::ComponentSetting()
 		PlayerHitBox->GetTransform()->SetLocalMove(float4{0.f,-75.f,0.f});
 		PlayerHitBox->GetTransform()->SetLocalScaling(float4{50.f,75.f,1.f });
 
-		PlayerHitBox->Off();
+		//PlayerHitBox->Off();
 	}
 }
 

@@ -336,6 +336,11 @@ public:
 		DirectVector = DirectX::XMVector3Normalize(DirectVector);
 	}
 
+	void Normalize2D()
+	{
+		DirectVector = DirectX::XMVector2Normalize(DirectVector);
+	}
+
 	float4 ToRadianAngle() const
 	{
 		return this->operator*(GameEngineMath::DegreeToRadian);
