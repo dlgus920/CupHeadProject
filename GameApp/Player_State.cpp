@@ -583,7 +583,6 @@ void Player::Bomb_End()
 
 void Player::Death_Start()
 {
-	State_Update_ = false;
 }
 StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 {
@@ -660,9 +659,7 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 			Move(400.f, 0.f, _DeltaTime);
 		}
 	}
-	//if aniend && ground
 	
-
 	return StateInfo();
 }
 void Player::Hit_End()
@@ -670,27 +667,11 @@ void Player::Hit_End()
 	JumpSpeed_ = 0.f;
 	TimeCheck_ = 0.f;
 }
-#ifdef _DEBUG
-void Player::Update_DEBUG()
-{
-	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
-
-	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
-	{
-		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::PINK);
-	}
-	else
-	{
-		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
-	}
-}
-#endif // _DEBUG
-
 
 void Player::Dash_Start()
 {
 	ChangeAnimation("Cup-Dash");
-	TimeCheck_ = 0.f;
+	AniState_DashEnd_ = false;
 }
 StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 {
@@ -702,9 +683,8 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 	{
 		Move(-C_DashSpeed_, 0.f, _DeltaTime);
 	}
-	TimeCheck_ += _DeltaTime;
 
-	if(TimeCheck_ > 1.f)
+	if(true == AniState_DashEnd_)
 	{
 		return CheckState();
 	}
@@ -713,18 +693,5 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Dash_End()
 {
-	TimeCheck_ = 0.f;
-}
-
-void Player::Parry_Start()
-{
-}
-
-StateInfo Player::Parry_Update(StateInfo _state, float _DeltaTime)
-{
-	return StateInfo();
-}
-
-void Player::Parry_End()
-{
+	AniState_DashEnd_ = false;
 }

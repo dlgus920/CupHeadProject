@@ -96,16 +96,10 @@ private: //Member
 	const float C_GravityAcc_ = 3.81;
 	float GravitySpeed_;
 
-
-
 	float TimeCheck_;
 	float DistTimeCheck_;
 
 	float ShootingInterTime_;
-
-
-
-
 
 		// state
 	bool WalkState_Changed_;
@@ -115,9 +109,9 @@ private: //Member
 		WalkState_Changed_ = false;
 	}
 
-	bool KeyState_Update_;
-	bool ColState_Update_;
-	bool State_Update_;
+	//bool KeyState_Update_;
+	//bool ColState_Update_;
+	//bool State_Update_;
 
 	bool KeyState_Up_;
 	bool KeyState_Down_;
@@ -139,6 +133,8 @@ private: //Member
 	bool ColState_Hit_;
 	bool ColState_Parry_;
 	
+	bool AniState_DashEnd_;
+
 	float4 HitDir_;
 
 	int HP;
@@ -249,27 +245,27 @@ private: //State
 	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
 	void Dash_End();
 
-	void Parry_Start();
-	StateInfo Parry_Update(StateInfo _state, float _DeltaTime);
-	void Parry_End();
-
 #pragma endregion
 
 public: //Inline
-	inline void SetStateUpdateOn()
-	{
-		State_Update_ = true;
-	}
-	inline void SetStateUpdateOff()
-	{
-		State_Update_ = false;
-	}
+	//inline void SetStateUpdateOn()
+	//{
+	//	State_Update_ = true;
+	//}
+	//inline void SetStateUpdateOff()
+	//{
+	//	State_Update_ = false;
+	//}
 
 	inline const std::string GetCurState()
 	{
 		return State_.GetName();
 	}
 
+	inline void DashAniamtionEnd()
+	{
+		AniState_DashEnd_ = true;
+	}
 
 };
 

@@ -57,8 +57,6 @@ private:	// member Var
 
 	float4 ColState_;
 	class StagePoint* ColState_Chose_;
-
-	bool AniState_Chose_End_;
 	//bool AniState_ScreenIris_End_;
 
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
@@ -110,15 +108,5 @@ private:
 	StateInfo Chose_Update(StateInfo _state, float _DeltaTime);
 	void Chose_End();
 
-	void LevelChangeWait_Start();
-	StateInfo LevelChangeWait_Update(StateInfo _state, float _DeltaTime);
-	void LevelChangeWait_End();
-
-private:
-	void SetAniStateChoseEnd()
-	{
-		AniState_Chose_End_ = true;
-	}
-	
 };
 

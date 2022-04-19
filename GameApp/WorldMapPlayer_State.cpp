@@ -157,27 +157,13 @@ void WorldMapPlayer::Chose_Start()
 	//TODO :: 현재 IrisImage, 월드맵 플레이어, 월드맵씬 셋간의 동기화가 이루어지지 않음, 동기화 진행후, 셋다 끝났을때 안정적으로 씬을 넘기도록 하기
 
 	SetChangeAnimation("Cup-Chose");
+
+	ChangeScene(ColState_Chose_->GetNextScene());
 }
 StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
 {
-	if (true == AniState_Chose_End_)
-	{
-		ChangeScene(ColState_Chose_->GetNextScene());
-	}
-
 	return StateInfo();
 }
 void WorldMapPlayer::Chose_End()
-{
-}
-
-void WorldMapPlayer::LevelChangeWait_Start()
-{
-}
-StateInfo WorldMapPlayer::LevelChangeWait_Update(StateInfo _state, float _DeltaTime)
-{
-	return StateInfo();
-}
-void WorldMapPlayer::LevelChangeWait_End()
 {
 }

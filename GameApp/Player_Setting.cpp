@@ -72,7 +72,6 @@ void Player::StateSetting()
 	State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
 	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
 	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
-	State_.CreateState("Parry", &Player::Parry_Start, &Player::Parry_Update, &Player::Parry_End);
 
 }
 
@@ -85,8 +84,7 @@ void Player::ComponentSetting()
 	}
 
 	{
-		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		
+		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();	
 		//PlayerImageRenderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f)); //색상 오버레이
 		//PlayerImageRenderer->SetAlpha(0.5f); //알파
 	}
@@ -95,9 +93,7 @@ void Player::ComponentSetting()
 		PlayerMovingCollision = CreateTransformComponent<GameEngineCollision>();
 		PlayerMovingCollision->SetCollisionType(CollisionType::Rect);
 		PlayerMovingCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
-		//PlayerMovingCollision->GetTransform()->SetLocalMove(float4{ 0.f,-75.f,0.f });
 		PlayerMovingCollision->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
-		//PlayerCollision->GetTransform()->SetLocalScaling(float4{ 100.0f, 100.0f, 1.0f });
 	}
 
 	{
@@ -177,7 +173,6 @@ void Player::AnimationSetting()
 			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Start", 160, 166, C_AnimationInterTime_);
 			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Idle", 168, 172, C_AnimationInterTime_);
 			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 174, 176, C_AnimationInterTime_);
-
 		}
 
 		//
@@ -194,6 +189,7 @@ void Player::AnimationSetting()
 	//Dash
 	{
 		PlayerImageRenderer->CreateAnimation("Cup_Dash.png", "Cup-Dash", 0, 7, C_AnimationInterTime_);
+		PlayerImageRenderer->SetEndCallBack("Cup-Dash", std::bind(&Player::DashAniamtionEnd, this));
 	}
 	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Death", 140, 154, C_AnimationInterTime_);
 }

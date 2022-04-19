@@ -4,28 +4,29 @@
 #include "Image.h"
 #include "GameEngine/GameEngineCollision.h"
 
+#ifdef _DEBUG
+void Player::Update_DEBUG()
+{
+	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+
+	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::PINK);
+	}
+	else
+	{
+		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
+	}
+}
+#endif // _DEBUG
+
 void Player::Update(float _DeltaTime)
 {
-	//GetLevel()->PushDebugRender(PlayerCollision->GetTransform(), CollisionType::Rect);  //디버그 렌더러 생성
-
-	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-
-	if (true == KeyState_Update_)
-	{
-		KeyUpdate();
-	}
-
-	//if (true == ColState_Update_) // 정교화를 위해 호출시점을 바꿀 필요가 있음
-	//{
-	//	//CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
-	//}
+	KeyUpdate();
 	GroundCollisonUpdate();
 	ParryCollisonUpdate();
 	HitCollisonUpdate();
-	if (true == State_Update_)
-	{
-		StateUpdate(_DeltaTime);
-	}
+	StateUpdate(_DeltaTime);
 
 	//ImageScaleUpdate();
 
