@@ -167,12 +167,12 @@ void WorldMapScene::SetScreenIris(bool _In)
 
 	if (false == _In)
 	{
-		IrisImage_->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage_);
+		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&Image::Death, this));
 		IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
 	}
 	else
 	{
-		IrisImage_->SetImageAnimationEndFunc<WorldMapScene>("ScreenIris", &WorldMapScene::ScreenFadeEnd, this);
+		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&WorldMapScene::ScreenFadeEnd, this));
 	}
 }
 

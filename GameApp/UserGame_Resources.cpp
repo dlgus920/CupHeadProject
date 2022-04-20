@@ -20,21 +20,21 @@ void UserGame::ResourcesLoad()
 		}
 	}
 
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
+	//{
+	//	GameEngineDirectory TextureDir;
+	//	TextureDir.MoveParent(GV_GAMEFILENAME);
+	//	TextureDir.MoveChild("Resources");
+	//	TextureDir.MoveChild("Image");
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+	//	std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		}	
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Animation.png");
-		Texture->Cut(8, 8);
-	}
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}	
+	//	GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Animation.png");
+	//	Texture->Cut(8, 8);
+	//}
 
 	AppShaderLoad(); //TODO : 현재 문제 발생 주범
 }

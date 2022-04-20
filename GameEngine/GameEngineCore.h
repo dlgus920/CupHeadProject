@@ -16,6 +16,9 @@ private:
 	static std::map<std::string, GameEngineLevel*> AllLevel_;
 
 public:
+	//float TimeRate_;
+
+public:
 	template<typename LevelType>
 	static void LevelCreate(const std::string& _Level)
 	{
@@ -41,6 +44,8 @@ public:
 public:
 	static void LevelChange(const std::string& _Level);
 	static GameEngineLevel* LevelFind(const std::string& _Level);
+
+	static void SetTimeRate(float _TimeRate);
 
 // ============================================== GameCore ฐüทร ============================================== //
 private:

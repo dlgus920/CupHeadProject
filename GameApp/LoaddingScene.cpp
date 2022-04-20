@@ -68,6 +68,7 @@ void LoaddingScene::LevelStart()
 
 void LoaddingScene::LevelUpdate(float _DeltaTime)
 {
+
 	if (BlendRate_ >= 1.f)
 	{
 		CutIn_ = true;
@@ -124,7 +125,7 @@ void LoaddingScene::LevelChangeStartEvent()
 	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
 	HourGlass_->SetAdjustImzgeSize();
 	HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
-	HourGlass_->SetImageAnimationEndFunc<LoaddingScene>("HourGlass", &LoaddingScene::LoadEnd, this);
+	HourGlass_->SetImageAnimationEndFunc("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
 
 
 }

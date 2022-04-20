@@ -4,7 +4,10 @@
 #include "Image.h"
 
 
-Image::Image() // default constructer 디폴트 생성자
+Image::Image()
+	: LifeTime_(0.f)
+	, TimeCheck_(0.f)
+	, DeathFuction_(nullptr)
 {
 
 }
@@ -22,6 +25,15 @@ void Image::Start()
 
 void Image::Update(float _DeltaTime)
 {
+	if (LifeTime_ != 0.f)
+	{
+		TimeCheck_ += _DeltaTime;
+		if (LifeTime_ < TimeCheck_)
+		{
+			EffectDeath();
+		}
+	}
+
 }
 
 void Image::ImageCreateAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
@@ -62,7 +74,7 @@ void Image::SetImageWorldPosition(const float4& _Value)
 
 void Image::SetReserveDeath(std::string _Name)
 {
-	SetImageAnimationEndFunc<Image>(_Name, &Image::Death, this);
+	SetImageAnimationEndFunc(_Name, std::bind(& Image::Death, this));
 }
 
 void Image::SetAdjustImzgeSize()
@@ -73,4 +85,26 @@ void Image::SetAdjustImzgeSize()
 void Image::SetAnimationFrame(int Frame)
 {
 	
+}
+void Image::SetImageAnimationEndFunc(const std::string& _Name, std::function<void()> _CallBack)
+{
+	ImageRenderer_->SetEndCallBack(_Name,_CallBack);
+}
+void Image::SetImageAnimationFrameFunc(const std::string& _Name, std::function<void()> _CallBack)
+{
+	ImageRenderer_->SetEndCallBack(_Name,_CallBack);
+}
+void Image::SetDeathFuction(std::function<void()> _CallBack)
+{
+	DeathFuction_ = _CallBack;
+}
+
+void Image::EffectDeath()
+{
+	if (nullptr != DeathFuction_)
+	{
+		DeathFuction_();
+	}
+
+	Death();
 }

@@ -17,7 +17,6 @@ WorldMapPlayer::WorldMapPlayer()
 	, KeyState_Left_(false)
 	, KeyState_Right_(false)
 	, KeyState_Chose_(false)
-	, AniState_Chose_End_(false)
 	, ColState_Chose_(nullptr)
 	, ColState_{}
 	, Dir_(AnimationDirection::Right)

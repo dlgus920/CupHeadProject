@@ -184,6 +184,10 @@ private: //Func
 
 private: //Effect
 	void EffectDust();
+	void EffectDashDust();
+	void EffectParry();
+	void EffectHit();
+	void EffectJumpLanding();
 
 
 private: //Setting
@@ -202,6 +206,7 @@ private: //Update
 	const bool HitCollisonUpdate();
 
 	void ImageScaleUpdate();
+
 #ifdef _DEBUG
 	void Update_DEBUG();
 #endif // _DEBUG

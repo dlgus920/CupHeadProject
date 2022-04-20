@@ -197,31 +197,109 @@ void Player::EffectDust()
 	switch (swit)
 	{
 	case 0:	
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 0, 18, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 0, 18, 0.04);
 		break;
 	case 1:
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 20, 39, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 20, 39, 0.04);
 		break;
 	case 2:
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 40, 57, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 40, 57, 0.04);
 		break;
 	case 3:
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 60, 78, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 60, 78, 0.04);
 		break;
 	case 4:
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 80, 99, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 80, 99, 0.04);
 		break;
 	case 5:
-		Dust->CreateAnimation("PlayerDust.png", "Dust", 100, 117, 0.04);
+		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 100, 117, 0.04);
 		break;
 	}
 
-	Dust->SetEndCallBack("Dust", std::bind(&GameEngineActor::Death, DustAct));
-	Dust->SetChangeAnimation("Dust");
+	Dust->SetEndCallBack("PlayerDust", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("PlayerDust");
 	Dust->SetAdjustImzgeSize();
 
 	float4 Pos = GetTransform()->GetWorldPosition();
 	Pos.y -= 75.f;
+	Pos.z += 1.f;
+	DustAct->GetTransform()->SetWorldPosition(Pos);
+}
+
+void Player::EffectDashDust()
+{
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
+
+	Dust->CreateAnimation("DashDust.png", "DashDust", 0, 12, 0.04);
+	Dust->SetEndCallBack("DashDust", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("DashDust");
+	Dust->SetAdjustImzgeSize();
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.y -= 75.f;
+	Pos.z += 1.f;
+	DustAct->GetTransform()->SetWorldPosition(Pos);
+}
+void Player::EffectParry()
+{
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
+
+	Dust->CreateAnimation("ParryEffect.png", "ParryEffect", 0, 8, 0.04);
+	Dust->SetEndCallBack("ParryEffect", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("ParryEffect");
+	Dust->SetAdjustImzgeSize();
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.y -= 75.f;
+	Pos.z += 1.f;
+	DustAct->GetTransform()->SetWorldPosition(Pos);
+}
+void Player::EffectHit() 
+{
+	GameEngineRandom ran;
+
+	int swit = ran.RandomInt(0, 2);
+
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>();
+
+	switch (swit)
+	{
+	case 0:
+		Dust->CreateAnimation("HitEffect.png", "HitEffect", 0, 8, 0.03);
+		break;
+	case 1:
+		Dust->CreateAnimation("HitEffect.png", "HitEffect", 9, 17, 0.03);
+		break;
+	case 2:
+		Dust->CreateAnimation("HitEffect.png", "HitEffect", 18, 26, 0.03);
+		break;
+	}
+
+	Dust->SetEndCallBack("HitEffect", std::bind(&GameEngineActor::Death, DustAct));
+	Dust->SetChangeAnimation("HitEffect");
+	Dust->SetAdjustImzgeSize();
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.y -= 75.f;
+	Pos.z += 1.f;
+	DustAct->GetTransform()->SetWorldPosition(Pos);
+}
+void Player::EffectJumpLanding() 
+{
+	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
+	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
+
+	Dust->CreateAnimation("LandDust.png", "LandDust", 0, 5, 0.04);
+	Dust->SetChangeAnimation("LandDust");
+	Dust->SetAdjustImzgeSize();
+
+	Dust->SetEndCallBack("LandDust", std::bind(&GameEngineActor::Death, DustAct));
+
+	float4 Pos = GetTransform()->GetWorldPosition();
+	Pos.y -= 100.f;
 	Pos.z += 1.f;
 	DustAct->GetTransform()->SetWorldPosition(Pos);
 }

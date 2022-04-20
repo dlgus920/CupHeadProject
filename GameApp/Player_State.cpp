@@ -3,6 +3,8 @@
 #include "Bullet.h"
 #include "Map.h"
 
+#include <GameEngine/GameEngineCore.h>
+
 //#include <GameEngine/GameEngineImageRenderer.h>
 
 
@@ -206,6 +208,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 
 				ChangeAnimation("Cup-Jump-Parry");
 
+				EffectParry();
+
 				Bottom_Card_->Increase();
 				
 				Jumpend_ = false;
@@ -220,12 +224,15 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	{
 		if (TimeCheck_ < 0.35f)
 		{
+			GameEngineCore::SetTimeRate(0.3f);
+
 			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 		}
 
 		else if (TimeCheck_ >= 0.35f)
 		{
+			GameEngineCore::SetTimeRate(1.f);
 			if (false == Jumpend_)
 			{
 				Jumpend_ = true;
@@ -360,6 +367,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
+	EffectJumpLanding();
+
 	Jumpend_ = false;
 	LongJump_ = false;
 	Parry_ = false;
@@ -603,6 +612,10 @@ void Player::Death_End()
 
 void Player::Hit_Start()
 {
+	//GameEngineCore::SetTimeRate(0.5f);
+
+	EffectHit();
+
 	if (true == ColState_Ground)
 	{
 		ChangeAnimation("Cup-Hit-Ground");
@@ -666,10 +679,12 @@ void Player::Hit_End()
 {
 	JumpSpeed_ = 0.f;
 	TimeCheck_ = 0.f;
+	//GameEngineCore::SetTimeRate(1.f);
 }
 
 void Player::Dash_Start()
 {
+	EffectDashDust();
 	ChangeAnimation("Cup-Dash");
 	AniState_DashEnd_ = false;
 }

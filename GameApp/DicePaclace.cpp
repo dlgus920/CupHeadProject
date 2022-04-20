@@ -29,6 +29,57 @@ void DicePaclace::LevelResourcesLoad()
 		TextureDir.MoveParent(GV_GAMEFILENAME);
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("DicePalace");
+
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
+			Texture->Cut(10, 8);
+			Texture = GameEngineTextureManager::GetInst().Find("BossExplosion.png");
+			Texture->Cut(10, 1);
+
+		}
+		TextureDir.MoveChild("KingDice(Boss)");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Defeat"));
+
+		//TextureDir.MoveParent("DicePalace");
+		TextureDir.MoveChild("KDice-Attack");
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Birth"));
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Idle"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Birth"));
+
+		{
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Card_Club.png");
+			Texture->Cut(7, 3);
+
+			Texture = GameEngineTextureManager::GetInst().Find("Card_Hraet.png");
+			Texture->Cut(7, 3);
+		}
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("UI");
 
 		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -52,64 +103,6 @@ void DicePaclace::LevelResourcesLoad()
 		TextureDir.MoveParent(GV_GAMEFILENAME);
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Monster");
-		TextureDir.MoveChild("KingDice(Boss)");
-
-		{
-			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-			for (size_t i = 0; i < AllFile.size(); i++)
-			{
-				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			}
-
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
-			Texture->Cut(10, 8);
-
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Defeat"));
-		}
-
-		TextureDir.MoveChild("KDice-Attack");
-
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Idle"));
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Birth"));
-
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Idle"));
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Body-Birth"));
-
-
-		{
-			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-			for (size_t i = 0; i < AllFile.size(); i++)
-			{
-				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			}
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Card_Club.png");
-			Texture->Cut(7, 3);
-
-			Texture = GameEngineTextureManager::GetInst().Find("Card_Hraet.png");
-			Texture->Cut(7, 3);
-		}
-	}
-
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Monster");
-		TextureDir.MoveChild("KingDice(Boss)");
-		
-	}
-
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("CharactorSprite");
 
 		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -124,6 +117,14 @@ void DicePaclace::LevelResourcesLoad()
 		Texture->Cut(8, 1);
 		Texture = GameEngineTextureManager::GetInst().Find("PlayerDust.png");
 		Texture->Cut(20, 6);
+		Texture = GameEngineTextureManager::GetInst().Find("DashDust.png");
+		Texture->Cut(13, 1);
+		Texture = GameEngineTextureManager::GetInst().Find("HitEffect.png");
+		Texture->Cut(9, 3);
+		Texture = GameEngineTextureManager::GetInst().Find("ParryEffect.png");
+		Texture->Cut(9, 1);		
+		Texture = GameEngineTextureManager::GetInst().Find("LandDust.png");
+		Texture->Cut(6, 1);
 	}
 
 	{

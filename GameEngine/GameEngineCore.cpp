@@ -11,6 +11,7 @@
 #include "GameEngineBase/GameEngineFile.h"
 
 GameEngineCore* GameEngineCore::MainCore_ = nullptr;
+float TimeRate_ =1.f;
 
 GameEngineCore::GameEngineCore() // default constructer 디폴트 생성자
 {
@@ -110,7 +111,7 @@ void GameEngineCore::MainLoop()
 		GameEngineDebug::MsgBoxError("현재 레벨이 존재하지 않습니다.");
 	}
 
-	float Time = GameEngineTime::GetInst().GetDeltaTime();
+	float Time = GameEngineTime::GetInst().GetDeltaTime() *TimeRate_;
 
 	CurrentLevel_->LevelUpdate(Time);
 	CurrentLevel_->ActorUpdate(Time);
@@ -167,6 +168,11 @@ GameEngineLevel* GameEngineCore::LevelFind(const std::string& _Level)
 		return FindIter->second;
 	}
 	return nullptr;
+}
+
+void GameEngineCore::SetTimeRate(float _TimeRate)
+{
+	TimeRate_ = _TimeRate;
 }
 
 
