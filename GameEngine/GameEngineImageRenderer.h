@@ -69,8 +69,6 @@ private:
 		}
 	};
 
-
-
 public:
 	//custom
 	void SetResultColor(float4 _ResultColor)

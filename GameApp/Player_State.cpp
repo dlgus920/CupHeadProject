@@ -367,6 +367,7 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 }
 void Player::Jump_End()
 {
+	GameEngineCore::SetTimeRate(1.f);
 	EffectJumpLanding();
 
 	Jumpend_ = false;

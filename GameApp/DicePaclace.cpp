@@ -104,14 +104,18 @@ void DicePaclace::LevelResourcesLoad()
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("CharactorSprite");
-
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
+		
 		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
 		}
+
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
+
 		Texture->Cut(20, 20);
 		Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
 		Texture->Cut(8, 1);
@@ -125,36 +129,30 @@ void DicePaclace::LevelResourcesLoad()
 		Texture->Cut(9, 1);		
 		Texture = GameEngineTextureManager::GetInst().Find("LandDust.png");
 		Texture->Cut(6, 1);
-	}
 
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Bullet");
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
 		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
 		}
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
+
+		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
 		Texture->Cut(8, 1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
 		Texture->Cut(4, 1);
 		Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
 		Texture->Cut(6, 1);
 	}
-
 }
 
 void DicePaclace::LevelStart()
 {
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
-
-	//GetMainCameraActor()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
@@ -164,28 +162,22 @@ void DicePaclace::LevelStart()
 		//Actor->GetUIRenderer()->SetRenderGroup(1000);  
 	}
 
-
-
 	{
-
 		Image* BackImage = CreateActor<Image>();
 		BackImage->ImageSetImage("DicePalaceBack.png");
 		BackImage->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back10) });
-
 
 		BackImage = CreateActor<Image>();
 		BackImage->ImageSetImage("DicePalaceMain.png");
 		BackImage->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
-
 		Map* _Map = CreateActor<Map>();
 
 		// 1280 720
 		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
 		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-
 		_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 	}
 

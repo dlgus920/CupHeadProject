@@ -63,7 +63,6 @@ void WorldMapScene::LevelResourcesLoad()
 			Texture->Cut(20, 6);
 		}
 
-
 	}
 
 	{
@@ -139,12 +138,7 @@ void WorldMapScene::LevelChangeStartEvent()
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
 	SetScreenIris(false);
-	//Image* IrisImage = CreateActor<Image>();
-	//IrisImage->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.05f);
-	//IrisImage->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-	//IrisImage->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z00Fx00)));
-	//IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
-
+	
 	WorldMapPlayer_->Entry();
 
 }
@@ -160,26 +154,24 @@ void WorldMapScene::SetScreenIris(bool _In)
 	float4 pos = GetMainCamera()->GetTransform()->GetWorldPosition();
 
 	IrisImage_ = CreateActor<Image>();
-	IrisImage_->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.055f);
-	IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+	IrisImage_->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.055f, false);
 	IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 	IrisImage_->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
 
 	if (false == _In)
 	{
 		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&Image::Death, this));
-		IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
 	}
 	else
 	{
 		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&WorldMapScene::ScreenFadeEnd, this));
+		IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
 	}
 }
 
 void WorldMapScene::ScreenFadeEnd()
 {
 	ScreenFadeEnd_ = true;
-	IrisImage_->Death();
 
 #ifdef _DEBUG
 	if (nullptr == GameEngineCore::LevelFind(NextScene_))
@@ -192,4 +184,6 @@ void WorldMapScene::ScreenFadeEnd()
 		->SetLoaddingNextLevel(NextScene_);
 
 	GameEngineCore::LevelChange("LoaddingScene");
+
+	IrisImage_->Death();
 }

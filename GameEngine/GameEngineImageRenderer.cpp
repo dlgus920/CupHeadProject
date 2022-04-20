@@ -200,9 +200,6 @@ void GameEngineImageRenderer::ImageRendererStart()
 
 	ResultColor = float4::ONE;
 	ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor); // 색상 합성
-
-	//TODO : 모든 얘한테 다 주던가 각자 따로 만들게끔 설계하기
-
 }
 
 void GameEngineImageRenderer::SetIndex(const int Index)
@@ -269,6 +266,7 @@ void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, c
 
 void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
 {
+#ifdef _DEBUG
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 
 	if (AllAnimations_.end() != FindIter)
@@ -282,7 +280,7 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 폴더 텍스처를 세팅하려고 했습니다..");
 	}
-
+#endif // _DEBUG
 
 	Animation2D* NewAnimation = new Animation2D();
 
@@ -324,6 +322,10 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	if (nullptr == CurAnimation_->FolderTextures_)
 	{
 		ShaderHelper.SettingTexture("Tex", CurAnimation_->AnimationTexture_);
+	}
+	else
+	{
+		ShaderHelper.SettingTexture("Tex", CurAnimation_->FolderTextures_->GetTextureIndex(CurAnimation_->CurFrame_));
 	}
 	CurAnimation_->Reset();
 	CurAnimation_->CallStart();

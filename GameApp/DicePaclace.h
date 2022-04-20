@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngine/GameEngineLevel.h>
 
 class DicePaclace : public GameEngineLevel
 {

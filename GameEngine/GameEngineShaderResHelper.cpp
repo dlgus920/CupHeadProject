@@ -193,9 +193,7 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 		return;
 	}
 
-
 	FindIter->second->Res_ = _Texture;
-
 }
 
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, const std::string& _ImageName)
