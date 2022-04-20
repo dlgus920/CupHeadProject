@@ -5,6 +5,7 @@ enum class CollisionGruop
 	None,
 	StagePoint,
 	Player,
+	PlayerParry,
 	PlayerHitBox,
 	PlayerMoving,
 	Bullet,

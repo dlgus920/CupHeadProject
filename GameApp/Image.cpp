@@ -8,6 +8,7 @@ Image::Image()
 	: LifeTime_(0.f)
 	, TimeCheck_(0.f)
 	, DeathFuction_(nullptr)
+	, ImageRenderer_(nullptr)
 {
 
 }
@@ -19,7 +20,6 @@ Image::~Image() // default destructer 디폴트 소멸자
 
 void Image::Start()
 {
-	//ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>(GetTransform());
 	ImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 }
 
@@ -33,7 +33,6 @@ void Image::Update(float _DeltaTime)
 			EffectDeath();
 		}
 	}
-
 }
 
 void Image::ImageCreateAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
@@ -50,53 +49,26 @@ void Image::ImageCreateAnimationFolder(const std::string& _Name, const std::stri
 void Image::ImageSetImage(const std::string& _TextureName)
 {
 	ImageRenderer_->SetImage(_TextureName);
-
-}
-void Image::SetImageLocalScaling(const float4& _Value)
-{
-	ImageRenderer_->GetTransform()->SetLocalScaling(_Value);
-}
-
-void Image::SetImageWorldScaling(const float4& _Value)
-{
-	ImageRenderer_->GetTransform()->SetWorldScaling(_Value);
-}
-
-void Image::SetImageLocalPosition(const float4& _Value)
-{
-	ImageRenderer_->GetTransform()->SetLocalPosition(_Value);
-}
-
-void Image::SetImageWorldPosition(const float4& _Value)
-{
-	ImageRenderer_->GetTransform()->SetWorldPosition(_Value);
 }
 
 void Image::SetReserveDeath(std::string _Name)
 {
-	SetImageAnimationEndFunc(_Name, std::bind(& Image::Death, this));
-}
-
-void Image::SetAdjustImzgeSize()
-{
-	ImageRenderer_->SetAdjustImzgeSize();
+	ImageRenderer_->SetEndCallBack(_Name, std::bind(& Image::Death, this));
 }
 
 void Image::SetAnimationFrame(int Frame)
 {
-	
+	ImageRenderer_->GetCurrentAnimation()->SetCurrentIndex(Frame);
 }
-void Image::SetImageAnimationEndFunc(const std::string& _Name, std::function<void()> _CallBack)
-{
-	ImageRenderer_->SetEndCallBack(_Name,_CallBack);
-}
-void Image::SetImageAnimationFrameFunc(const std::string& _Name, std::function<void()> _CallBack)
-{
-	ImageRenderer_->SetEndCallBack(_Name,_CallBack);
-}
-void Image::SetDeathFuction(std::function<void()> _CallBack)
+
+void Image::SetImageDeathFuction(std::function<void()> _CallBack)
 {
 	DeathFuction_ = _CallBack;
+}
+
+void Image::SetImageDeathTime(float _LifeTime)
+{
+	LifeTime_ = _LifeTime;
 }
 
 void Image::EffectDeath()

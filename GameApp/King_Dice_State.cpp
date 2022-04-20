@@ -26,6 +26,11 @@ void King_Dice::Idle_Start()
 }
 StateInfo King_Dice::Idle_Update(StateInfo _StateInfo, float _DeltaTime)
 {
+	if (Hp_ < 0)
+	{
+		return "Defeat";
+	}
+
 	TimeCheck_ += _DeltaTime;
 
 	if (TimeCheck_ > 2.f)
@@ -45,10 +50,17 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
 
+	MonsterHitBox->On();
+
 	HandSwitching();
 }
 StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 {
+	if (Hp_ < 0)
+	{
+		return "Defeat";
+	}
+
 #ifdef _DEBUG
 	if (true == AniEnd_Attack_Body_Birth_)
 	{
@@ -110,7 +122,6 @@ void King_Dice::Attack_End_()
 	TimeCheck_ = 0.f;
 	CardCount_ = 0;
 
-	MonsterHitBoxHand->Off();
 	Hand_.HandOff();
 
 	MonsterImageRenderer->GetTransform()->SetLocalScaling({ 1440.f, 750.0f, 1.0f });
@@ -122,15 +133,28 @@ void King_Dice::Attack_End_()
 
 void King_Dice::Defeat_Start()
 {
+	TimeCheck_ = 0.f;
 	MonsterHitBox->Off();
-	MonsterHitBoxHand->Off(); 
+	Hand_.HandOff();
+
+	MonsterImageRenderer->SetChangeAnimation("KDice-Defeat");
 }
 StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
 {
+	TimeCheck_ += _DeltaTime;
+
+	if (TimeCheck_ >= 0.2f)
+	{
+		TimeCheck_ = 0.f;
+
+		EffectDefeatRandom();
+	}
+
 	return StateInfo();
 }
 void King_Dice::Defeat_End_()
 {
+	TimeCheck_ = 0.f;
 }
 
 void King_Dice::Chop_Start()
@@ -150,7 +174,6 @@ void King_Dice::Chop_End_()
 void King_Dice::BattleState_Battle_Start()
 {
 	MonsterHitBox->On();
-	MonsterHitBoxHand->On();
 }
 StateInfo King_Dice::BattleState_Battle_Update(StateInfo _StateInfo, float _DeltaTime)
 {
@@ -167,8 +190,8 @@ void King_Dice::BattleState_Dice_Start()
 {
 	//IdleNextState_ = "Chop";
 
-	MonsterHitBox->Off();
-	MonsterHitBoxHand->Off();
+	//MonsterHitBox->Off();
+	//MonsterHitBoxHand->Off();
 }
 StateInfo King_Dice::BattleState_Dice_Update(StateInfo _StateInfo, float _DeltaTime)
 {

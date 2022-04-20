@@ -1,10 +1,10 @@
 #pragma once
-#include <GameEngine/GameEngineActor.h>
+#include "Monster.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineFSM.h>
 
-class King_Dice : public GameEngineActor
+class King_Dice : public Monster
 {
 public:
 	King_Dice(); // default constructer 디폴트 생성자
@@ -18,13 +18,16 @@ public:
 private:
 	GameEngineFSM<King_Dice> State_;
 	GameEngineFSM<King_Dice> BattleState_;
+
 	GameEngineCollision* MonsterHitBox;
-	GameEngineCollision* MonsterHitBoxHand;
+	//GameEngineCollision* MonsterHitBoxHand;
+
 	GameEngineImageRenderer* MonsterImageRenderer;
 
 	class PerryObjectDice* PerryObjectDice_;
 
 	std::string IdleNextState_;
+
 
 	int CardCount_;
 	float TimeCheck_;
@@ -61,7 +64,7 @@ private:
 		void HandBirth();
 	};
 
-	struct Card
+	struct Card : public ParryObject
 	{
 		Card();
 		~Card();
@@ -125,6 +128,9 @@ private:
 	void SpawnParryCard();
 	void CardUpdate(float _DeltaTime);
 	void CardClear();
+
+	void EffectDefeat(float4 _Pos);
+	void EffectDefeatRandom();
 
 private:
 

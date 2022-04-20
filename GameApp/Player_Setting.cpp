@@ -17,6 +17,7 @@ void Player::DefalutSetting()
 	Dir_ = AnimationDirection::Right;
 
 	BulletInfo_.BulletSpeed_ = 1000.f;
+	BulletInfo_.BulletDamage_ = 10;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
@@ -99,7 +100,7 @@ void Player::ComponentSetting()
 	{
 		PlayerParryCollision = CreateTransformComponent<GameEngineCollision>();
 		PlayerParryCollision->SetCollisionType(CollisionType::Rect);
-		PlayerParryCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		PlayerParryCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::PlayerParry));
 		PlayerParryCollision->GetTransform()->SetLocalMove(float4{0.f,-75.f,0.f});
 		PlayerParryCollision->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
 	}

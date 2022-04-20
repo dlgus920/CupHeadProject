@@ -1,6 +1,7 @@
 #pragma once
-#include "Image.h"
+#include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineActor.h>
 
 // 분류 : 
 // 용도 : 

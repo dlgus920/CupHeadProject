@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "ParryObject.h"
 
 // 만들어진 상태에서 아예 안쓸때까지 소멸되지 않고 메모리에 남아있게 함 // 일일이 다시 만드는데 되려 메모리 먹음
 enum class DiceNumber
@@ -8,7 +8,7 @@ enum class DiceNumber
 	Num2,
 	Num3
 };
-class PerryObjectDice : public Object
+class PerryObjectDice : public ParryObject
 {
 public:
 	PerryObjectDice();
@@ -20,8 +20,10 @@ public:
 	PerryObjectDice& operator=(const PerryObjectDice&& _other) = delete;
 
 private:	// member Var
+	GameEngineCollision* ObjectCollision_;
+	GameEngineImageRenderer* ObjectRenderer_;
+
 	DiceNumber DiceNumber_;
-	bool IsCollision_;
 public:
 	void Start() override;
 	void Update(float _DeltaTime) override;

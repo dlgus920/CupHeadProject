@@ -61,30 +61,30 @@ void TitleScene::LevelStart()
 	{
 		Image* Actor = CreateActor<Image>();
 		Actor->ImageSetImage("title_screen_background.png");
-		Actor->SetAdjustImzgeSize();
+		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
 	}
 
 	{
 		Image* Actor = CreateActor<Image>();
 		Actor->ImageCreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
-		Actor->SetAdjustImzgeSize();
+		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
 	}
 	
 	{
 		Image* Image_ = CreateActor<Image>();
 		Image_->ImageSetImage("Title_font.png");
-		Image_->SetAdjustImzgeSize();
+		Image_->ImageRenderer_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
 
 	{
 		FadeImage_ = CreateActor<Image>();
 		FadeImage_->ImageSetImage("title_screen_background.png");
-		FadeImage_->SetAdjustImzgeSize();
+		FadeImage_->ImageRenderer_->SetAdjustImzgeSize();
 		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
-		FadeImage_->SetBlendColor(float4{ 0.f,0.f,0.f,0.f });
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,0.f });
 	}
 
 	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
@@ -117,7 +117,7 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 			GameEngineCore::LevelChange("LoaddingScene");
 			//TODO : 로딩씬 생성후 죽이기 or 초기화 작업
 		}
-		FadeImage_->SetBlendColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
 }
 

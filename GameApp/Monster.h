@@ -1,8 +1,5 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
-#include <GameEngine/GameEngineImageRenderer.h>
-#include <GameEngine/GameEngineCollision.h>
-#include <GameEngineBase/GameEngineFSM.h>
 
 class Monster : public GameEngineActor
 {
@@ -21,6 +18,12 @@ protected:
 	virtual void TransformUpdate();
 	virtual void Update(float _DeltaTime);
 	virtual void ReleaseEvent();
+
+protected:
+	int Hp_;
+
+public:
+	void DamageToMonster(int _Damage);
 
 };
 

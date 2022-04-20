@@ -95,7 +95,7 @@ void WorldMapScene::LevelStart()
 
 		Image* MapImage = CreateActor<Image>();
 		MapImage ->ImageSetImage("WorldMap_Background.png");
-		MapImage ->SetAdjustImzgeSize();
+		MapImage ->ImageRenderer_->SetAdjustImzgeSize();
 		MapImage ->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
 	}
 
@@ -160,12 +160,12 @@ void WorldMapScene::SetScreenIris(bool _In)
 
 	if (false == _In)
 	{
-		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&Image::Death, this));
+		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris", std::bind(&Image::Death, this));
 	}
 	else
 	{
-		IrisImage_->SetImageAnimationEndFunc("ScreenIris", std::bind(&WorldMapScene::ScreenFadeEnd, this));
-		IrisImage_->GetImageRenderer()->SetAnimationReverse("ScreenIris");
+		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris", std::bind(&WorldMapScene::ScreenFadeEnd, this));
+		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris");
 	}
 }
 

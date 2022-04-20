@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
+
 #include "Bullet.h"
 #include "Image.h"
+#include "Monster.h"
 
 Bullet_Defalut::Bullet_Defalut()
 {
@@ -32,8 +34,11 @@ void Bullet_Defalut::Start()
 
 void Bullet_Defalut::Update(float _DeltaTime)
 {
-	if (true == BulletCollisionCheck(CollisionGruop::MonsterHitBox))
+	GameEngineCollision* MonsCol = BulletCollision_->CollisionPtr(static_cast<int>(CollisionGruop::MonsterHitBox));
+
+	if (nullptr != MonsCol)
 	{
+		dynamic_cast<Monster*>(MonsCol->GetActor())->DamageToMonster(BulletInfo_.BulletDamage_);
 		BulletDeath();
 	}
 
@@ -48,8 +53,6 @@ void Bullet_Defalut::Update(float _DeltaTime)
 
 		GetTransform()->SetWorldMove(BulletInfo_.MoveDir_ * BulletInfo_.BulletSpeed_ * _DeltaTime);
 	}
-
-
 }
 
 void Bullet_Defalut::BulletDeath()
@@ -57,7 +60,7 @@ void Bullet_Defalut::BulletDeath()
 	Image* Birth = GetLevel()->CreateActor<Image>();
 	Birth->ImageCreateAnimation("Bullet_Default_Death.png", "Death", 0, 5, 0.05, false);
 	Birth->SetReserveDeath("Death");
-	Birth->SetAdjustImzgeSize();
+	Birth->ImageRenderer_->SetAdjustImzgeSize();
 	Birth->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
 
 	Death();

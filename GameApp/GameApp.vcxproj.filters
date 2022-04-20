@@ -119,6 +119,12 @@
     <ClCompile Include="King_Dice.cpp">
       <Filter>Actor\MOB\King_Dice</Filter>
     </ClCompile>
+    <ClCompile Include="ParryObject.cpp">
+      <Filter>Actor\Object\ParryObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice_Card.cpp">
+      <Filter>Actor\Object\ParryObject\Dice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -306,6 +312,12 @@
     </ClInclude>
     <ClInclude Include="King_Dice.h">
       <Filter>Actor\MOB\King_Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="ParryObject.h">
+      <Filter>Actor\Object\ParryObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice_Card.h">
+      <Filter>Actor\Object\ParryObject\Dice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

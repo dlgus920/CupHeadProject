@@ -12,15 +12,18 @@ struct BulletInfo
 	BulletInfo()
 		: BulletSpeed_(0.f)
 		, MoveDir_(float4::ZERO)
+		, BulletDamage_(0)
 	{}
-	BulletInfo(float4 _MoveDIr, float _BulletSpeed)
+	BulletInfo(float4 _MoveDIr, float _BulletSpeed, int _BulletDamage)
 	{
 		MoveDir_ = _MoveDIr;
 		BulletSpeed_ = _BulletSpeed;
+		BulletDamage_ = _BulletDamage;
 	}
 
 	float4 MoveDir_;
 	float BulletSpeed_;
+	int BulletDamage_;
 };
 
 class Bullet : public GameEngineActor
@@ -50,12 +53,6 @@ protected:
 
 protected:
 	void SetBulletInfo(BulletInfo _BulletInfo);
-
-	const bool BulletCollisionCheck(CollisionGruop _CollisionGruop)
-	{
-		return BulletCollision_->Collision(static_cast<int>(_CollisionGruop));
-	}
-
 };
 
 class Bullet_Defalut : public Bullet
@@ -91,7 +88,7 @@ public:
 
 protected:
 	void Start() override;
-	void Update(float _DeltaTime) override;
+	void Update(float _DeltaTime) override;	
 private:
 	void BulletDeath();
 };
@@ -118,7 +115,6 @@ private:
 
 	float OriginSpeed_;
 	float TargetSpeed_;
-
 
 protected:
 	void Start() override;

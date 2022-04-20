@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "King_Dice.h"
+#include "Effect.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 
@@ -10,7 +11,6 @@ King_Dice::King_Dice()
 	, BattleState_(this)
 	, MonsterImageRenderer(nullptr)
 	, MonsterHitBox(nullptr)
-	, MonsterHitBoxHand(nullptr)
 	, IsDiceTime_(true)
 	, TimeCheck_(0.f)
 	, CardCount_(0)
@@ -31,6 +31,7 @@ void King_Dice::Start()
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Idle", "KDIce-Idle", 0.04f);
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04f, false);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.05f, true);
 
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04f, false);
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-End", 0.04f, false);
@@ -61,13 +62,13 @@ void King_Dice::Start()
 		MonsterHitBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
 		MonsterHitBox->GetTransform()->SetLocalScaling(float4{250.f,250.f,1.f});
 		MonsterHitBox->GetTransform()->SetLocalPosition(float4{0.f,250.f,static_cast<int>(ZOrder::Z01Actor02)});
-		MonsterHitBox->Off();
+		//MonsterHitBox->Off();
 
-		MonsterHitBoxHand = CreateTransformComponent<GameEngineCollision>();
-		MonsterHitBoxHand->SetCollisionType(CollisionType::Rect);
-		MonsterHitBoxHand->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
-		MonsterHitBoxHand->GetTransform()->SetLocalScaling(float4{ 150.f,250.f,1.f });
-		MonsterHitBoxHand->Off();
+		//MonsterHitBoxHand = CreateTransformComponent<GameEngineCollision>();
+		//MonsterHitBoxHand->SetCollisionType(CollisionType::Rect);
+		//MonsterHitBoxHand->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
+		//MonsterHitBoxHand->GetTransform()->SetLocalScaling(float4{ 150.f,250.f,1.f });
+		//MonsterHitBoxHand->Off();
 
 		Hand_.Collision = CreateTransformComponent<GameEngineCollision>();
 		Hand_.Collision->SetCollisionType(CollisionType::Rect);
@@ -99,6 +100,10 @@ void King_Dice::Start()
 	State_.ChangeState("Intro");
 
 	Cardvector_.reserve(20);
+
+	//////////////½ºÅÝ
+	Hp_ = 100;
+
 }
 
 void King_Dice::Update(float _DeltaTime)
@@ -262,6 +267,28 @@ void King_Dice::CardClear()
 	}
 
 	Cardvector_.clear();
+}
+
+void King_Dice::EffectDefeat(float4 _Pos)
+{
+	Effect* effect = GetLevel()->CreateActor<Effect>();
+	effect->EffectAnimationActor("BossExplosion.png","BossExplosion",0,8,0.04,false);
+	effect->GetTransform()->SetWorldPosition(_Pos);
+}
+
+void King_Dice::EffectDefeatRandom()
+{
+	GameEngineRandom ran;
+	float dist = ran.RandomFloat(0.f, 250.f);
+
+	float RanDegree = ran.RandomFloat(0.f, 360.f);
+	RanDegree *= GameEngineMath::DegreeToRadian;
+
+	float4 Pos = float4{ cosf(RanDegree)* dist,sinf(RanDegree)* dist };
+
+	Pos += GetTransform()->GetWorldPosition();
+
+	EffectDefeat(Pos);
 }
 
 King_Dice::Card::Card()

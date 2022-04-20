@@ -19,8 +19,8 @@ private:
 	void Update(float _DeltaTime) override;
 
 public:
-	GameEngineImageRenderer* AddImageAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
-	GameEngineImageRenderer* AddImageAnimationFolderActor(std::string _TextureName, std::string _AnimationName , float _InterTime, bool _Loop);
+	GameEngineImageRenderer* EffectAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
+	GameEngineImageRenderer* EffectAnimationFolderActor(std::string _TextureName, std::string _AnimationName , float _InterTime, bool _Loop);
 
 
 

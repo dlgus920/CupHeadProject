@@ -2,6 +2,7 @@
 #include "Monster.h"
 
 Monster::Monster()
+	: Hp_(0)
 {
 }
 
@@ -25,4 +26,9 @@ void Monster::Update(float _DeltaTime)
 
 void Monster::ReleaseEvent()
 {
+}
+
+void Monster::DamageToMonster(int _Damage)
+{
+	Hp_ -= _Damage;
 }

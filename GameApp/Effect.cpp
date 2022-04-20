@@ -20,7 +20,7 @@ void Effect::Update(float _DeltaTime)
 
 }
 
-GameEngineImageRenderer* Effect::AddImageAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
+GameEngineImageRenderer* Effect::EffectAnimationActor(std::string _TextureName, std::string _AnimationName, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
 {
 	GameEngineImageRenderer* ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 
@@ -33,7 +33,7 @@ GameEngineImageRenderer* Effect::AddImageAnimationActor(std::string _TextureName
 	return ImageRenderer;
 }
 
-GameEngineImageRenderer* Effect::AddImageAnimationFolderActor(std::string _TextureName, std::string _AnimationName, float _InterTime, bool _Loop)
+GameEngineImageRenderer* Effect::EffectAnimationFolderActor(std::string _TextureName, std::string _AnimationName, float _InterTime, bool _Loop)
 {
 	GameEngineImageRenderer* ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 

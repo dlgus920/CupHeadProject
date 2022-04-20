@@ -3,6 +3,8 @@
 #include "Bullet.h"
 #include "Map.h"
 
+#include "ParryObject.h"
+
 #include <GameEngine/GameEngineCore.h>
 
 //#include <GameEngine/GameEngineImageRenderer.h>
@@ -205,6 +207,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 			if (GameEngineInput::GetInst().Down("Jump"))
 			{
 				Parry_ = true; // 페리중이다.
+
+				dynamic_cast<ParryObject*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
 
 				ChangeAnimation("Cup-Jump-Parry");
 

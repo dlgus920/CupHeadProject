@@ -3,11 +3,12 @@
 #include <GameEngine/GameEngineCollision.h>
 
 #include "Bullet.h"
+#include "Monster.h"
 
-Bullet::Bullet() :
-	BulletCollision_(nullptr),
-	BulletRenderer_(nullptr),
-	BulletLifeTile_(0.f)
+Bullet::Bullet() 
+	: BulletCollision_(nullptr)
+	, BulletRenderer_(nullptr)
+	, BulletLifeTile_(0.f)
 {
 }
 

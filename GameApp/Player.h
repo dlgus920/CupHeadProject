@@ -81,7 +81,7 @@ private: //Member
 	float HitInvinceTimeCheck_;
 	const float HitInvinceTime_ = 1.5f;
 
-	const float C_AnimationInterTime_ = 0.05;
+	const float C_AnimationInterTime_ = 0.05f;
 	const float C_MoveSpeed_ = 500.f;
 	const float C_DashSpeed_ = 600.f;
 	const float C_JumpSpeed0_ = 1600.f;
@@ -93,7 +93,7 @@ private: //Member
 	bool LongJump_;
 	bool Parry_;
 
-	const float C_GravityAcc_ = 3.81;
+	const float C_GravityAcc_ = 3.81f;
 	float GravitySpeed_;
 
 	float TimeCheck_;
@@ -131,6 +131,7 @@ private: //Member
 	bool ColState_Ground;
 	float4 ColState_Pixel_;
 	bool ColState_Hit_;
+	//bool ColState_Parry_;
 	bool ColState_Parry_;
 	
 	bool AniState_DashEnd_;

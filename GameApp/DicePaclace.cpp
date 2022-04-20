@@ -165,12 +165,12 @@ void DicePaclace::LevelStart()
 	{
 		Image* BackImage = CreateActor<Image>();
 		BackImage->ImageSetImage("DicePalaceBack.png");
-		BackImage->SetAdjustImzgeSize();
+		BackImage->ImageRenderer_->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back10) });
 
 		BackImage = CreateActor<Image>();
 		BackImage->ImageSetImage("DicePalaceMain.png");
-		BackImage->SetAdjustImzgeSize();
+		BackImage->ImageRenderer_->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
 		Map* _Map = CreateActor<Map>();

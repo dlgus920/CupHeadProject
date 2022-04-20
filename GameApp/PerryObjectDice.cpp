@@ -2,8 +2,9 @@
 #include "PerryObjectDice.h"
 
 PerryObjectDice::PerryObjectDice()
-	: IsCollision_(false)
-	, DiceNumber_(DiceNumber::Num1)
+	: DiceNumber_(DiceNumber::Num1)
+	, ObjectCollision_(nullptr)
+	, ObjectRenderer_(nullptr)
 {
 
 }
@@ -15,7 +16,8 @@ PerryObjectDice::~PerryObjectDice() // default destructer 디폴트 소멸자
 
 void PerryObjectDice::Start()
 {
-	Object::Start();
+	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
+	ObjectCollision_ = CreateTransformComponent<GameEngineCollision>();
 
 	ObjectCollision_->GetTransform()->SetLocalScaling(float4{100.f,100.f,1.f });
 	ObjectCollision_->SetCollisionType(CollisionType::Rect);
@@ -34,8 +36,6 @@ void PerryObjectDice::Start()
 
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Death",40,57, 0.05,false);// 57프레임 도달시 업데이트 멈춤
 	ObjectRenderer_->SetFrameCallBack("Death",57,std::bind(&PerryObjectDice::Off, this));
-
-
 
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);
@@ -59,32 +59,29 @@ void PerryObjectDice::Start()
 
 void PerryObjectDice::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(ObjectCollision_->GetTransform(), CollisionType::Rect);\
-	if (false == IsCollision_)
-	{
-		if (ObjectCollision_->Collision(static_cast<int>(CollisionGruop::PlayerHitBox)))
-		{
-			switch (DiceNumber_)
-			{
-			case DiceNumber::Num1:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			case DiceNumber::Num2:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			case DiceNumber::Num3:
-				ObjectRenderer_->SetChangeAnimation("Rolling1-1");
-				break;
-			}
+	GetLevel()->PushDebugRender(ObjectCollision_->GetTransform(), CollisionType::Rect);
 
-			IsCollision_ = true;
+	if (true == Parry_)
+	{
+		switch (DiceNumber_)
+		{
+		case DiceNumber::Num1:
+			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+			break;
+		case DiceNumber::Num2:
+			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+			break;
+		case DiceNumber::Num3:
+			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+			break;
 		}
+
+		Parry_ = false;
 	}
 }
 
 void PerryObjectDice::Resset() //Spawn과 동시에 Resset 해야함
 {
-	IsCollision_ = false;
 	ObjectRenderer_->SetChangeAnimation("Idle");
 	On();
 }
