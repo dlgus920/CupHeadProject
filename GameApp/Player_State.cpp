@@ -657,10 +657,15 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 
-		if (true == ColState_Ground)
+		if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 		{
-			return CheckState();
+			TimeCheck_ = 0.f;
+			return "Idle";
 		}
+		//if (true == ColState_Ground)
+		//{
+		//	return CheckState();
+		//}
 	}
 
 	if (HitDir_.x > 0.f)
@@ -714,4 +719,87 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 void Player::Dash_End()
 {
 	AniState_DashEnd_ = false;
+}
+
+
+void Player::Intro_Start()
+{
+	PlayerImageRenderer->SetChangeAnimation("Cup-Intro");
+}
+StateInfo Player::Intro_Update(StateInfo _state, float _DeltaTime)
+{
+	if (true == AniState_IntroEnd_)
+	{
+		return "Playing";
+	}
+
+	return StateInfo();
+}
+void Player::Intro_End()
+{
+	AniState_IntroEnd_ = false;
+}
+
+void Player::Playing_Start()
+{
+	State_.ChangeState("Idle");
+}
+StateInfo Player::Playing_Update(StateInfo _state, float _DeltaTime)
+{
+	KeyUpdate();
+	GroundCollisonUpdate();
+	ParryCollisonUpdate();
+	HitCollisonUpdate();
+	StateUpdate(_DeltaTime);
+
+	if (true == HitInvince_)
+	{
+		//반짝임 효과
+
+		HitInvinceTimeCheck_ += _DeltaTime;
+
+		PlayerHitBox->Off();
+		//컬리젼 해제
+
+		if (blit_)
+		{
+			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,0.6f });
+			blit_ = false;
+		}
+		else
+		{
+			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
+			blit_ = true;
+		}
+
+		if (HitInvinceTime_ <= HitInvinceTimeCheck_)
+		{
+			PlayerHitBox->On();
+			HitInvince_ = false;
+			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
+			HitInvinceTimeCheck_ = 0.f;
+			//반짝임 효과 해제
+		}
+	}
+
+	return StateInfo();
+}
+void Player::Playing_End()
+{
+
+}
+
+void Player::End_Start()
+{
+	//이게 호출될때 바닥에 착지한 상태일것, (필히 자연스러운 흐름으로 Idle State에서 넘어오게 만들것,)
+
+	ChangeAnimation("Cup-Idle");
+}
+StateInfo Player::End_Update(StateInfo _state, float _DeltaTime) 
+{
+	return StateInfo();
+}
+void Player::End_End() 
+{
+
 }

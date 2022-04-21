@@ -6,6 +6,8 @@
 
 #include "PerryObjectDice.h"
 
+#include "Dice_Card.h"
+
 King_Dice::King_Dice()
 	: State_(this)
 	, BattleState_(this)
@@ -18,6 +20,7 @@ King_Dice::King_Dice()
 	, AniEnd_Attack_Body_Birth_(false)
 	, AniEnd_Attack_Body_End_(false)
 	, AniEnd_Attack_Hand_Birth_(false)
+	, Defeat_(false)
 {
 }
 
@@ -178,92 +181,139 @@ void King_Dice::HandIdle()
 
 void King_Dice::SpawnCard()
 {
-	Card _Card;
-	_Card.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-	_Card.Collision = CreateTransformComponent<GameEngineCollision>();
+	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
+	_Dice_Card->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor02)));
 
-	_Card.ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
-	_Card.ImageRenderer->SetChangeAnimation("Card_Club");
+	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Monster);
 
-	_Card.Collision->SetCollisionType(CollisionType::Rect);
-	_Card.Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Monster);
+	_Dice_Card->ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
+	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Club");
+
+	_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 100,220, 1.f });
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+
+		_Dice_Card->SetCardMove(float4{ 400.f,0.f });
+
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+
 	}
 	else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
 	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+
+
+		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
 	}
 
-	_Card.Collision->GetTransform()->SetLocalScaling(float4{ 100.f,220.f, 1.f });
+	Cardvector_.push_back(_Dice_Card);
 
-	Cardvector_.push_back(_Card);
+	//Card _Card;
+	//_Card.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+	//_Card.Collision = CreateTransformComponent<GameEngineCollision>();
+
+
+	//_Card.ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
+	//_Card.ImageRenderer->SetChangeAnimation("Card_Club");
+
+	//_Card.Collision->SetCollisionType(CollisionType::Rect);
+	//_Card.Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Monster);
+
+	//if (Hand_.Hand_Dir_ == Hand_Dir::Left)
+	//{
+	//	_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+	//}
+	//else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
+	//{
+	//	_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+	//}
+
+	//_Card.Collision->GetTransform()->SetLocalScaling(float4{ 100.f,220.f, 1.f });
+
+	//Cardvector_.push_back(_Card);
 }
 
 void King_Dice::SpawnParryCard()
 {
-	Card _Card;
-	_Card.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-	_Card.Collision = CreateTransformComponent<GameEngineCollision>();
+	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
-	_Card.Collision->SetCollisionType(CollisionType::Rect);
-	_Card.Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+	_Dice_Card->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor02)));
 
-	_Card.ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
-	_Card.ImageRenderer->SetChangeAnimation("Card_Hraet");
+	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
-	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
-	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
-	}
-	else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
-	{
-		_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
-		_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
-	}
+	_Dice_Card->ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
+	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Hraet");
 
-	_Card.Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
-
-	Cardvector_.push_back(_Card);
-}
-
-void King_Dice::CardUpdate(float _DeltaTime)
-{
-	float4 MovePos;
+	_Dice_Card-> Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
 	{
-		MovePos= float4{ 400.f * _DeltaTime,0.f,0.f };
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+
+		_Dice_Card->SetCardMove(float4{400.f,0.f});
 	}
 	else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
 	{
-		MovePos = float4{ -400.f * _DeltaTime,0.f,0.f };
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+
+		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
 	}
 
-	for (int i = 0; i < Cardvector_.size(); ++i)
-	{
-		Cardvector_[i].CardMove(MovePos);
-		GetLevel()->PushDebugRender(Cardvector_[i].Collision->GetTransform(), CollisionType::Rect);
-	}
 
+	//Card _Card;
+	//_Card.ImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+	//_Card.Collision = CreateTransformComponent<GameEngineCollision>();
+
+	//_Card.Collision->SetCollisionType(CollisionType::Rect);
+	//_Card.Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+
+	//_Card.ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
+	//_Card.ImageRenderer->SetChangeAnimation("Card_Hraet");
+
+	//if (Hand_.Hand_Dir_ == Hand_Dir::Left)
+	//{
+	//	_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.Collision->GetTransform()->SetLocalPosition(float4{ -410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+	//}
+	//else if (Hand_.Hand_Dir_ == Hand_Dir::Right)
+	//{
+	//	_Card.ImageRenderer->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.Collision->GetTransform()->SetLocalPosition(float4{ 410.f, -150.f, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Card.ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+	//}
+
+	//_Card.Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
+
+	//Cardvector_.push_back(_Card);
 }
 
 void King_Dice::CardClear()
 {
 	for (int i = 0; i < Cardvector_.size(); ++i)
 	{
-		Cardvector_[i].ImageRenderer->Death();
-		Cardvector_[i].Collision->Death();
+		Cardvector_[i]->Death();
 	}
 
 	Cardvector_.clear();

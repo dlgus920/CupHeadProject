@@ -25,5 +25,7 @@ private:
 	void LevelChangeStartEvent() override;
 
 public:
+	void CupVictory();
+	void CupGameStart();
 };
 

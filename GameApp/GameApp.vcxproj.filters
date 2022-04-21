@@ -92,9 +92,6 @@
     <ClCompile Include="PositionComponent.cpp">
       <Filter>GameComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Actor\Object\Base</Filter>
-    </ClCompile>
     <ClCompile Include="StagePoint.cpp">
       <Filter>Actor\Object</Filter>
     </ClCompile>
@@ -205,9 +202,6 @@
     <Filter Include="Actor\Object">
       <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Object\Base">
-      <UniqueIdentifier>{1d59a653-daa2-4573-9f39-d927ad516bcb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Object\ParryObject">
       <UniqueIdentifier>{4709b944-ae14-4f87-b162-5a022a821ec5}</UniqueIdentifier>
     </Filter>
@@ -291,9 +285,6 @@
     <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="PositionComponent.h">
       <Filter>GameComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Actor\Object\Base</Filter>
     </ClInclude>
     <ClInclude Include="StagePoint.h">
       <Filter>Actor\Object</Filter>

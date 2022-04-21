@@ -208,3 +208,13 @@ void DicePaclace::LevelChangeEndEvent()
 void DicePaclace::LevelChangeStartEvent()
 {
 }
+
+void DicePaclace::CupGameStart()
+{
+
+}
+
+void DicePaclace::CupVictory()
+{
+	Player_->SetVictory();
+}

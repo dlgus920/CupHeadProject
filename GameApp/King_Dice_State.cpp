@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "King_Dice.h"
+#include "DicePaclace.h"
 
 
 void King_Dice::Intro_Start()
@@ -46,8 +47,6 @@ void King_Dice::Idle_End_()
 
 void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
-	CardClear();
-
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
 
 	MonsterHitBox->On();
@@ -61,60 +60,67 @@ StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 		return "Defeat";
 	}
 
-#ifdef _DEBUG
-	if (true == AniEnd_Attack_Body_Birth_)
-	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
-
-		Hand_.HandOn();
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
-
-		AniEnd_Attack_Body_Birth_ = false;
-	}
-
-	if (true == AniEnd_Attack_Hand_Birth_)
-	{
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
-
-		Hand_.IsAttacking_ = true;
-
-		AniEnd_Attack_Hand_Birth_ = false;
-	}
-
 	if (true == AniEnd_Attack_Body_End_)
 	{
 		return "Idle";
+
+		CardClear();
 	}
+
+	else
+	{
+
+#ifdef _DEBUG
+
+		if (true == AniEnd_Attack_Body_Birth_)
+		{
+			MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
+
+			Hand_.HandOn();
+			Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
+
+			AniEnd_Attack_Body_Birth_ = false;
+		}
+
+		if (true == AniEnd_Attack_Hand_Birth_)
+		{
+			Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
+
+			Hand_.IsAttacking_ = true;
+
+			AniEnd_Attack_Hand_Birth_ = false;
+		}
 #endif // !_DEBUG
 
-	if (true == Hand_.IsAttacking_)
-	{
-		TimeCheck_ += _DeltaTime;
-
-		if (TimeCheck_ > 0.4f)
+		if (true == Hand_.IsAttacking_)
 		{
-			CardCount_++;
+			TimeCheck_ += _DeltaTime;
 
-			if ((CardCount_ % 3) == 0)
+			if (TimeCheck_ > 0.4f)
 			{
-				SpawnParryCard();
-			}
-			else
-			{
-				SpawnCard();
-			}
+				CardCount_++;
 
-			if (CardCount_ > 10)
-			{
-				MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-End");
-				Hand_.IsAttacking_ = false;
-				Hand_.HandOff();
-			}
+				if ((CardCount_ % 3) == 0)
+				{
+					SpawnParryCard();
+				}
+				else
+				{
+					SpawnCard();
+				}
 
-			TimeCheck_ = 0.f;
+				if (CardCount_ > 10)
+				{
+					MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-End");
+					Hand_.IsAttacking_ = false;
+					Hand_.HandOff();
+				}
+
+				TimeCheck_ = 0.f;
+			}
 		}
-	}
 
+	}
 	return StateInfo();
 }
 void King_Dice::Attack_End_()
@@ -129,6 +135,8 @@ void King_Dice::Attack_End_()
 	AniEnd_Attack_Body_Birth_ = false;
 	AniEnd_Attack_Body_End_ = false;
 	AniEnd_Attack_Hand_Birth_ = false;
+
+	CardClear();
 }
 
 void King_Dice::Defeat_Start()
@@ -138,6 +146,10 @@ void King_Dice::Defeat_Start()
 	Hand_.HandOff();
 
 	MonsterImageRenderer->SetChangeAnimation("KDice-Defeat");
+
+	Defeat_ = true;
+
+	GetLevel<DicePaclace>()->CupVictory();
 }
 StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
 {
@@ -178,7 +190,6 @@ void King_Dice::BattleState_Battle_Start()
 StateInfo King_Dice::BattleState_Battle_Update(StateInfo _StateInfo, float _DeltaTime)
 {
 	//주기적인 싸이클 속에서 공격, idle 반복 시킴
-	CardUpdate(_DeltaTime);
 
 	return StateInfo();
 }

@@ -220,10 +220,6 @@
     </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="Object.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="ParryObject.cpp">
       <SubType>
       </SubType>
@@ -359,10 +355,6 @@
     </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="Object.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ParryObject.h">
       <SubType>
       </SubType>

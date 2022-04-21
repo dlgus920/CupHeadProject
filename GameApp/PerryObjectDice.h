@@ -24,7 +24,7 @@ private:	// member Var
 	GameEngineImageRenderer* ObjectRenderer_;
 
 	DiceNumber DiceNumber_;
-public:
+private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 

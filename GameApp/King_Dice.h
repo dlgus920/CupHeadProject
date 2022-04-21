@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineFSM.h>
 
+class Dice_Card;
 class King_Dice : public Monster
 {
 public:
@@ -28,6 +29,7 @@ private:
 
 	std::string IdleNextState_;
 
+	bool Defeat_;
 
 	int CardCount_;
 	float TimeCheck_;
@@ -64,7 +66,7 @@ private:
 		void HandBirth();
 	};
 
-	struct Card : public ParryObject
+	struct Card
 	{
 		Card();
 		~Card();
@@ -74,7 +76,7 @@ private:
 		void CardMove(float4 Move);
 	};
 
-	std::vector<Card> Cardvector_;
+	std::vector<Dice_Card*> Cardvector_;
 	Hand Hand_;
 
 private:	// member Var
@@ -126,7 +128,6 @@ private:
 
 	void SpawnCard();
 	void SpawnParryCard();
-	void CardUpdate(float _DeltaTime);
 	void CardClear();
 
 	void EffectDefeat(float4 _Pos);

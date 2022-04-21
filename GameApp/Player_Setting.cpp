@@ -21,7 +21,7 @@ void Player::DefalutSetting()
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);
 
-	State_.ChangeState("Idle");
+	GameState_.ChangeState("Intro");
 
 	ShootingPos_[static_cast<int>(ShootingDir::Right)] = float4{ 80.f,-50.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 	ShootingPos_[static_cast<int>(ShootingDir::Left)] = float4{ -80.f,-50.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
@@ -74,6 +74,9 @@ void Player::StateSetting()
 	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
 	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
 
+	GameState_.CreateState("Intro", &Player::Intro_Start, &Player::Intro_Update, &Player::Intro_End);
+	GameState_.CreateState("Playing", &Player::Playing_Start, &Player::Playing_Update, &Player::Playing_End);
+	GameState_.CreateState("End", &Player::End_Start, &Player::End_Update, &Player::End_End);
 }
 
 void Player::ComponentSetting()
@@ -118,6 +121,11 @@ void Player::ComponentSetting()
 
 void Player::AnimationSetting()
 {
+	// INTRO
+	{
+		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Intro", 220, 247, C_AnimationInterTime_);
+		PlayerImageRenderer->SetEndCallBack("Cup-Intro", std::bind(&Player::IntroAniamtionEnd, this));
+	}
 	// IDLE
 	{		
 		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Idle", 0, 7, C_AnimationInterTime_);

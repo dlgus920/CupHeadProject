@@ -22,47 +22,19 @@ void Player::Update_DEBUG()
 
 void Player::Update(float _DeltaTime)
 {
-	KeyUpdate();
-	GroundCollisonUpdate();
-	ParryCollisonUpdate();
-	HitCollisonUpdate();
-	StateUpdate(_DeltaTime);
+	GameState_.Update(_DeltaTime);
 
-	//ImageScaleUpdate();
+	//KeyUpdate();
+		//GroundCollisonUpdate();
+		//ParryCollisonUpdate();
+		//HitCollisonUpdate();
+		//StateUpdate(_DeltaTime);
 
-	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+		//ImageScaleUpdate();
 
-	//State_Update_는 State_.Update중에 설정함
+		//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
-	if (true == HitInvince_)
-	{
-		//반짝임 효과
-
-		HitInvinceTimeCheck_ += _DeltaTime;
-
-		PlayerHitBox->Off();
-		//컬리젼 해제
-
-		if (blit_)
-		{
-			PlayerImageRenderer->SetResultColor(float4{1.f,1.f,1.f,0.6f});
-			blit_ = false;
-		}
-		else
-		{
-			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
-			blit_ = true;
-		}
-
-		if (HitInvinceTime_ <= HitInvinceTimeCheck_)
-		{
-			PlayerHitBox->On();
-			HitInvince_ = false;
-			PlayerImageRenderer->SetResultColor(float4{ 1.f,1.f,1.f,1.f });
-			HitInvinceTimeCheck_ = 0.f;
-			//반짝임 효과 해제
-		}
-	}
+		//State_Update_는 State_.Update중에 설정함
 
 #ifdef _DEBUG
 	Update_DEBUG();

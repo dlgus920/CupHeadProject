@@ -120,6 +120,22 @@ void WorldMapScene::LevelStart()
 		GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
 
 	}
+	{
+		IrisImage_ = CreateActor<Image>();
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
+		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris_Out");
+
+
+		//IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris", std::bind(&Image::Death, this));
+		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
+
+		IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+		IrisImage_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,0.f,100.f });
+
+		IrisImage_->ImageRenderer_->Off();
+		//IrisImage_->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.f });
+	}
 }
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
@@ -151,22 +167,20 @@ void WorldMapScene::ChangeScene(std::string _Scene)
 
 void WorldMapScene::SetScreenIris(bool _In)
 {
-	float4 pos = GetMainCamera()->GetTransform()->GetWorldPosition();
+	IrisImage_->ImageRenderer_->On();
 
-	IrisImage_ = CreateActor<Image>();
-	IrisImage_->ImageCreateAnimationFolder("ScreenIris", "ScreenIris", 0.055f, false);
-	IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-	IrisImage_->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
+	float4 pos = GetMainCamera()->GetTransform()->GetWorldPosition();
 
 	if (false == _In)
 	{
-		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris", std::bind(&Image::Death, this));
+		IrisImage_->ImageRenderer_->SetChangeAnimation("ScreenIris_In");
 	}
 	else
 	{
-		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris", std::bind(&WorldMapScene::ScreenFadeEnd, this));
-		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris");
+		IrisImage_->ImageRenderer_->SetChangeAnimation("ScreenIris_Out");
 	}
+
+	IrisImage_->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
 }
 
 void WorldMapScene::ScreenFadeEnd()
@@ -186,4 +200,5 @@ void WorldMapScene::ScreenFadeEnd()
 	GameEngineCore::LevelChange("LoaddingScene");
 
 	IrisImage_->Death();
+
 }

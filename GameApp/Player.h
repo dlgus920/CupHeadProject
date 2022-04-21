@@ -63,6 +63,7 @@ private: //Member
 	Bottom_HP* Bottom_HP_;
 
 	GameEngineFSM<Player> State_;
+	GameEngineFSM<Player> GameState_;
 
 	GameEngineTransform* Camera_;
 
@@ -111,7 +112,7 @@ private: //Member
 
 	//bool KeyState_Update_;
 	//bool ColState_Update_;
-	//bool State_Update_;
+	bool Update_State_;
 
 	bool KeyState_Up_;
 	bool KeyState_Down_;
@@ -135,6 +136,7 @@ private: //Member
 	bool ColState_Parry_;
 	
 	bool AniState_DashEnd_;
+	bool AniState_IntroEnd_;
 
 	float4 HitDir_;
 
@@ -182,6 +184,8 @@ private: //Func
 	void GravityClear();
 
 	const float4 GetShootPos();
+
+
 
 private: //Effect
 	void EffectDust();
@@ -251,6 +255,19 @@ private: //State
 	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
 	void Dash_End();
 
+
+
+	void Intro_Start();
+	StateInfo Intro_Update(StateInfo _state, float _DeltaTime);
+	void Intro_End();
+
+	void Playing_Start();
+	StateInfo Playing_Update(StateInfo _state, float _DeltaTime);
+	void Playing_End();
+
+	void End_Start();
+	StateInfo End_Update(StateInfo _state, float _DeltaTime);
+	void End_End();
 #pragma endregion
 
 public: //Inline
@@ -262,6 +279,16 @@ public: //Inline
 	//{
 	//	State_Update_ = false;
 	//}
+	void SetVictory()
+	{
+		Update_State_ = false;
+		GameState_.ChangeState("End");
+	}
+
+	void SetStart()
+	{
+		GameState_.ChangeState("Intro");
+	}
 
 	inline const std::string GetCurState()
 	{
@@ -273,5 +300,9 @@ public: //Inline
 		AniState_DashEnd_ = true;
 	}
 
+	inline void IntroAniamtionEnd()
+	{
+		AniState_IntroEnd_ = true;
+	}
 };
 

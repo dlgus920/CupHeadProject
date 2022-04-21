@@ -13,7 +13,8 @@ StagePoint::~StagePoint() // default destructer 디폴트 소멸자
 
 void StagePoint::Start()
 {
-	Object::Start();
+	ObjectCollision_ = CreateTransformComponent<GameEngineCollision>();
+	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 
 	ObjectRenderer_->SetImage("world_platforming_icon_0001.png");
 
