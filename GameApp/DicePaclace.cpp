@@ -8,6 +8,7 @@
 
 #include "Map.h"
 #include "Image.h"
+#include "Effect.h"
 #include "PerryObjectDice.h"
 #include "King_Dice.h"
 #include "Player.h"
@@ -45,6 +46,11 @@ void DicePaclace::LevelResourcesLoad()
 			Texture->Cut(10, 1);
 
 		}
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("Knockout"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ReadyWALLOP!"));
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("YouDied"));
+
 		TextureDir.MoveChild("KingDice(Boss)");
 
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
@@ -207,6 +213,11 @@ void DicePaclace::LevelChangeEndEvent()
 
 void DicePaclace::LevelChangeStartEvent()
 {
+	Effect* Effect_ = CreateActor<Effect>();
+	Effect_->EffectAnimationFolderActor("ReadyWALLOP!","ReadyWALLOP!",0.04f,false)
+		->GetTransform()-> SetLocalScaling(float4{ 1280.f,720.f,1.f });
+
+	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
 
 void DicePaclace::CupGameStart()
