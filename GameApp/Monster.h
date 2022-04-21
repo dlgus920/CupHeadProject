@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 class Monster : public GameEngineActor
 {
@@ -10,9 +11,10 @@ public:
 
 	// delete Function
 	Monster(const Monster& _Other) = delete;
-	Monster(Monster&& _Other) noexcept = delete;
+	Monster(Monster&& _Other) = delete;
 	Monster& operator=(const Monster& _Other) = delete;
-	Monster& operator=(Monster&& _Other) noexcept = delete;
+	Monster& operator=(Monster&& _Other) = delete;
+
 protected:
 	virtual void Start();
 	virtual void TransformUpdate();
@@ -20,10 +22,16 @@ protected:
 	virtual void ReleaseEvent();
 
 protected:
+	GameEngineRandom Random_;
 	int Hp_;
 
 public:
 	void DamageToMonster(int _Damage);
 
-};
+protected:
 
+	void EffectDefeat(float4 _Pos);
+	void EffectDefeatRandom(float _Radius);
+
+
+};

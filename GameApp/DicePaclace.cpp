@@ -5,6 +5,7 @@
 #include <GameEngine/GameEngineTransform.h>
 #include <GameEngine/CameraActor.h>
 #include <GameEngine/MouseActor.h>
+#include <GameEngine/GameEngineCore.h>
 
 #include "Map.h"
 #include "Image.h"
@@ -213,19 +214,60 @@ void DicePaclace::LevelChangeEndEvent()
 
 void DicePaclace::LevelChangeStartEvent()
 {
+	{
+		Image* Back = CreateActor<Image>();
+		Back->ImageSetImage("Loading_background.png");
+		Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
+		Back->ImageRenderer_-> GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+		Back->ImageRenderer_->SetResultColor(float4{1.f,1.f,1.f,0.3f});
+	
+
+		Effect* Effect_ = CreateActor<Effect>();
+		GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", 0.04f, false);
+
+		_GameEngineImageRenderer->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+		_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
+
+		Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
+	}
+}
+
+void DicePaclace::GamePlayStart()
+{
+	Image* Back = CreateActor<Image>();
+	Back->ImageSetImage("Loading_background.png");
+	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
+	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
+
+
 	Effect* Effect_ = CreateActor<Effect>();
-	Effect_->EffectAnimationFolderActor("ReadyWALLOP!","ReadyWALLOP!",0.04f,false)
-		->GetTransform()-> SetLocalScaling(float4{ 1280.f,720.f,1.f });
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", 0.04f, false);
+
+	_GameEngineImageRenderer->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+	_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
 
-void DicePaclace::CupGameStart()
-{
-
-}
-
-void DicePaclace::CupVictory()
+void DicePaclace::GamePlayVictory()
 {
 	Player_->SetVictory();
+
+
+	//아주 잠깐 시간이 멈추게 해야함 밑에놈만 제외하고,
+
+	Effect* Effect_ = CreateActor<Effect>();
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", 0.04f, false);
+
+	_GameEngineImageRenderer->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+
+	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
+	
+	//GameEngineCore::SetTimeRate(0.f);
+
+	//float Time = GameEngineTime::GetInst().GetDeltaTime();
+
+	//해야할일, 레벨에 존재하는 모든 엑터의 컴포넌트 리스트를 조져서 렌더러만 쏙 빼와서 플레이 비율 조정하기
+
 }

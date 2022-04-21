@@ -47,6 +47,8 @@ void King_Dice::Idle_End_()
 
 void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
+	CardClear();
+
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
 
 	MonsterHitBox->On();
@@ -96,7 +98,7 @@ StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 		{
 			TimeCheck_ += _DeltaTime;
 
-			if (TimeCheck_ > 0.4f)
+			if (TimeCheck_ > 0.3f)
 			{
 				CardCount_++;
 
@@ -135,12 +137,12 @@ void King_Dice::Attack_End_()
 	AniEnd_Attack_Body_Birth_ = false;
 	AniEnd_Attack_Body_End_ = false;
 	AniEnd_Attack_Hand_Birth_ = false;
-
-	CardClear();
 }
 
 void King_Dice::Defeat_Start()
 {
+	CardClear();
+
 	TimeCheck_ = 0.f;
 	MonsterHitBox->Off();
 	Hand_.HandOff();
@@ -149,7 +151,7 @@ void King_Dice::Defeat_Start()
 
 	Defeat_ = true;
 
-	GetLevel<DicePaclace>()->CupVictory();
+	GetLevel<DicePaclace>()->GamePlayVictory();
 }
 StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
 {
@@ -159,7 +161,7 @@ StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
 	{
 		TimeCheck_ = 0.f;
 
-		EffectDefeatRandom();
+		EffectDefeatRandom(250.f);
 	}
 
 	return StateInfo();
@@ -179,8 +181,6 @@ StateInfo King_Dice::Chop_Update(StateInfo _StateInfo, float _DeltaTime)
 void King_Dice::Chop_End_()
 {
 }
-
-
 
 
 void King_Dice::BattleState_Battle_Start()

@@ -66,16 +66,6 @@ private:
 		void HandBirth();
 	};
 
-	struct Card
-	{
-		Card();
-		~Card();
-
-		GameEngineImageRenderer* ImageRenderer;
-		GameEngineCollision* Collision;
-		void CardMove(float4 Move);
-	};
-
 	std::vector<Dice_Card*> Cardvector_;
 	Hand Hand_;
 
@@ -130,8 +120,8 @@ private:
 	void SpawnParryCard();
 	void CardClear();
 
-	void EffectDefeat(float4 _Pos);
-	void EffectDefeatRandom();
+	//void EffectDefeat(float4 _Pos);
+	//void EffectDefeatRandom(float _Radius);
 
 private:
 
