@@ -20,7 +20,6 @@ public:
 	float TimeCheck_;
 	float BlendRate_;
 
-
 protected:
 	virtual void LevelResourcesLoad();
 	virtual void LevelStart();

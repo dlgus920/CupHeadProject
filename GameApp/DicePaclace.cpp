@@ -175,7 +175,7 @@ void DicePaclace::LevelStart()
 	}
 
 	{
-		BlendRate_ = 0.f;
+		BlendRate_ = 1.f;
 
 		FadeImage_ = CreateActor<Image>();
 
@@ -218,7 +218,7 @@ void DicePaclace::LevelStart()
 	{
 		PhaseState_.CreateState("Intro",&DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
 		PhaseState_.CreateState("Playing",&DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
-		PhaseState_.CreateState("End",&DicePaclace::End_Start, &DicePaclace::End_Update, &DicePaclace::End_End);
+		//PhaseState_.CreateState("End",&DicePaclace::End_Start, &DicePaclace::End_Update, &DicePaclace::End_End);
 	}
 }
 
@@ -295,6 +295,17 @@ void DicePaclace::Intro_Start()
 }
 void DicePaclace::Intro_Update(float _DeltaTime)
 {
+	BlendRate_ -= _DeltaTime;
+	if (0.f >= BlendRate_)
+	{
+		BlendRate_ = 0.f;
+
+		PhaseState_.ChangeState("Playing");
+		return;
+	}
+
+	FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
 }
 void DicePaclace::Intro_End()
 {
@@ -302,6 +313,7 @@ void DicePaclace::Intro_End()
 
 void DicePaclace::Playing_Start()
 {
+	//NextScene_ = "WorldMap";
 }
 
 void DicePaclace::Playing_Update(float _DeltaTime)
@@ -316,16 +328,16 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 		}
 
-		if (TimeCheck_ > 4.f)
+		if (BlendRate_ >= 1.f)
 		{
+			BlendRate_ = 1.f;
 #ifdef _DEBUG
 			if (nullptr == GameEngineCore::LevelFind("WorldMap"))
 			{
 				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
 			}
 #endif // _DEBUG
-
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(NextScene_);;
 
 			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
@@ -336,15 +348,15 @@ void DicePaclace::Playing_End()
 {
 }
 
-void DicePaclace::End_Start()
-{
-}
-void DicePaclace::End_Update(float _DeltaTime)
-{
-}
-void DicePaclace::End_End()
-{
-}
+//void DicePaclace::End_Start()
+//{
+//}
+//void DicePaclace::End_Update(float _DeltaTime)
+//{
+//}
+//void DicePaclace::End_End()
+//{
+//}
 
 void DicePaclace::GamePlayVictory()
 {
