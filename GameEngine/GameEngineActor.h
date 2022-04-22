@@ -30,6 +30,8 @@ public:
 	}
 
 private:
+	float PlayRate_;
+
 	GameEngineTransform Transform_;
 	GameEngineLevel* Level_;
 	// Status
@@ -51,6 +53,11 @@ private:
 
 public:
 	//custom
+
+	void SetPlayRate(float _PlayRate_)
+	{
+		PlayRate_ = _PlayRate_;
+	}
 
 	template <typename Level>
 	Level* GetLevel()

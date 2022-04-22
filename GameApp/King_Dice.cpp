@@ -202,7 +202,7 @@ void King_Dice::SpawnCard()
 		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
 	}
 
-	_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 100,220, 1.f });
+	_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 80,210, 1.f });
 
 	Cardvector_.push_back(_Dice_Card);
 }

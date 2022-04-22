@@ -14,7 +14,9 @@
 #include "King_Dice.h"
 #include "Player.h"
 
-DicePaclace::DicePaclace() // default constructer 디폴트 생성자
+DicePaclace::DicePaclace() 
+	: King_Dice_(nullptr)
+	, Player_(nullptr)
 {
 
 }
@@ -191,7 +193,7 @@ void DicePaclace::LevelStart()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(900.f, -400.0f, static_cast<float>(ZOrder::Z01Actor00Player01)));
+		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z01Actor00Player01)));
 	}
 
 	{
@@ -230,6 +232,11 @@ void DicePaclace::LevelChangeStartEvent()
 
 		Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 	}
+
+	Image* Back = CreateActor<Image>();
+	Back->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f,true);
+	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
+	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 }
 
 void DicePaclace::GamePlayStart()
@@ -241,6 +248,10 @@ void DicePaclace::GamePlayStart()
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
 
 
+
+
+	
+
 	Effect* Effect_ = CreateActor<Effect>();
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", 0.04f, false);
 
@@ -250,24 +261,25 @@ void DicePaclace::GamePlayStart()
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
 
+void DicePaclace::KnockoutEnd()
+{
+	GameEngineCore::SetTimeRate(1.f);
+}
+
 void DicePaclace::GamePlayVictory()
 {
 	Player_->SetVictory();
 
-
-	//아주 잠깐 시간이 멈추게 해야함 밑에놈만 제외하고,
-
 	Effect* Effect_ = CreateActor<Effect>();
+
+	GameEngineCore::SetTimeRate	(0.0001f);
+	Effect_->SetPlayRate		(10000.f);
+
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", 0.04f, false);
+	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&Image::Death, Effect_));
+	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&DicePaclace::KnockoutEnd, this));
 
 	_GameEngineImageRenderer->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
-	
-	//GameEngineCore::SetTimeRate(0.f);
-
-	//float Time = GameEngineTime::GetInst().GetDeltaTime();
-
-	//해야할일, 레벨에 존재하는 모든 엑터의 컴포넌트 리스트를 조져서 렌더러만 쏙 빼와서 플레이 비율 조정하기
-
 }

@@ -210,10 +210,6 @@ public:
 		IsPlay_ = true;
 	}
 
-	inline void SetPlayRate(float _PlayRate)
-	{
-		PlayRate_ = _PlayRate;
-	}
 protected:
 	void ImageRendererStart();
 	void Update(float _DeltaTime) override;
@@ -227,7 +223,6 @@ private:
 	bool IsPlay_;
 	GameEngineTexture* CurTexture;
 
-	float PlayRate_;
 
 	void Start() override;
 

@@ -27,5 +27,7 @@ private:
 public:
 	void GamePlayVictory();
 	void GamePlayStart();
+
+	void KnockoutEnd();
 };
 

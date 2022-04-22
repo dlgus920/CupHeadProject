@@ -170,7 +170,6 @@ GameEngineImageRenderer::GameEngineImageRenderer()
 	, CurAnimation_(nullptr)
 	, CurTexture(nullptr)
 	, IsPlay_(true)
-	, PlayRate_(1.f)
 {
 }
 
@@ -340,7 +339,7 @@ void GameEngineImageRenderer::Update(float _DeltaTime)
 		return;
 	}
 
-	CurAnimation_->Update(_DeltaTime* PlayRate_);
+	CurAnimation_->Update(_DeltaTime);
 }
 
 void GameEngineImageRenderer::SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack)
