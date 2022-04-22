@@ -15,112 +15,115 @@
       <Filter>UserCore\Resources</Filter>
     </ClCompile>
     <ClCompile Include="TopUI.cpp">
-      <Filter>02. Actor\01. Level.1\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>01. Scene\04. PlayLevel</Filter>
+      <Filter>00. Base\01. Actor\UI</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
-      <Filter>01. Scene\00. MainLoad</Filter>
+      <Filter>01. App\02. Scene\00. MainLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>01. App\01. Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01. App\01. Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Setting.cpp">
+      <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClCompile>
     <ClCompile Include="LoaddingScene.cpp">
-      <Filter>01. Scene\01. LoadingScene</Filter>
+      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapScene.cpp">
-      <Filter>01. Scene\02. WolrdMap</Filter>
+      <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClCompile>
     <ClCompile Include="StoryScene.cpp">
-      <Filter>01. Scene\03. StoryScene</Filter>
+      <Filter>01. App\02. Scene\03. StoryScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>00. Base\01. Actor\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>00. Base\01. Actor\MOB\Base</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>02. Actor\01. Level.1\Image</Filter>
+      <Filter>00. Base\01. Actor\Image</Filter>
     </ClCompile>
     <ClCompile Include="MainLoading.cpp">
-      <Filter>01. Scene\00. MainLoad</Filter>
+      <Filter>01. App\02. Scene\00. MainLoad</Filter>
     </ClCompile>
-    <ClCompile Include="DicePaclace.cpp">
-      <Filter>01. Scene\04. PlayLevel\Stage</Filter>
+    <ClCompile Include="Player_Update.cpp">
+      <Filter>01. App\01. Actor\Player\PlayMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>00. Base\01. Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Defalut.cpp">
+      <Filter>01. App\01. Actor\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Spread.cpp">
+      <Filter>01. App\01. Actor\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>01. App\01. Actor\Object\Bullet\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Guided.cpp">
+      <Filter>01. App\01. Actor\Object\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Store.cpp">
-      <Filter>01. Scene\02. WolrdMap\Stage</Filter>
+      <Filter>01. App\02. Scene\02. WolrdMap\Stage</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer.cpp">
-      <Filter>02. Actor\02 .Level.2\WorldMap</Filter>
+      <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer_Setting.cpp">
-      <Filter>02. Actor\02 .Level.2\WorldMap</Filter>
+      <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer_Update.cpp">
-      <Filter>02. Actor\02 .Level.2\WorldMap</Filter>
+      <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="PositionComponent.cpp">
       <Filter>GameComponent</Filter>
     </ClCompile>
+    <ClCompile Include="PerryObjectDice.cpp">
+      <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
+    </ClCompile>
     <ClCompile Include="WorldMapPlayer_State.cpp">
-      <Filter>02. Actor\02 .Level.2\WorldMap</Filter>
+      <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="Bottom_Card.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\UI\Bottom UI</Filter>
+      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
     </ClCompile>
     <ClCompile Include="Bottom_HP.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\UI\Bottom UI</Filter>
+      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>02. Actor\01. Level.1\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_Setting.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_State.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_Update.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="King_Dice.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\King_Dice</Filter>
+      <Filter>00. Base\01. Actor\Effect</Filter>
     </ClCompile>
     <ClCompile Include="King_Dice_State.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\King_Dice</Filter>
+      <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClCompile>
-    <ClCompile Include="ParryObject.cpp">
-      <Filter>02. Actor\01. Level.1\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="PerryObjectDice.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\ParryObject</Filter>
+    <ClCompile Include="King_Dice.cpp">
+      <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClCompile>
     <ClCompile Include="Dice_Card.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\ParryObject</Filter>
+      <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>02. Actor\01. Level.1\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>02. Actor\01. Level.1\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>02. Actor\02 .Level.2</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet_Defalut.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet_Guided.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet_Spread.cpp">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\Bullet</Filter>
+    <ClCompile Include="ParryObject.cpp">
+      <Filter>00. Base\01. Actor\Object</Filter>
     </ClCompile>
     <ClCompile Include="StagePoint.cpp">
-      <Filter>02. Actor\02 .Level.2\WorldMap\Object</Filter>
+      <Filter>01. App\01. Actor\Object</Filter>
     </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>02. Actor\01. Level.1\UI</Filter>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>00. Base\01. Actor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>01. App\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBase.cpp">
+      <Filter>00. Base\02. Scene\00. Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DicePaclace.cpp">
+      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,86 +142,98 @@
     <Filter Include="GameComponent">
       <UniqueIdentifier>{bf49a85c-e35e-450e-8ada-b49c5ab368fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor">
-      <UniqueIdentifier>{5b1798ae-0845-4fbe-8a16-76e0e38dd1a8}</UniqueIdentifier>
+    <Filter Include="01. App">
+      <UniqueIdentifier>{e231d113-cd3a-4a6a-8477-b4af2f1bb0c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\01. Level.1">
-      <UniqueIdentifier>{cdec93a9-3d32-48f0-a467-b4b2f3f430f4}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor">
+      <UniqueIdentifier>{a8b1c9e7-a812-480a-9707-b86ed0b6575a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\01. Level.1\Effect">
-      <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\01. Level.1\Image">
-      <UniqueIdentifier>{8877c995-7c38-4347-b50d-545d55bd3789}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\01. Level.1\Monster">
-      <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\01. Level.1\Object">
-      <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\01. Level.1\UI">
-      <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\02 .Level.2">
-      <UniqueIdentifier>{90e9bd9a-ee4c-4c19-8dd1-ecb218aded7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap">
-      <UniqueIdentifier>{79f1951c-21a4-468e-838c-1010edad0e6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\Player">
+    <Filter Include="01. App\01. Actor\Player">
       <UniqueIdentifier>{9be1d242-92bc-4502-851d-9beafd04356a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\King_Dice">
-      <UniqueIdentifier>{dbbfae0a-79c1-4863-b751-004ce6407b47}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\Player\PlayMap">
+      <UniqueIdentifier>{79f1951c-21a4-468e-838c-1010edad0e6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\Object">
-      <UniqueIdentifier>{fee26311-4e46-468f-bdf7-cebb79548f9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\Object\ParryObject">
-      <UniqueIdentifier>{4709b944-ae14-4f87-b162-5a022a821ec5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Actor\02 .Level.2\WorldMap">
+    <Filter Include="01. App\01. Actor\Player\WorldMap">
       <UniqueIdentifier>{064506d8-bfc8-4230-9082-9a99394b6d0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\Object\Bullet">
-      <UniqueIdentifier>{418c4219-979d-4304-8346-0cc73968f827}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\Object">
+      <UniqueIdentifier>{2f2e3ddb-e5f7-43d8-af93-2c501c2bfca3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\WorldMap\Object">
-      <UniqueIdentifier>{12148c92-b732-44bd-9f11-5c669f391b4f}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\Object\ParryObject">
+      <UniqueIdentifier>{4709b944-ae14-4f87-b162-5a022a821ec5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\UI">
-      <UniqueIdentifier>{b9aa4901-0c67-499c-99de-372cd6562517}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\Object\ParryObject\Dice">
+      <UniqueIdentifier>{29436531-16e9-4d60-943c-c00c788e250d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Actor\02 .Level.2\PlayMap\UI\Bottom UI">
-      <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\King_Dice">
+      <UniqueIdentifier>{dbbfae0a-79c1-4863-b751-004ce6407b47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene">
-      <UniqueIdentifier>{e6998438-49d5-445a-83ae-2e78e52a45df}</UniqueIdentifier>
+    <Filter Include="01. App\01. Actor\Object\Bullet">
+      <UniqueIdentifier>{c109a256-8ae9-496a-bc86-14e905481b91}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\00. MainLoad">
+    <Filter Include="01. App\01. Actor\Object\Bullet\Base">
+      <UniqueIdentifier>{a6644d60-0ac6-416f-8883-75e107677fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base">
+      <UniqueIdentifier>{fb61ee93-b0a7-4471-8008-5979f9e57858}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene">
+      <UniqueIdentifier>{2a056ca7-83b7-4517-b1a6-868ec6e5d8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\00. MainLoad">
       <UniqueIdentifier>{2eea9bad-f280-49e1-b974-8b60367e37da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. WolrdMap">
+    <Filter Include="01. App\02. Scene\01. LoadingScene">
+      <UniqueIdentifier>{39089cdb-be51-4d93-9e99-9b40b457ebf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\02. WolrdMap">
       <UniqueIdentifier>{57d0f3d0-bb31-47a7-8172-62de4a3a35c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. WolrdMap\Stage">
+    <Filter Include="01. App\02. Scene\02. WolrdMap\Stage">
       <UniqueIdentifier>{f7c0f664-23f9-49ee-ab5f-7a6a8c233519}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\03. StoryScene">
+    <Filter Include="01. App\02. Scene\03. StoryScene">
       <UniqueIdentifier>{c8488634-b3e9-4e12-94b8-1f4ce5175d1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\04. PlayLevel">
+    <Filter Include="01. App\02. Scene\04. PlayLevel">
       <UniqueIdentifier>{87927065-6845-4564-9509-402c5a97d61c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\04. PlayLevel\Stage">
-      <UniqueIdentifier>{8044c92d-1e39-4d66-af65-ef813ee737a8}</UniqueIdentifier>
+    <Filter Include="00. Base\02. Scene">
+      <UniqueIdentifier>{e6998438-49d5-445a-83ae-2e78e52a45df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\04. PlayLevel\MIniStage">
+    <Filter Include="00. Base\02. Scene\00. Base">
+      <UniqueIdentifier>{6bb348f2-0448-419c-af4a-0637ae528e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor">
+      <UniqueIdentifier>{5b1798ae-0845-4fbe-8a16-76e0e38dd1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\UI">
+      <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\UI\Base">
+      <UniqueIdentifier>{2edcbc75-7d06-4c55-ba88-65c65d0f4b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\UI\Bottom">
+      <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\MOB">
+      <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\MOB\Base">
+      <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\Image">
+      <UniqueIdentifier>{8877c995-7c38-4347-b50d-545d55bd3789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\Object">
+      <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Base\01. Actor\Effect">
+      <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\04. PlayLevel\MIniStage">
       <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\01. LoadingScene">
-      <UniqueIdentifier>{39089cdb-be51-4d93-9e99-9b40b457ebf1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -235,83 +250,86 @@
       <Filter>UserCore\Resources</Filter>
     </ClInclude>
     <ClInclude Include="TopUI.h">
-      <Filter>02. Actor\01. Level.1\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>01. Scene\04. PlayLevel</Filter>
+      <Filter>00. Base\01. Actor\UI</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
-      <Filter>01. Scene\00. MainLoad</Filter>
+      <Filter>01. App\02. Scene\00. MainLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClInclude>
     <ClInclude Include="LoaddingScene.h">
-      <Filter>01. Scene\01. LoadingScene</Filter>
+      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapScene.h">
-      <Filter>01. Scene\02. WolrdMap</Filter>
+      <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClInclude>
     <ClInclude Include="StoryScene.h">
-      <Filter>01. Scene\03. StoryScene</Filter>
+      <Filter>01. App\02. Scene\03. StoryScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>00. Base\01. Actor\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>01. App\01. Actor\Object\Bullet\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>00. Base\01. Actor\MOB\Base</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>02. Actor\01. Level.1\Image</Filter>
+      <Filter>00. Base\01. Actor\Image</Filter>
     </ClInclude>
     <ClInclude Include="MainLoading.h">
-      <Filter>01. Scene\00. MainLoad</Filter>
+      <Filter>01. App\02. Scene\00. MainLoad</Filter>
     </ClInclude>
-    <ClInclude Include="DicePaclace.h">
-      <Filter>01. Scene\04. PlayLevel\Stage</Filter>
+    <ClInclude Include="Map.h">
+      <Filter>00. Base\01. Actor</Filter>
     </ClInclude>
     <ClInclude Include="Store.h">
-      <Filter>01. Scene\02. WolrdMap\Stage</Filter>
+      <Filter>01. App\02. Scene\02. WolrdMap\Stage</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapPlayer.h">
-      <Filter>02. Actor\02 .Level.2\WorldMap</Filter>
+      <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="PositionComponent.h">
       <Filter>GameComponent</Filter>
     </ClInclude>
+    <ClInclude Include="PerryObjectDice.h">
+      <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
+    </ClInclude>
     <ClInclude Include="Bottom_HP.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\UI\Bottom UI</Filter>
+      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
     </ClInclude>
     <ClInclude Include="Bottom_Card.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\UI\Bottom UI</Filter>
+      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>02. Actor\01. Level.1\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Player</Filter>
+      <Filter>00. Base\01. Actor\Effect</Filter>
     </ClInclude>
     <ClInclude Include="King_Dice.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\King_Dice</Filter>
-    </ClInclude>
-    <ClInclude Include="ParryObject.h">
-      <Filter>02. Actor\01. Level.1\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="PerryObjectDice.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\ParryObject</Filter>
+      <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClInclude>
     <ClInclude Include="Dice_Card.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\ParryObject</Filter>
+      <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>02. Actor\01. Level.1\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>02. Actor\01. Level.1\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>02. Actor\02 .Level.2</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>02. Actor\02 .Level.2\PlayMap\Object\Bullet</Filter>
+    <ClInclude Include="ParryObject.h">
+      <Filter>00. Base\01. Actor\Object</Filter>
     </ClInclude>
     <ClInclude Include="StagePoint.h">
-      <Filter>02. Actor\02 .Level.2\WorldMap\Object</Filter>
+      <Filter>01. App\01. Actor\Object</Filter>
     </ClInclude>
-    <ClInclude Include="UIBase.h">
-      <Filter>02. Actor\01. Level.1\UI</Filter>
+    <ClInclude Include="GameObject.h">
+      <Filter>00. Base\01. Actor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>01. App\02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBase.h">
+      <Filter>00. Base\02. Scene\00. Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DicePaclace.h">
+      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

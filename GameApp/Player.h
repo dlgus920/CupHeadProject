@@ -220,53 +220,53 @@ private: //Update
 private: //State
 #pragma region State_
 	void Bomb_Start();
-	StateInfo Bomb_Update(StateInfo _state, float _DeltaTime);
+	void Bomb_Update(float _DeltaTime);
 	void Bomb_End();
 
 	void Death_Start();
-	StateInfo Death_Update(StateInfo _state, float _DeltaTime);
+	void Death_Update(float _DeltaTime);
 	void Death_End();
 
 	void Jump_Start();
-	StateInfo Jump_Update(StateInfo _state, float _DeltaTime);
+	void Jump_Update(float _DeltaTime);
 	void Jump_End();
 
 	void Idle_Start();
-	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
+	void Idle_Update(float _DeltaTime);
 	void Idle_End();
 
 	void Walk_Start();
-	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
+	void Walk_Update(float _DeltaTime);
 	void Walk_End();
 
 	void Duck_Start();
-	StateInfo Duck_Update(StateInfo _state, float _DeltaTime);
+	void Duck_Update(float _DeltaTime);
 	void Duck_End();
 
 	void RockOn_Start();
-	StateInfo RockOn_Update(StateInfo _state, float _DeltaTime);
+	void RockOn_Update(float _DeltaTime);
 	void RockOn_End();
 
 	void Hit_Start();
-	StateInfo Hit_Update(StateInfo _state, float _DeltaTime);
+	void Hit_Update(float _DeltaTime);
 	void Hit_End();
 
 	void Dash_Start();
-	StateInfo Dash_Update(StateInfo _state, float _DeltaTime);
+	void Dash_Update(float _DeltaTime);
 	void Dash_End();
 
 
 
 	void Intro_Start();
-	StateInfo Intro_Update(StateInfo _state, float _DeltaTime);
+	void Intro_Update(float _DeltaTime);
 	void Intro_End();
 
 	void Playing_Start();
-	StateInfo Playing_Update(StateInfo _state, float _DeltaTime);
+	void Playing_Update(float _DeltaTime);
 	void Playing_End();
 
 	void End_Start();
-	StateInfo End_Update(StateInfo _state, float _DeltaTime);
+	void End_Update(float _DeltaTime);
 	void End_End();
 #pragma endregion
 

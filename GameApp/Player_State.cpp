@@ -14,13 +14,14 @@ void Player::Idle_Start()
 {
 	ChangeAnimation("Cup-Idle");
 }
-StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
+void Player::Idle_Update(float _DeltaTime)
 {
 	//StateUpdate(_DeltaTime);
 
 	if (CheckState() != "Idle")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (KeyState_Shoot_)
@@ -69,8 +70,6 @@ StateInfo Player::Idle_Update(StateInfo _state, float _DeltaTime)
 
 		ChangeAnimation("Cup-Idle");
 	}
-
-	return StateInfo();
 }
 void Player::Idle_End()
 {
@@ -83,7 +82,7 @@ void Player::Walk_Start()
 	TimeCheck_ = 0.f;
 	// 각기 다른 에니메이션 재생
 }
-StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
+void Player::Walk_Update(float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
 
@@ -100,7 +99,8 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (CheckState() != "Walk")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (false == WalkState_Changed_)
@@ -151,7 +151,6 @@ StateInfo Player::Walk_Update(StateInfo _state, float _DeltaTime)
 			}
 		}
 	}
-	return StateInfo();
 }
 void Player::Walk_End()
 {
@@ -176,26 +175,29 @@ void Player::Jump_Start()
 
 	EffectDust();
 }
-StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
+void Player::Jump_Update(float _DeltaTime)
 {
 	//TODO :: 언젠가 점프 더 부드럽게 다듬을것
 
 	if (true == ColState_Hit_)
 	{
 		TimeCheck_ = 0.f;
-		return "Hit";
+		State_.ChangeState("Hit");
+		return;
 	}
 
 	if (true == KeyState_Dash_) 
 	{
 		TimeCheck_ = 0.f;
-		return "Dash";
+		State_.ChangeState("Dash");
+		return;
 	}
 
 	if (true == KeyState_Bomb)
 	{
-		TimeCheck_ = 0.f;
-		return "Bomb";
+		TimeCheck_ = 0.f; 
+		State_.ChangeState("Bomb");
+		return;
 	}
 
 	TimeCheck_ += _DeltaTime;
@@ -292,7 +294,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 					{
 						TimeCheck_ = 0.f;
-						return "Idle";
+						State_.ChangeState("Idle");
+						return;
 					}
 				}
 			}
@@ -320,7 +323,8 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 					{
 						TimeCheck_ = 0.f;
-						return "Idle";
+						State_.ChangeState("Idle");
+						return;
 					}
 				}
 			}
@@ -366,8 +370,6 @@ StateInfo Player::Jump_Update(StateInfo _state, float _DeltaTime)
 	{
 		ShootingInterTime_ = 0.f;
 	}
-
-	return StateInfo();
 }
 void Player::Jump_End()
 {
@@ -386,11 +388,12 @@ void Player::Duck_Start()
 {
 	ChangeAnimation("Cup-Duck-Idle");
 }
-StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
+void Player::Duck_Update(float _DeltaTime)
 {
 	if (CheckState() != "Duck")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (KeyState_Shoot_)
@@ -420,8 +423,6 @@ StateInfo Player::Duck_Update(StateInfo _state, float _DeltaTime)
 		ChangeAnimation("Cup-Duck-Idle");
 		ShootingInterTime_ = 0.f;
 	}
-
-	return StateInfo();
 }
 void Player::Duck_End()
 {
@@ -431,11 +432,12 @@ void Player::Duck_End()
 void Player::RockOn_Start()
 {
 }
-StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
+void Player::RockOn_Update(float _DeltaTime)
 {
 	if (CheckState() != "RockOn")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (true == KeyState_Shoot_)
@@ -570,8 +572,6 @@ StateInfo Player::RockOn_Update(StateInfo _state, float _DeltaTime)
 			ChangeAnimation("Cup-RockOn-Str");
 		}
 	}
-	
-	return StateInfo();
 }
 void Player::RockOn_End()
 {
@@ -583,11 +583,12 @@ void Player::Bomb_Start()
 	ChangeAnimation("Cup-Bomb");
 
 }
-StateInfo Player::Bomb_Update(StateInfo _state, float _DeltaTime)
+void Player::Bomb_Update(float _DeltaTime)
 {
 	//if(ani end)
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 }
 void Player::Bomb_End()
@@ -598,7 +599,7 @@ void Player::Bomb_End()
 void Player::Death_Start()
 {
 }
-StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
+void Player::Death_Update(float _DeltaTime)
 {
 	if (true) // 조건 충족시
 	{
@@ -606,10 +607,9 @@ StateInfo Player::Death_Update(StateInfo _state, float _DeltaTime)
 	}
 	else
 	{
-		return StateInfo();
+		return void();
 
 	}
-	return StateInfo();
 }
 void Player::Death_End()
 {
@@ -637,7 +637,7 @@ void Player::Hit_Start()
 
 	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
 }
-StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
+void Player::Hit_Update(float _DeltaTime)
 {
 	//if (Bottom_HP_->GetCurHP() == 0)
 	//{
@@ -660,7 +660,8 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 		if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
 		{
 			TimeCheck_ = 0.f;
-			return "Idle";
+			State_.ChangeState("Idle");
+			return;
 		}
 		//if (true == ColState_Ground)
 		//{
@@ -682,8 +683,6 @@ StateInfo Player::Hit_Update(StateInfo _state, float _DeltaTime)
 			Move(400.f, 0.f, _DeltaTime);
 		}
 	}
-	
-	return StateInfo();
 }
 void Player::Hit_End()
 {
@@ -698,7 +697,7 @@ void Player::Dash_Start()
 	ChangeAnimation("Cup-Dash");
 	AniState_DashEnd_ = false;
 }
-StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
+void Player::Dash_Update(float _DeltaTime)
 {
 	if ((Dir_ == AnimationDirection::Right))
 	{
@@ -711,10 +710,9 @@ StateInfo Player::Dash_Update(StateInfo _state, float _DeltaTime)
 
 	if(true == AniState_DashEnd_)
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
-
-	return StateInfo();
 }
 void Player::Dash_End()
 {
@@ -722,18 +720,20 @@ void Player::Dash_End()
 }
 
 
+
+
+
 void Player::Intro_Start()
 {
 	PlayerImageRenderer->SetChangeAnimation("Cup-Intro");
 }
-StateInfo Player::Intro_Update(StateInfo _state, float _DeltaTime)
+void Player::Intro_Update(float _DeltaTime)
 {
 	if (true == AniState_IntroEnd_)
 	{
-		return "Playing";
+		GameState_.ChangeState("Playing");
+		return;
 	}
-
-	return StateInfo();
 }
 void Player::Intro_End()
 {
@@ -744,7 +744,7 @@ void Player::Playing_Start()
 {
 	State_.ChangeState("Idle");
 }
-StateInfo Player::Playing_Update(StateInfo _state, float _DeltaTime)
+void Player::Playing_Update(float _DeltaTime)
 {
 	KeyUpdate();
 	GroundCollisonUpdate();
@@ -781,8 +781,6 @@ StateInfo Player::Playing_Update(StateInfo _state, float _DeltaTime)
 			//반짝임 효과 해제
 		}
 	}
-
-	return StateInfo();
 }
 void Player::Playing_End()
 {
@@ -795,9 +793,8 @@ void Player::End_Start()
 
 	ChangeAnimation("Cup-Idle");
 }
-StateInfo Player::End_Update(StateInfo _state, float _DeltaTime) 
+void Player::End_Update(float _DeltaTime) 
 {
-	return StateInfo();
 }
 void Player::End_End() 
 {

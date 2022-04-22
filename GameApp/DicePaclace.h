@@ -1,7 +1,8 @@
 #pragma once
-#include <GameEngine/GameEngineLevel.h>
+//#include <GameEngine/GameEngineLevel.h>
+#include "SceneBase.h"
 
-class DicePaclace : public GameEngineLevel
+class DicePaclace : public SceneBase
 {
 public:
 	DicePaclace(); 
@@ -13,9 +14,15 @@ protected:		// delete constructer
 	DicePaclace& operator=(const DicePaclace& _other) = delete; 
 	DicePaclace& operator=(const DicePaclace&& _other) = delete; 
 
-private:	// member Var
+private:	
+
+	GameEngineFSM<DicePaclace> PhaseState_;
+
+
 	class King_Dice* King_Dice_;
 	class Player* Player_;
+
+	bool Victory_;
 
 private:
 	void LevelResourcesLoad() override;
@@ -29,5 +36,20 @@ public:
 	void GamePlayStart();
 
 	void KnockoutEnd();
+
+private:
+
+	void Intro_Start();
+	void Intro_Update(float _DeltaTime);
+	void Intro_End();
+
+	void Playing_Start();
+	void Playing_Update(float _DeltaTime);
+	void Playing_End();
+
+	void End_Start();
+	void End_Update(float _DeltaTime);
+	void End_End();
+
 };
 

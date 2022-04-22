@@ -199,6 +199,6 @@ void WorldMapScene::ScreenFadeEnd()
 
 	GameEngineCore::LevelChange("LoaddingScene");
 
-	IrisImage_->Death();
+	//IrisImage_->Death();
 
 }

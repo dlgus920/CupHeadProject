@@ -93,19 +93,19 @@ public:
 
 private:
 	void Entry_Start();
-	StateInfo Entry_Update(StateInfo _state, float _DeltaTime);
+	void Entry_Update( float _DeltaTime);
 	void Entry_End();
 
 	void Idle_Start();
-	StateInfo Idle_Update(StateInfo _state, float _DeltaTime);
+	void Idle_Update( float _DeltaTime);
 	void Idle_End();
 
 	void Walk_Start();
-	StateInfo Walk_Update(StateInfo _state, float _DeltaTime);
+	void Walk_Update( float _DeltaTime);
 	void Walk_End();
 
 	void Chose_Start();
-	StateInfo Chose_Update(StateInfo _state, float _DeltaTime);
+	void Chose_Update( float _DeltaTime);
 	void Chose_End();
 
 };

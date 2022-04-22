@@ -1,8 +1,9 @@
 #pragma once
-#include <GameEngine/GameEngineLevel.h>
+//#include <GameEngine/GameEngineLevel.h>
+#include "SceneBase.h"
 
 // 설명 :
-class LoaddingScene : public GameEngineLevel
+class LoaddingScene : public SceneBase
 {
 public:
 	LoaddingScene(); // default constructer 디폴트 생성자
@@ -18,11 +19,6 @@ private:	// member Var
 	std::string NextScene_;
 	class Image* HourGlass_;
 	bool LoadEnd_;
-
-	float BlendRate_;
-	float TimeCheck_;
-
-	class GameEngineImageRenderer* FadeImage_;
 
 	bool CutIn_;
 

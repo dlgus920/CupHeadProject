@@ -9,15 +9,16 @@ void WorldMapPlayer::Entry_Start()
 {
 	SetChangeAnimation("Cup-Idle-Down");
 }
-StateInfo WorldMapPlayer::Entry_Update(StateInfo _state, float _DeltaTime)
+void WorldMapPlayer::Entry_Update( float _DeltaTime)
 {
 	TimeCheck_ += _DeltaTime;
 	if (TimeCheck_ > 1.f)
 	{
-		return "Idle";
+		State_.ChangeState("Idle");
+		return;
 	}
 
-	return StateInfo();
+	 
 }
 void WorldMapPlayer::Entry_End()
 {
@@ -28,11 +29,12 @@ void WorldMapPlayer::Idle_Start()
 {
 	SetChangeAnimation("Cup-Idle-Down");
 }
-StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
+void WorldMapPlayer::Idle_Update( float _DeltaTime)
 {
 	if (CheckState() != "Idle")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (MoveDir_ == float4::UP)
@@ -64,7 +66,7 @@ StateInfo WorldMapPlayer::Idle_Update(StateInfo _state, float _DeltaTime)
 		SetChangeAnimation("Cup-Idle-Down-Right");
 	}
 
-	return StateInfo();
+	 
 }
 void WorldMapPlayer::Idle_End()
 {
@@ -74,7 +76,7 @@ void WorldMapPlayer::Walk_Start()
 {
 	TimeCheck_ = 0.f;
 }
-StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
+void WorldMapPlayer::Walk_Update( float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
 
@@ -86,7 +88,8 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (CheckState() != "Walk")
 	{
-		return CheckState();
+		State_.ChangeState(CheckState());
+		return;
 	}
 
 	if (MoveDir_ == float4::UP)
@@ -119,24 +122,24 @@ StateInfo WorldMapPlayer::Walk_Update(StateInfo _state, float _DeltaTime)
 
 	if (ColState_.b_Up != 0 && MoveDir_.y > 0)
 	{
-		return StateInfo();
+		return;
 	}
 	if (ColState_.b_Down != 0 && MoveDir_.y < 0)
 	{
-		return StateInfo();
+		return;
 	}
 	if (ColState_.b_Left != 0 && MoveDir_.x < 0)
 	{
-		return StateInfo();
+		return;
 	}
 	if (ColState_.b_Right != 0 && MoveDir_.x > 0)
 	{
-		return StateInfo();
+		return;
 	}
 
 	Move(MoveDir_ * 300.f, _DeltaTime);
 
-	return StateInfo();
+	 
 }
 void WorldMapPlayer::Walk_End()
 {
@@ -160,9 +163,8 @@ void WorldMapPlayer::Chose_Start()
 
 	ChangeScene(ColState_Chose_->GetNextScene());
 }
-StateInfo WorldMapPlayer::Chose_Update(StateInfo _state, float _DeltaTime)
+void WorldMapPlayer::Chose_Update( float _DeltaTime)
 {
-	return StateInfo();
 }
 void WorldMapPlayer::Chose_End()
 {

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "DicePaclace.h"
+#include "LoaddingScene.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
@@ -17,6 +18,8 @@
 DicePaclace::DicePaclace() 
 	: King_Dice_(nullptr)
 	, Player_(nullptr)
+	, Victory_(false)
+	, PhaseState_(this)
 {
 
 }
@@ -172,6 +175,17 @@ void DicePaclace::LevelStart()
 	}
 
 	{
+		BlendRate_ = 0.f;
+
+		FadeImage_ = CreateActor<Image>();
+
+		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
+		FadeImage_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
+		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
+
+	{
 		Image* BackImage = CreateActor<Image>();
 		BackImage->ImageSetImage("DicePalaceBack.png");
 		BackImage->ImageRenderer_->SetAdjustImzgeSize();
@@ -200,14 +214,27 @@ void DicePaclace::LevelStart()
 		King_Dice_ = CreateActor<King_Dice>();
 		King_Dice_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
 	}
+
+	{
+		PhaseState_.CreateState("Intro",&DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
+		PhaseState_.CreateState("Playing",&DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
+		PhaseState_.CreateState("End",&DicePaclace::End_Start, &DicePaclace::End_Update, &DicePaclace::End_End);
+	}
 }
 
 void DicePaclace::LevelUpdate(float _DeltaTime)
 {
+	PhaseState_.Update(_DeltaTime);
+
 	if (true == GameEngineInput::GetInst().Down("FreeCameraOn"))
 	{
 		GetMainCameraActor()->FreeCameraModeSwitch();
 	}
+
+	//BlendRate_ -= _DeltaTime;
+
+
+	
 }
 
 void DicePaclace::LevelChangeEndEvent()
@@ -247,11 +274,6 @@ void DicePaclace::GamePlayStart()
 	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
 
-
-
-
-	
-
 	Effect* Effect_ = CreateActor<Effect>();
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", 0.04f, false);
 
@@ -264,6 +286,64 @@ void DicePaclace::GamePlayStart()
 void DicePaclace::KnockoutEnd()
 {
 	GameEngineCore::SetTimeRate(1.f);
+
+	Victory_ = true;
+}
+
+void DicePaclace::Intro_Start()
+{
+}
+void DicePaclace::Intro_Update(float _DeltaTime)
+{
+}
+void DicePaclace::Intro_End()
+{
+}
+
+void DicePaclace::Playing_Start()
+{
+}
+
+void DicePaclace::Playing_Update(float _DeltaTime)
+{
+	if (true == Victory_)
+	{
+		TimeCheck_ += _DeltaTime;
+
+		if (TimeCheck_ > 3.f)
+		{
+			BlendRate_ += _DeltaTime;
+			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		}
+
+		if (TimeCheck_ > 4.f)
+		{
+#ifdef _DEBUG
+			if (nullptr == GameEngineCore::LevelFind("WorldMap"))
+			{
+				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
+			}
+#endif // _DEBUG
+
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
+
+			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
+			GameEngineCore::LevelChange("LoaddingScene");
+		}
+	}
+}
+void DicePaclace::Playing_End()
+{
+}
+
+void DicePaclace::End_Start()
+{
+}
+void DicePaclace::End_Update(float _DeltaTime)
+{
+}
+void DicePaclace::End_End()
+{
 }
 
 void DicePaclace::GamePlayVictory()

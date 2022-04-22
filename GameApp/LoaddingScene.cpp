@@ -10,9 +10,7 @@ LoaddingScene::LoaddingScene()
 	: NextScene_()
 	, LoadEnd_(false)
 	, CutIn_(false)
-	, BlendRate_(0.f)
-	, TimeCheck_(0.f)
-	, FadeImage_(nullptr)
+	, HourGlass_(nullptr)
 {
 
 }
@@ -50,18 +48,18 @@ void LoaddingScene::LevelStart()
 		Image* Back = CreateActor<Image>();
 		Back->ImageSetImage("Loading_background.png");
 		Back->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
-		Back->ImageRenderer_->SetAdjustImzgeSize();
+		Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
 
 		BlendRate_ = 1.f;
 
-		FadeImage_ = Back->CreateTransformComponent<GameEngineImageRenderer>();
-		FadeImage_->SetImage("title_screen_background.png");
-		FadeImage_->SetAdjustImzgeSize();
-		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
-		FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		FadeImage_ = CreateActor<Image>();
 
+		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
+		FadeImage_->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z00Fx00) });
+		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
-
+	
 
 	GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
 }
@@ -84,7 +82,7 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 
 			CutIn_ = false;
 		}
-		FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		FadeImage_->ImageRenderer_-> SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 
 	}
 	else
@@ -104,7 +102,7 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 				HourGlass_->Death();
 				HourGlass_ = nullptr;
 			}
-			FadeImage_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 		}
 	}
 	

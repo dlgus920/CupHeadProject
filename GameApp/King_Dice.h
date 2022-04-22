@@ -75,31 +75,31 @@ private:	// member Var
 
 private:
 	void Intro_Start();
-	StateInfo Intro_Update(StateInfo _StateInfo, float _DeltaTime);
+	void Intro_Update(float _DeltaTime);
 	void Intro_End_();
 
 	void Idle_Start();
-	StateInfo Idle_Update(StateInfo _StateInfo, float _DeltaTime);
+	void Idle_Update(float _DeltaTime);
 	void Idle_End_();
 
 	void Attack_Start();
-	StateInfo Attack_Update(StateInfo _StateInfo, float _DeltaTime);
+	void Attack_Update(float _DeltaTime);
 	void Attack_End_();
 
 	void Defeat_Start();
-	StateInfo Defeat_Update(StateInfo _StateInfo, float _DeltaTime);
+	void Defeat_Update(float _DeltaTime);
 	void Defeat_End_();
 
 	void Chop_Start();
-	StateInfo Chop_Update(StateInfo _StateInfo, float _DeltaTime);
+	void Chop_Update(float _DeltaTime);
 	void Chop_End_();
 
 	void BattleState_Battle_Start();
-	StateInfo BattleState_Battle_Update(StateInfo _StateInfo, float _DeltaTime);
+	void BattleState_Battle_Update(float _DeltaTime);
 	void BattleState_Battle_End();
 
 	void BattleState_Dice_Start();
-	StateInfo BattleState_Dice_Update(StateInfo _StateInfo, float _DeltaTime);
+	void BattleState_Dice_Update(float _DeltaTime);
 	void BattleState_Dice_End();
 
 public:

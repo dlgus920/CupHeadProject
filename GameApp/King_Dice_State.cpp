@@ -7,14 +7,15 @@ void King_Dice::Intro_Start()
 {
 	MonsterImageRenderer->SetChangeAnimation("KDIce-Intro");
 }
-StateInfo King_Dice::Intro_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::Intro_Update( float _DeltaTime)
 {
 	if (true == AniEnd_Intro_)
 	{
-		return "Idle";
+		State_.ChangeState("Idle");
+		return;
 	}
 
-	return StateInfo();
+	 
 }
 void King_Dice::Intro_End_()
 {
@@ -25,20 +26,22 @@ void King_Dice::Idle_Start()
 {
 	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
 }
-StateInfo King_Dice::Idle_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::Idle_Update( float _DeltaTime)
 {
 	if (Hp_ < 0)
 	{
-		return "Defeat";
+		State_.ChangeState("Defeat");
+		return;
 	}
 
 	TimeCheck_ += _DeltaTime;
 
 	if (TimeCheck_ > 2.f)
 	{
-		return IdleNextState_;
+		State_.ChangeState(IdleNextState_);
+		return;
 	}
-	return StateInfo();
+	 
 }
 void King_Dice::Idle_End_()
 {
@@ -55,18 +58,20 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 
 	HandSwitching();
 }
-StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::Attack_Update( float _DeltaTime)
 {
 	if (Hp_ < 0)
 	{
-		return "Defeat";
+		State_.ChangeState("Defeat");
+		return;
 	}
 
 	if (true == AniEnd_Attack_Body_End_)
 	{
-		return "Idle";
-
 		CardClear();
+
+		State_.ChangeState("Idle");
+		return;
 	}
 
 	else
@@ -123,7 +128,7 @@ StateInfo King_Dice::Attack_Update(StateInfo _StateInfo, float _DeltaTime)
 		}
 
 	}
-	return StateInfo();
+	 
 }
 void King_Dice::Attack_End_()
 {
@@ -153,7 +158,7 @@ void King_Dice::Defeat_Start()
 
 	GetLevel<DicePaclace>()->GamePlayVictory();
 }
-StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::Defeat_Update( float _DeltaTime)
 {
 	TimeCheck_ += _DeltaTime;
 
@@ -164,7 +169,7 @@ StateInfo King_Dice::Defeat_Update(StateInfo _StateInfo, float _DeltaTime)
 		EffectDefeatRandom(250.f);
 	}
 
-	return StateInfo();
+	 
 }
 void King_Dice::Defeat_End_()
 {
@@ -174,9 +179,9 @@ void King_Dice::Defeat_End_()
 void King_Dice::Chop_Start()
 {
 }
-StateInfo King_Dice::Chop_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::Chop_Update( float _DeltaTime)
 {
-	return StateInfo();
+	 
 }
 void King_Dice::Chop_End_()
 {
@@ -187,11 +192,11 @@ void King_Dice::BattleState_Battle_Start()
 {
 	MonsterHitBox->On();
 }
-StateInfo King_Dice::BattleState_Battle_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::BattleState_Battle_Update( float _DeltaTime)
 {
 	//주기적인 싸이클 속에서 공격, idle 반복 시킴
 
-	return StateInfo();
+	 
 }
 void King_Dice::BattleState_Battle_End()
 {
@@ -204,19 +209,20 @@ void King_Dice::BattleState_Dice_Start()
 	//MonsterHitBox->Off();
 	//MonsterHitBoxHand->Off();
 }
-StateInfo King_Dice::BattleState_Dice_Update(StateInfo _StateInfo, float _DeltaTime)
+void King_Dice::BattleState_Dice_Update( float _DeltaTime)
 {
 	IdleNextState_ = "Attack";
-	return "BattleState_Battle";
+	BattleState_.ChangeState("BattleState_Battle");
+	return;
 
 	if (false == IsDiceTime_)
 	{
 		IdleNextState_ = "Attack";
-
-		return "BattleState_Battle";
+		BattleState_.ChangeState("BattleState_Battle");
+		return;
 	}
 
-	return StateInfo();
+	 
 }
 void King_Dice::BattleState_Dice_End()
 {

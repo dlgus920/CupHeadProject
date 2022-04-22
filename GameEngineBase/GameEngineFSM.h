@@ -5,28 +5,6 @@
 #include "GameEngineTime.h"
 #include <map>
 
-class StateInfo
-{
-public:
-	std::string _NextState;
-
-public:
-	StateInfo()
-		: _NextState("")
-	{
-	}
-
-	StateInfo(const char* _Name)
-		: _NextState(_Name)
-	{
-	}
-
-	StateInfo(const std::string& _Name)
-		: _NextState(_Name)
-	{
-	}
-};
-
 template<typename FSMType>
 class GameEngineFSM
 {
@@ -38,10 +16,10 @@ class GameEngineFSM
 		GameEngineFSM* parent_;
 
 		void(FSMType::* StateStart)();
-		StateInfo(FSMType::* StateUpdate)(StateInfo _Ptr, float DeltaTime);
+		void(FSMType::* StateUpdate)(float DeltaTime);
 		void(FSMType::* StateEnd)();
 
-		//std::function<void(StateInfo)> UpdateFunc_;
+		//std::function<void(void)> UpdateFunc_;
 		//std::function<void> StartFunc_;
 		//std::function<void> EndFunc_;
 
@@ -78,12 +56,14 @@ class GameEngineFSM
 			}
 #endif // _DEBUG
 
-			StateInfo Return = (parent_->ObjectPtr_->*StateUpdate)(GetName(), _DeltaTime);
+			//void Return = (parent_->ObjectPtr_->*StateUpdate)(_DeltaTime);
 
-			if (Return._NextState == "")
-			{
-				return;
-			}
+			//if (Return._NextState == "")
+			//{
+			//	return;
+			//}
+
+			(parent_->ObjectPtr_->*StateUpdate)(_DeltaTime);
 #ifdef _DEBUG
 			//if (Return._NextState.size() == 0)
 			//{
@@ -97,7 +77,7 @@ class GameEngineFSM
 #endif // _DEBUG
 
 			
-			parent_->ChangeState(Return._NextState);
+			//parent_->ChangeState(Return._NextState);
 		}
 
 		void CallEnd()
@@ -134,7 +114,7 @@ private:
 	std::map<std::string, State*> allState_;
 	FSMType* ObjectPtr_;
 	State* curState_;
-	StateInfo nextState_;
+	std::string nextState_;
 
 private:	// member Var
 
@@ -173,7 +153,7 @@ public:		//delete operator
 
 
 public:
-	void CreateState(const std::string& _name, void(FSMType::* _StartFunc)(), StateInfo(FSMType::* _UpdateFunc)(StateInfo, float), void(FSMType::* _EndFunc)())
+	void CreateState(const std::string& _name, void(FSMType::* _StartFunc)(), void(FSMType::* _UpdateFunc)(float), void(FSMType::* _EndFunc)())
 	{
 #ifdef _DEBUG
 		if (nullptr != FindState(_name))
