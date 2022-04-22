@@ -3,7 +3,8 @@
 
 void WorldMapPlayer::Update(float _DeltaTime)
 {
-	GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
+	GetLevel()->GetMainCameraActor()->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
 
 	if (true == KeyState_Update_)
 	{

@@ -57,11 +57,13 @@ GameEngineDevice::~GameEngineDevice() // default destructer 디폴트 소멸자
 
 void GameEngineDevice::Initialize() 
 {
+#ifdef _DEBUG
 	if (nullptr == GameEngineWindow::GetInst().GetWindowHWND())
 	{
 		GameEngineDebug::MsgBoxError("Window Hwnd ERROR");
 		return;
 	}
+#endif // _DEBUG
 
 	int iFlag = 0;
 

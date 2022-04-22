@@ -56,28 +56,7 @@ class GameEngineFSM
 			}
 #endif // _DEBUG
 
-			//void Return = (parent_->ObjectPtr_->*StateUpdate)(_DeltaTime);
-
-			//if (Return._NextState == "")
-			//{
-			//	return;
-			//}
-
 			(parent_->ObjectPtr_->*StateUpdate)(_DeltaTime);
-#ifdef _DEBUG
-			//if (Return._NextState.size() == 0)
-			//{
-			//	return;
-			//}
-
-			if (nullptr == parent_->FindState(Return._NextState))
-			{
-				GameEngineDebug::AssertFalse();
-			}
-#endif // _DEBUG
-
-			
-			//parent_->ChangeState(Return._NextState);
 		}
 
 		void CallEnd()
@@ -192,11 +171,14 @@ public:
 
 	bool IsCurStateName(const std::string& _Name)
 	{
+
+#ifdef _DEBUG
 		if (nullptr == curState_)
 		{
 			GameEngineDebug::AssertFalse();
 			return false;
 		}
+#endif // _DEBUG
 
 		if (curState_->GetName() == _Name)
 		{

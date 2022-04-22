@@ -397,11 +397,13 @@ void GameEngineVertexShader::LayOutCheck()
 		{
 			if (Name == NextName)
 			{
+#ifdef _DEBUG
 				if (PrevIndex != Input.SemanticIndex)
 				{
 					GameEngineDebug::MsgBoxError("시맨틱의 인덱스 순서가 잘못되었습니다 오름차순이 아닙니다..");
 					return;
 				}
+#endif // _DEBUG
 
 				++PrevIndex;
 				// 저 순서가 어때야 합니까?
@@ -416,11 +418,12 @@ void GameEngineVertexShader::LayOutCheck()
 		// 이것도 안된다.
 		//Postion0;
 		//Postion3;
-
+#ifdef _DEBUG
 		if (DXGI_FORMAT::DXGI_FORMAT_UNKNOWN == Format)
 		{
 			GameEngineDebug::MsgBoxError("쉐이더 인풋 파라미터 타입이 정상적이지 않습니다.");
 		}
+#endif // _DEBUG
 
 		AddInputLayOut(Input.SemanticName, Input.SemanticIndex, ParameterSize, Format, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA);
 	}
@@ -443,10 +446,12 @@ void GameEngineVertexShader::LayOutClear()
 
 void GameEngineVertexShader::InputLayOutSetting()
 {
+#ifdef _DEBUG
 	if (nullptr == LayOut_)
 	{
 		GameEngineDebug::MsgBoxError("쉐이더 인풋 파라미터가 존재하지 않습니다.");
 	}
+#endif // _DEBUG
 
 	GameEngineDevice::GetInst().GetContext()->IASetInputLayout(LayOut_);
 }

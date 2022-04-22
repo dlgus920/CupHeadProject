@@ -140,7 +140,11 @@ void WorldMapScene::LevelStart()
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
 {
-	GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
+
+	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
+	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetWorldPosition());
+
+	//Map::ScreenFx->GetTransform()->SetWorldPosition(GetMainCameraActor()->GetTransform()->GetWorldPosition());
 }
 
 void WorldMapScene::LevelChangeEndEvent()

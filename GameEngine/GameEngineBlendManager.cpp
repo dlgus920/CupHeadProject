@@ -32,11 +32,12 @@ GameEngineBlendManager::GameEngineBlendManager(GameEngineBlendManager&& _other) 
 GameEngineBlend* GameEngineBlendManager::Create(const std::string& _Name, const D3D11_BLEND_DESC& _Info, float4 _Fector /*= float4::ONE*/, unsigned int _Mask /*= 0xfffffff*/)
 {
 	GameEngineBlend* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineBlend* NewRes = new GameEngineBlend();

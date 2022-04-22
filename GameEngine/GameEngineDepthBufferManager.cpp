@@ -32,11 +32,12 @@ GameEngineDepthBufferManager::GameEngineDepthBufferManager(GameEngineDepthBuffer
 GameEngineDepthBuffer* GameEngineDepthBufferManager::Create(const std::string& _Name, float4 _Size)
 {
 	GameEngineDepthBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineDepthBuffer* NewRes = new GameEngineDepthBuffer();
@@ -57,11 +58,12 @@ GameEngineDepthBuffer* GameEngineDepthBufferManager::Load(const std::string& _Pa
 GameEngineDepthBuffer* GameEngineDepthBufferManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineDepthBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineDepthBuffer* NewRes = new GameEngineDepthBuffer();
 	NewRes->SetName(_Name);

@@ -32,11 +32,12 @@ GameEngineRasterizerManager::GameEngineRasterizerManager(GameEngineRasterizerMan
 GameEngineRasterizer* GameEngineRasterizerManager::Create(const std::string& _Name, const D3D11_RASTERIZER_DESC& _RasterizerDesc)
 {
 	GameEngineRasterizer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineRasterizer* NewRes = new GameEngineRasterizer();
@@ -57,11 +58,12 @@ GameEngineRasterizer* GameEngineRasterizerManager::Load(const std::string& _Path
 GameEngineRasterizer* GameEngineRasterizerManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineRasterizer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineRasterizer* NewRes = new GameEngineRasterizer();
 	NewRes->SetName(_Name);

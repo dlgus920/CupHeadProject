@@ -32,11 +32,12 @@ GameEngineConstantBufferManager::GameEngineConstantBufferManager(GameEngineConst
 GameEngineConstantBuffer* GameEngineConstantBufferManager::Create(const std::string& _Name, const D3D11_SHADER_BUFFER_DESC& _BufferDesc, ID3D11ShaderReflectionConstantBuffer* _VarInfo)
 {
 	GameEngineConstantBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineConstantBuffer* NewRes = new GameEngineConstantBuffer();
@@ -76,11 +77,12 @@ GameEngineConstantBuffer* GameEngineConstantBufferManager::Load(const std::strin
 GameEngineConstantBuffer* GameEngineConstantBufferManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineConstantBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineConstantBuffer* NewRes = new GameEngineConstantBuffer();
 	NewRes->SetName(_Name);

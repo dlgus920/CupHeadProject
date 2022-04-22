@@ -29,11 +29,12 @@ GameEngineFontManager::GameEngineFontManager(GameEngineFontManager&& _other) noe
 GameEngineFont* GameEngineFontManager::Load(const std::string& _Name)
 {
 	GameEngineFont* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineFont* NewRes = new GameEngineFont();
 	NewRes->SetName(_Name);

@@ -46,11 +46,12 @@ GameEnginePixelShader* GameEnginePixelShaderManager::Load(const std::string& _Na
 )
 {
 	GameEnginePixelShader* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 	GameEnginePixelShader* NewRes = new GameEnginePixelShader();
 	NewRes->SetName(_Name);
@@ -74,11 +75,12 @@ GameEnginePixelShader* GameEnginePixelShaderManager::Create(
 )
 {
 	GameEnginePixelShader* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 	GameEnginePixelShader* NewRes = new GameEnginePixelShader();
 	NewRes->SetName(_Name);

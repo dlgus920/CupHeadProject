@@ -22,9 +22,11 @@ GameEngineFile::GameEngineFile(const std::string& _Path)
 	: fileHandle_(nullptr)
 {
 	path_ = _Path;
+#ifdef _DEBUG
 	if (false == IsExist())
 	{
 		GameEngineDebug::AssertFalse();
+#endif // _DEBUG
 	}
 }
 
@@ -35,10 +37,12 @@ GameEngineFile::GameEngineFile(const std::string& _Path, const std::string& _Mod
 	// 오픈하고 익시트
 	Open(_Mode);
 
+#ifdef _DEBUG
 	if (false == IsExist())
 	{
 		GameEngineDebug::AssertFalse();
 	}
+#endif // _DEBUG
 }
 
 GameEngineFile::~GameEngineFile()
@@ -57,10 +61,12 @@ void GameEngineFile::Open(const std::string& _Mode)
 {
 	OpenMode = _Mode;
 	fopen_s(&fileHandle_, path_.string().c_str(), _Mode.c_str());
+#ifdef _DEBUG
 	if (nullptr == fileHandle_)
 	{
 		GameEngineDebug::AssertFalse();
 	}
+#endif // _DEBUG
 }
 
 void GameEngineFile::Close() 
@@ -74,8 +80,7 @@ void GameEngineFile::Close()
 
 void GameEngineFile::Write(const void* _Data, size_t _Size) 
 {
-	// 쓰기용으로 파일을 열지 않고
-	// 왜 쓰려고 하는냐에 대한 예외처리입니다.
+#ifdef _DEBUG
 	if (OpenMode[0] != 'w')
 	{
 		GameEngineDebug::AssertFalse();
@@ -88,14 +93,15 @@ void GameEngineFile::Write(const void* _Data, size_t _Size)
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // _DEBUG
 
 	fwrite(_Data, _Size, 1, fileHandle_);
 }
 
 void GameEngineFile::Read(void* _Buffer, size_t _BufferSize, size_t _DataSize)
 {
-	// 쓰기용으로 파일을 열지 않고
-// 왜 쓰려고 하는냐에 대한 예외처리입니다.
+#ifdef _DEBUG
+	// 쓰기용으로 파일을 열지 않고 쓰려고 하는냐에 대한 예외처리
 	if (OpenMode[0] != 'r')
 	{
 		GameEngineDebug::AssertFalse();
@@ -108,6 +114,7 @@ void GameEngineFile::Read(void* _Buffer, size_t _BufferSize, size_t _DataSize)
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // _DEBUG
 
 	fread_s(_Buffer, _BufferSize, _DataSize, 1, fileHandle_);
 

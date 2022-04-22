@@ -97,11 +97,12 @@ void GameEngineCollision::Collision(CollisionType _ThisType, CollisionType _Othe
 		}
 
 		auto& CheckFunction = CollisionCheckFunction[static_cast<int>(_ThisType)][static_cast<int>(_OtherType)];
-
+#ifdef _DEBUG
 		if (nullptr == CheckFunction)
 		{
 			GameEngineDebug::MsgBoxError("아직 구현하지 않는 타입간에 충돌을 하려고 했습니다.");
 		}
+#endif // _DEBUG
 
 		if (
 			false == 
@@ -130,11 +131,12 @@ bool GameEngineCollision::Collision(int _OtherGroup)
 
 			auto& CheckFunction = CollisionCheckFunction[static_cast<int>(CollisionType_)]
 				[static_cast<int>(OtherCollision->CollisionType_)];
-
+#ifdef _DEBUG
 			if (nullptr == CheckFunction)
 			{
 				GameEngineDebug::MsgBoxError("아직 구현하지 않는 타입간에 충돌을 하려고 했습니다.");
 			}
+#endif // _DEBUG
 
 			if (false == CheckFunction(GetTransform(), OtherCollision->GetTransform()))
 			{
@@ -163,11 +165,12 @@ GameEngineCollision* GameEngineCollision::CollisionPtr(int _OtherGroup)
 
 			auto& CheckFunction = CollisionCheckFunction[static_cast<int>(CollisionType_)]
 				[static_cast<int>(OtherCollision->CollisionType_)];
-
+#ifdef _DEBUG
 			if (nullptr == CheckFunction)
 			{
 				GameEngineDebug::MsgBoxError("아직 구현하지 않는 타입간에 충돌을 하려고 했습니다.");
 			}
+#endif // _DEBUG
 
 			if (false == CheckFunction(GetTransform(), OtherCollision->GetTransform()))
 			{

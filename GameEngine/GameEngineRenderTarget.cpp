@@ -51,10 +51,12 @@ void GameEngineRenderTarget::Create(const std::string _TextureName, float4 _Clea
 {
 
 	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(_TextureName);
+#ifdef _DEBUG
 	if (nullptr == FindTexture)
 	{
 		GameEngineDebug::MsgBoxError("FindTexture Is null Create Render Target Error");
 	}
+#endif // _DEBUG
 
 	FindTexture->CreateRenderTargetView();
 	FindTexture->CreateShaderResourceView();
@@ -95,11 +97,12 @@ void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearCo
 
 void GameEngineRenderTarget::Setting(int _Index) 
 {
-
+#ifdef _DEBUG
 	if (0 >= RenderTargetViews_.size())
 	{
 		GameEngineDebug::MsgBoxError("Render Target Setting Error Size Zero");
 	}
+#endif // _DEBUG
 
 	ID3D11DepthStencilView* View = nullptr;
 

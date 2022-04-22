@@ -33,11 +33,12 @@ GameEngineIndexBufferManager::GameEngineIndexBufferManager(GameEngineIndexBuffer
 GameEngineIndexBuffer* GameEngineIndexBufferManager::Create(const std::string& _Name, const std::vector<UINT>& _Index, D3D11_USAGE _Usage)
 {
 	GameEngineIndexBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineIndexBuffer* NewRes = new GameEngineIndexBuffer();
@@ -57,11 +58,12 @@ GameEngineIndexBuffer* GameEngineIndexBufferManager::Load(const std::string& _Pa
 GameEngineIndexBuffer* GameEngineIndexBufferManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineIndexBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineIndexBuffer* NewRes = new GameEngineIndexBuffer();
 	NewRes->SetName(_Name);

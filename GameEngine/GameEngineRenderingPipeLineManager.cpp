@@ -32,11 +32,12 @@ GameEngineRenderingPipeLineManager::GameEngineRenderingPipeLineManager(GameEngin
 GameEngineRenderingPipeLine* GameEngineRenderingPipeLineManager::Create(const std::string& _Name)
 {
 	GameEngineRenderingPipeLine* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineRenderingPipeLine* NewRes = new GameEngineRenderingPipeLine();
@@ -56,11 +57,12 @@ GameEngineRenderingPipeLine* GameEngineRenderingPipeLineManager::Load(const std:
 GameEngineRenderingPipeLine* GameEngineRenderingPipeLineManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineRenderingPipeLine* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineRenderingPipeLine* NewRes = new GameEngineRenderingPipeLine();
 	NewRes->SetName(_Name);

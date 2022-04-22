@@ -155,8 +155,8 @@ const bool GameEngineImageRenderer::GetCurAnimation_End(std::string Animation_Na
 	{
 		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
 	}
-
 #endif // _DEBUG
+
 	if (CurAnimation_->GetName() != Animation_Name)
 	{
 		return false;
@@ -204,6 +204,7 @@ void GameEngineImageRenderer::ImageRendererStart()
 
 void GameEngineImageRenderer::SetIndex(const int Index)
 {
+#ifdef _DEBUG
 	if (nullptr == CurTexture)
 	{
 		GameEngineDebug::MsgBoxError("텍스처가 존재하지 않는데 인덱스를 지정하려고 했습니다");
@@ -213,6 +214,7 @@ void GameEngineImageRenderer::SetIndex(const int Index)
 	{
 		GameEngineDebug::MsgBoxError("잘리지 않은 텍스처의 인덱스를 지정하려고 했습니다.");
 	}
+#endif // _DEBUG
 
 	CutData = CurTexture->GetCutData(Index);
 
@@ -221,12 +223,13 @@ void GameEngineImageRenderer::SetIndex(const int Index)
 void GameEngineImageRenderer::SetImage(const std::string& _ImageName)
 {
 	CurTexture = GameEngineTextureManager::GetInst().Find(_ImageName);
-
+#ifdef _DEBUG
 	if (nullptr == CurTexture)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다");
 		return;
 	}
+#endif // _DEBUG
 
 	ShaderHelper.SettingTexture("Tex", _ImageName);
 }
@@ -234,20 +237,22 @@ void GameEngineImageRenderer::SetImage(const std::string& _ImageName)
 void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop /*= true*/)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-
+#ifdef _DEBUG
 	if (AllAnimations_.end() != FindIter)
 	{
 		GameEngineDebug::MsgBoxError("이미 존재하는 애니메이션을 또 만들었습니다.");
 	}
+#endif // _DEBUG
 
 	Animation2D* NewAnimation = new Animation2D();
 
 	NewAnimation->AnimationTexture_ = GameEngineTextureManager::GetInst().Find(_TextureName);
-
+#ifdef _DEBUG
 	if (nullptr == NewAnimation->AnimationTexture_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처로 애니메이션을 만들려고 했습니다.");
 	}
+#endif // _DEBUG
 
 	NewAnimation->SetName(_Name);
 	NewAnimation->IsEnd = false;
@@ -301,7 +306,7 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool _IsForce /*= false*/)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-
+#ifdef _DEBUG
 	if (AllAnimations_.end() == FindIter)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
@@ -311,6 +316,7 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	{
 		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
 	}
+#endif // _DEBUG
 
 	if (false == _IsForce && CurAnimation_ == FindIter->second)
 	{
@@ -344,7 +350,7 @@ void GameEngineImageRenderer::Update(float _DeltaTime)
 void GameEngineImageRenderer::SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-
+#ifdef _DEBUG
 	if (AllAnimations_.end() == FindIter)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
@@ -354,13 +360,14 @@ void GameEngineImageRenderer::SetStartCallBack(const std::string& _Name, std::fu
 	{
 		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
 	}
+#endif // _DEBUG
 
 	FindIter->second->StartCallBack_.push_back(_CallBack);
 }
 void GameEngineImageRenderer::SetEndCallBack(const std::string& _Name, std::function<void()> _CallBack)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-
+#ifdef _DEBUG
 	if (AllAnimations_.end() == FindIter)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
@@ -370,13 +377,14 @@ void GameEngineImageRenderer::SetEndCallBack(const std::string& _Name, std::func
 	{
 		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
 	}
+#endif // _DEBUG
 
 	FindIter->second->EndCallBack_.push_back(_CallBack);
 }
 void GameEngineImageRenderer::SetFrameCallBack(const std::string& _Name, int _Index, std::function<void()> _CallBack)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-
+#ifdef _DEBUG
 	if (AllAnimations_.end() == FindIter)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
@@ -386,6 +394,7 @@ void GameEngineImageRenderer::SetFrameCallBack(const std::string& _Name, int _In
 	{
 		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
 	}
+#endif // _DEBUG
 
 	FindIter->second->FrameCallBack_[_Index].push_back(_CallBack);
 }

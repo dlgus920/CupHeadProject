@@ -34,11 +34,12 @@ public:
 	GameEngineVertexBuffer* Create(const std::string& _Name, const std::vector<VertexType>& _Vertex, D3D11_USAGE _Usage)
 	{
 		GameEngineVertexBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 		if (nullptr != FindRes)
 		{
 			GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 		}
+#endif // _DEBUG
 
 
 		GameEngineVertexBuffer* NewRes = new GameEngineVertexBuffer();

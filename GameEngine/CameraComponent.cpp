@@ -137,11 +137,12 @@ void CameraComponent::ReleaseRenderer()
 		for (; BeginIter != EndIter; )
 		{
 			GameEngineRenderer* ReleaseRenderer = *BeginIter;
-
+#ifdef _DEBUG
 			if (nullptr == ReleaseRenderer)
 			{
 				GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
 			}
+#endif // _DEBUG
 
 			if (true == ReleaseRenderer->IsDeath())
 			{

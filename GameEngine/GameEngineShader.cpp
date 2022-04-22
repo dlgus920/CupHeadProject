@@ -99,12 +99,13 @@ void GameEngineShader::ResCheck()
 			Buffer->GetDesc(&BufferDesc);
 
 			GameEngineConstantBuffer* NewBuffer = GameEngineConstantBufferManager::GetInst().CreateAndFind(Name, BufferDesc, Buffer);
-
+#ifdef _DEBUG
 			if (BufferDesc.Size != NewBuffer->GetBufferSize())
 			{
 				GameEngineDebug::MsgBoxError("구조가 다른 상수버퍼가 존재합니다.");
 				return;
 			}
+#endif // _DEBUG
 
 			ConstanceBuffers_.insert(std::make_pair(ResInfo.BindPoint, NewBuffer));
 			break;

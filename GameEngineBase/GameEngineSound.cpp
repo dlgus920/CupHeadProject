@@ -32,12 +32,13 @@ bool GameEngineSound::Load(const std::string& _Path)
 		GameEngineDebug::MsgBoxError("Sound Load Error");
 		return false;
 	}
-
+#ifdef _DEBUG
 	if (nullptr == sound_)
 	{
 		GameEngineDebug::MsgBoxError("Sound Pointer nullptr Error");
 		return false;
 	}
+#endif // _DEBUG
 
 	return true;
 }

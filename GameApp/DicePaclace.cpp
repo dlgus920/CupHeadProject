@@ -197,7 +197,6 @@ void DicePaclace::LevelStart()
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
 		Map* _Map = CreateActor<Map>();
-
 		// 1280 720
 		_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
 		_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
@@ -218,6 +217,8 @@ void DicePaclace::LevelStart()
 	{
 		PhaseState_.CreateState("Intro",&DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
 		PhaseState_.CreateState("Playing",&DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
+
+		PhaseState_.ChangeState("Intro");
 		//PhaseState_.CreateState("End",&DicePaclace::End_Start, &DicePaclace::End_Update, &DicePaclace::End_End);
 	}
 }
@@ -230,11 +231,6 @@ void DicePaclace::LevelUpdate(float _DeltaTime)
 	{
 		GetMainCameraActor()->FreeCameraModeSwitch();
 	}
-
-	//BlendRate_ -= _DeltaTime;
-
-
-	
 }
 
 void DicePaclace::LevelChangeEndEvent()
@@ -259,11 +255,6 @@ void DicePaclace::LevelChangeStartEvent()
 
 		Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 	}
-
-	Image* Back = CreateActor<Image>();
-	Back->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f,true);
-	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
-	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 }
 
 void DicePaclace::GamePlayStart()
@@ -331,8 +322,9 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 		if (BlendRate_ >= 1.f)
 		{
 			BlendRate_ = 1.f;
+
 #ifdef _DEBUG
-			if (nullptr == GameEngineCore::LevelFind("WorldMap"))
+			if (nullptr == GameEngineCore::LevelFind(NextScene_))
 			{
 				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
 			}

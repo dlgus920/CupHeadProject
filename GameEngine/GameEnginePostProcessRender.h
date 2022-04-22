@@ -33,12 +33,13 @@ public:
 	inline void SetEffect(const std::string& _Effect)
 	{
 		Effect_ = GameEngineRenderingPipeLineManager::GetInst().Find(_Effect);
-
+#ifdef _DEBUG
 		if (nullptr == Effect_)
 		{
 			GameEngineDebug::MsgBoxError("존재하지 않는 효과를 주려고 했습니다.");
 			return;
 		}
+#endif // _DEBUG
 
 		Res_.ShaderResourcesCheck(Effect_);
 	}

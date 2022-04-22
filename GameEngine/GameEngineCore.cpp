@@ -105,11 +105,12 @@ void GameEngineCore::MainLoop()
 
 		GameEngineTime::GetInst().TimeCheckReset();
 	}
-
+#ifdef _DEBUG
 	if (nullptr == CurrentLevel_)
 	{
 		GameEngineDebug::MsgBoxError("현재 레벨이 존재하지 않습니다.");
 	}
+#endif // _DEBUG
 
 	float Time = GameEngineTime::GetInst().GetDeltaTime() *TimeRate_;
 
@@ -137,12 +138,13 @@ void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
 void GameEngineCore::LevelDestroy(const std::string& _Level)
 {
 	GameEngineLevel* Level = LevelFind(_Level);
-
+#ifdef _DEBUG
 	if (nullptr == Level)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 레벨을 지우려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 
 	AllLevel_.erase(AllLevel_.find(_Level));
 	delete Level;
@@ -179,11 +181,12 @@ void GameEngineCore::SetTimeRate(float _TimeRate)
 void GameEngineCore::LevelChange(const std::string& _Level)
 {
 	GameEngineLevel* FindLevel = LevelFind(_Level);
-
+#ifdef _DEBUG
 	if (nullptr == FindLevel)
 	{
 		GameEngineDebug::MsgBoxError("Next Level Is Nullptr");
 	}
+#endif // _DEBUG
 
 	NextLevel_ = FindLevel;
 }

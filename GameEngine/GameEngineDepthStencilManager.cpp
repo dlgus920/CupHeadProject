@@ -32,11 +32,12 @@ GameEngineDepthStencilManager::GameEngineDepthStencilManager(GameEngineDepthSten
 GameEngineDepthStencil* GameEngineDepthStencilManager::Create(const std::string& _Name, const D3D11_DEPTH_STENCIL_DESC& DepthInfo)
 {
 	GameEngineDepthStencil* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineDepthStencil* NewRes = new GameEngineDepthStencil();
@@ -57,11 +58,12 @@ GameEngineDepthStencil* GameEngineDepthStencilManager::Load(const std::string& _
 GameEngineDepthStencil* GameEngineDepthStencilManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineDepthStencil* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineDepthStencil* NewRes = new GameEngineDepthStencil();
 	NewRes->SetName(_Name);

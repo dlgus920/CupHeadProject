@@ -74,11 +74,13 @@ GameEngineSound* GameEngineSoundManager::FindSound(const std::string& _name)
 
 void GameEngineSoundManager::SoundUpdate() 
 {
+#ifdef _DEBUG
 	if (nullptr == soundSystem_)
 	{
 		GameEngineDebug::MsgBoxError("SoundSystem Is null");
 		return;
 	}
+#endif // _DEBUG
 
 	soundSystem_->update();
 }
@@ -99,11 +101,13 @@ void GameEngineSoundManager::Load(const std::string& _path)
 
 void GameEngineSoundManager::Load(const std::string& _name, const std::string& _path)
 {
+#ifdef _DEBUG
 	if (nullptr != FindSound(_name))
 	{
 		GameEngineDebug::MsgBoxError("Sound Load overlap error");
 		return;
 	}
+#endif // _DEBUG
 
 	GameEngineSound* newLoadSound = new GameEngineSound();
 
@@ -121,12 +125,13 @@ void GameEngineSoundManager::Load(const std::string& _name, const std::string& _
 void GameEngineSoundManager::PlaySoundOneShot(const std::string& _name) 
 {
 	GameEngineSound* SoundPtr = FindSound(_name);
-
+#ifdef _DEBUG
 	if (nullptr == SoundPtr)
 	{
 		GameEngineDebug::MsgBoxError("PlaySound Error");
 		return;
 	}
+#endif // _DEBUG
 
 	soundSystem_->playSound(SoundPtr->sound_, nullptr, false, nullptr);
 }
@@ -137,12 +142,13 @@ void GameEngineSoundManager::Initialize()
 {
 	// 내부코드에서 NEW를 할 가능성이 매우 다분해.
 	FMOD::System_Create(&soundSystem_);
-
+#ifdef _DEBUG
 	if (nullptr == soundSystem_)
 	{
 		GameEngineDebug::MsgBoxError("sound system create Error");
 		return;
 	}
+#endif // _DEBUG
 
 	// 동시에 32개 개수인지 사운드 채널의 의미인지를 잘 모르고 있습니다.
 	// 32채널을 재생할수 있다는 의미인데 선생님도 잘 모릅니다.

@@ -28,7 +28,6 @@ void GameEngineDepthStencil::ReCreate(const D3D11_DEPTH_STENCIL_DESC& _Info)
 void GameEngineDepthStencil::Create(const D3D11_DEPTH_STENCIL_DESC& _Info)
 {
 	ID3D11DepthStencilState* State = nullptr;
-
 	if (S_OK != GameEngineDevice::GetDevice()->CreateDepthStencilState(&_Info, &State))
 	{
 		GameEngineDebug::MsgBoxError("DepthStencil state 생성에 실패했습니다.");

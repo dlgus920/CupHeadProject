@@ -32,12 +32,13 @@ void GameEngineRenderer::SetRenderingPipeLine(const std::string& _Value)
 	ShaderHelper.Clear();
 
 	PipeLine_ = GameEngineRenderingPipeLineManager::GetInst().Find(_Value);
-
+#ifdef _DEBUG
 	if (nullptr == PipeLine_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 랜더링 파이프라인입니다." + _Value);
 		return;
 	}
+#endif // _DEBUG
 
 	ShaderHelper.ShaderResourcesCheck(PipeLine_->GetPixelShader());
 	ShaderHelper.ShaderResourcesCheck(PipeLine_->GetVertexShader());
@@ -46,11 +47,12 @@ void GameEngineRenderer::SetRenderingPipeLine(const std::string& _Value)
 	{
 		ShaderHelper.SettingConstantBufferLink("TransformData", GetTransform()->GetTransformData());
 	}
-
+#ifdef _DEBUG
 	if (nullptr == PipeLine_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 파이프라인 입니다!");
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderer::Start() 

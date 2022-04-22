@@ -56,12 +56,14 @@ void WorldMapPlayer::Entry()
 
 void WorldMapPlayer::Move(float4 MoveDir, float _DeltaTime)
 {
-	GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
+	//GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
+	GetTransform()->SetWorldMove(MoveDir * _DeltaTime);
 }
 
 void WorldMapPlayer::Move(float DirX, float DirY, float _DeltaTime)
 {
-	GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
+	//GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
+	GetTransform()->SetWorldMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
 
 std::string WorldMapPlayer::CheckState()

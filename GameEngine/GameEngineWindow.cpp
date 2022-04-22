@@ -77,12 +77,13 @@ GameEngineWindow::~GameEngineWindow()
 int GameEngineWindow::CreateMainWindowClass()
 {
     hInstance_ = GetModuleHandle(NULL);
-
+#ifdef _DEBUG
     if (nullptr == hInstance_)
     {
         GameEngineDebug::AssertFalse();
         return 0;
     }
+#endif // _DEBUG
 
     className_ = "DEF";
 
@@ -107,12 +108,12 @@ int GameEngineWindow::CreateMainWindowClass()
 
 void GameEngineWindow::CreateMainWindow(const std::string& _titlename, const float4& _size, const float4& _pos)
 {
+#ifdef _DEBUG
     if (0 == CreateMainWindowClass())
     {
         GameEngineDebug::MsgBoxError("윈도우 클래스 등록에 실패했습니다.");
         return;
     }
-
     if (nullptr == hInstance_)
     {
         GameEngineDebug::AssertFalse();
@@ -124,6 +125,7 @@ void GameEngineWindow::CreateMainWindow(const std::string& _titlename, const flo
         GameEngineDebug::AssertFalse();
         return;
     }
+#endif // _DEBUG
 
     // setlocale(LC_ALL, "");
 
@@ -131,12 +133,13 @@ void GameEngineWindow::CreateMainWindow(const std::string& _titlename, const flo
     windowhandle_ = nullptr;
     windowhandle_ = CreateWindowA(className_.c_str(), "TEST", WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance_, nullptr);
-
+#ifdef _DEBUG
     if (0 == windowhandle_)
     {
         GameEngineDebug::AssertFalse();
         return;
     }
+#endif // _DEBUG
 
     SetWindowTextA(windowhandle_, windowTitle_.c_str());
     ShowWindow(windowhandle_, SW_SHOW);
@@ -169,12 +172,13 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
     {
         if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-
+#ifdef _DEBUG
             if (nullptr == _loopFunc)
             {
                 GameEngineDebug::AssertFalse();
                 return;
             }
+#endif // _DEBUG
 
             _loopFunc();
 
@@ -189,12 +193,13 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
         }
         else 
         {
-
+#ifdef _DEBUG
             if (nullptr == _loopFunc)
             {
                 GameEngineDebug::AssertFalse();
                 return;
             }
+#endif // _DEBUG
 
             _loopFunc();
         }

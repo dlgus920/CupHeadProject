@@ -46,11 +46,12 @@ GameEngineVertexShader* GameEngineVertexShaderManager::Load(const std::string& _
 	)
 {
 	GameEngineVertexShader* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 	GameEngineVertexShader* NewRes = new GameEngineVertexShader();
 	NewRes->SetName(_Name);
@@ -74,11 +75,12 @@ GameEngineVertexShader* GameEngineVertexShaderManager::Create(
 	)
 {
 	GameEngineVertexShader* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 	GameEngineVertexShader* NewRes = new GameEngineVertexShader();
 	NewRes->SetName(_Name);

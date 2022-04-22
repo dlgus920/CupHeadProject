@@ -78,12 +78,13 @@ void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc)
 	TextureDesc_ = _Desc;
 
 	GameEngineDevice::GetDevice()->CreateTexture2D(&TextureDesc_, nullptr, &Texture2D_);
-
+#ifdef _DEBUG
 	if (nullptr == Texture2D_)
 	{
 		GameEngineDebug::MsgBoxError("Texture Create Error");
 		return;
 	}
+#endif // _DEBUG
 
 	if (_Desc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
 	{
@@ -105,10 +106,12 @@ void GameEngineTexture::Create(D3D11_TEXTURE2D_DESC _Desc)
 
 void GameEngineTexture::Create(ID3D11Texture2D* _Texture2D)
 {
+#ifdef _DEBUG
 	if (nullptr == _Texture2D)
 	{
 		GameEngineDebug::MsgBoxError("Texture Is null GameEngine Texture Create Error");
 	}
+#endif // _DEBUG
 
 
 	Texture2D_ = _Texture2D;
@@ -177,6 +180,7 @@ void GameEngineTexture::Load(const std::string& _Path)
 	GameEngineString::AnsiToUnicode(_Path, wPath);
 
 	// PNG
+#ifdef _DEBUG
 	if (Extension == "TGA")
 	{
 		GameEngineDebug::MsgBoxError("로드할수 없는 이미지 포맷입니다" + Extension);
@@ -187,11 +191,14 @@ void GameEngineTexture::Load(const std::string& _Path)
 	}
 	else
 	{
+#endif // _DEBUG
 		if (S_OK != DirectX::LoadFromWICFile(wPath.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, Image_))
 		{
 			GameEngineDebug::MsgBoxError("로드할수 없는 이미지 포맷입니다" + _Path);
 		}
+#ifdef _DEBUG
 	}
+#endif // _DEBUG
 
 	if (S_OK != DirectX::CreateShaderResourceView(GameEngineDevice::GetDevice(),
 		Image_.GetImages(),
@@ -246,6 +253,7 @@ void GameEngineTexture::Cut(int _x, int _y)
 
 float4 GameEngineTexture::GetCutData(int _Index)
 {
+#ifdef _DEBUG
 	if (0 == CutList_.size())
 	{
 		GameEngineDebug::MsgBoxError("자르지 않은 텍스처에서 인덱스를 얻어오려고 했습니다.");
@@ -255,6 +263,7 @@ float4 GameEngineTexture::GetCutData(int _Index)
 	{
 		GameEngineDebug::MsgBoxError("자른 개수에 비해서 인덱스가 너무 큽니다.");
 	}
+#endif // _DEBUG
 
 	return CutList_[_Index];
 }

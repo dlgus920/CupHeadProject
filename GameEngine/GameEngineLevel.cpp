@@ -173,11 +173,12 @@ void GameEngineLevel::Release(float _DeltaTime)
 			for (; BeginIter != EndIter; )
 			{
 				GameEngineCollision* ReleaseCollision = *BeginIter;
-
+#ifdef _DEBUG
 				if (nullptr == ReleaseCollision)
 				{
 					GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
 				}
+#endif // _DEBUG
 
 				if (true == ReleaseCollision->IsDeath())
 				{
@@ -206,11 +207,12 @@ void GameEngineLevel::Release(float _DeltaTime)
 			for (; BeginIter != EndIter; )
 			{
 				GameEngineActor* ReleaseActor = *BeginIter;
-
+#ifdef _DEBUG
 				if (nullptr == ReleaseActor)
 				{
 					GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
 				}
+#endif // _DEBUG
 
 				ReleaseActor->ComponentRelease();
 

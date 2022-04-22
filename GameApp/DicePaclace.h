@@ -1,5 +1,5 @@
 #pragma once
-//#include <GameEngine/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineFSM.h>
 #include "SceneBase.h"
 
 class DicePaclace : public SceneBase

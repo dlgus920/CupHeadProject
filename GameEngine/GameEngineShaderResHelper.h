@@ -44,12 +44,13 @@ public:
 	void SettingConstantBufferLink(const std::string& _SettingName, T& _Data) 
 	{
 		std::map<std::string, GameEngineConstantBufferSetting*>::iterator FindIter = AllConstantBufferData_.find(_SettingName);
-
+#ifdef _DEBUG
 		if (FindIter == AllConstantBufferData_.end())
 		{
 			GameEngineDebug::MsgBoxError("존재하지 않는 상수버퍼를 세팅하려고 했습니다." + _SettingName);
 			return;
 		}
+#endif // _DEBUG
 
 		GameEngineConstantBufferSetting* SettingData = FindIter->second;
 
@@ -64,12 +65,13 @@ public:
 	void SettingConstantBufferSet(const std::string& _SettingName, const T& _Data)
 	{
 		std::map<std::string, GameEngineConstantBufferSetting*>::iterator FindIter = AllConstantBufferData_.find(_SettingName);
-
+#ifdef _DEBUG
 		if (FindIter == AllConstantBufferData_.end())
 		{
 			GameEngineDebug::MsgBoxError("존재하지 않는 상수버퍼를 세팅하려고 했습니다." + _SettingName);
 			return;
 		}
+#endif // _DEBUG
 
 		GameEngineConstantBufferSetting* SettingData = FindIter->second;
 

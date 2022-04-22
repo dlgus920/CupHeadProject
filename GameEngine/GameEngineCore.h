@@ -22,11 +22,13 @@ public:
 	template<typename LevelType>
 	static void LevelCreate(const std::string& _Level)
 	{
+#ifdef _DEBUG
 		if (nullptr != LevelFind(_Level))
 		{
 			GameEngineDebug::MsgBoxError("같은 이름의 레벨을 2번 만들려고 했습니다");
 			return;
 		}
+#endif // _DEBUG
 
 		AllLevel_.insert(std::make_pair(_Level, new LevelType()));
 		AllLevel_[_Level]->Init();

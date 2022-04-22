@@ -55,10 +55,12 @@ void GameEngineConstantBuffer::Create(const D3D11_SHADER_BUFFER_DESC& _BufferDes
 
 void GameEngineConstantBuffer::ChangeData(void* _Data, size_t _Size) 
 {
+#ifdef _DEBUG
 	if (BufferData_.ByteWidth != _Size)
 	{
 		GameEngineDebug::MsgBoxError("상수버퍼 세팅의 크기가 다릅니다.");
 	}
+#endif // _DEBUG
 
 	memset(&ResData_, 0, sizeof(ResData_));
 

@@ -32,11 +32,12 @@ GameEngineRenderTargetManager::GameEngineRenderTargetManager(GameEngineRenderTar
 GameEngineRenderTarget* GameEngineRenderTargetManager::Create(const std::string& _Name, const std::string& _TextureName, float4 _Color)
 {
 	GameEngineRenderTarget* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Create");
 	}
+#endif // _DEBUG
 
 
 	GameEngineRenderTarget* NewRes = new GameEngineRenderTarget();
@@ -57,11 +58,12 @@ GameEngineRenderTarget* GameEngineRenderTargetManager::Load(const std::string& _
 GameEngineRenderTarget* GameEngineRenderTargetManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineRenderTarget* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineRenderTarget* NewRes = new GameEngineRenderTarget();
 	NewRes->SetName(_Name);

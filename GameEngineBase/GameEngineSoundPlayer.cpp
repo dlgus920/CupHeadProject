@@ -43,12 +43,13 @@ void GameEngineSoundPlayer::PlayCountReset(int _Count /*= -1*/)
 void GameEngineSoundPlayer::PlayOverLap(const std::string& _name, int _LoopCount/* = 1*/)
 {
 	GameEngineSound* SoundPtr = GameEngineSoundManager::GetInst().FindSound(_name);
-
+#ifdef _DEBUG
 	if (nullptr == SoundPtr)
 	{
 		GameEngineDebug::MsgBoxError("PlaySound Error");
 		return;
 	}
+#endif // _DEBUG
 
 	if (0 == PlayCount)
 	{
@@ -71,12 +72,13 @@ void GameEngineSoundPlayer::PlayAlone(const std::string& _name, int _LoopCount /
 {
 	// 함수를 만들어서 그함수를 다시 실행
 	GameEngineSound* SoundPtr = GameEngineSoundManager::GetInst().FindSound(_name);
-
+#ifdef _DEBUG
 	if (nullptr == SoundPtr)
 	{
 		GameEngineDebug::MsgBoxError("PlaySound Error");
 		return;
 	}
+#endif // _DEBUG
 
 	if (true == IsPlay())
 	{

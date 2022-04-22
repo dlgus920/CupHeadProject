@@ -36,11 +36,12 @@ GameEngineVertexBuffer* GameEngineVertexBufferManager::Load(const std::string& _
 GameEngineVertexBuffer* GameEngineVertexBufferManager::Load(const std::string& _Name, const std::string& _Path)
 {
 	GameEngineVertexBuffer* FindRes = Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
+#endif // _DEBUG
 
 	GameEngineVertexBuffer* NewRes = new GameEngineVertexBuffer();
 	NewRes->SetName(_Name);

@@ -20,7 +20,6 @@ public:
 
 private:
 	static Map* CurrentMap;
-
 	GameEngineImageRenderer* CollisionMap_;
 
 private:
@@ -39,6 +38,9 @@ public:
 protected:
 	void Start() override;
 	void LevelChangeStartEvent() override;
+
+public:
+	class Image* ScreenFx;
 
 public:
 	GameEngineImageRenderer* GetCollisionMap()

@@ -235,6 +235,9 @@
     <Filter Include="01. App\02. Scene\04. PlayLevel\MIniStage">
       <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. App\01. Actor\ScreenFX">
+      <UniqueIdentifier>{cc05350c-6be2-40a8-a0b5-bf7217051242}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">

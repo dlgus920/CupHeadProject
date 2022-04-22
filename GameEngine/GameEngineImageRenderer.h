@@ -123,11 +123,13 @@ public:
 		{
 			return CurTexture->GetMetaDataImageSize();
 		}
-
 #ifdef _DEBUG
-		GameEngineDebug::MsgBoxError("이미지가 지정되지 않았습니다.");
-
+		else
+		{
+			GameEngineDebug::MsgBoxError("이미지가 지정되지 않았습니다.");
+		}
 #endif // _DEBUG
+
 
 		return float4::ZERO;
 	}

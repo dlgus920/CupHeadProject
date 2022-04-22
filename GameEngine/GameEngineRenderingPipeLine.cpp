@@ -33,35 +33,38 @@ GameEngineRenderingPipeLine::GameEngineRenderingPipeLine(GameEngineRenderingPipe
 void GameEngineRenderingPipeLine::SetInputAssembler1VertexBufferSetting(const std::string& _Name)
 {
 	VertexBuffer_ = GameEngineVertexBufferManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == VertexBuffer_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 버텍스 버퍼를 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 
 }
 
 void GameEngineRenderingPipeLine::SetInputAssembler1InputLayOutSetting(const std::string& _Name)
 {
 	InputLayOutVertexShader_ = GameEngineVertexShaderManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == InputLayOutVertexShader_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 버텍스 버퍼를 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::SetInputAssembler2IndexBufferSetting(const std::string& _Name)
 {
 	IndexBuffer_ = GameEngineIndexBufferManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == IndexBuffer_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 버텍스 버퍼를 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY _Topology)
@@ -73,56 +76,62 @@ void GameEngineRenderingPipeLine::SetInputAssembler2TopologySetting(D3D11_PRIMIT
 void GameEngineRenderingPipeLine::SetVertexShader(const std::string& _Name)
 {
 	VertexShader_ = GameEngineVertexShaderManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == VertexShader_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 버텍스 쉐이더를 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::SetRasterizer(const std::string& _Name)
 {
 	Rasterizer_ = GameEngineRasterizerManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == Rasterizer_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 레이터라이저 세팅을 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::SetPixelShader(const std::string& _Name)
 {
 	PixelShader_ = GameEnginePixelShaderManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == PixelShader_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 픽셀 쉐이더를 세팅을 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::SetOutputMergerBlend(const std::string& _Name)
 {
 	Blend_ = GameEngineBlendManager::GetInst().Find(_Name);
-
+#ifdef _DEBUG
 	if (nullptr == Blend_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 블랜드를 세팅을 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 
 }
 
 void GameEngineRenderingPipeLine::SetOutputMergerDepthStencil(const std::string& _Name)
 {
 	DepthStencil_ = GameEngineDepthStencilManager::GetInst().Find(_Name);
+#ifdef _DEBUG
 	if (nullptr == DepthStencil_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 깊이 세팅을 세팅하려고 했습니다.");
 		return;
 	}
+#endif // _DEBUG
 }
 
 void GameEngineRenderingPipeLine::InputAssembler1()

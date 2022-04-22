@@ -87,11 +87,12 @@ void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineShader* _Shader)
 		SettingData->Res_ = ConstantBuffer.second;
 		SettingData->SettingIndex_ = ConstantBuffer.first;
 		auto Result = AllConstantBufferData_.insert(std::make_pair(ConstantBuffer.second->GetName(), SettingData));
-
+#ifdef _DEBUG
 		if (false == Result.second)
 		{
 			GameEngineDebug::MsgBoxError("같은 이름의 상수버퍼가 이미 존재합니다." + ConstantBuffer.second->GetName());
 		}
+#endif // _DEBUG
 	}
 
 	for (auto& Sampler : _Shader->GetSamplers())
@@ -101,11 +102,12 @@ void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineShader* _Shader)
 		SettingData->Res_ = Sampler.second;
 		SettingData->SettingIndex_ = Sampler.first;
 		auto Result = AllSamplerData_.insert(std::make_pair(Sampler.second->GetName(), SettingData));
-
+#ifdef _DEBUG
 		if (false == Result.second)
 		{
 			GameEngineDebug::MsgBoxError("같은 이름의 샘플러가 이미 존재합니다." + Sampler.second->GetName());
 		}
+#endif // _DEBUG
 	}
 
 	GameEngineTexture* ErrorTexture = GameEngineTextureManager::GetInst().Find("NotSettingError.png");
@@ -117,11 +119,12 @@ void GameEngineShaderResHelper::ShaderResourcesCheck(GameEngineShader* _Shader)
 		SettingData->Res_ = ErrorTexture;
 		SettingData->SettingIndex_ = Texture.first;
 		auto Result = AllTextureData_.insert(std::make_pair(Texture.second, SettingData));
-
+#ifdef _DEBUG
 		if (false == Result.second)
 		{
 			GameEngineDebug::MsgBoxError("같은 이름의 텍스처가 이미 존재합니다." + Texture.second);
 		}
+#endif // _DEBUG
 	}
 }
 
@@ -130,10 +133,12 @@ void GameEngineShaderResHelper::Setting()
 	// 정보가 다 있으니까.
 	for (auto& Setting : AllConstantBufferData_)
 	{
+#ifdef _DEBUG
 		if (Setting.second->Mode_ == SettingMode::MAX)
 		{
 			GameEngineDebug::MsgBoxError("다음의 상수버퍼가 세팅되지 않았습니다. >>> " + Setting.first);
 		}
+#endif // _DEBUG
 		
 		Setting.second->ChangeData();
 		Setting.second->ShaderSetting();
@@ -154,10 +159,12 @@ void GameEngineShaderResHelper::ReSet()
 {
 	for (auto& Setting : AllConstantBufferData_)
 	{
+#ifdef _DEBUG
 		if (Setting.second->Mode_ == SettingMode::MAX)
 		{
 			GameEngineDebug::MsgBoxError("다음의 상수버퍼가 세팅되지 않았습니다. >>> " + Setting.first);
 		}
+#endif // _DEBUG
 
 
 		Setting.second->ChangeData();
@@ -180,7 +187,7 @@ void GameEngineShaderResHelper::ReSet()
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture) 
 {
 	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
-
+#ifdef _DEBUG
 	if (FindIter == AllTextureData_.end())
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
@@ -192,6 +199,7 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + _Texture->GetName());
 		return;
 	}
+#endif // _DEBUG
 
 	FindIter->second->Res_ = _Texture;
 }
@@ -199,21 +207,23 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, const std::string& _ImageName)
 {
 	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
-
+#ifdef _DEBUG
 	if (FindIter == AllTextureData_.end())
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
 		return;
 	}
+#endif // _DEBUG
 
 
 	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(_ImageName);
-
+#ifdef _DEBUG
 	if (nullptr == FindTexture)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + _ImageName);
 		return;
 	}
+#endif // _DEBUG
 
 	FindIter->second->Res_ = FindTexture;
 }
