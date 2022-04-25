@@ -38,6 +38,10 @@ public:
 	void KnockoutEnd();
 
 private:
+	void ResourcesLoading_Start();
+	void ResourcesLoading_Update(float _DeltaTime);
+	void ResourcesLoading_End();
+
 	void Intro_Start();
 	void Intro_Update(float _DeltaTime);
 	void Intro_End();

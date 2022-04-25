@@ -4,7 +4,6 @@
 
 GameEngineComponent::GameEngineComponent() 
 	: Actor_(nullptr)
-	, Level_(nullptr)
 {
 }
 
@@ -12,10 +11,14 @@ GameEngineComponent::~GameEngineComponent()
 {
 }
 
+GameEngineLevel* GameEngineComponent::GetLevel()
+{
+	return Actor_->GetLevel();
+}
+
 void GameEngineComponent::InitComponent(GameEngineActor* _Actor)
 {
 	Actor_ = _Actor;
-	Level_ = Actor_->GetLevel();
 }
 
 

@@ -27,5 +27,8 @@ protected:
 	virtual void LevelChangeEndEvent();
 	virtual void LevelChangeStartEvent();
 
+	void TextureLoading(GameEngineDirectory Dir);
+	
+
 };
 

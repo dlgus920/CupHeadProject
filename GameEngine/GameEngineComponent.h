@@ -24,10 +24,7 @@ public:
 		return Actor_;
 	}
 
-	GameEngineLevel* GetLevel()
-	{
-		return Level_;
-	}
+	GameEngineLevel* GetLevel();
 
 protected:
 	virtual void InitComponent(GameEngineActor* Actor_);
@@ -36,7 +33,6 @@ protected:
 	virtual void Update(float _DeltaTime) = 0;
 
 private:
-	GameEngineLevel* Level_;
 	GameEngineActor* Actor_;
 };
 

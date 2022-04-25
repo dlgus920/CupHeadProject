@@ -68,8 +68,6 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 
 			// 위치바꾸고
 		
-
-
 			Actor->Update(Actor ->PlayRate_ *_DeltaTime);
 			Actor->UpdateComponent(Actor ->PlayRate_ *_DeltaTime);
 		}
