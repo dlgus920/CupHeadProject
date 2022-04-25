@@ -59,4 +59,5 @@ void SceneBase::TextureLoading(GameEngineDirectory Dir)
 	}
 
 	--UserGame::LoadingFolder;
+
 }

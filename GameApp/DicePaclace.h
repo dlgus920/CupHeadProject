@@ -4,7 +4,7 @@
 
 class DicePaclace : public SceneBase
 {
-
+	friend class LoaddingScene;
 public:
 	DicePaclace(); 
 	~DicePaclace(); 
@@ -33,8 +33,8 @@ private:
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 
 public:
-	void GamePlayVictory();
-	void GamePlayStart();
+	void Knockout();
+	void ReadyWALLOP();
 	void KnockoutEnd();
 
 private:
@@ -50,9 +50,8 @@ private:
 	void Playing_Update(float _DeltaTime);
 	void Playing_End();
 
-	//void End_Start();
-	//void End_Update(float _DeltaTime);
-	//void End_End();
+	bool ThreadResourceLoad();
+
 
 public:
 	//friend void WorldMapPlayer::ChangeScene(std::string _Scene);

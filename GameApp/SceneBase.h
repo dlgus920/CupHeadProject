@@ -20,6 +20,14 @@ public:
 	float TimeCheck_;
 	float BlendRate_;
 
+	struct FolderLoad
+	{
+		GameEngineDirectory Dir;
+		std::string _FolderName;
+	};
+
+	std::vector<FolderLoad> VecFolderLoad_;
+
 protected:
 	virtual void LevelResourcesLoad();
 	virtual void LevelStart();
@@ -28,7 +36,6 @@ protected:
 	virtual void LevelChangeStartEvent();
 
 	void TextureLoading(GameEngineDirectory Dir);
-	
 
 };
 
