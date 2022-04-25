@@ -76,7 +76,7 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 	}
 }
 
-void GameEngineLevel::LevelChangeEndActorEvent()
+void GameEngineLevel::LevelChangeEndActorEvent(GameEngineLevel* _NextLevel)
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -84,11 +84,11 @@ void GameEngineLevel::LevelChangeEndActorEvent()
 
 		for (GameEngineActor* Actor : Actors)
 		{
-			Actor->LevelChangeEndEvent();
+			Actor->LevelChangeEndEvent(_NextLevel);
 		}
 	}
 }
-void GameEngineLevel::LevelChangeStartActorEvent()
+void GameEngineLevel::LevelChangeStartActorEvent(GameEngineLevel* _PrevLevel)
 {
 	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
 	{
@@ -96,7 +96,7 @@ void GameEngineLevel::LevelChangeStartActorEvent()
 
 		for (GameEngineActor* Actor : Actors)
 		{
-			Actor->LevelChangeStartEvent();
+			Actor->LevelChangeStartEvent(_PrevLevel);
 		}
 	}
 }
@@ -238,14 +238,12 @@ void GameEngineLevel::Release(float _DeltaTime)
 // 	RendererList_[_Order].push_back(_Renderer);
 
 
-void GameEngineLevel::LevelChangeStartEvent()
+void GameEngineLevel::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-
 }
 
-void GameEngineLevel::LevelChangeEndEvent()
+void GameEngineLevel::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-
 }
 
 void GameEngineLevel::PushCollision(GameEngineCollision* _Collision, int _Group)
@@ -294,3 +292,98 @@ void GameEngineLevel::AllClear()
 	}
 }
 
+void GameEngineLevel::SetLevelActorMoveProcess()
+{
+	for (size_t i = 0; i < NextLevelActorsData_.size(); i++)
+	{
+		GameEngineLevel* _NextLevel = NextLevelActorsData_[i].Level;
+		GameEngineActor* _Actor = NextLevelActorsData_[i].Actor;
+
+		// 지금 내 카메라에서 어떠한 랜더러를 빼서
+		MainCameraActor_->GetCamera()->NextLevelMoveRenderer(_NextLevel->GetMainCamera(), _Actor);
+		UICameraActor_->GetCamera()->NextLevelMoveRenderer(_NextLevel->GetUICamera(), _Actor);
+
+		// 콜리전 삭제
+		{
+			std::map<int, std::list<GameEngineCollision*>>::iterator RenderMapBeginIter = CollisionList_.begin();
+			std::map<int, std::list<GameEngineCollision*>>::iterator RenderMapEndIter = CollisionList_.end();
+
+
+			for (; RenderMapBeginIter != RenderMapEndIter; ++RenderMapBeginIter)
+			{
+				std::list<GameEngineCollision*>& Collisions = RenderMapBeginIter->second;
+
+				std::list<GameEngineCollision*>::iterator BeginIter = Collisions.begin();
+				std::list<GameEngineCollision*>::iterator EndIter = Collisions.end();
+
+				for (; BeginIter != EndIter; )
+				{
+					GameEngineCollision* ReleaseCollision = *BeginIter;
+
+					if (nullptr == ReleaseCollision)
+					{
+						GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
+					}
+
+					if (ReleaseCollision->GetActor() == _Actor)
+					{
+						_NextLevel->CollisionList_[(*BeginIter)->GetOrder()].push_back(*BeginIter);
+
+						BeginIter = Collisions.erase(BeginIter);
+
+						continue;
+					}
+
+					++BeginIter;
+
+				}
+			}
+		}
+
+		{
+			std::map<int, std::list<GameEngineActor*>>::iterator ActorMapBeginIter = ActorList_.begin();
+			std::map<int, std::list<GameEngineActor*>>::iterator ActorMapEndIter = ActorList_.end();
+
+			for (; ActorMapBeginIter != ActorMapEndIter; ++ActorMapBeginIter)
+			{
+				std::list<GameEngineActor*>& Actors = ActorMapBeginIter->second;
+
+				std::list<GameEngineActor*>::iterator BeginIter = Actors.begin();
+				std::list<GameEngineActor*>::iterator EndIter = Actors.end();
+
+				for (; BeginIter != EndIter; )
+				{
+					GameEngineActor* ReleaseActor = *BeginIter;
+
+					if (nullptr == ReleaseActor)
+					{
+						GameEngineDebug::MsgBoxError("Release Actor Is Nullptr!!!!");
+					}
+
+					if (ReleaseActor == _Actor)
+					{
+						_NextLevel->ActorList_[ReleaseActor->GetOrder()].push_back(ReleaseActor);
+
+						ReleaseActor->SetLevel(_NextLevel);
+
+						BeginIter = Actors.erase(BeginIter);
+
+						continue;
+					}
+
+					++BeginIter;
+				}
+
+			}
+		}
+	}
+
+	NextLevelActorsData_.clear();
+}
+
+void GameEngineLevel::SetLevelActorMove(GameEngineLevel* _NextLevel, GameEngineActor* _Actor)
+{
+	NextLevelActorsData_.push_back({ _Actor , _NextLevel });
+
+
+}

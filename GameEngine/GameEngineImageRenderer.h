@@ -146,7 +146,8 @@ public:
 	GameEngineImageRenderer& operator=(const GameEngineImageRenderer& _Other) = delete;
 	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
 
-	void SetImage(const std::string& _ImageName);
+	void SetImage(const std::string& _ImageName, const std::string& _Sampler = "");
+
 
 	void SetIndex(const int Index);
 
@@ -213,7 +214,7 @@ public:
 	}
 
 protected:
-	void ImageRendererStart();
+	void SetRenderingPipeLineSettingNext() override;
 	void Update(float _DeltaTime) override;
 
 private:

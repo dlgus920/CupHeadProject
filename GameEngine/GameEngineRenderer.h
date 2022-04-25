@@ -25,6 +25,8 @@ public:
 
 	void SetRenderingPipeLine(const std::string& _Value);
 
+	virtual void SetRenderingPipeLineSettingNext() {}
+
 	GameEngineShaderResHelper ShaderHelper;
 	virtual void SetRenderGroup(int _Order);
 

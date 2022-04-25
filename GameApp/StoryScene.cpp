@@ -19,10 +19,10 @@ void StoryScene::LevelUpdate(float _DeltaTime)
 {
 }
 
-void StoryScene::LevelChangeEndEvent()
+void StoryScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
 }
 
-void StoryScene::LevelChangeStartEvent()
+void StoryScene::LevelChangeStartEvent(GameEngineLevel* _NextLevel)
 {
 }

@@ -1,9 +1,10 @@
 #include "PreCompile.h"
 #include "GameEngineShaderResHelper.h"
 #include "GameEngineConstantBuffer.h"
-#include "GameEngineSampler.h"
 #include "GameEngineTextureManager.h"
 #include "GameEngineTexture.h"
+#include "GameEngineSamplerManager.h"
+#include "GameEngineSampler.h"
 #include "GameEngineRenderingPipeLine.h"
 #include "GameEngineVertexShader.h"
 #include "GameEnginePixelShader.h"
@@ -55,7 +56,9 @@ void GameEngineShaderResHelper::Clear()
 
 bool GameEngineShaderResHelper::IsConstantBuffer(const std::string& _SettingName)
 {
-	std::map<std::string, GameEngineConstantBufferSetting*>::iterator FindIter = AllConstantBufferData_.find(_SettingName);
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+	std::map<std::string, GameEngineConstantBufferSetting*>::iterator FindIter = AllConstantBufferData_.find(UpperName);
 
 	if (FindIter == AllConstantBufferData_.end())
 	{
@@ -186,11 +189,15 @@ void GameEngineShaderResHelper::ReSet()
 
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture) 
 {
-	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+
+	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(UpperName);
+
 #ifdef _DEBUG
 	if (FindIter == AllTextureData_.end())
 	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + UpperName);
 		return;
 	}
 
@@ -206,7 +213,10 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 
 void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, const std::string& _ImageName)
 {
-	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(_SettingName);
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(UpperName);
+
 #ifdef _DEBUG
 	if (FindIter == AllTextureData_.end())
 	{
@@ -215,15 +225,74 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 	}
 #endif // _DEBUG
 
+	std::string UpperNameImage = GameEngineString::toupper(_ImageName);
 
-	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(_ImageName);
+	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(UpperNameImage);
+
 #ifdef _DEBUG
 	if (nullptr == FindTexture)
 	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + _ImageName);
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + UpperNameImage);
 		return;
 	}
 #endif // _DEBUG
 
 	FindIter->second->Res_ = FindTexture;
+}
+
+void GameEngineShaderResHelper::SettingSampler(const std::string& _SettingName, const std::string& _Name)
+{
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+
+	std::map<std::string, GameEngineSamplerSetting*>::iterator FindIter = AllSamplerData_.find(UpperName);
+
+#ifdef _DEBUG
+	if (FindIter == AllSamplerData_.end())
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + UpperName);
+		return;
+	}
+#endif // _DEBUG
+
+
+	std::string UpperNameSampler = GameEngineString::toupper(_Name);
+
+
+	GameEngineSampler* FindSampler = GameEngineSamplerManager::GetInst().Find(UpperNameSampler);
+
+#ifdef _DEBUG
+	if (nullptr == FindSampler)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + UpperNameSampler);
+		return;
+	}
+#endif // _DEBUG
+
+	FindIter->second->Res_ = FindSampler;
+
+}
+
+void GameEngineShaderResHelper::SettingSampler(const std::string& _SettingName, GameEngineSampler* _Value)
+{
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+	std::map<std::string, GameEngineSamplerSetting*>::iterator FindIter = AllSamplerData_.find(UpperName);
+
+#ifdef _DEBUG
+	if (FindIter == AllSamplerData_.end())
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 샘플러 슬롯에 세팅하려고 했습니다." + UpperName);
+		return;
+	}
+
+	if (nullptr == _Value)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 샘플러를 세팅하려고 했습니다. >>> " + _Value->GetName());
+		return;
+	}
+#endif // _DEBUG
+
+
+	FindIter->second->Res_ = _Value;
 }

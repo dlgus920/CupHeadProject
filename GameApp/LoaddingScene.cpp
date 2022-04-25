@@ -108,11 +108,11 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 	
 }
 
-void LoaddingScene::LevelChangeEndEvent()
+void LoaddingScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
 }
 
-void LoaddingScene::LevelChangeStartEvent()
+void LoaddingScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
 

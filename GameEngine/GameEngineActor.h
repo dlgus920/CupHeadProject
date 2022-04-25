@@ -16,18 +16,15 @@ public:
 	~GameEngineActor();
 
 	GameEngineActor(const GameEngineActor& _Other) = delete;
-	GameEngineActor(GameEngineActor&& _Other) noexcept = delete;
+	GameEngineActor(GameEngineActor&& _Other) = delete;
 	GameEngineActor& operator=(const GameEngineActor& _Other) = delete;
-	GameEngineActor& operator=(GameEngineActor&& _Other) noexcept = delete;
+	GameEngineActor& operator=(GameEngineActor&& _Other) = delete;
 
 public:
+	bool IsFindObject_;
+	bool NextLevelMove_;
 	bool IsDestroyed_;
 	float DeathTime_;
-
-	GameEngineTransform* GetTransform()
-	{
-		return &Transform_;
-	}
 
 private:
 	float PlayRate_;
@@ -42,8 +39,8 @@ protected:
 	virtual void Start() {}
 	virtual void Update(float _DeltaTime) {}
 	virtual void ReleaseEvent() {}
-	virtual void LevelChangeEndEvent() {}
-	virtual void LevelChangeStartEvent() {}
+	virtual void LevelChangeEndEvent(GameEngineLevel* _NextLevel) {}
+	virtual void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) {}
 
 private:
 	void SetLevel(GameEngineLevel* Level);
@@ -52,18 +49,35 @@ private:
 	void ReleaseUpdate(float _DeltaTime);
 
 public:
+	template<typename LevelType>
+	LevelType* GetLevelConvert()
+	{
+		return dynamic_cast<LevelType*>(Level_);
+	}
+
+	void MoveNextOn()
+	{
+		NextLevelMove_ = true;
+	}
+
+	GameEngineTransform* GetTransform()
+	{
+		return &Transform_;
+	}
+
 	//custom
 
 	void SetPlayRate(float _PlayRate_)
 	{
 		PlayRate_ = _PlayRate_;
 	}
-
 	template <typename Level>
 	Level* GetLevel()
 	{
 		return dynamic_cast<Level*>(Level_);
 	}
+
+	//custom
 
 	GameEngineLevel* GetLevel()
 	{

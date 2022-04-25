@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineLevel.h"
+#include <GameEngineBase\GameEngineThreadQueue.h>
 
 // 분류 : 게임 코어 및 레벨관리자
 // 용도 : 
@@ -9,6 +10,8 @@ class GameEngineCore : public GameEngineObjectBase
 {
 	friend class GameEngineLevelControlWindow;
 
+public:
+	static GameEngineThreadQueue ThreadQueue;
 // ============================================= Level 관리자 관련 ============================================= //
 private:
 	static GameEngineLevel* NextLevel_;
@@ -31,6 +34,7 @@ public:
 #endif // _DEBUG
 
 		AllLevel_.insert(std::make_pair(_Level, new LevelType()));
+		AllLevel_[_Level]->SetName(_Level);
 		AllLevel_[_Level]->Init();
 		AllLevel_[_Level]->LevelResourcesLoad();
 		AllLevel_[_Level]->LevelStart();

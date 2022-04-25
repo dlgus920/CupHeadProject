@@ -121,12 +121,12 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 	}
 }
 
-void TitleScene::LevelChangeEndEvent()
+void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
 	//Death();
 }
 
-void TitleScene::LevelChangeStartEvent()
+void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));

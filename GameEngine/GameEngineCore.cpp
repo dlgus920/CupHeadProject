@@ -10,6 +10,8 @@
 #include "GameEngineBase/GameEngineDirectory.h"
 #include "GameEngineBase/GameEngineFile.h"
 
+GameEngineThreadQueue GameEngineCore::ThreadQueue = GameEngineThreadQueue("GameEngineThread");
+
 GameEngineCore* GameEngineCore::MainCore_ = nullptr;
 float TimeRate_ =1.f;
 
@@ -64,6 +66,8 @@ void GameEngineCore::EngineDestroy()
 		}
 	}
 
+	ThreadQueue.Destroy();
+
 	GameEngineManagerHelper::ManagerRelease();
 	GameEngineInput::Destroy();
 	GameEngineTime::Destroy();
@@ -87,16 +91,18 @@ void GameEngineCore::MainLoop()
 		if (nullptr == CurrentLevel_)
 		{
 			CurrentLevel_ = NextLevel_;
-			NextLevel_->LevelChangeStartActorEvent();
-			NextLevel_->LevelChangeStartEvent();
+			NextLevel_->LevelChangeStartActorEvent(NextLevel_);
+			NextLevel_->LevelChangeStartEvent(NextLevel_);
 		}
 		else
 		{
-			CurrentLevel_->LevelChangeEndActorEvent();
-			CurrentLevel_->LevelChangeEndEvent();
+			CurrentLevel_->LevelChangeEndActorEvent(NextLevel_);
+			CurrentLevel_->LevelChangeEndEvent(NextLevel_);
+			CurrentLevel_->SetLevelActorMoveProcess();
 
-			NextLevel_->LevelChangeStartActorEvent();
-			NextLevel_->LevelChangeStartEvent();
+			NextLevel_->LevelChangeStartActorEvent(CurrentLevel_);
+			NextLevel_->LevelChangeStartEvent(CurrentLevel_);
+			NextLevel_->SetLevelActorMoveProcess();
 
 			CurrentLevel_ = NextLevel_;
 		}
@@ -181,6 +187,11 @@ void GameEngineCore::SetTimeRate(float _TimeRate)
 void GameEngineCore::LevelChange(const std::string& _Level)
 {
 	GameEngineLevel* FindLevel = LevelFind(_Level);
+
+	if (FindLevel == CurrentLevel_)
+	{
+		return;
+	}
 #ifdef _DEBUG
 	if (nullptr == FindLevel)
 	{

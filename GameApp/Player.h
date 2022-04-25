@@ -39,8 +39,12 @@ enum class BulletType
 
 class Player : public GameEngineActor
 {
+
 	friend class PlayLevel;
 	friend class GameEngineLevel;
+
+public:
+	static Player* MainPlayer;
 
 private:
 	Player();
@@ -54,6 +58,7 @@ private:
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;
+	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 
 private: //Member
 

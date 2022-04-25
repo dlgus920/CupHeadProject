@@ -31,7 +31,10 @@ GameEngineConstantBufferManager::GameEngineConstantBufferManager(GameEngineConst
 
 GameEngineConstantBuffer* GameEngineConstantBufferManager::Create(const std::string& _Name, const D3D11_SHADER_BUFFER_DESC& _BufferDesc, ID3D11ShaderReflectionConstantBuffer* _VarInfo)
 {
-	GameEngineConstantBuffer* FindRes = Find(_Name);
+	std::string UpperName = GameEngineString::toupper(_Name);
+
+	GameEngineConstantBuffer* FindRes = Find(UpperName);
+
 #ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
@@ -41,18 +44,20 @@ GameEngineConstantBuffer* GameEngineConstantBufferManager::Create(const std::str
 
 
 	GameEngineConstantBuffer* NewRes = new GameEngineConstantBuffer();
-	NewRes->SetName(_Name);
+	NewRes->SetName(UpperName);
 	NewRes->Create(_BufferDesc, _VarInfo);
 
 	// 그리고 뭘할거냐?
 
-	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(_Name, NewRes));
+	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(UpperName, NewRes));
 	return NewRes;
 }
 
 GameEngineConstantBuffer* GameEngineConstantBufferManager::CreateAndFind(const std::string& _Name, const D3D11_SHADER_BUFFER_DESC& _BufferDesc, ID3D11ShaderReflectionConstantBuffer* _VarInfo)
 {
-	GameEngineConstantBuffer* FindRes = Find(_Name);
+	std::string UpperName = GameEngineString::toupper(_Name);
+
+	GameEngineConstantBuffer* FindRes = Find(UpperName);
 
 	if (nullptr != FindRes)
 	{
@@ -61,10 +66,10 @@ GameEngineConstantBuffer* GameEngineConstantBufferManager::CreateAndFind(const s
 
 
 	GameEngineConstantBuffer* NewRes = new GameEngineConstantBuffer();
-	NewRes->SetName(_Name);
+	NewRes->SetName(UpperName);
 	NewRes->Create(_BufferDesc, _VarInfo);
 
-	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(_Name, NewRes));
+	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(UpperName, NewRes));
 
 	return NewRes;
 }
@@ -76,7 +81,10 @@ GameEngineConstantBuffer* GameEngineConstantBufferManager::Load(const std::strin
 
 GameEngineConstantBuffer* GameEngineConstantBufferManager::Load(const std::string& _Name, const std::string& _Path)
 {
-	GameEngineConstantBuffer* FindRes = Find(_Name);
+	std::string UpperName = GameEngineString::toupper(_Name);
+
+	GameEngineConstantBuffer* FindRes = Find(UpperName);
+
 #ifdef _DEBUG
 	if (nullptr != FindRes)
 	{
@@ -85,16 +93,17 @@ GameEngineConstantBuffer* GameEngineConstantBufferManager::Load(const std::strin
 #endif // _DEBUG
 
 	GameEngineConstantBuffer* NewRes = new GameEngineConstantBuffer();
-	NewRes->SetName(_Name);
+	NewRes->SetName(UpperName);
 
-
-	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(_Name, NewRes));
+	ResourcesMap.insert(std::map<std::string, GameEngineConstantBuffer*>::value_type(UpperName, NewRes));
 	return NewRes;
 }
 
 GameEngineConstantBuffer* GameEngineConstantBufferManager::Find(const std::string& _Name)
 {
-	std::map<std::string, GameEngineConstantBuffer*>::iterator FindIter = ResourcesMap.find(_Name);
+	std::string UpperName = GameEngineString::toupper(_Name);
+
+	std::map<std::string, GameEngineConstantBuffer*>::iterator FindIter = ResourcesMap.find(UpperName);
 
 	if (FindIter != ResourcesMap.end())
 	{

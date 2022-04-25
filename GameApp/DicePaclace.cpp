@@ -233,11 +233,23 @@ void DicePaclace::LevelUpdate(float _DeltaTime)
 	}
 }
 
-void DicePaclace::LevelChangeEndEvent()
+void DicePaclace::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
+
+
+	if (std::string::npos != _NextLevel->GetName().find("World")
+		&& std::string::npos != _NextLevel->GetName().find("Boss"))
+	{
+
+		Player::MainPlayer->GetLevel()->SetLevelActorMove(_NextLevel, Player::MainPlayer);
+
+	}
+
+	// MoveLevelActor("TitleLevel", "BossLevel");
+
 }
 
-void DicePaclace::LevelChangeStartEvent()
+void DicePaclace::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
 	{
 		Image* Back = CreateActor<Image>();

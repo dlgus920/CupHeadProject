@@ -26,7 +26,8 @@ void Map::Start()
 	ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 }
 
-void Map::LevelChangeStartEvent()
+
+void Map::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
 	CurrentMap = this;
 }

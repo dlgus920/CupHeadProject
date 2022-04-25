@@ -23,6 +23,7 @@
     <ClInclude Include="GameEngineDirectory.h" />
     <ClInclude Include="GameEngineFile.h" />
     <ClInclude Include="GameEngineFSM.h" />
+    <ClInclude Include="GameEngineIocp.h" />
     <ClInclude Include="GameEngineMath.h">
       <SubType>
       </SubType>
@@ -43,6 +44,8 @@
     <ClInclude Include="GameEngineSoundManager.h" />
     <ClInclude Include="GameEngineSound.h" />
     <ClInclude Include="GameEngineSoundPlayer.h" />
+    <ClInclude Include="GameEngineThread.h" />
+    <ClInclude Include="GameEngineThreadQueue.h" />
     <ClInclude Include="GameEngineTime.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
@@ -58,6 +61,7 @@
     <ClCompile Include="GameEngineDirectory.cpp" />
     <ClCompile Include="GameEngineFile.cpp" />
     <ClCompile Include="GameEngineFSM.cpp" />
+    <ClCompile Include="GameEngineIocp.cpp" />
     <ClCompile Include="GameEngineMath.cpp">
       <SubType>
       </SubType>
@@ -78,6 +82,8 @@
     <ClCompile Include="GameEngineSoundManager.cpp" />
     <ClCompile Include="GameEngineSound.cpp" />
     <ClCompile Include="GameEngineSoundPlayer.cpp" />
+    <ClCompile Include="GameEngineThread.cpp" />
+    <ClCompile Include="GameEngineThreadQueue.cpp" />
     <ClCompile Include="GameEngineTime.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>

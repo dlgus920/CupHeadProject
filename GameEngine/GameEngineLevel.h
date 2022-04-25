@@ -44,15 +44,21 @@ public:
 
 	CameraActor* GetUICameraActor();
 	CameraComponent* GetUICamera();
+private:
+	class NextLevelActor
+	{
+	public:
+		GameEngineActor* Actor;
+		GameEngineLevel* Level;
+	};
 
 private:
-	std::map<int, std::list<GameEngineActor*>> ActorList_;	
+
 	CameraActor* MainCameraActor_;
 	CameraActor* UICameraActor_;
-
+	std::map<int, std::list<GameEngineActor*>> ActorList_;	
 	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
-
-
+	std::vector<NextLevelActor> NextLevelActorsData_;
 	bool IsDebug_;
 
 public:
@@ -67,8 +73,10 @@ public:
 	virtual void LevelResourcesLoad() = 0;
 	virtual void LevelStart() = 0;
 	virtual void LevelUpdate(float _DeltaTime) = 0;
-	virtual void LevelChangeEndEvent() = 0;
-	virtual void LevelChangeStartEvent() = 0;
+	virtual void LevelChangeEndEvent(GameEngineLevel* _NextLevel) = 0;
+	virtual void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) = 0;
+
+	void SetLevelActorMove(GameEngineLevel* _NextLevel, GameEngineActor* _Actor);
 
 ////////////////////////////////////////////////////// Renderer
 
@@ -77,8 +85,10 @@ private:
 
 	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
 //	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
-	void LevelChangeEndActorEvent();
-	void LevelChangeStartActorEvent();
+	void LevelChangeEndActorEvent(GameEngineLevel* _NextLevel);
+	void LevelChangeStartActorEvent(GameEngineLevel* _PrevLevel);
+
+	void SetLevelActorMoveProcess();
 
 	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
 	{
@@ -146,6 +156,4 @@ public:
 		PostRender[_Key].push_back(NewPost);
 		return NewPost;
 	}
-
-
 };

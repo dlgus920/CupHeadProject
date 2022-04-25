@@ -147,12 +147,12 @@ void WorldMapScene::LevelUpdate(float _DeltaTime)
 	//Map::ScreenFx->GetTransform()->SetWorldPosition(GetMainCameraActor()->GetTransform()->GetWorldPosition());
 }
 
-void WorldMapScene::LevelChangeEndEvent()
+void WorldMapScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
 	//¸±¸®Áî ¸Ê
 }
 
-void WorldMapScene::LevelChangeStartEvent()
+void WorldMapScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));

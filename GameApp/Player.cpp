@@ -10,6 +10,8 @@
 #include "Map.h"
 #include "Image.h"
 
+Player* Player::MainPlayer;
+
 Player::Player() 
 	: State_(this)
 	, GameState_(this)
@@ -50,6 +52,7 @@ Player::Player()
 	, HP(0)
 	, ParryCount(0)
 {
+	MainPlayer = this;
 }
 
 Player::~Player()
@@ -65,6 +68,17 @@ void Player::Start()
 
 	DefalutSetting();
 
+}
+
+void Player::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
+{
+	//if (std::string::npos != _NextLevel->GetName().find("Title"))
+	//{
+	//	return;
+	//}
+
+	//GetLevel()->SetLevelActorMove(_NextLevel, this);
+	//_NextLevel->GetMainCameraActor()->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition() + float4(0.0f, 0.0F, -100.0F));
 }
 
 void Player::ChangeAnimation(std::string _animation)

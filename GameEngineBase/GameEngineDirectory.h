@@ -9,7 +9,7 @@ class GameEngineDirectory : public GameEnginePath
 {
 public:
 	GameEngineDirectory(); // default constructer 디폴트 생성자
-	GameEngineDirectory(const std::string& Path);
+	GameEngineDirectory(const std::string& Path); // default constructer 디폴트 생성자
 	~GameEngineDirectory(); // default destructer 디폴트 소멸자
 
 public:		// delete constructer
@@ -35,6 +35,12 @@ public:		//member Func
 	// 자식 폴더중 _DirName으로 이동
 	bool MoveChild(const std::string& _DirName);
 
+	GameEngineDirectory& operator/(const std::string& _DirName)
+	{
+		MoveChild(_DirName);
+		return *this;
+	}
+
 public:
 	// 내 폴더에 + 파일이름 경로를 리턴해주는 함수
 	std::string PathToPlusFileName(const std::string& _FileName);
@@ -46,5 +52,9 @@ public:
 	// .
 	// * 모든 확장자
 	std::vector<GameEngineFile> GetAllFile(const std::string& _filter = "*");
+
+	std::vector<GameEngineDirectory> GetAllDirectory(const std::string& _filter = "");
+
+	std::vector<GameEngineDirectory> GetAllDirectoryRecursive(const std::string& _filter = "");
 };
 

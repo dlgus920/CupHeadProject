@@ -14,12 +14,31 @@
 void GameEngineCore::EngineResourcesLoad()
 {
 	{
-		GameEngineDirectory EngineTextureDir;
-		EngineTextureDir.MoveParent(GV_GAMEFILENAME);
-		EngineTextureDir.MoveChild("EngineResources");
-		EngineTextureDir.MoveChild("Texture");
+		GameEngineDirectory EngineDir;
 
-		std::vector<GameEngineFile> AllFile = EngineTextureDir.GetAllFile();
+		while (true)
+		{
+			if (EngineDir.IsRoot())
+			{
+				GameEngineDebug::MsgBoxError("엔진 리소스 폴더가 존재하지 않습니다.");
+				return;
+			}
+
+			std::vector<GameEngineDirectory> AllDir = EngineDir.GetAllDirectory("EngineResources");
+
+			if (0 == AllDir.size())
+			{
+				EngineDir.MoveParent();
+				continue;
+			}
+
+			EngineDir.MoveChild("EngineResources");
+			break;
+		}
+
+		EngineDir.MoveChild("Texture");
+
+		std::vector<GameEngineFile> AllFile = EngineDir.GetAllFile();
 
 		for (size_t i = 0; i < AllFile.size(); i++)
 		{
@@ -28,12 +47,31 @@ void GameEngineCore::EngineResourcesLoad()
 	}
 
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParent(GV_GAMEFILENAME);
-		Dir.MoveChild("EngineResources");
-		Dir.MoveChild("Shader");
+		GameEngineDirectory EngineDir;
 
-		std::vector<GameEngineFile> AllShader = Dir.GetAllFile("fx");
+		while (true)
+		{
+			if (EngineDir.IsRoot())
+			{
+				GameEngineDebug::MsgBoxError("엔진 리소스 폴더가 존재하지 않습니다.");
+				return;
+			}
+
+			std::vector<GameEngineDirectory> AllDir = EngineDir.GetAllDirectory("EngineResources");
+
+			if (0 == AllDir.size())
+			{
+				EngineDir.MoveParent();
+				continue;
+			}
+
+			EngineDir.MoveChild("EngineResources");
+			break;
+		}
+
+		EngineDir.MoveChild("Shader");
+
+		std::vector<GameEngineFile> AllShader = EngineDir.GetAllFile("fx");
 
 		for (auto& ShaderFile : AllShader)
 		{
@@ -58,6 +96,51 @@ void GameEngineCore::EngineResourcesLoad()
 	GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().Find("PointSmp");
 	NewRes->Info_.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	NewRes->ReCreate();
+	//{
+	//	GameEngineDirectory EngineTextureDir;
+	//	EngineTextureDir.MoveParent(GV_GAMEFILENAME);
+	//	EngineTextureDir.MoveChild("EngineResources");
+	//	EngineTextureDir.MoveChild("Texture");
+
+	//	std::vector<GameEngineFile> AllFile = EngineTextureDir.GetAllFile();
+
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}
+	//}
+
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParent(GV_GAMEFILENAME);
+	//	Dir.MoveChild("EngineResources");
+	//	Dir.MoveChild("Shader");
+
+	//	std::vector<GameEngineFile> AllShader = Dir.GetAllFile("fx");
+
+	//	for (auto& ShaderFile : AllShader)
+	//	{
+	//		ShaderFile.Open("rt");
+
+	//		std::string FileName = ShaderFile.GetFileNameWithOutExtension();
+	//		std::string AllCode = ShaderFile.GetString();
+
+	//		if (std::string::npos != AllCode.find(FileName + "_VS"))
+	//		{
+	//			GameEngineVertexShader* Ptr = GameEngineVertexShaderManager::GetInst().Load(FileName + "_VS", ShaderFile.GetFullPath(), FileName + "_VS");
+	//		}
+
+	//		if (std::string::npos != AllCode.find(FileName + "_PS"))
+	//		{
+	//			GameEnginePixelShader* Ptr = GameEnginePixelShaderManager::GetInst().Load(FileName + "_PS", ShaderFile.GetFullPath(), FileName + "_PS");
+	//		}
+
+	//	}
+	//}
+
+	//GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().Find("PointSmp");
+	//NewRes->Info_.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	//NewRes->ReCreate();
 }
 void GameEngineCore::EngineResourcesCreate()
 {
@@ -277,6 +360,47 @@ void GameEngineCore::EngineResourcesCreate()
 		DepthInfo.DepthEnable = false;
 		DepthInfo.StencilEnable = false;
 		GameEngineDepthStencilManager::GetInst().Create("BaseDepthOff", DepthInfo);
+	}
+
+	{
+		D3D11_SAMPLER_DESC Smp_Decs = {};
+
+		memset(&Smp_Decs, 0, sizeof(D3D11_SAMPLER_DESC));
+		Smp_Decs.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		Smp_Decs.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Smp_Decs.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Smp_Decs.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+		Smp_Decs.MipLODBias = 0.0f;
+		Smp_Decs.MaxAnisotropy = 1;
+		Smp_Decs.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		Smp_Decs.MinLOD = -FLT_MAX;
+		Smp_Decs.MaxLOD = FLT_MAX;
+		// Smp_Decs.BorderColor;
+		// Smp_Decs.MaxAnisotropy;
+
+		GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().CreateAndFind("LINEARSmp", Smp_Decs);
+	}
+
+
+	{
+		D3D11_SAMPLER_DESC Smp_Decs = {};
+
+		memset(&Smp_Decs, 0, sizeof(D3D11_SAMPLER_DESC));
+		Smp_Decs.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		Smp_Decs.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Smp_Decs.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Smp_Decs.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+		Smp_Decs.MipLODBias = 0.0f;
+		Smp_Decs.MaxAnisotropy = 1;
+		Smp_Decs.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		Smp_Decs.MinLOD = -FLT_MAX;
+		Smp_Decs.MaxLOD = FLT_MAX;
+		// Smp_Decs.BorderColor;
+		// Smp_Decs.MaxAnisotropy;
+
+		GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().CreateAndFind("PointSmp", Smp_Decs);
 	}
 
 	{
