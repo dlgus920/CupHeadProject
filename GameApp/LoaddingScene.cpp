@@ -2,6 +2,8 @@
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/GameEngineImageRenderer.h>
 
+#include "UserGame.h"
+
 #include "LoaddingScene.h"
 #include "WorldMapScene.h"
 #include "Image.h"
@@ -89,11 +91,11 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 	{
 		TimeCheck_ += _DeltaTime;
 
-		if (TimeCheck_ > 2.f)
+		if (TimeCheck_ > 1.f && 0 >= UserGame::LoadingFolder)
 		{
 			BlendRate_ += _DeltaTime * 2;
 
-			if (BlendRate_ >= 1.f || GameEngineInput::GetInst().Down("Next"))
+			if (BlendRate_ >= 1.f )
 			{
 				GameEngineCore::LevelChange(NextScene_);
 

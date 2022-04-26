@@ -189,6 +189,40 @@ void King_Dice::Chop_End_()
 {
 }
 
+void King_Dice::Clap_Start()
+{
+	MonsterImageRenderer->SetChangeAnimation("KDice-Clap-Birth");
+}
+void King_Dice::Clap_Update(float _DeltaTime)
+{
+#ifdef _DEBUG
+
+	if (true == AniEnd_Clap_Birth_)
+	{
+		MonsterImageRenderer->SetChangeAnimation("KDice-Clap-Idle");
+		AniEnd_Clap_Birth_ = false;
+
+
+		//주사위 굴리기
+	}
+#endif // !_DEBUG
+
+	//주사위 굴리기 끝나면
+	if (false)
+	{
+		MonsterImageRenderer->SetChangeAnimation("KDice-Clap-End");
+	}
+
+	if (true == AniEnd_Clap_End_)
+	{
+		State_.ChangeState("Idle");
+		return;
+	}
+}
+void King_Dice::Clap_End_()
+{
+}
+
 
 void King_Dice::BattleState_Battle_Start()
 {
@@ -206,7 +240,7 @@ void King_Dice::BattleState_Battle_End()
 
 void King_Dice::BattleState_Dice_Start()
 {
-	//IdleNextState_ = "Chop";
+	//IdleNextState_ = "Clap";
 
 	//MonsterHitBox->Off();
 	//MonsterHitBoxHand->Off();

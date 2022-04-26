@@ -48,16 +48,16 @@ void SceneBase::LevelChangeStartEvent()
 {
 }
 
-void SceneBase::TextureLoading(GameEngineDirectory Dir)
-{
-	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
-
-	for (size_t i = 0; i < AllFile.size(); i++)
-	{
-		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		// Sleep(10);
-	}
-
-	--UserGame::LoadingFolder;
-
-}
+//void SceneBase::TextureLoading(GameEngineDirectory Dir)
+//{
+//	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
+//
+//	for (size_t i = 0; i < AllFile.size(); i++)
+//	{
+//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+//		// Sleep(10);
+//	}
+//
+//	--UserGame::LoadingFolder;
+//
+//}

@@ -36,11 +36,18 @@ private:
 
 	bool IsDiceTime_;
 
+
+#ifdef _DEBUG
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_Body_Birth_;
 	bool AniEnd_Attack_Body_End_;
 
 	bool AniEnd_Attack_Hand_Birth_;
+
+	bool AniEnd_Clap_Birth_;
+	bool AniEnd_Clap_End_;
+#endif // _DEBUG
+
 
 	enum class Hand_Dir
 	{
@@ -94,6 +101,10 @@ private:
 	void Chop_Update(float _DeltaTime);
 	void Chop_End_();
 
+	void Clap_Start();
+	void Clap_Update(float _DeltaTime);
+	void Clap_End_();
+
 	void BattleState_Battle_Start();
 	void BattleState_Battle_Update(float _DeltaTime);
 	void BattleState_Battle_End();
@@ -141,7 +152,26 @@ private:
 	void AniEnd_Attack_Hand_Birth()
 	{
 		AniEnd_Attack_Hand_Birth_ = true;
+	}	
+	void AniEnd_Clap_Birth()
+	{
+		AniEnd_Clap_Birth_ = true;
+	}	
+	void AniEnd_Clap_End()
+	{
+		AniEnd_Clap_End_ = true;
 	}
+
+	void AniEnd_Reset()
+	{
+		AniEnd_Intro_ = false;
+		AniEnd_Attack_Body_Birth_ = false;
+		AniEnd_Attack_Body_End_ = false;
+		AniEnd_Attack_Hand_Birth_ = false;
+		AniEnd_Clap_Birth_ = false;
+		AniEnd_Clap_End_ = false;
+	}
+
 #endif // _DEBUG
 
 #ifndef _DEBUG
@@ -166,15 +196,17 @@ private:
 	{
 		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
 	}
+
+	void AniEnd_Clap_Birth()
+	{
+
+	}
+	void AniEnd_Clap_End()
+	{
+	}
 #endif // _DEBUG
 
-	void AniEnd_Reset()
-	{
-		AniEnd_Intro_ = false;
-		AniEnd_Attack_Body_Birth_ = false;
-		AniEnd_Attack_Body_End_ = false;
-		AniEnd_Attack_Hand_Birth_ = false;
-	}
+
 
 };
 

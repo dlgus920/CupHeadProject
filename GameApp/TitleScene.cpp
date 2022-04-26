@@ -2,6 +2,8 @@
 #include "TitleScene.h"
 #include "LoaddingScene.h"
 
+#include "UserGame.h"
+
 #include "Image.h"
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
@@ -22,33 +24,30 @@ TitleScene::~TitleScene()
 
 void TitleScene::LevelResourcesLoad()
 {
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("TitleScene");
+	//UserGame::LoadingFolder++;
+	//GameEngineCore::ThreadQueue.JobPost
+	//(
+	//	[]()
 
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
 		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("TitleScene");
+
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
+
+			//UserGame::LoadingFolder--;
 		}
-
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
-
-		/*GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("title_screen_background.png");
-		Texture->Cut(8, 8);*/
-	}
-
-	//{
-	//	GameEngineDirectory TextureDir;
-	//	TextureDir.MoveParent(GV_GAMEFILENAME);
-	//	TextureDir.MoveChild("Resources");
-	//	TextureDir.MoveChild("Image");
-
-	//}
+	//);
 }
 
 void TitleScene::LevelStart()
@@ -87,7 +86,6 @@ void TitleScene::LevelStart()
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,0.f });
 	}
 
-	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
 }
 
 void TitleScene::LevelUpdate(float _DeltaTime)
@@ -111,6 +109,8 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
+			GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
+
 			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
 
 			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;

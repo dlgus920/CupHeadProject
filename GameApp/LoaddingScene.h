@@ -22,6 +22,14 @@ private:	// member Var
 
 	bool CutIn_;
 
+	struct FolderLoad
+	{
+		GameEngineDirectory Dir;
+		std::string _FolderName;
+	};
+
+	std::vector<FolderLoad> VecFolderLoad_;
+
 protected:
 	void LevelResourcesLoad() override;
 	void LevelStart() override;
