@@ -125,6 +125,9 @@
     <ClCompile Include="DicePaclace.cpp">
       <Filter>01. App\02. Scene\04. PlayLevel</Filter>
     </ClCompile>
+    <ClCompile Include="KingDice_Marker.cpp">
+      <Filter>01. App\01. Actor\King_Dice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -333,6 +336,9 @@
     </ClInclude>
     <ClInclude Include="DicePaclace.h">
       <Filter>01. App\02. Scene\04. PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="KingDice_Marker.h">
+      <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

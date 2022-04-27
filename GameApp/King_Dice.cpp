@@ -21,9 +21,9 @@ King_Dice::King_Dice()
 	, AniEnd_Attack_Body_Birth_(false)
 	, AniEnd_Attack_Body_End_(false)
 	, AniEnd_Attack_Hand_Birth_(false)
-	, AniEnd_Clap_Birth_(false)
-	, AniEnd_Clap_End_(false)
 #endif // _DEBUG
+	, AniEnd_Clap_Dice_(false)
+	, AniEnd_Clap_(false)
 	, Defeat_(false)
 {
 }
@@ -40,13 +40,11 @@ void King_Dice::Start()
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04f, false);
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.05f, true);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap-Chomp", "KDice-Clap-Chomp", 0.05f, false);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.05f, false);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap-Birth", "KDice-Clap-Birth", 0.05f, false);
-		MonsterImageRenderer->SetEndCallBack("KDice-Clap-Birth", std::bind(&King_Dice::AniEnd_Clap_Birth, this));
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap-Idle", "KDice-Clap-Idle", 0.05f, true);
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap-End", "KDice-Clap-End", 0.05f, false);
-		MonsterImageRenderer->SetEndCallBack("KDice-Clap-End", std::bind(&King_Dice::AniEnd_Clap_End, this));
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap", "KDice-Clap", 0.05f, false);
+		MonsterImageRenderer->SetFrameCallBack("KDice-Clap", 26 ,std::bind(&King_Dice::AniEnd_Clap_Dice, this));
+		MonsterImageRenderer->SetEndCallBack("KDice-Clap" ,std::bind(&King_Dice::AniEnd_Clap, this));
 
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04f, false);
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-End", 0.04f, false);
@@ -106,11 +104,6 @@ void King_Dice::Start()
 
 		BattleState_.CreateState("BattleState_Battle",&King_Dice::BattleState_Battle_Start,&King_Dice::BattleState_Battle_Update,&King_Dice::BattleState_Battle_End);
 		BattleState_.CreateState("BattleState_Dice",&King_Dice::BattleState_Dice_Start,&King_Dice::BattleState_Dice_Update,&King_Dice::BattleState_Dice_End);
-	}
-
-	{
-		PerryObjectDice_ = GetLevel()-> CreateActor<PerryObjectDice>();
-		PerryObjectDice_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z01Actor05)));
 	}
 
 	BattleState_.ChangeState("BattleState_Dice");
@@ -258,6 +251,13 @@ void King_Dice::CardClear()
 	}
 
 	Cardvector_.clear();
+}
+
+void King_Dice::SpawnDice()
+{
+	PerryObjectDice_ = GetLevel()->CreateActor<PerryObjectDice>();
+	PerryObjectDice_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z01Actor05)));
+	PerryObjectDice_->SetKing_Dice(this);
 }
 
 King_Dice::Hand::Hand()

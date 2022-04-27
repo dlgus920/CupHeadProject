@@ -192,6 +192,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="KingDice_Marker.cpp" />
     <ClCompile Include="Dice_Card.cpp">
       <SubType>
       </SubType>
@@ -331,6 +332,7 @@
     </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
+    <ClInclude Include="KingDice_Marker.h" />
     <ClInclude Include="Dice_Card.h">
       <SubType>
       </SubType>

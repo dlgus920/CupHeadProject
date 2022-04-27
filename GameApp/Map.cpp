@@ -2,13 +2,12 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-//#include "Player.h"
-#include "Image.h"
 #include "Map.h"
 
 Map* Map::CurrentMap = nullptr;
 
 Map::Map()
+	: CollisionMap_(nullptr)
 {
 }
 
@@ -20,10 +19,10 @@ void Map::Start()
 {
 	CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
 
-	ScreenFx = GetLevel()->CreateActor<Image>();
-	ScreenFx->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f, true);
-	ScreenFx->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
-	ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+	//ScreenFx = GetLevel()->CreateActor<Image>();
+	//ScreenFx->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f, true);
+	//ScreenFx->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
+	//ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 }
 
 

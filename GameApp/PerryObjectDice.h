@@ -4,6 +4,7 @@
 // 만들어진 상태에서 아예 안쓸때까지 소멸되지 않고 메모리에 남아있게 함 // 일일이 다시 만드는데 되려 메모리 먹음
 enum class DiceNumber
 {
+	None,
 	Num1,
 	Num2,
 	Num3
@@ -24,9 +25,18 @@ private:	// member Var
 	GameEngineImageRenderer* ObjectRenderer_;
 
 	DiceNumber DiceNumber_;
+
+	class King_Dice* King_Dice_;
+
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+public:
+	void SetKing_Dice(King_Dice* _King_Dice)
+	{
+		King_Dice_ = _King_Dice;
+	}
 
 private:
 	void Resset();
@@ -53,6 +63,17 @@ private:
 	void Rolling3_2();
 
 	void RollingEnd();
+
+public:
+	const int GetNumber()
+	{
+		return static_cast<int>(DiceNumber_);
+	}
+
+	const bool GetRoll()
+	{
+		return Parry_;
+	}
 
 };
 

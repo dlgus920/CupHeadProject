@@ -5,6 +5,7 @@
 #include <GameEngineBase/GameEngineFSM.h>
 
 class Dice_Card;
+
 class King_Dice : public Monster
 {
 public:
@@ -36,7 +37,6 @@ private:
 
 	bool IsDiceTime_;
 
-
 #ifdef _DEBUG
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_Body_Birth_;
@@ -44,9 +44,9 @@ private:
 
 	bool AniEnd_Attack_Hand_Birth_;
 
-	bool AniEnd_Clap_Birth_;
-	bool AniEnd_Clap_End_;
 #endif // _DEBUG
+	bool AniEnd_Clap_Dice_;
+	bool AniEnd_Clap_;
 
 
 	enum class Hand_Dir
@@ -131,10 +131,18 @@ private:
 	void SpawnParryCard();
 	void CardClear();
 
+	void SpawnDice();
+
 	//void EffectDefeat(float4 _Pos);
 	//void EffectDefeatRandom(float _Radius);
 
 private:
+
+	void AniEnd_Clap_Dice()
+	{
+		AniEnd_Clap_Dice_ = true;
+	}
+
 
 #ifdef _DEBUG
 	void AniEnd_Intro()
@@ -153,13 +161,9 @@ private:
 	{
 		AniEnd_Attack_Hand_Birth_ = true;
 	}	
-	void AniEnd_Clap_Birth()
+	void AniEnd_Clap()
 	{
-		AniEnd_Clap_Birth_ = true;
-	}	
-	void AniEnd_Clap_End()
-	{
-		AniEnd_Clap_End_ = true;
+		AniEnd_Clap_ = true;
 	}
 
 	void AniEnd_Reset()
@@ -168,8 +172,6 @@ private:
 		AniEnd_Attack_Body_Birth_ = false;
 		AniEnd_Attack_Body_End_ = false;
 		AniEnd_Attack_Hand_Birth_ = false;
-		AniEnd_Clap_Birth_ = false;
-		AniEnd_Clap_End_ = false;
 	}
 
 #endif // _DEBUG
@@ -196,13 +198,10 @@ private:
 	{
 		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
 	}
-
-	void AniEnd_Clap_Birth()
+	void AniEnd_Clap()
 	{
-
-	}
-	void AniEnd_Clap_End()
-	{
+		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+		AniEnd_Clap_ = true;
 	}
 #endif // _DEBUG
 

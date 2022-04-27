@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "King_Dice.h"
 #include "DicePaclace.h"
-
+#include "PerryObjectDice.h"
 
 void King_Dice::Intro_Start()
 {
@@ -26,22 +26,28 @@ void King_Dice::Idle_Start()
 {
 	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
 }
-void King_Dice::Idle_Update( float _DeltaTime)
+void King_Dice::Idle_Update(float _DeltaTime)
 {
-	if (Hp_ < 0)
+	if (true == BattleState_.IsCurStateName("BattleState_Battle"))
 	{
-		State_.ChangeState("Defeat");
-		return;
+		if (Hp_ < 0)
+		{
+			State_.ChangeState("Defeat");
+			return;
+		}
+
+		TimeCheck_ += _DeltaTime;
+
+		if (TimeCheck_ > 2.f)
+		{
+			State_.ChangeState(IdleNextState_);
+			return;
+		}
 	}
-
-	TimeCheck_ += _DeltaTime;
-
-	if (TimeCheck_ > 2.f)
+	else if (true == BattleState_.IsCurStateName("BattleState_Dice"))
 	{
-		State_.ChangeState(IdleNextState_);
-		return;
+
 	}
-	 
 }
 void King_Dice::Idle_End_()
 {
@@ -68,7 +74,7 @@ void King_Dice::Attack_Update( float _DeltaTime)
 
 	if (true == AniEnd_Attack_Body_End_)
 	{
-		CardClear();
+		//CardClear();
 
 		State_.ChangeState("Idle");
 		return;
@@ -191,33 +197,44 @@ void King_Dice::Chop_End_()
 
 void King_Dice::Clap_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDice-Clap-Birth");
+	MonsterImageRenderer->SetChangeAnimation("KDice-Clap");
 }
 void King_Dice::Clap_Update(float _DeltaTime)
 {
 #ifdef _DEBUG
-
-	if (true == AniEnd_Clap_Birth_)
+	if (true == AniEnd_Clap_)
 	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Clap-Idle");
-		AniEnd_Clap_Birth_ = false;
-
-
-		//주사위 굴리기
-	}
-#endif // !_DEBUG
-
-	//주사위 굴리기 끝나면
-	if (false)
-	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Clap-End");
-	}
-
-	if (true == AniEnd_Clap_End_)
-	{
+		AniEnd_Clap_ = false;
 		State_.ChangeState("Idle");
 		return;
 	}
+#endif // !_DEBUG
+
+	if (true == AniEnd_Clap_Dice_)
+	{
+		//TODO : 담베, 토끼, 팽이발레
+		//spawn dice
+		//dice idle
+		SpawnDice();
+
+		AniEnd_Clap_Dice_ = false;
+	}
+
+	if (nullptr != PerryObjectDice_)
+	{
+		if (true == PerryObjectDice_->GetRoll())
+		{
+			int num = PerryObjectDice_->GetNumber();
+			State_.ChangeState("Chop");
+			return;
+		}
+	}
+
+
+	//주사위 굴리기 끝나면
+
+
+
 }
 void King_Dice::Clap_End_()
 {

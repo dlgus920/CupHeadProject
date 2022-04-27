@@ -2,9 +2,10 @@
 #include "PerryObjectDice.h"
 
 PerryObjectDice::PerryObjectDice()
-	: DiceNumber_(DiceNumber::Num1)
+	: DiceNumber_(DiceNumber::None)
 	, ObjectCollision_(nullptr)
 	, ObjectRenderer_(nullptr)
+	, King_Dice_(nullptr)
 {
 
 }

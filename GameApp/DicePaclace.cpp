@@ -7,11 +7,13 @@
 #include <GameEngine/CameraActor.h>
 #include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
+//#include <GameEngineBase/GameEngineRandom.h>
 
 #include "UserGame.h"
 
 #include "Map.h"
 #include "Image.h"
+#include "KingDice_Marker.h"
 #include "Effect.h"
 #include "PerryObjectDice.h"
 #include "King_Dice.h"
@@ -47,11 +49,7 @@ void DicePaclace::LevelResourcesLoad()
 			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("YouDied"));
 
 			TextureDir.MoveChild("KingDice(Boss)");
-			TextureDir.MoveChild("KDice-Clap");
-
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap-Birth"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap-End"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap-Idle"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap"));
 
 			UserGame::LoadingFolder--;
 		}
@@ -72,7 +70,7 @@ void DicePaclace::LevelResourcesLoad()
 			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Idle"));
 			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDIce-Intro"));
 			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Defeat"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap-Chomp"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Chomp"));
 
 			TextureDir.MoveChild("KDice-Attack");
 
@@ -111,6 +109,17 @@ void DicePaclace::LevelResourcesLoad()
 				Texture->Cut(10, 1);
 
 			}
+			TextureDir.MoveChild("DicePalaceMain_Numbers");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+				}
+			}
+
+			TextureDir.MoveParent("DicePalace");
 
 			TextureDir.MoveChild("KingDice(Boss)");
 			TextureDir.MoveChild("KDice-Attack");
@@ -301,6 +310,13 @@ void DicePaclace::ResourcesLoading_Update(float _DeltaTime)
 		}
 
 		{
+			ScreenFx = CreateActor<Image>();
+			ScreenFx->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f, true);
+			ScreenFx->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
+			ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
+		}
+
+		{
 			BlendRate_ = 1.f;
 
 			FadeImage_ = CreateActor<Image>();
@@ -312,21 +328,31 @@ void DicePaclace::ResourcesLoading_Update(float _DeltaTime)
 		}
 
 		{
-			Image* BackImage = CreateActor<Image>();
-			BackImage->ImageSetImage("DicePalaceBack.png");
-			BackImage->ImageRenderer_->SetAdjustImzgeSize();
-			BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back10) });
+			//Image* BackImage = CreateActor<Image>();
+			//BackImage->ImageSetImage("DicePalaceBack.png");
+			//BackImage->ImageRenderer_->SetAdjustImzgeSize();
+			//BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back10) });
 
-			BackImage = CreateActor<Image>();
-			BackImage->ImageSetImage("DicePalaceMain.png");
-			BackImage->ImageRenderer_->SetAdjustImzgeSize();
-			BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
+			//BackImage = CreateActor<Image>();
+			//BackImage->ImageSetImage("DicePalaceMain.png");
+			//BackImage->ImageRenderer_->SetAdjustImzgeSize();
+			//BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
-			Map* _Map = CreateActor<Map>();
+			Map::CurrentMap = CreateActor<Map>();
 			// 1280 720
-			_Map->GetCollisionMap()->SetImage("DicePalaceCol.png");
-			_Map->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-			_Map->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+			Map::CurrentMap->GetCollisionMap()->SetImage("DicePalaceCol.png");
+			Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1440.f, 750.f });
+			Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 720.f, -375.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+
+			//Map::CurrentMap = CreateActor<Map>();
+			//Map::CurrentMap->GetCollisionMap()->SetImage("DicePalaceCol.png");
+			//Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+			//Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+		}
+
+		{
+			KingDice_Marker_ = CreateActor<KingDice_Marker>();
+			KingDice_Marker_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back08) });
 		}
 
 		{
@@ -378,6 +404,10 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 {
 	if (true == Victory_)
 	{
+		int ranint = Random_.RandomInt(-10,10);
+
+		GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f + ranint, static_cast<float>(ZOrder::Z00Camera00)));
+
 		TimeCheck_ += _DeltaTime;
 
 		if (TimeCheck_ > 3.f)
@@ -410,6 +440,7 @@ void DicePaclace::Playing_End()
 bool DicePaclace::ThreadResourceLoad()
 {
 //¾ÆÁ÷ ¾È¾¸
+	return true;
 }
 
 
