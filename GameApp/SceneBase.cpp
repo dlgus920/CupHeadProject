@@ -61,3 +61,46 @@ void SceneBase::LevelChangeStartEvent()
 //	--UserGame::LoadingFolder;
 //
 //}
+
+GameEngineTexture* SceneBase::SceneTextureLoad(const std::string& _Path)
+{
+
+	return Load(GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
+}
+
+GameEngineTexture* SceneBase::SceneTextureLoad(const std::string& _Name, const std::string& _Path)
+{
+	GameEngineTexture* FindRes = Find(_Name);
+#ifdef _DEBUG
+	if (nullptr != FindRes)
+	{
+		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
+	}
+#endif // _DEBUG
+
+	GameEngineTexture* NewRes = new GameEngineTexture();
+	NewRes->SetName(_Name);
+	NewRes->Load(_Path);
+	{
+		//std::lock_guard Lock(ManagerLock);
+		TextureResourcesMap.insert(std::map<std::string, GameEngineTexture*>::value_type(_Name, NewRes));
+	}
+	return NewRes;
+}
+
+GameEngineTexture* SceneBase::SceneTextureFind(const std::string& _Name)
+{
+	std::map<std::string, GameEngineTexture*>::iterator FindIter;
+	{
+		//std::lock_guard Lock(ManagerLock);
+
+		FindIter = TextureResourcesMap.find(GameEngineString::toupper(_Name));
+	}
+
+	if (FindIter != TextureResourcesMap.end())
+	{
+		return FindIter->second;
+	}
+
+	return nullptr;
+}

@@ -249,8 +249,9 @@ void GameEngineImageRenderer::SetImage(const std::string& _ImageName, const std:
 
 void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop /*= true*/)
 {
-	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 #ifdef _DEBUG
+	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
+
 	if (AllAnimations_.end() != FindIter)
 	{
 		GameEngineDebug::MsgBoxError("이미 존재하는 애니메이션을 또 만들었습니다.");
@@ -284,9 +285,10 @@ void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, c
 
 void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
 {
-	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().Find(_FolderTexName);
+
 #ifdef _DEBUG
+	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 
 	if (AllAnimations_.end() != FindIter)
 	{

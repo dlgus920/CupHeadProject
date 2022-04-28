@@ -28,141 +28,14 @@ Stage_Mr_Wheezy::~Stage_Mr_Wheezy()
 
 void Stage_Mr_Wheezy::LevelResourcesLoad()
 {
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
 		{
 			GameEngineDirectory TextureDir;
 			TextureDir.MoveParent(GV_GAMEFILENAME);
 			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
-			TextureDir.MoveChild("KingDice(Boss)");
-
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap"));
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("DicePalace");
-			TextureDir.MoveChild("KingDice(Boss)");
-			TextureDir.MoveChild("KDice-Attack");
-
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Attack-Hand-Idle"));
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("DicePalace");
-
-			{
-				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-				for (size_t i = 0; i < AllFile.size(); i++)
-				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-				}
-
-				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("ParryObjectDice.png");
-				Texture->Cut(10, 8);
-				Texture = GameEngineTextureManager::GetInst().Find("BossExplosion.png");
-				Texture->Cut(10, 1);
-
-			}
-			TextureDir.MoveChild("DicePalaceMain_Numbers");
-			{
-				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-				for (size_t i = 0; i < AllFile.size(); i++)
-				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-				}
-			}
-
-			TextureDir.MoveParent("DicePalace");
-
-			TextureDir.MoveChild("KingDice(Boss)");
-			TextureDir.MoveChild("KDice-Attack");
-
-			{
-				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-				for (size_t i = 0; i < AllFile.size(); i++)
-				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-				}
-				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Card_Club.png");
-				Texture->Cut(7, 3);
-
-				Texture = GameEngineTextureManager::GetInst().Find("Card_Hraet.png");
-				Texture->Cut(7, 3);
-			}
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("UI");
-
-			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-			for (size_t i = 0; i < AllFile.size(); i++)
-			{
-				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			}
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bottom_HP.png");
-			Texture->Cut(6, 2);
-
-			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Dia.png");
-			Texture->Cut(6, 1);
-
-			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Spade.png");
-			Texture->Cut(6, 1);
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("CharactorSprite");
+			TextureDir.MoveChild("MiniBoss");
+			TextureDir.MoveChild("Mr_Wheezy");
 
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -173,23 +46,18 @@ void Stage_Mr_Wheezy::LevelResourcesLoad()
 				}
 			}
 
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
-
-			Texture->Cut(20, 20);
-			Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
-			Texture->Cut(8, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("PlayerDust.png");
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Intro_Flame.png");
+			Texture->Cut(10, 1);
+			Texture = GameEngineTextureManager::GetInst().Find("Intro_Hand.png");
+			Texture->Cut(14, 1);
+			Texture = GameEngineTextureManager::GetInst().Find("Mr_Wheezy.png");
 			Texture->Cut(20, 6);
-			Texture = GameEngineTextureManager::GetInst().Find("DashDust.png");
-			Texture->Cut(13, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("HitEffect.png");
-			Texture->Cut(9, 3);
-			Texture = GameEngineTextureManager::GetInst().Find("ParryEffect.png");
-			Texture->Cut(9, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("LandDust.png");
-			Texture->Cut(6, 1);
+			Texture = GameEngineTextureManager::GetInst().Find("Smoke_FX.png");
+			Texture->Cut(20, 3);
 
-			TextureDir.MoveChild("Bullet");
+			TextureDir.MoveChild("BackGround");
+
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_top_smoke"));
 
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -200,17 +68,11 @@ void Stage_Mr_Wheezy::LevelResourcesLoad()
 				}
 			}
 
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
-			Texture->Cut(8, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
-			Texture->Cut(4, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
-			Texture->Cut(6, 1);
-
-			UserGame::LoadingFolder--;
+			TextureDir.MoveChild("BG_Fire");
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Back"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Front"));
+			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
 		}
-	);
-
 }
 void Stage_Mr_Wheezy::LevelStart()
 {
