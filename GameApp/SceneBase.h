@@ -6,13 +6,13 @@ class SceneBase : public GameEngineLevel
 private:	// member Var
 
 public:
-	SceneBase(); 
-	~SceneBase(); 
+	SceneBase();
+	~SceneBase();
 
-	SceneBase(const SceneBase& _other) = delete; 
+	SceneBase(const SceneBase& _other) = delete;
 	SceneBase(SceneBase&& _other) = delete;
-	SceneBase& operator=(const SceneBase& _other) = delete; 
-	SceneBase& operator=(const SceneBase&& _other) = delete; 
+	SceneBase& operator=(const SceneBase& _other) = delete;
+	SceneBase& operator=(const SceneBase&& _other) = delete;
 
 public:
 
@@ -26,6 +26,5 @@ protected:
 	virtual void LevelUpdate(float _DeltaTime);
 	virtual void LevelChangeEndEvent();
 	virtual void LevelChangeStartEvent();
-
 };
 

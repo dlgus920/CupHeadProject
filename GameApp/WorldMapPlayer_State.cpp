@@ -157,8 +157,6 @@ void WorldMapPlayer::Chose_Start()
 	//IrisImage->GetTransform()->SetWorldPosition(float4(pos.x, pos.y, static_cast<int>(ZOrder::Z00Fx00)));
 	//IrisImage->SetImageAnimationEndFunc<Image>("ScreenIris", &Image::Death, IrisImage);
 
-	//TODO :: 현재 IrisImage, 월드맵 플레이어, 월드맵씬 셋간의 동기화가 이루어지지 않음, 동기화 진행후, 셋다 끝났을때 안정적으로 씬을 넘기도록 하기
-
 	SetChangeAnimation("Cup-Chose");
 
 	ChangeScene(ColState_Chose_->GetNextScene());

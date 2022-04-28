@@ -28,14 +28,14 @@ private:
 
 	class PerryObjectDice* PerryObjectDice_;
 
-	std::string IdleNextState_;
-
 	bool Defeat_;
 
 	int CardCount_;
 	float TimeCheck_;
 
 	bool IsDiceTime_;
+
+	bool Ani_Idle_Ready_;
 
 #ifdef _DEBUG
 	bool AniEnd_Intro_;
@@ -143,6 +143,10 @@ private:
 		AniEnd_Clap_Dice_ = true;
 	}
 
+	void Ani_Idle_Ready()
+	{
+		Ani_Idle_Ready_ = true;
+	}
 
 #ifdef _DEBUG
 	void AniEnd_Intro()

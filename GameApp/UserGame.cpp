@@ -73,8 +73,6 @@ void UserGame::LoadingNextLevel(std::string _NextLevel)
 	//LevelChange("Loading");
 }
 
-//TODO: 게임엔진 코어가 레벨로부터 bool값을 검사하며 다음 레벨을 만들어 주길 바람
-
 //
 //void UserGame::GameLoop()
 //{

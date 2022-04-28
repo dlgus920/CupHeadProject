@@ -79,5 +79,5 @@ void UserGame::ResourcesLoad()
 
 	}
 
-	AppShaderLoad(); //TODO : 현재 문제 발생 주범
+	AppShaderLoad(); 
 }

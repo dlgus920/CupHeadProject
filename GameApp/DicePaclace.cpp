@@ -402,6 +402,11 @@ void DicePaclace::Playing_Start()
 }
 void DicePaclace::Playing_Update(float _DeltaTime)
 {
+	if (true == IsStageMove_)
+	{
+		KingDice_Marker_->Clear(StageMoveCount_);
+	}
+
 	if (true == Victory_)
 	{
 		int ranint = Random_.RandomInt(-10,10);
@@ -443,7 +448,6 @@ bool DicePaclace::ThreadResourceLoad()
 	return true;
 }
 
-
 void DicePaclace::ReadyWALLOP()
 {
 	Image* Back = CreateActor<Image>();
@@ -460,14 +464,12 @@ void DicePaclace::ReadyWALLOP()
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
-
 void DicePaclace::KnockoutEnd()
 {
 	GameEngineCore::SetTimeRate(1.f);
 
 	Victory_ = true;
 }
-
 void DicePaclace::Knockout()
 {
 	Player_->SetVictory();

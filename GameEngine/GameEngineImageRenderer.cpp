@@ -51,7 +51,9 @@ void GameEngineImageRenderer::Animation2D::FrameUpdate()
 {
 	if (CurTime_ <= 0.0f)
 	{
+		CallFrame();
 		++CurFrame_;
+
 		CurTime_ = InterTime_;
 		if (true == Loop_
 			&& CurFrame_ > EndFrame_)
@@ -79,6 +81,7 @@ void GameEngineImageRenderer::Animation2D::ReverseFrameUpdate()
 {
 	if (CurTime_ <= 0.0f)
 	{
+		CallFrame();
 		--CurFrame_;
 		CurTime_ = InterTime_;
 		if (true == Loop_
@@ -120,7 +123,7 @@ void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
 		ReverseFrameUpdate();
 	}
 
-	CallFrame();
+	//CallFrame();
 	if (nullptr == FolderTextures_)
 	{
 		Renderer->ShaderHelper.SettingTexture("Tex", AnimationTexture_);

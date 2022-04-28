@@ -24,6 +24,7 @@ King_Dice::King_Dice()
 #endif // _DEBUG
 	, AniEnd_Clap_Dice_(false)
 	, AniEnd_Clap_(false)
+	, Ani_Idle_Ready_(false)
 	, Defeat_(false)
 {
 }
@@ -38,12 +39,14 @@ void King_Dice::Start()
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Idle", "KDIce-Idle", 0.04f);
 		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04f, false);
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.05f, true);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.04f, true);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.05f, false);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.04f, false);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap", "KDice-Clap", 0.05f, false);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap", "KDice-Clap", 0.04f, false);
 		MonsterImageRenderer->SetFrameCallBack("KDice-Clap", 26 ,std::bind(&King_Dice::AniEnd_Clap_Dice, this));
+
+		MonsterImageRenderer->SetEndCallBack("KDice-Idle" ,std::bind(&King_Dice::Ani_Idle_Ready, this));
 		MonsterImageRenderer->SetEndCallBack("KDice-Clap" ,std::bind(&King_Dice::AniEnd_Clap, this));
 
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04f, false);

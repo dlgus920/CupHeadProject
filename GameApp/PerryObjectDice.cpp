@@ -6,6 +6,7 @@ PerryObjectDice::PerryObjectDice()
 	, ObjectCollision_(nullptr)
 	, ObjectRenderer_(nullptr)
 	, King_Dice_(nullptr)
+	, Rolled_(false)
 {
 
 }
@@ -36,15 +37,15 @@ void PerryObjectDice::Start()
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-2", 26, 28, 0.05, false);
 
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Death",40,57, 0.05,false);// 57프레임 도달시 업데이트 멈춤
-	ObjectRenderer_->SetFrameCallBack("Death",57,std::bind(&PerryObjectDice::Off, this));
+	ObjectRenderer_->SetFrameCallBack("Death",57,std::bind(&PerryObjectDice::Death, this));
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num3",50,73, 0.05,true);
+	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
+	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);
+	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num3",50,73, 0.05,true);
 
-	ObjectRenderer_->SetFrameCallBack("Idle",0,std::bind(&PerryObjectDice::Num1, this));
-	ObjectRenderer_->SetFrameCallBack("Idle",7, std::bind(&PerryObjectDice::Num2, this));
-	ObjectRenderer_->SetFrameCallBack("Idle",15, std::bind(&PerryObjectDice::Num3, this));
+	ObjectRenderer_->SetFrameCallBack("Idle",50,std::bind(&PerryObjectDice::Num1, this));
+	ObjectRenderer_->SetFrameCallBack("Idle",57, std::bind(&PerryObjectDice::Num2, this));
+	ObjectRenderer_->SetFrameCallBack("Idle",65, std::bind(&PerryObjectDice::Num3, this));
 
 	ObjectRenderer_->SetEndCallBack("Rolling1-1", std::bind(&PerryObjectDice::Rolling1_2, this));
 	ObjectRenderer_->SetEndCallBack("Rolling2-1", std::bind(&PerryObjectDice::Rolling2_2, this));
@@ -70,10 +71,10 @@ void PerryObjectDice::Update(float _DeltaTime)
 			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
 			break;
 		case DiceNumber::Num2:
-			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+			ObjectRenderer_->SetChangeAnimation("Rolling2-1");
 			break;
 		case DiceNumber::Num3:
-			ObjectRenderer_->SetChangeAnimation("Rolling1-1");
+			ObjectRenderer_->SetChangeAnimation("Rolling3-1");
 			break;
 		}
 
@@ -85,6 +86,19 @@ void PerryObjectDice::Resset() //Spawn과 동시에 Resset 해야함
 {
 	ObjectRenderer_->SetChangeAnimation("Idle");
 	On();
+}
+
+void PerryObjectDice::Num1()
+{
+	DiceNumber_ = DiceNumber::Num1;
+}
+void PerryObjectDice::Num2()
+{
+	DiceNumber_ = DiceNumber::Num2;
+}
+void PerryObjectDice::Num3()
+{
+	DiceNumber_ = DiceNumber::Num3;
 }
 
 void PerryObjectDice::Rolling1_1()
@@ -119,6 +133,7 @@ void PerryObjectDice::Rolling3_2()
 
 void PerryObjectDice::RollingEnd()
 {
+	Rolled_ = true;
 	ObjectRenderer_->SetChangeAnimation("Death");
 }
 

@@ -46,10 +46,6 @@ void Bottom_Card::Start()
 
 void Bottom_Card::Update(float _DeltaTime)
 {
-	//TODO:: 우선 페리 오브젝트 먼저 만들고 구현할것
-
-	//오르고 내리고 구현 안하고 일단 사라지고 하는것만 구현
-
 	for (int i = 0; i < CurCount_; ++i)
 	{
 		UICard_[i]->On();

@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "Map.h"
 
-#include "ParryObject.h"
+#include "PerryObjectDice.h"
 
 #include <GameEngine/GameEngineCore.h>
 
@@ -210,7 +210,7 @@ void Player::Jump_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				dynamic_cast<ParryObject*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
+				dynamic_cast<PerryObjectDice*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
 
 				ChangeAnimation("Cup-Jump-Parry");
 

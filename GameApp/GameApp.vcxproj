@@ -221,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Mr_Wheezy.cpp" />
+    <ClCompile Include="Mr_Wheezy_State.cpp" />
+    <ClCompile Include="Stage_Mr_Wheezy.cpp" />
     <ClCompile Include="ParryObject.cpp">
       <SubType>
       </SubType>
@@ -361,6 +364,8 @@
     </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Mr_Wheezy.h" />
+    <ClInclude Include="Stage_Mr_Wheezy.h" />
     <ClInclude Include="ParryObject.h">
       <SubType>
       </SubType>

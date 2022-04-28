@@ -45,7 +45,6 @@ float4 Map::GetColor(GameEngineTransform* _Ptr, bool YRevers /*= true*/)
 
 float4 Map::GetColor(float4 _Postion)
 {
-	//TODO : ÀÌ»õ³¢°¡ ¾ò¾î¿Ã ÇÈ¼¿ÀÇ ÁÂÇ¥¸¦ ¾îÂ¼±¸ ÀúÂ¼±¸
 	return CurrentMap->CollisionMap_->GetCurrentTexture()->GetPixel(_Postion.ix(), _Postion.iy());
 }
 

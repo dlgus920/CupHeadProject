@@ -115,7 +115,6 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 
 			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
-			//TODO : 로딩씬 생성후 죽이기 or 초기화 작업
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}

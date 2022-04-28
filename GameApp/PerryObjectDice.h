@@ -25,7 +25,7 @@ private:	// member Var
 	GameEngineImageRenderer* ObjectRenderer_;
 
 	DiceNumber DiceNumber_;
-
+	bool Rolled_;
 	class King_Dice* King_Dice_;
 
 private:
@@ -41,18 +41,9 @@ public:
 private:
 	void Resset();
 
-	void Num1()
-	{
-		DiceNumber_ = DiceNumber::Num1;
-	}
-	void Num2()
-	{
-		DiceNumber_ = DiceNumber::Num2;
-	}
-	void Num3()
-	{
-		DiceNumber_ = DiceNumber::Num3;
-	}
+	void Num1();
+	void Num2();
+	void Num3();
 
 	void Rolling1_1();
 	void Rolling2_1();
@@ -72,7 +63,7 @@ public:
 
 	const bool GetRoll()
 	{
-		return Parry_;
+		return Rolled_;
 	}
 
 };

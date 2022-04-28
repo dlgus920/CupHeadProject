@@ -40,14 +40,28 @@ void King_Dice::Idle_Update(float _DeltaTime)
 
 		if (TimeCheck_ > 2.f)
 		{
-			State_.ChangeState(IdleNextState_);
-			return;
+			if (Ani_Idle_Ready_)
+			{
+				State_.ChangeState("Attack");
+				return;
+			}
 		}
 	}
 	else if (true == BattleState_.IsCurStateName("BattleState_Dice"))
 	{
+		TimeCheck_ += _DeltaTime;
 
+		if (TimeCheck_ > 2.f)
+		{
+			if (Ani_Idle_Ready_)
+			{
+				State_.ChangeState("Clap");
+				return;
+			}
+		}
 	}
+
+	Ani_Idle_Ready_ = false;
 }
 void King_Dice::Idle_End_()
 {
@@ -82,9 +96,7 @@ void King_Dice::Attack_Update( float _DeltaTime)
 
 	else
 	{
-
 #ifdef _DEBUG
-
 		if (true == AniEnd_Attack_Body_Birth_)
 		{
 			MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
@@ -186,6 +198,7 @@ void King_Dice::Defeat_End_()
 
 void King_Dice::Chop_Start()
 {
+	MonsterImageRenderer->SetChangeAnimation("KDice-Chomp");
 }
 void King_Dice::Chop_Update( float _DeltaTime)
 {
@@ -205,7 +218,8 @@ void King_Dice::Clap_Update(float _DeltaTime)
 	if (true == AniEnd_Clap_)
 	{
 		AniEnd_Clap_ = false;
-		State_.ChangeState("Idle");
+		//State_.ChangeState("Idle");
+		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
 		return;
 	}
 #endif // !_DEBUG
@@ -224,7 +238,10 @@ void King_Dice::Clap_Update(float _DeltaTime)
 	{
 		if (true == PerryObjectDice_->GetRoll())
 		{
-			int num = PerryObjectDice_->GetNumber();
+			GetLevel<DicePaclace>()->SetPlusDiceNum(PerryObjectDice_->GetNumber());
+
+			//TODO : 숫자를 받아왔으니, 이제 마커를 이동시키면 됨
+
 			State_.ChangeState("Chop");
 			return;
 		}
@@ -257,20 +274,17 @@ void King_Dice::BattleState_Battle_End()
 
 void King_Dice::BattleState_Dice_Start()
 {
-	//IdleNextState_ = "Clap";
 
-	//MonsterHitBox->Off();
-	//MonsterHitBoxHand->Off();
+	MonsterHitBox->Off();
 }
 void King_Dice::BattleState_Dice_Update( float _DeltaTime)
 {
-	IdleNextState_ = "Attack";
-	BattleState_.ChangeState("BattleState_Battle");
-	return;
+	//IdleNextState_ = "Attack";
+	//BattleState_.ChangeState("BattleState_Battle");
+	//return;
 
-	if (false == IsDiceTime_)
+	if (false == IsDiceTime_) 
 	{
-		IdleNextState_ = "Attack";
 		BattleState_.ChangeState("BattleState_Battle");
 		return;
 	}

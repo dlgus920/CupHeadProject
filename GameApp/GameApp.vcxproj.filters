@@ -128,6 +128,15 @@
     <ClCompile Include="KingDice_Marker.cpp">
       <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClCompile>
+    <ClCompile Include="Stage_Mr_Wheezy.cpp">
+      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+    </ClCompile>
+    <ClCompile Include="Mr_Wheezy.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="Mr_Wheezy_State.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -241,6 +250,9 @@
     <Filter Include="01. App\01. Actor\ScreenFX">
       <UniqueIdentifier>{cc05350c-6be2-40a8-a0b5-bf7217051242}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss">
+      <UniqueIdentifier>{5f12dbad-5e9b-460e-893e-9664e5483607}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -339,6 +351,12 @@
     </ClInclude>
     <ClInclude Include="KingDice_Marker.h">
       <Filter>01. App\01. Actor\King_Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Mr_Wheezy.h">
+      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+    </ClInclude>
+    <ClInclude Include="Mr_Wheezy.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
