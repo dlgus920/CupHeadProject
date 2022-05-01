@@ -41,10 +41,18 @@ public:
 	}
 
 	static void LevelDestroy(const std::string& _Level);
-
+	
 	static GameEngineLevel* CurrentLevel() 
 	{
 		return CurrentLevel_;
+	}
+
+	template<typename LevelType>
+	static LevelType* CurrentLevel()
+	{
+		//LevelType* Level = dynamic_cast<LevelType*>(CurrentLevel_);
+		//return Level;	
+		return dynamic_cast<LevelType*>(CurrentLevel_);
 	}
 
 public:

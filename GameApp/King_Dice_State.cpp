@@ -5,7 +5,7 @@
 
 void King_Dice::Intro_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDIce-Intro");
+	MonsterImageRenderer->SetChangeAnimation("KDice-Intro");
 }
 void King_Dice::Intro_Update( float _DeltaTime)
 {
@@ -24,7 +24,7 @@ void King_Dice::Intro_End_()
 
 void King_Dice::Idle_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+	MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 }
 void King_Dice::Idle_Update(float _DeltaTime)
 {
@@ -40,7 +40,7 @@ void King_Dice::Idle_Update(float _DeltaTime)
 
 		if (TimeCheck_ > 2.f)
 		{
-			if (Ani_Idle_Ready_)
+			if (true == Ani_Idle_Ready_)
 			{
 				State_.ChangeState("Attack");
 				return;
@@ -53,7 +53,7 @@ void King_Dice::Idle_Update(float _DeltaTime)
 
 		if (TimeCheck_ > 2.f)
 		{
-			if (Ani_Idle_Ready_)
+			if (true == Ani_Idle_Ready_)
 			{
 				State_.ChangeState("Clap");
 				return;
@@ -199,6 +199,7 @@ void King_Dice::Defeat_End_()
 void King_Dice::Chop_Start()
 {
 	MonsterImageRenderer->SetChangeAnimation("KDice-Chomp");
+	MonsterImageRenderer->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx02) });
 }
 void King_Dice::Chop_Update( float _DeltaTime)
 {
@@ -206,6 +207,7 @@ void King_Dice::Chop_Update( float _DeltaTime)
 }
 void King_Dice::Chop_End_()
 {
+	MonsterImageRenderer->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back08) });
 }
 
 void King_Dice::Clap_Start()
@@ -219,7 +221,7 @@ void King_Dice::Clap_Update(float _DeltaTime)
 	{
 		AniEnd_Clap_ = false;
 		//State_.ChangeState("Idle");
-		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+		MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 		return;
 	}
 #endif // !_DEBUG
@@ -238,12 +240,21 @@ void King_Dice::Clap_Update(float _DeltaTime)
 	{
 		if (true == PerryObjectDice_->GetRoll())
 		{
-			GetLevel<DicePaclace>()->SetPlusDiceNum(PerryObjectDice_->GetNumber());
+			TimeCheck_ += _DeltaTime;
+			if (TimeCheck_ >= 2.f)
+			{
+				if (true == Ani_Idle_Ready_)
+				{
+					GetLevel<DicePaclace>()->SetPlusDiceNum(PerryObjectDice_->GetNumber());
 
-			//TODO : 숫자를 받아왔으니, 이제 마커를 이동시키면 됨
+					//TODO : 숫자를 받아왔으니, 이제 마커를 이동시키면 됨
+					PerryObjectDice_->Death();
+					PerryObjectDice_ = nullptr;
 
-			State_.ChangeState("Chop");
-			return;
+					State_.ChangeState("Chop");
+					return;
+				}
+			}
 		}
 	}
 
@@ -255,6 +266,7 @@ void King_Dice::Clap_Update(float _DeltaTime)
 }
 void King_Dice::Clap_End_()
 {
+	TimeCheck_ = 0.f;
 }
 
 

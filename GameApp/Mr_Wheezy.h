@@ -22,11 +22,6 @@ private:
 	GameEngineCollision* MonsterHitBox;
 	GameEngineImageRenderer* MonsterImageRenderer;
 
-	GameEngineImageRenderer* BackGroundRenderer_;
-	GameEngineImageRenderer* BackGroundRenderer_;
-	GameEngineImageRenderer* BackGroundRenderer_;
-	GameEngineImageRenderer* BackGroundRenderer_;
-
 	class PerryObjectDice* PerryObjectDice_;
 
 	bool Defeat_;

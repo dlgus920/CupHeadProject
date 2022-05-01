@@ -80,3 +80,12 @@ void Image::EffectDeath()
 
 	Death();
 }
+
+GameEngineImageRenderer* Image::CreateImageRenderer(float4 _Scale, float4 _Pos)
+{
+	GameEngineImageRenderer* BackRenderer = CreateTransformComponent<GameEngineImageRenderer>();
+	BackRenderer->GetTransform()->SetLocalScaling(_Scale);
+	BackRenderer->GetTransform()->SetLocalPosition(_Pos);
+
+	return BackRenderer;
+}

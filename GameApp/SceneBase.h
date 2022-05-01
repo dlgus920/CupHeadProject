@@ -19,23 +19,28 @@ public:
 	float BlendRate_;
 
 private:
+	//std::map<std::string, GameEngineFolderTexture*> FolderResourcesMap;
+	//std::map<std::string, GameEngineTexture*> TextureResourcesMap;
 
-	std::map<std::string, GameEngineFolderTexture*> FolderResourcesMap;
-	std::map<std::string, GameEngineTexture*> TextureResourcesMap;
+protected:
+	class Player* Player_;
+	bool Victory_;
 
-	void Clear()
-	{
-		FolderResourcesMap.clear();
-		TextureResourcesMap.clear();
-	}
+private:
 
-	GameEngineTexture* SceneTextureLoad(const std::string& _Path);
-	// 이름 직접 지정
-	GameEngineTexture* SceneTextureLoad(const std::string& _Name, const std::string& _Path);
-	// 목록에서 찾는다.
-	GameEngineTexture* SceneTextureFind(const std::string& _Name);
+protected:
+	//GameEngineTexture* SceneTextureLoad(const std::string& _Path);
+	//// 이름 직접 지정
+	//GameEngineTexture* SceneTextureLoad(const std::string& _Name, const std::string& _Path);
+	//// 목록에서 찾는다.
+	//GameEngineTexture* SceneTextureFind(const std::string& _Name);
 
+	//void PlayerResourceLoad();
+	//void SceneResourceClear();
 public:
+	void Knockout();
+	void ReadyWALLOP();
+	void KnockoutEnd();
 
 protected:
 	virtual void LevelResourcesLoad();
@@ -43,6 +48,5 @@ protected:
 	virtual void LevelUpdate(float _DeltaTime);
 	virtual void LevelChangeEndEvent();
 	virtual void LevelChangeStartEvent();
-
 };
 

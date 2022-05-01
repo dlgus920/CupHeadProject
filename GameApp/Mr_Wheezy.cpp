@@ -95,67 +95,67 @@ void Mr_Wheezy::Update(float _DeltaTime)
 
 void Mr_Wheezy::SpawnCard()
 {
-	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
+	//Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
-	_Dice_Card->ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
-	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Club");
+	//_Dice_Card->ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
+	//_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Club");
 
-	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Monster);
+	//_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Monster);
 
 
-	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
-	{
-		_Dice_Card->GetTransform()->SetWorldPosition(float4{ 230.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
-		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
-		_Dice_Card->SetCardMove(float4{ 400.f,0.f });
-	}
-	else
-	{
-		_Dice_Card->GetTransform()->SetWorldPosition(float4{ 1050.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
-		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
-		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
-	}
+	//if (Hand_.Hand_Dir_ == Hand_Dir::Left)
+	//{
+	//	_Dice_Card->GetTransform()->SetWorldPosition(float4{ 230.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+	//	_Dice_Card->SetCardMove(float4{ 400.f,0.f });
+	//}
+	//else
+	//{
+	//	_Dice_Card->GetTransform()->SetWorldPosition(float4{ 1050.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+	//	_Dice_Card->SetCardMove(float4{ -400.f,0.f });
+	//}
 
-	_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 80,210, 1.f });
+	//_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 80,210, 1.f });
 
-	Cardvector_.push_back(_Dice_Card);
+	//Cardvector_.push_back(_Dice_Card);
 }
 
 void Mr_Wheezy::SpawnParryCard()
 {
-	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
+	//Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
-	_Dice_Card->ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
-	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Hraet");
+	//_Dice_Card->ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
+	//_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Hraet");
 
-	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+	//_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
-	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
-	{		
-		_Dice_Card->GetTransform()->SetWorldPosition(float4{ 230.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
-		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
+	//if (Hand_.Hand_Dir_ == Hand_Dir::Left)
+	//{		
+	//	_Dice_Card->GetTransform()->SetWorldPosition(float4{ 230.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ 230.f,240.f, 1.f });
 
-		_Dice_Card->SetCardMove(float4{400.f,0.f});
-	}
-	else
-	{		
-		_Dice_Card->GetTransform()->SetWorldPosition(float4{ 1050.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
-		_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
+	//	_Dice_Card->SetCardMove(float4{400.f,0.f});
+	//}
+	//else
+	//{		
+	//	_Dice_Card->GetTransform()->SetWorldPosition(float4{ 1050.f, -460, static_cast<int>(ZOrder::Z01Actor04) });
+	//	_Dice_Card->ImageRenderer->GetTransform()->SetLocalScaling(float4{ -230.f,240.f, 1.f });
 
-		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
-	}
+	//	_Dice_Card->SetCardMove(float4{ -400.f,0.f });
+	//}
 
-	_Dice_Card-> Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
+	//_Dice_Card-> Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
 
-	Cardvector_.push_back(_Dice_Card);
+	//Cardvector_.push_back(_Dice_Card);
 }
 
 void Mr_Wheezy::CardClear()
 {
-	for (int i = 0; i < Cardvector_.size(); ++i)
-	{
-		Cardvector_[i]->Death();
-	}
+	//for (int i = 0; i < Cardvector_.size(); ++i)
+	//{
+	//	Cardvector_[i]->Death();
+	//}
 
-	Cardvector_.clear();
+	//Cardvector_.clear();
 }

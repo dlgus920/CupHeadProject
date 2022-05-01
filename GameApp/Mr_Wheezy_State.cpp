@@ -88,53 +88,8 @@ void Mr_Wheezy::Attack_Update( float _DeltaTime)
 
 #ifdef _DEBUG
 
-		if (true == AniEnd_Attack_Body_Birth_)
-		{
-			MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
 
-			Hand_.HandOn();
-			Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
-
-			AniEnd_Attack_Body_Birth_ = false;
-		}
-
-		if (true == AniEnd_Attack_Hand_Birth_)
-		{
-			Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
-
-			Hand_.IsAttacking_ = true;
-
-			AniEnd_Attack_Hand_Birth_ = false;
-		}
 #endif // !_DEBUG
-
-		if (true == Hand_.IsAttacking_)
-		{
-			TimeCheck_ += _DeltaTime;
-
-			if (TimeCheck_ > 0.3f)
-			{
-				CardCount_++;
-
-				if ((CardCount_ % 3) == 0)
-				{
-					SpawnParryCard();
-				}
-				else
-				{
-					SpawnCard();
-				}
-
-				if (CardCount_ > 10)
-				{
-					MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-End");
-					Hand_.IsAttacking_ = false;
-					Hand_.HandOff();
-				}
-
-				TimeCheck_ = 0.f;
-			}
-		}
 
 	}
 	 
@@ -211,25 +166,7 @@ void Mr_Wheezy::Clap_Update(float _DeltaTime)
 	}
 #endif // !_DEBUG
 
-	if (true == AniEnd_Clap_Dice_)
-	{
-		//TODO : 담베, 토끼, 팽이발레
-		//spawn dice
-		//dice idle
-		SpawnDice();
 
-		AniEnd_Clap_Dice_ = false;
-	}
-
-	if (nullptr != PerryObjectDice_)
-	{
-		if (true == PerryObjectDice_->GetRoll())
-		{
-			int num = PerryObjectDice_->GetNumber();
-			State_.ChangeState("Chop");
-			return;
-		}
-	}
 
 
 	//주사위 굴리기 끝나면
@@ -267,11 +204,6 @@ void Mr_Wheezy::BattleState_Dice_Update( float _DeltaTime)
 	//BattleState_.ChangeState("BattleState_Battle");
 	//return;
 
-	if (false == IsDiceTime_) 
-	{
-		BattleState_.ChangeState("BattleState_Battle");
-		return;
-	}
 
 	 
 }

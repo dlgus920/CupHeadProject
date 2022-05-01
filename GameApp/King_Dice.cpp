@@ -37,8 +37,8 @@ void King_Dice::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		MonsterImageRenderer->CreateAnimationFolder("KDIce-Idle", "KDIce-Idle", 0.04f);
-		MonsterImageRenderer->CreateAnimationFolder("KDIce-Intro", "KDIce-Intro", 0.04f, false);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle", "KDice-Idle", 0.04f);
+		MonsterImageRenderer->CreateAnimationFolder("KDice-Intro", "KDice-Intro", 0.04f, false);
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.04f, true);
 
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.04f, false);
@@ -55,7 +55,7 @@ void King_Dice::Start()
 
 		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Idle", "KDice-Attack-Body-Idle", 0.04f);
 
-		MonsterImageRenderer->SetEndCallBack("KDIce-Intro", std::bind(&King_Dice::AniEnd_Intro, this));
+		MonsterImageRenderer->SetEndCallBack("KDice-Intro", std::bind(&King_Dice::AniEnd_Intro, this));
 		MonsterImageRenderer->SetEndCallBack("KDice-Attack-Body-Birth", std::bind(&King_Dice::AniEnd_Attack_Body_Birth, this));
 		MonsterImageRenderer->SetEndCallBack("KDice-Attack-Body-End", std::bind(&King_Dice::AniEnd_Attack_Body_End, this));
 
@@ -126,6 +126,8 @@ void King_Dice::Update(float _DeltaTime)
 
 	BattleState_.Update(_DeltaTime);
 	State_.Update(_DeltaTime);
+
+	Ani_Idle_Ready_ = false;
 }
 
 void King_Dice::Intro()

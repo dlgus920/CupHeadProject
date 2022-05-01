@@ -37,7 +37,6 @@ void PerryObjectDice::Start()
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-2", 26, 28, 0.05, false);
 
 	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Death",40,57, 0.05,false);// 57프레임 도달시 업데이트 멈춤
-	ObjectRenderer_->SetFrameCallBack("Death",57,std::bind(&PerryObjectDice::Death, this));
 
 	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
 	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);

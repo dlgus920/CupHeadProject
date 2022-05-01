@@ -152,10 +152,7 @@ public:
 	void SetIndex(const int Index);
 
 	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
-
 	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
-
-	// _IsForce 같은 애니메이션 인데도 바꿀거냐? true 바꾼다.
 	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);
 
 	void SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack);

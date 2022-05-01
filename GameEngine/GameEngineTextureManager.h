@@ -26,6 +26,9 @@ public:
 
 private:	// member Var
 	std::map<std::string, GameEngineTexture*> ResourcesMap;
+	
+	class GameEngineLevel;
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>> GlobalResourcesMap; //(Level, (Name, Texture))
 
 public:
 	// 직접 만들수 있다.
@@ -37,6 +40,12 @@ public:
 	GameEngineTexture* Load(const std::string& _Name, const std::string& _Path);
 	// 목록에서 찾는다.
 	GameEngineTexture* Find(const std::string& _Name);
+
+
+
+	//GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
+	//GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
+	//GameEngineTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
 
 private:
 	GameEngineTextureManager(); // default constructer 디폴트 생성자

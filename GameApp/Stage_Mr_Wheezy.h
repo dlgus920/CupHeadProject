@@ -19,15 +19,16 @@ protected:		// delete constructer
 
 private:
 	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
-	class GameEngineRandom Random_;
 
 	class Mr_Wheezy* Mr_Wheezy_;
-	class Player* Player_;
-	class KingDice_Marker* KingDice_Marker_;
 
+	class GameEngineImageRenderer* BackImageRenderer_[2];
+	//class Player* Player_;
+	//bool Victory_;
+
+	class GameEngineRandom Random_;
 	std::string NextScene_;
 
-	bool Victory_;
 
 private:
 	void LevelResourcesLoad() override;
@@ -36,10 +37,10 @@ private:
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 
-public:
-	void Knockout();
-	void ReadyWALLOP();
-	void KnockoutEnd();
+//public:
+//	void Knockout();
+//	void ReadyWALLOP();
+//	void KnockoutEnd();
 
 private:
 	void ResourcesLoading_Start();

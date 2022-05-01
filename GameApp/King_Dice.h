@@ -204,7 +204,7 @@ private:
 	}
 	void AniEnd_Clap()
 	{
-		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+		MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 		AniEnd_Clap_ = true;
 	}
 #endif // _DEBUG

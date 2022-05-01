@@ -3,6 +3,7 @@
 
 #include "LoaddingScene.h"
 #include "DicePaclace.h"
+#include "Stage_Mr_Wheezy.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
@@ -103,7 +104,8 @@ void WorldMapScene::LevelStart()
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
 		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
 
-		WorldMapPoint->SetNextScene("DicePaclace");
+		//WorldMapPoint->SetNextScene("DicePaclace");
+		WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
 	}
 
 	{
@@ -117,7 +119,8 @@ void WorldMapScene::LevelStart()
 	//	Actor->GetTransform()->SetWorldPosition(float4(0.0f, 0.0f, 0.0f));
 	//}
 	{
-		GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+		//GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+		GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
 	}
 	{

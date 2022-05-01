@@ -22,14 +22,14 @@ private:
 	class GameEngineRandom Random_;
 
 	class King_Dice* King_Dice_;
-	class Player* Player_;
+	//class Player* Player_;
 	class KingDice_Marker* KingDice_Marker_;
 
 	class Image* ScreenFx;
 
 	std::string NextScene_;
 
-	bool Victory_;
+	//bool Victory_;
 
 	int StageMoveCount_;
 	int CurStageNum_; //max 10
@@ -46,9 +46,9 @@ private:
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 
 public:
-	void Knockout();
-	void ReadyWALLOP();
-	void KnockoutEnd();
+	//void Knockout();
+	//void ReadyWALLOP();
+	//void KnockoutEnd();
 
 	void SetPlusDiceNum(int _num)
 	{
