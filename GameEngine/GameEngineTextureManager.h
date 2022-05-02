@@ -31,21 +31,17 @@ private:	// member Var
 	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>> GlobalResourcesMap; //(Level, (Name, Texture))
 
 public:
-	// 직접 만들수 있다.
 	GameEngineTexture* Create(const std::string& _Name, ID3D11Texture2D* _Texture2D);
-
-	// 파일에서 로드
 	GameEngineTexture* Load(const std::string& _Path);
-	// 이름 직접 지정
 	GameEngineTexture* Load(const std::string& _Name, const std::string& _Path);
-	// 목록에서 찾는다.
 	GameEngineTexture* Find(const std::string& _Name);
 
 
 
-	//GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
-	//GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
-	//GameEngineTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
+	GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
+	GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
+	GameEngineTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
+	void DestroyLevelRes(GameEngineLevel* _Level);
 
 private:
 	GameEngineTextureManager(); // default constructer 디폴트 생성자

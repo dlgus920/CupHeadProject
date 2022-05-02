@@ -17,6 +17,7 @@ protected:		// delete constructer
 
 private:	// member Var
 	std::string NextScene_;
+	std::string PrevScene_;
 	class Image* HourGlass_;
 	bool LoadEnd_;
 
@@ -37,8 +38,9 @@ protected:
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 public:
-	void SetLoaddingNextLevel(std::string _Nextlevel)
+	void SetLoaddingNextLevel(std::string _PrevScene_,std::string _Nextlevel)
 	{
+		PrevScene_ = _PrevScene_;
 		NextScene_ = _Nextlevel;
 	}
 

@@ -25,6 +25,9 @@ public:
 
 private:	// member Var
 	std::map<std::string, GameEngineFolderTexture*> ResourcesMap;
+	class GameEngineLevel;
+
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>> GlobalResourcesMap;
 
 public:
 	GameEngineFolderTexture* Load(const std::string& _Path);
@@ -33,6 +36,11 @@ public:
 	GameEngineFolderTexture* Load(const std::string& _Name, const std::string& _Path);
 	// 목록에서 찾는다.
 	GameEngineFolderTexture* Find(const std::string& _Name);
+
+	GameEngineFolderTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
+	GameEngineFolderTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
+	GameEngineFolderTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
+	void DestroyLevelRes(GameEngineLevel* _Level);
 
 private:
 	GameEngineFolderTextureManager(); // default constructer 디폴트 생성자

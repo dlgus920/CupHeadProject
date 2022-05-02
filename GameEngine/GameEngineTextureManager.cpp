@@ -55,7 +55,6 @@ GameEngineTexture* GameEngineTextureManager::Create(const std::string& _Name, ID
 
 GameEngineTexture* GameEngineTextureManager::Load(const std::string& _Path)
 {
-
 	return Load(GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
 }
 
@@ -94,4 +93,95 @@ GameEngineTexture* GameEngineTextureManager::Find(const std::string& _Name)
 	}
 
 	return nullptr;
+}
+
+
+
+
+GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Path)
+{
+	return LoadLevelRes(Level, GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
+}
+
+GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path)
+{
+	std::string UpName = GameEngineString::toupper(_Name);
+
+	GameEngineTexture* FindRes = FindLevelRes(Level, UpName);
+#ifdef _DEBUG
+	if (nullptr != FindRes)
+	{
+		GameEngineDebug::MsgBoxError(UpName + " Is Overlap Load");
+	}
+#endif // _DEBUG
+
+	GameEngineTexture* NewRes = new GameEngineTexture();
+	NewRes->SetName(UpName);
+	NewRes->Load(_Path);
+	{
+		std::lock_guard Lock(ManagerLock);
+
+		std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(Level);
+
+		FindIterglobal->second.insert(std::map<std::string, GameEngineTexture*>::value_type(UpName, NewRes));
+
+		ResourcesMap.insert(std::map<std::string, GameEngineTexture*>::value_type(UpName, NewRes));
+	}
+	return NewRes;
+}
+
+GameEngineTexture* GameEngineTextureManager::FindLevelRes(GameEngineLevel* Level, const std::string& _Name)
+{
+	std::string UpName = GameEngineString::toupper(_Name);
+
+	std::map<std::string, GameEngineTexture*>::iterator FindIter;
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal;
+
+	{
+		std::lock_guard Lock(ManagerLock);
+
+		FindIterglobal = GlobalResourcesMap.find(Level);
+	}
+
+	if (FindIterglobal == GlobalResourcesMap.end())
+	{
+		return nullptr;
+	}
+
+	{
+		std::lock_guard Lock(ManagerLock);
+
+		FindIter = FindIterglobal->second.find(UpName);
+	}
+
+	if (FindIter != FindIterglobal->second.end())
+	{
+		return FindIter->second;
+	}
+
+	return nullptr;
+}
+
+void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
+{
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(_Level);
+
+#ifdef _DEBUG
+	if (GlobalResourcesMap.end() == FindIterglobal)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 레벨의 리소스를 제거함");
+	}
+#endif // _DEBUG
+
+	for (const std::pair<std::string, GameEngineTexture*>& Res : FindIterglobal->second)
+	{
+		if (nullptr != Res.second)
+		{
+			delete Res.second;
+		}
+	}
+
+	FindIterglobal->second.clear();
+
+	GlobalResourcesMap.erase(FindIterglobal);
 }

@@ -111,7 +111,7 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 		{
 			GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
 
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel("WorldMap");;
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(TitleScene::GetName(), "WorldMap");;
 
 			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");

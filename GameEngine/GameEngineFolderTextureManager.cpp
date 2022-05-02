@@ -2,6 +2,8 @@
 #include "GameEngineFolderTextureManager.h"
 #include "GameEngineFolderTexture.h"
 
+#include "GameEngineLevel.h"
+
 GameEngineFolderTextureManager* GameEngineFolderTextureManager::Inst = new GameEngineFolderTextureManager();
 
 GameEngineFolderTextureManager::GameEngineFolderTextureManager() // default constructer 디폴트 생성자
@@ -62,4 +64,64 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::Find(const std::string&
 	}
 
 	return nullptr;
+}
+
+GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Path)
+{
+	return LoadLevelRes(Level, GameEnginePath::GetFileName(_Path), _Path);
+}
+
+GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path)
+{
+	std::string UpName = GameEngineString::toupper(_Name);
+
+	GameEngineFolderTexture* FindRes = FindLevelRes(Level, UpName);
+#ifdef _DEBUG
+	if (nullptr != FindRes)
+	{
+		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
+	}
+#endif // _DEBUG
+
+	GameEngineFolderTexture* NewRes = new GameEngineFolderTexture();
+	NewRes->SetName(UpName);
+	NewRes->Load(_Path);
+	{
+		std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(Level);
+
+		FindIterglobal->second.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
+
+		ResourcesMap.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
+	}
+	return NewRes;
+}
+
+GameEngineFolderTexture* GameEngineFolderTextureManager::FindLevelRes(GameEngineLevel* Level, const std::string& _Name)
+{
+	std::map<std::string, GameEngineFolderTexture*>::iterator FindIter;
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>>::iterator FindIterglobal;
+
+	{
+		FindIterglobal = GlobalResourcesMap.find(Level);
+	}
+
+	if (FindIterglobal == GlobalResourcesMap.end())
+	{
+		return nullptr;
+	}
+
+	{
+		FindIter = FindIterglobal->second.find(GameEngineString::toupper(_Name));
+	}
+
+	if (FindIter != FindIterglobal->second.end())
+	{
+		return FindIter->second;
+	}
+
+	return nullptr;
+}
+
+void GameEngineFolderTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
+{
 }

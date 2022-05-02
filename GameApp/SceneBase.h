@@ -35,7 +35,8 @@ protected:
 	//// 목록에서 찾는다.
 	//GameEngineTexture* SceneTextureFind(const std::string& _Name);
 
-	//void PlayerResourceLoad();
+	void PlayerResourceLoad();
+	void SceneResourceLoad();
 	//void SceneResourceClear();
 public:
 	void Knockout();
@@ -46,7 +47,12 @@ protected:
 	virtual void LevelResourcesLoad();
 	virtual void LevelStart();
 	virtual void LevelUpdate(float _DeltaTime);
+
 	virtual void LevelChangeEndEvent();
 	virtual void LevelChangeStartEvent();
+
+protected:
+
+
 };
 

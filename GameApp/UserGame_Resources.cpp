@@ -53,14 +53,11 @@ void UserGame::ResourcesLoad()
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenFx"));
 
 		//std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
 		//for (size_t i = 0; i < AllFile.size(); i++)
 		//{
 		//	GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 		//}
-
 		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenFx"));
-
 		/*
 		static bool CreateActorCheck = false;
 
@@ -73,10 +70,6 @@ void UserGame::ResourcesLoad()
 
 		//playlevel에 이런 조건을 걸어줘서 리소스 로드가 되었는가 체크해야함
 		*/
-
-
-
-
 	}
 
 	AppShaderLoad(); 

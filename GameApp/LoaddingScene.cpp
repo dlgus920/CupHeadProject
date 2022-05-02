@@ -45,7 +45,13 @@ void LoaddingScene::LevelResourcesLoad()
 }
 
 void LoaddingScene::LevelStart()
-{	
+{
+	HourGlass_ = CreateActor<Image>();
+	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+	HourGlass_->ImageRenderer_->SetAdjustImzgeSize();
+	HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
+	HourGlass_->ImageRenderer_->SetEndCallBack("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
+
 	{
 		Image* Back = CreateActor<Image>();
 		Back->ImageSetImage("Loading_background.png");
@@ -97,7 +103,22 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 
 			if (BlendRate_ >= 1.f )
 			{
+				//GameEngineCore::LevelFind(NextScene_)->LevelChangeStartEvent(nullptr);
+
+				/*
+				TODO: 
+				1. LevelCreate는 리소스 로드만 담당하게 한다.
+				2. LoaddingScene에서 리소스 로드가 끝났는지를 체크하고, 씬을 넘겨준다.
+				3. LoaddingScene에서 리소스 로드가 끝났음을 체크하고, 딱1번 실행시킬 함수를 정하던가
+				4. 매번 씬을 넘길때마다 LevelStart를 호출하고, 이전 씬을 지워버린다.
+
+				4-1. DicePalce의 경우, 다시 되돌아올때, 진행 상황을 어디선가 가지고 있다가 이쪽으로 다시 가져와 줘야 한다.
+				아마도 플레이어가 진행 상황을 가지고 있으면 될것 같다. 레벨 시작할때마다 플레이어에게서 가져오고 그대로 셋팅하도록 하자
+				
+				*/
+
 				GameEngineCore::LevelChange(NextScene_);
+				GameEngineCore::LevelDestroy(PrevScene_);
 
 				NextScene_.clear();
 				LoadEnd_ = false;
@@ -121,11 +142,11 @@ void LoaddingScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
 
-	HourGlass_ = CreateActor<Image>();
-	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
-	HourGlass_->ImageRenderer_->SetAdjustImzgeSize();
-	HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
-	HourGlass_->ImageRenderer_->SetEndCallBack("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
+	//HourGlass_ = CreateActor<Image>();
+	//HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+	//HourGlass_->ImageRenderer_->SetAdjustImzgeSize();
+	//HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
+	//HourGlass_->ImageRenderer_->SetEndCallBack("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
 
 
 }

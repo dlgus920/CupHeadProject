@@ -428,7 +428,7 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
 			}
 #endif // _DEBUG
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(NextScene_);;
+			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(DicePaclace::GetName(),NextScene_);;
 
 			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
