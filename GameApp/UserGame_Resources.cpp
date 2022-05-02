@@ -11,6 +11,7 @@ void TextureLoading(GameEngineDirectory Dir)
 	for (size_t i = 0; i < AllFile.size(); i++)
 	{
 		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		GameEngineTextureManager::GetInst().LoadLevelRes(nullptr, AllFile[i].GetFullPath());
 		// Sleep(10);
 	}
 
@@ -52,24 +53,7 @@ void UserGame::ResourcesLoad()
 
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenFx"));
 
-		//std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-		//for (size_t i = 0; i < AllFile.size(); i++)
-		//{
-		//	GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-		//}
-		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenFx"));
-		/*
-		static bool CreateActorCheck = false;
-
-		if (0 >= UserGame::LoadingFolder
-			&& false == CreateActorCheck)
-		{
-			CreateActorLevel();
-			CreateActorCheck = true;
-		}
-
-		//playlevel에 이런 조건을 걸어줘서 리소스 로드가 되었는가 체크해야함
-		*/
+		GameEngineFolderTextureManager::GetInst().LoadLevelRes(nullptr, TextureDir.PathToPlusFileName("ScreenFx"));
 	}
 
 	AppShaderLoad(); 

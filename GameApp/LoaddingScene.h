@@ -1,10 +1,12 @@
 #pragma once
 //#include <GameEngine/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineFSM.h>
 #include "SceneBase.h"
 
 // 설명 :
 class LoaddingScene : public SceneBase
 {
+	friend class TitleScene;
 public:
 	LoaddingScene(); // default constructer 디폴트 생성자
 	~LoaddingScene(); // default destructer 디폴트 소멸자
@@ -18,18 +20,14 @@ protected:		// delete constructer
 private:	// member Var
 	std::string NextScene_;
 	std::string PrevScene_;
+
 	class Image* HourGlass_;
+
+	GameEngineFSM<LoaddingScene> PhaseState_;
+
 	bool LoadEnd_;
-
 	bool CutIn_;
-
-	struct FolderLoad
-	{
-		GameEngineDirectory Dir;
-		std::string _FolderName;
-	};
-
-	std::vector<FolderLoad> VecFolderLoad_;
+	bool LevelDestroy_;
 
 protected:
 	void LevelResourcesLoad() override;
@@ -37,9 +35,21 @@ protected:
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
+
+private:
+
+	void Loading_Start();
+	void Loading_Update(float _DeltaTime);
+	void Loading_End();
+
+	void Load_Start();
+	void Load_Update(float _DeltaTime);
+	void Load_End();
+
 public:
-	void SetLoaddingNextLevel(std::string _PrevScene_,std::string _Nextlevel)
+	void SetLoaddingNextLevel(std::string _PrevScene_,std::string _Nextlevel, bool _LevelDestroy = true)
 	{
+		LevelDestroy_ = _LevelDestroy;
 		PrevScene_ = _PrevScene_;
 		NextScene_ = _Nextlevel;
 	}

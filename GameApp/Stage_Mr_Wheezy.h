@@ -7,6 +7,7 @@
 class Stage_Mr_Wheezy : public SceneBase
 {
 	friend class LoaddingScene;
+
 public:
 	Stage_Mr_Wheezy();
 	~Stage_Mr_Wheezy();

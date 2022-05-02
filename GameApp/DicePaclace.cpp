@@ -253,35 +253,9 @@ void DicePaclace::LevelUpdate(float _DeltaTime)
 
 void DicePaclace::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-
-	//if (std::string::npos != _NextLevel->GetName().find("World")
-	//	&& std::string::npos != _NextLevel->GetName().find("Boss"))
-	//{
-
-	//	Player::MainPlayer->GetLevel()->SetLevelActorMove(_NextLevel, Player::MainPlayer);
-	//}
-
-	// MoveLevelActor("TitleLevel", "BossLevel");
-
 }
 void DicePaclace::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-	//{
-	//	Image* Back = CreateActor<Image>();
-	//	Back->ImageSetImage("Loading_background.png");
-	//	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
-	//	Back->ImageRenderer_-> GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
-	//	Back->ImageRenderer_->SetResultColor(float4{1.f,1.f,1.f,0.3f});
-	//
-
-	//	Effect* Effect_ = CreateActor<Effect>();
-	//	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", 0.04f, false);
-
-	//	_GameEngineImageRenderer->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
-	//	_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
-
-	//	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
-	//}
 }
 
 void DicePaclace::ResourcesLoading_Start()
@@ -428,9 +402,10 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
 			}
 #endif // _DEBUG
+
+
 			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(DicePaclace::GetName(),NextScene_);;
 
-			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
 		}
 	}

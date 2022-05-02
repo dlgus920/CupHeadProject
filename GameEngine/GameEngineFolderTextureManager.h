@@ -3,6 +3,7 @@
 
 // Ό³Έν : 
 class GameEngineFolderTexture;
+class GameEngineLevel;
 class GameEngineFolderTextureManager
 {
 private:
@@ -25,7 +26,6 @@ public:
 
 private:	// member Var
 	std::map<std::string, GameEngineFolderTexture*> ResourcesMap;
-	class GameEngineLevel;
 
 	std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>> GlobalResourcesMap;
 

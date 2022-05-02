@@ -5,6 +5,7 @@
 // 설명 :
 class WorldMapScene : public GameEngineLevel
 {
+	friend class LoaddingScene;
 
 public:
 	WorldMapScene(); // default constructer 디폴트 생성자

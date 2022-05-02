@@ -19,9 +19,25 @@ private:
 	static std::map<std::string, GameEngineLevel*> AllLevel_;
 
 public:
-	//float TimeRate_;
+	static void LevelDestroy(const std::string& _Level);
 
-public:
+	static void LevelChange(const std::string& _Level);
+
+	static GameEngineLevel* LevelFind(const std::string& _Level);
+
+	static void SetTimeRate(float _TimeRate);
+
+// ============================================== GameCore 관련 ============================================== //
+private:
+	static GameEngineCore* MainCore_;
+
+private:
+	static void WindowCreate(GameEngineCore& _RuntimeCore);
+	static void Loop();
+	static void MainLoop();
+
+public:	
+
 	template<typename LevelType>
 	static void LevelCreate(const std::string& _Level)
 	{
@@ -36,12 +52,11 @@ public:
 		AllLevel_.insert(std::make_pair(_Level, new LevelType()));
 		AllLevel_[_Level]->SetName(_Level);
 		AllLevel_[_Level]->Init();
-		AllLevel_[_Level]->LevelResourcesLoad();
-		AllLevel_[_Level]->LevelStart();
+
+		//AllLevel_[_Level]->LevelResourcesLoad();
+		//AllLevel_[_Level]->LevelStart();
 	}
 
-	static void LevelDestroy(const std::string& _Level);
-	
 	static GameEngineLevel* CurrentLevel() 
 	{
 		return CurrentLevel_;
@@ -55,22 +70,6 @@ public:
 		return dynamic_cast<LevelType*>(CurrentLevel_);
 	}
 
-public:
-	static void LevelChange(const std::string& _Level);
-	static GameEngineLevel* LevelFind(const std::string& _Level);
-
-	static void SetTimeRate(float _TimeRate);
-
-// ============================================== GameCore 관련 ============================================== //
-private:
-	static GameEngineCore* MainCore_;
-
-private:
-	static void WindowCreate(GameEngineCore& _RuntimeCore);
-	static void Loop();
-	static void MainLoop();
-
-public:
 	template<typename UserGameType>
 	static void Start()
 	{

@@ -153,7 +153,7 @@ void WorldMapScene::LevelUpdate(float _DeltaTime)
 
 		{
 			//GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
-			GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+			//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
 		}
 

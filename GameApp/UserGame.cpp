@@ -8,8 +8,11 @@
 
 #include "TitleScene.h"
 #include "LoaddingScene.h"
-#include "DicePaclace.h"
+
 #include "WorldMapScene.h"
+
+#include "DicePaclace.h"
+#include "Stage_Mr_Wheezy.h"
 
 std::atomic<int> UserGame::LoadingFolder = 0;
 
@@ -48,11 +51,16 @@ void UserGame::Initialize()
 	//GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Find("ColorRendering");
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
-	LevelCreate<TitleScene>("Title");
-	
+	GameEngineCore::LevelCreate<TitleScene>("Title");
+	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
+	GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+	GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+	GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
-	LevelChange("Title");
-	//LevelChange("Play");
+	GameEngineCore::LevelFind("Title")->LevelResourcesLoad();
+	GameEngineCore::LevelFind("Title")->LevelStart();
+
+	GameEngineCore::LevelChange("Title");
 
 	return;
 }

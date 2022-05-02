@@ -4,6 +4,8 @@
 // Ό³Έν :
 class StoryScene : public GameEngineLevel
 {
+	friend class LoaddingScene;
+
 private:	// member Var
 
 public:

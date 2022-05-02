@@ -24,30 +24,26 @@ TitleScene::~TitleScene()
 
 void TitleScene::LevelResourcesLoad()
 {
-	//UserGame::LoadingFolder++;
-	//GameEngineCore::ThreadQueue.JobPost
-	//(
-	//	[]()
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("TitleScene");
 
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
 		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("TitleScene");
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 
-			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-			for (size_t i = 0; i < AllFile.size(); i++)
-			{
-				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			}
-
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
-
-			//UserGame::LoadingFolder--;
+			GameEngineTextureManager::GetInst().LoadLevelRes(this,AllFile[i].GetFullPath());
 		}
-	//);
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
+
+		GameEngineFolderTextureManager::GetInst().LoadLevelRes(this, TextureDir.PathToPlusFileName("TitleScreen"));
+	}
 }
 
 void TitleScene::LevelStart()
@@ -59,33 +55,33 @@ void TitleScene::LevelStart()
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->ImageSetImage("title_screen_background.png");
+		Actor->ImageRenderer_->SetImage("title_screen_background.png");
 		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
 	}
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->ImageCreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+		Actor->ImageRenderer_->CreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+		Actor->ImageRenderer_->SetChangeAnimation("TitleScreen");
 		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
 	}
 	
 	{
 		Image* Image_ = CreateActor<Image>();
-		Image_->ImageSetImage("Title_font.png");
+		Image_->ImageRenderer_->SetImage("Title_font.png");
 		Image_->ImageRenderer_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
 
 	{
 		FadeImage_ = CreateActor<Image>();
-		FadeImage_->ImageSetImage("title_screen_background.png");
+		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
 		FadeImage_->ImageRenderer_->SetAdjustImzgeSize();
 		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,0.f });
 	}
-
 }
 
 void TitleScene::LevelUpdate(float _DeltaTime)
@@ -109,11 +105,12 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
-			GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
+			LoaddingScene* LoaddingScene_ = dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"));
 
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(TitleScene::GetName(), "WorldMap");;
+			LoaddingScene_->SetLoaddingNextLevel(TitleScene::GetName(), "WorldMap");;
+			LoaddingScene_->LevelResourcesLoad();
+			LoaddingScene_->LevelStart();
 
-			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });

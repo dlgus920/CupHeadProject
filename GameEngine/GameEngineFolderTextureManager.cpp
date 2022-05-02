@@ -89,9 +89,17 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngine
 	{
 		std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(Level);
 
-		FindIterglobal->second.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
+		if (FindIterglobal == GlobalResourcesMap.end())
+		{
+			std::map<std::string, GameEngineFolderTexture*> ddd;
 
-		ResourcesMap.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
+			ddd.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
+
+			GlobalResourcesMap.insert(std::make_pair(Level, ddd));
+
+			return NewRes;
+		}
+			FindIterglobal->second.insert(std::map<std::string, GameEngineFolderTexture*>::value_type(UpName, NewRes));
 	}
 	return NewRes;
 }

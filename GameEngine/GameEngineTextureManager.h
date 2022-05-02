@@ -3,6 +3,7 @@
 #include <mutex>
 
 class GameEngineTexture;
+class GameEngineLevel;
 class GameEngineTextureManager
 {
 private:
@@ -27,7 +28,6 @@ public:
 private:	// member Var
 	std::map<std::string, GameEngineTexture*> ResourcesMap;
 	
-	class GameEngineLevel;
 	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>> GlobalResourcesMap; //(Level, (Name, Texture))
 
 public:

@@ -116,9 +116,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>00. Base\01. Actor\Object</Filter>
     </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>01. App\02. Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneBase.cpp">
       <Filter>00. Base\02. Scene\00. Base</Filter>
     </ClCompile>
@@ -339,9 +336,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>00. Base\01. Actor\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>01. App\02. Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneBase.h">
       <Filter>00. Base\02. Scene\00. Base</Filter>

@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "GameEngineTextureManager.h"
 #include "GameEngineTexture.h"
+#include "GameEngineLevel.h"
 
 GameEngineTextureManager* GameEngineTextureManager::Inst = new GameEngineTextureManager();
 std::mutex GameEngineTextureManager::ManagerLock;
@@ -123,9 +124,18 @@ GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level
 
 		std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(Level);
 
-		FindIterglobal->second.insert(std::map<std::string, GameEngineTexture*>::value_type(UpName, NewRes));
+		if (FindIterglobal == GlobalResourcesMap.end())
+		{
+			std::map<std::string, GameEngineTexture*> FindIter;
 
-		ResourcesMap.insert(std::map<std::string, GameEngineTexture*>::value_type(UpName, NewRes));
+			FindIter.insert(std::make_pair(UpName, NewRes));
+
+			GlobalResourcesMap.insert(std::make_pair(Level, FindIter));
+
+			return NewRes;
+		}
+
+		FindIterglobal->second.insert(std::map<std::string, GameEngineTexture*>::value_type(UpName, NewRes));
 	}
 	return NewRes;
 }
