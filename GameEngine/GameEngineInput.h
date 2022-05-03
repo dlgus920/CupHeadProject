@@ -9,16 +9,23 @@ class GameEngineInput
 {
 private:
     class GameEngineKey 
-    {
-    private:
-        bool Down_;
+	{
+		friend GameEngineInput;
+	private:
+		GameEngineKey()
+			: Down_(false)
+			, Press_(false)
+			, Up_(false)
+			, Free_(false)
+		{
+		}
+
+		bool Down_;
         bool Press_;
         bool Up_;
         bool Free_;
 
         std::vector<int> CheckKey_;
-
-        friend GameEngineInput;
 
     public:
         void PushKey(int _CurKey)

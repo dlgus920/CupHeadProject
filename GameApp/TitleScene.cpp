@@ -108,14 +108,16 @@ void TitleScene::LevelLoop_Start()
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->ImageRenderer_->SetImage("title_screen_background.png");
+		Actor->ImageRenderer_->SetLevelImage("title_screen_background.png");
+		//Actor->ImageRenderer_->SetImage("title_screen_background.png");
 		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
 	}
 
 	{
 		Image* Actor = CreateActor<Image>();
-		Actor->ImageRenderer_->CreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+		Actor->ImageRenderer_->CreateLevelAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+		//Actor->ImageRenderer_->CreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
 		Actor->ImageRenderer_->SetChangeAnimation("TitleScreen");
 		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
@@ -123,7 +125,8 @@ void TitleScene::LevelLoop_Start()
 
 	{
 		Image* Image_ = CreateActor<Image>();
-		Image_->ImageRenderer_->SetImage("Title_font.png");
+		Image_->ImageRenderer_->SetLevelImage("Title_font.png");
+		//Image_->ImageRenderer_->SetImage("Title_font.png");
 		Image_->ImageRenderer_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}

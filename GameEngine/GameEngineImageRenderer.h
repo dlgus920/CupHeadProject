@@ -147,14 +147,18 @@ public:
 	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
 
 	void SetImage(const std::string& _ImageName, const std::string& _Sampler = "");
+	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
+	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
+
+	void SetLevelImage(const std::string& _ImageName, const std::string& _Sampler = "");
+	void CreateLevelAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
+	void CreateLevelAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
 
 
 	void SetIndex(const int Index);
 
 	void SetCurAnimationFrame(int _Frame);
 
-	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
-	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
 	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);
 
 	void SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack);

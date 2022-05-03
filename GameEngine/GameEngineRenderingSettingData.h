@@ -57,6 +57,10 @@ public:
 	GameEngineConstantBufferSetting()
 		: SettingData_(nullptr)
 		, Mode_(SettingMode::MAX)
+		, Res_(nullptr)
+		, Shader(nullptr)
+		, SettingIndex_(0)
+		, SettingDataSize_(0)
 	{
 
 	}
@@ -91,6 +95,8 @@ public:
 public:
 	GameEngineSamplerSetting()
 		: Res_(nullptr)
+		, Shader(nullptr)
+		, SettingIndex_(0)
 	{
 
 	}

@@ -84,6 +84,7 @@ class GameEngineFSM
 			: parent_(_parent)
 			, StateStart(nullptr)
 			, StateUpdate(nullptr)
+			, StateEnd(nullptr)
 		{
 
 		}

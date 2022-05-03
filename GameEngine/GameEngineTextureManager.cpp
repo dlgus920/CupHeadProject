@@ -3,6 +3,7 @@
 #include "GameEngineTexture.h"
 #include "GameEngineLevel.h"
 
+
 GameEngineTextureManager* GameEngineTextureManager::Inst = new GameEngineTextureManager();
 std::mutex GameEngineTextureManager::ManagerLock;
 
@@ -192,11 +193,11 @@ void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(_Level);
 
 #ifdef _DEBUG
-	if (GlobalResourcesMap.end() == FindIterglobal)
-	{
-		GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
-		return;
-	}
+	//if (GlobalResourcesMap.end() == FindIterglobal)
+	//{
+	//	GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
+	//	return;
+	//}
 
 #endif // _DEBUG
 

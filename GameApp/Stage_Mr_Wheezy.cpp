@@ -24,6 +24,7 @@ Stage_Mr_Wheezy::Stage_Mr_Wheezy()
 	, BackImageRenderer_{nullptr}
 {
 }
+
 Stage_Mr_Wheezy::~Stage_Mr_Wheezy()
 {
 }
@@ -278,7 +279,7 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		AshImageRenderer_Left = Mr_Wheezy_->CreateTransformComponent<GameEngineImageRenderer>();
 		AshImageRenderer_Left->CreateAnimation("Mr_Wheezy.png", "Mr_Wheezy-Ash_Pale", 94, 102, 0.04f, false);
 		AshImageRenderer_Left->SetChangeAnimation("Mr_Wheezy-Ash_Pale");
-		AshImageRenderer_Left->SetCurAnimationFrame(102);
+		AshImageRenderer_Left->SetCurAnimationFrame(101);
 		AshImageRenderer_Left->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
 		AshImageRenderer_Left->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back04)));
 

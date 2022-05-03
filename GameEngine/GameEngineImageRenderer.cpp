@@ -4,6 +4,7 @@
 #include "GameEngineFolderTextureManager.h"
 #include "GameEngineFolderTexture.h"
 #include "GameEngineSamplerManager.h"
+#include "GameEngineCore.h"
 
 void GameEngineImageRenderer::Animation2D::CallStart()
 {
@@ -195,7 +196,6 @@ void GameEngineImageRenderer::Start()
 {
 	GameEngineRenderer::Start();
 	SetRenderingPipeLine("Texture");
-	//ImageRendererStart();
 }
 
 void GameEngineImageRenderer::SetRenderingPipeLineSettingNext()
@@ -251,7 +251,6 @@ void GameEngineImageRenderer::SetImage(const std::string& _ImageName, const std:
 
 	ShaderHelper.SettingSampler("Smp", _Sampler);
 }
-
 void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop /*= true*/)
 {
 #ifdef _DEBUG
@@ -287,7 +286,6 @@ void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, c
 
 	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
 }
-
 void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
 {
 	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().Find(_FolderTexName);
@@ -322,6 +320,7 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 
 	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
 }
+
 
 void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool _IsForce /*= false*/)
 {
@@ -417,4 +416,102 @@ void GameEngineImageRenderer::SetFrameCallBack(const std::string& _Name, int _In
 #endif // _DEBUG
 
 	FindIter->second->FrameCallBack_[_Index].push_back(_CallBack);
+}
+
+
+
+
+
+
+
+void GameEngineImageRenderer::SetLevelImage(const std::string& _ImageName, const std::string& _Sampler/* = ""*/)
+{
+	CurTexture = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), _ImageName);
+#ifdef _DEBUG
+	if (nullptr == CurTexture)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다");
+		return;
+	}
+#endif // _DEBUG
+
+	ShaderHelper.SettingTexture("Tex", _ImageName);
+
+	GameEngineSampler* Sampler = GameEngineSamplerManager::GetInst().Find(_Sampler);
+
+	if (nullptr == Sampler)
+	{
+		return;
+	}
+
+	ShaderHelper.SettingSampler("Smp", _Sampler);
+}
+void GameEngineImageRenderer::CreateLevelAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop /*= true*/)
+{
+#ifdef _DEBUG
+	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
+
+	if (AllAnimations_.end() != FindIter)
+	{
+		GameEngineDebug::MsgBoxError("이미 존재하는 애니메이션을 또 만들었습니다.");
+	}
+#endif // _DEBUG
+
+	Animation2D* NewAnimation = new Animation2D();
+
+	NewAnimation->AnimationTexture_ = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(),_TextureName);
+#ifdef _DEBUG
+	if (nullptr == NewAnimation->AnimationTexture_)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처로 애니메이션을 만들려고 했습니다.");
+	}
+#endif // _DEBUG
+
+	NewAnimation->SetName(_Name);
+	NewAnimation->IsEnd = false;
+	NewAnimation->Loop_ = _Loop;
+	NewAnimation->InterTime_ = _InterTime;
+	NewAnimation->CurTime_ = _InterTime;
+
+	NewAnimation->FolderTextures_ = nullptr;
+	NewAnimation->CurFrame_ = _StartFrame;
+	NewAnimation->EndFrame_ = _EndFrame;
+	NewAnimation->StartFrame_ = _StartFrame;
+	NewAnimation->Renderer = this;
+
+	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
+}
+void GameEngineImageRenderer::CreateLevelAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
+{
+	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), _FolderTexName);
+
+#ifdef _DEBUG
+	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
+
+	if (AllAnimations_.end() != FindIter)
+	{
+		GameEngineDebug::MsgBoxError("이미 존재하는 애니메이션을 또 만들었습니다.");
+	}
+
+	if (nullptr == FolderTexture)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 폴더 텍스처를 세팅하려고 했습니다..");
+	}
+#endif // _DEBUG
+
+	Animation2D* NewAnimation = new Animation2D();
+
+	NewAnimation->SetName(_Name);
+	NewAnimation->IsEnd = false;
+	NewAnimation->Loop_ = _Loop;
+	NewAnimation->InterTime_ = _InterTime;
+	NewAnimation->CurTime_ = _InterTime;
+
+	NewAnimation->FolderTextures_ = FolderTexture;
+	NewAnimation->CurFrame_ = 0;
+	NewAnimation->EndFrame_ = FolderTexture->GetTextureCount() - 1;
+	NewAnimation->StartFrame_ = 0;
+	NewAnimation->Renderer = this;
+
+	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
 }

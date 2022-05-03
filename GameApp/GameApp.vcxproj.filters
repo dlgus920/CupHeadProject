@@ -17,9 +17,6 @@
     <ClCompile Include="TopUI.cpp">
       <Filter>00. Base\01. Actor\UI</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>01. App\02. Scene\00. MainLoad</Filter>
-    </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClCompile>
@@ -131,11 +128,11 @@
     <ClCompile Include="Mr_Wheezy_State.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
     </ClCompile>
-    <ClCompile Include="LoaddingScene.cpp">
-      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
-    </ClCompile>
     <ClCompile Include="Dice_Palace_State.cpp">
       <Filter>01. App\02. Scene\04. PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>01. App\02. Scene\01. TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +193,6 @@
     <Filter Include="01. App\02. Scene\00. MainLoad">
       <UniqueIdentifier>{2eea9bad-f280-49e1-b974-8b60367e37da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. App\02. Scene\01. LoadingScene">
-      <UniqueIdentifier>{39089cdb-be51-4d93-9e99-9b40b457ebf1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. App\02. Scene\02. WolrdMap">
       <UniqueIdentifier>{57d0f3d0-bb31-47a7-8172-62de4a3a35c8}</UniqueIdentifier>
     </Filter>
@@ -253,6 +247,9 @@
     <Filter Include="01. App\01. Actor\King_Dice\MiniBoss">
       <UniqueIdentifier>{5f12dbad-5e9b-460e-893e-9664e5483607}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. App\02. Scene\01. TitleScene">
+      <UniqueIdentifier>{bc8e05dd-6abe-4a27-8fc5-b834cef5419c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -269,9 +266,6 @@
     </ClInclude>
     <ClInclude Include="TopUI.h">
       <Filter>00. Base\01. Actor\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>01. App\02. Scene\00. MainLoad</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
@@ -352,8 +346,8 @@
     <ClInclude Include="Mr_Wheezy.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
     </ClInclude>
-    <ClInclude Include="LoaddingScene.h">
-      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
+    <ClInclude Include="TitleScene.h">
+      <Filter>01. App\02. Scene\01. TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
