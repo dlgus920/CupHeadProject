@@ -174,8 +174,6 @@ void King_Dice::Defeat_Start()
 
 	Defeat_ = true;
 
-	GetLevel<DicePaclace>()->SetNextScene("WorldMap");
-
 	GetLevel<DicePaclace>()->Knockout();
 }
 void King_Dice::Defeat_Update( float _DeltaTime)

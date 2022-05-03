@@ -22,6 +22,22 @@ GameEngineFolderTextureManager::~GameEngineFolderTextureManager() // default des
 	}
 
 	ResourcesMap.clear();
+	
+	//GlobalResourcesMap
+	auto iter0 = GlobalResourcesMap.begin();
+	auto iter1 = GlobalResourcesMap.end();
+
+	for (; iter0 != iter1; ++iter0)
+	{	
+		for (const std::pair<std::string, GameEngineFolderTexture*>& Res : iter0->second)
+		{
+			if (nullptr != Res.second)
+			{
+				delete Res.second;
+			}
+		}
+	}
+	GlobalResourcesMap.clear();
 }
 
 GameEngineFolderTextureManager::GameEngineFolderTextureManager(GameEngineFolderTextureManager&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
@@ -132,4 +148,26 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::FindLevelRes(GameEngine
 
 void GameEngineFolderTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 {
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(_Level);
+
+#ifdef _DEBUG
+	if (GlobalResourcesMap.end() == FindIterglobal)
+	{
+		GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
+		return;
+	}
+
+#endif // _DEBUG
+
+	for (const std::pair<std::string, GameEngineFolderTexture*>& Res : FindIterglobal->second)
+	{
+		if (nullptr != Res.second)
+		{
+			delete Res.second;
+		}
+	}
+
+	FindIterglobal->second.clear();
+
+	GlobalResourcesMap.erase(FindIterglobal);
 }

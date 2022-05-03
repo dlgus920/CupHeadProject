@@ -22,6 +22,21 @@ GameEngineTextureManager::~GameEngineTextureManager() // default destructer 디폴
 	}
 
 	ResourcesMap.clear();
+
+	auto iter0 = GlobalResourcesMap.begin();
+	auto iter1 = GlobalResourcesMap.end();
+
+	for (; iter0 != iter1; ++iter0)
+	{
+		for (const std::pair<std::string, GameEngineTexture*>& Res : iter0->second)
+		{
+			if (nullptr != Res.second)
+			{
+				delete Res.second;
+			}
+		}
+	}
+	GlobalResourcesMap.clear();
 }
 
 GameEngineTextureManager::GameEngineTextureManager(GameEngineTextureManager&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자

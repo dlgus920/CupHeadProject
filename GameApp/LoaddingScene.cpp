@@ -129,6 +129,4 @@ void LoaddingScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 	HourGlass_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{200.f,320.f});
 	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
 	HourGlass_->ImageRenderer_->SetEndCallBack("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
-
-	GameEngineCore::LevelFind(NextScene_)->LevelResourcesLoad();
 }

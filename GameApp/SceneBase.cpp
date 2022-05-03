@@ -28,17 +28,6 @@ SceneBase::~SceneBase() // default destructer 디폴트 소멸자
 
 void SceneBase::LevelStart()
 {
-	FadeImage_ = CreateActor<Image>();
-	FadeImage_->ImageSetImage("Loading_background.png");
-	FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
-
-	BlendRate_ = 1.f;
-
-	FadeImage_->ImageRenderer_ = FadeImage_->CreateTransformComponent<GameEngineImageRenderer>();
-	FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
-	FadeImage_->ImageRenderer_->SetAdjustImzgeSize();
-	FadeImage_->ImageRenderer_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
-	FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 }
 
 void SceneBase::LevelUpdate(float _DeltaTime)
@@ -52,44 +41,6 @@ void SceneBase::LevelChangeEndEvent()
 void SceneBase::LevelChangeStartEvent()
 {
 }
-
-//void SceneBase::TextureLoading(GameEngineDirectory Dir)
-//{
-//	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
-//
-//	for (size_t i = 0; i < AllFile.size(); i++)
-//	{
-//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-//		// Sleep(10);
-//	}
-//
-//	--UserGame::LoadingFolder;
-//
-//}
-
-//void SceneBase::SceneResourceClear()
-//{
-//	for (const std::pair<std::string, GameEngineTexture*>& Res : TextureResourcesMap)
-//	{
-//		if (nullptr != Res.second)
-//		{
-//			delete Res.second;
-//		}
-//	}
-//
-//	TextureResourcesMap.clear();
-//
-//
-//	for (const std::pair<std::string, GameEngineFolderTexture*>& Res : FolderResourcesMap)
-//	{
-//		if (nullptr != Res.second)
-//		{
-//			delete Res.second;
-//		}
-//	}
-//
-//	FolderResourcesMap.clear();
-//}
 
 void SceneBase::ReadyWALLOP()
 {
@@ -239,13 +190,13 @@ void SceneBase::ResourcesLoadFadeInit()
 		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 
-		FadeImage_->CreateImageRenderer(float4{ 1280.f,720.f }, float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z02Back10) })
-			->SetImage("Loading_background.png");
 
 		HourGlass_ = CreateActor<Image>();
 		HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
 		HourGlass_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 200.f,320.f });
 		HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+		HourGlass_->CreateImageRenderer(float4{ 1280.f,720.f }, float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z02Back10) })
+			->SetImage("Loading_background.png");
 	}
 }
 
@@ -264,66 +215,6 @@ void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
 }
-
-//void SceneBase::PlayerResourceLoad()
-//{
-//	UserGame::LoadingFolder++;
-//	GameEngineCore::ThreadQueue.JobPost
-//	(
-//		[]()
-//		{
-//			GameEngineDirectory TextureDir;
-//			TextureDir.MoveParent(GV_GAMEFILENAME);
-//			TextureDir.MoveChild("Resources");
-//			TextureDir.MoveChild("Image");
-//			TextureDir.MoveChild("CharactorSprite");
-//			{
-//				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-//
-//				for (size_t i = 0; i < AllFile.size(); i++)
-//				{
-//					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-//				}
-//			}
-//
-//			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
-//
-//			Texture->Cut(20, 20);
-//			Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
-//			Texture->Cut(8, 1);
-//			Texture = GameEngineTextureManager::GetInst().Find("PlayerDust.png");
-//			Texture->Cut(20, 6);
-//			Texture = GameEngineTextureManager::GetInst().Find("DashDust.png");
-//			Texture->Cut(13, 1);
-//			Texture = GameEngineTextureManager::GetInst().Find("HitEffect.png");
-//			Texture->Cut(9, 3);
-//			Texture = GameEngineTextureManager::GetInst().Find("ParryEffect.png");
-//			Texture->Cut(9, 1);
-//			Texture = GameEngineTextureManager::GetInst().Find("LandDust.png");
-//			Texture->Cut(6, 1);
-//
-//			TextureDir.MoveChild("Bullet");
-//
-//			{
-//				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-//
-//				for (size_t i = 0; i < AllFile.size(); i++)
-//				{
-//					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-//				}
-//			}
-//
-//			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
-//			Texture->Cut(8, 1);
-//			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
-//			Texture->Cut(4, 1);
-//			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
-//			Texture->Cut(6, 1);
-//
-//			UserGame::LoadingFolder--;
-//		}
-//	);
-//}
 
 void SceneBase::Knockout()
 {

@@ -23,6 +23,12 @@ DicePaclace::DicePaclace()
 	: King_Dice_(nullptr)
 	, PhaseState_(this)
 	, LoadState_(this)
+	, ScreenFx(nullptr)
+	, KingDice_Marker_(nullptr)
+	, IsStageMove_(false)
+	, MoveEnd_(false)
+	, CurStageNum_(0)
+	, StageMoveCount_(0)
 {
 }
 
@@ -60,6 +66,7 @@ void DicePaclace::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 }
 void DicePaclace::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
+	LoadState_.ChangeState("Init");
 }
 
 void DicePaclace::Intro_Start()
@@ -114,17 +121,7 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
-#ifdef _DEBUG
-			if (nullptr == GameEngineCore::LevelFind(NextScene_))
-			{
-				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
-			}
-#endif // _DEBUG
-
-
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(DicePaclace::GetName(),NextScene_);;
-
-			GameEngineCore::LevelChange("LoaddingScene");
+			GameEngineCore::LevelChange("WorldMap");
 		}
 	}
 }

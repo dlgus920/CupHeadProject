@@ -75,5 +75,5 @@ void UserGame::ResourcesLoad()
 		Texture->Cut(16, 3);
 	}
 
-	AppShaderLoad(); 
+	//AppShaderLoad(); 
 }

@@ -70,7 +70,6 @@ public:
 	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type, float4 _Color = float4::RED);
 	void PushCollision(GameEngineCollision* _Collision, int _Group);
 	
-	virtual void LevelResourcesLoad() = 0;
 	virtual void LevelStart() = 0;
 	virtual void LevelUpdate(float _DeltaTime) = 0;
 	virtual void LevelChangeEndEvent(GameEngineLevel* _NextLevel) = 0;

@@ -31,23 +31,6 @@ void TitleScene::LevelStart()
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
 }
 
-void TitleScene::LevelUpdate(float _DeltaTime)
-{
-	LoadState_.Update(_DeltaTime);
-}
-
-void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
-{
-}
-
-void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
-{
-	LoadState_.ChangeState("Init");
-
-	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
-}
-
 void TitleScene::Init_Update(float _DeltaTime)
 {
 	LoadState_.ChangeState("ResourcesLoad");
@@ -121,8 +104,6 @@ void TitleScene::ResourcesLoad_End()
 
 void TitleScene::LevelLoop_Start()
 {
-	//FadeImage_->Death();
-
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
 
 	{
@@ -174,5 +155,22 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 
 void TitleScene::LevelLoop_End()
 {
+}
+
+void TitleScene::LevelUpdate(float _DeltaTime)
+{
+	LoadState_.Update(_DeltaTime);
+}
+
+void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
+{
+}
+
+void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
+{
+	LoadState_.ChangeState("Init");
+
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
 }
 

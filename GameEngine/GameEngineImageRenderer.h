@@ -151,6 +151,8 @@ public:
 
 	void SetIndex(const int Index);
 
+	void SetCurAnimationFrame(int _Frame);
+
 	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
 	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
 	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);

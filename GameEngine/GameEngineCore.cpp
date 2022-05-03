@@ -104,6 +104,8 @@ void GameEngineCore::MainLoop()
 			NextLevel_->LevelChangeStartEvent(CurrentLevel_);
 			NextLevel_->SetLevelActorMoveProcess();
 
+			LevelDestroy(CurrentLevel_->GetName());
+
 			CurrentLevel_ = NextLevel_;
 		}
 

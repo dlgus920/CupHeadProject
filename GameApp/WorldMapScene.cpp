@@ -23,6 +23,9 @@
 
 WorldMapScene::WorldMapScene() 
 	: LoadState_(this)
+	, IrisImage_(nullptr)
+	, WorldMapPlayer_(nullptr)
+	, ScreenFadeEnd_(false)
 {
 
 }
@@ -36,8 +39,6 @@ void WorldMapScene::LevelStart()
 	LoadState_.CreateState("ResourcesLoad", &WorldMapScene::ResourcesLoad_Start, &WorldMapScene::ResourcesLoad_Update, &WorldMapScene::ResourcesLoad_End);
 	LoadState_.CreateState("LevelLoop", &WorldMapScene::LevelLoop_Start, &WorldMapScene::LevelLoop_Update, &WorldMapScene::LevelLoop_End);
 	LoadState_.CreateState("Init", nullptr, &WorldMapScene::Init_Update, nullptr);
-
-	//LoadState_.ChangeState("Init");
 }
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
@@ -63,7 +64,6 @@ void WorldMapScene::ResourcesLoad_Start()
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("World");
 			TextureDir.MoveChild("Background");
-
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
@@ -117,7 +117,6 @@ void WorldMapScene::ResourcesLoad_Start()
 				}
 				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("WorldCuphead.png");
 				Texture->Cut(16, 8);
-
 				Texture = GameEngineTextureManager::GetInst().Find("Dust.png");
 				Texture->Cut(20, 6);
 			}
@@ -153,14 +152,12 @@ void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
-			//LoadingFadeComplete_ = true;
-
 			HourGlass_->Death();
 			HourGlass_ = nullptr;
 			LoadState_.ChangeState("LevelLoop");
 		}
-
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
 	}
 	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetWorldPosition());
@@ -171,7 +168,6 @@ void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 void WorldMapScene::ResourcesLoad_End()
 {
 }
-
 
 void WorldMapScene::LevelLoop_Start()
 {

@@ -224,6 +224,11 @@ void GameEngineImageRenderer::SetIndex(const int Index)
 
 }
 
+void GameEngineImageRenderer::SetCurAnimationFrame(int _Frame)
+{
+	GetCurrentAnimation()->SetCurrentIndex(_Frame);
+}
+
 void GameEngineImageRenderer::SetImage(const std::string& _ImageName, const std::string& _Sampler/* = ""*/)
 {
 	CurTexture = GameEngineTextureManager::GetInst().Find(_ImageName);
