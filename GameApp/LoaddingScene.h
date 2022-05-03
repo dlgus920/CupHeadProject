@@ -30,21 +30,12 @@ private:	// member Var
 	bool LevelDestroy_;
 
 protected:
-	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 
 private:
-
-	void Loading_Start();
-	void Loading_Update(float _DeltaTime);
-	void Loading_End();
-
-	void Load_Start();
-	void Load_Update(float _DeltaTime);
-	void Load_End();
 
 public:
 	void SetLoaddingNextLevel(std::string _PrevScene_,std::string _Nextlevel, bool _LevelDestroy = true)

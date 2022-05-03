@@ -7,11 +7,15 @@
 
 #include "UserGame.h"
 
+#include <GameEngineBase/GameEngineFSM.h>
+
 SceneBase::SceneBase() 
 	: FadeImage_(nullptr)
 	, TimeCheck_(0.f)
 	, BlendRate_(1.f)
 	, Victory_(false)
+	, LoadingComplete_(false)
+	, LoadingFadeComplete_(false)
 	, Player_(nullptr)
 {
 
@@ -20,10 +24,6 @@ SceneBase::SceneBase()
 SceneBase::~SceneBase() // default destructer 디폴트 소멸자
 {
 	//SceneResourceClear();
-}
-
-void SceneBase::LevelResourcesLoad()
-{
 }
 
 void SceneBase::LevelStart()
@@ -225,6 +225,44 @@ void SceneBase::SceneResourceLoad()
 			UserGame::LoadingFolder--;
 		}
 	);
+}
+
+void SceneBase::ResourcesLoadFadeInit()
+{
+	{
+		BlendRate_ = 1.f;
+
+		FadeImage_ = CreateActor<Image>();
+
+		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
+		FadeImage_->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z00Fx00) });
+		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
+		FadeImage_->CreateImageRenderer(float4{ 1280.f,720.f }, float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z02Back10) })
+			->SetImage("Loading_background.png");
+
+		HourGlass_ = CreateActor<Image>();
+		HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
+		HourGlass_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 200.f,320.f });
+		HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+	}
+}
+
+void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)
+{
+	if (false == LoadingFadeComplete_)
+	{
+		BlendRate_ -= _DeltaTime * 2;
+
+		if (BlendRate_ <= 0.f)
+		{
+			BlendRate_ = 0.f;
+			LoadingFadeComplete_ = true;
+			//FadeImage_->Death();
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
 }
 
 //void SceneBase::PlayerResourceLoad()

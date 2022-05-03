@@ -29,9 +29,6 @@
     <ClCompile Include="Player_Setting.cpp">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClCompile>
-    <ClCompile Include="LoaddingScene.cpp">
-      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
-    </ClCompile>
     <ClCompile Include="WorldMapScene.cpp">
       <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClCompile>
@@ -133,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="Mr_Wheezy_State.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="LoaddingScene.cpp">
+      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice_Palace_State.cpp">
+      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,9 +276,6 @@
     <ClInclude Include="Player.h">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClInclude>
-    <ClInclude Include="LoaddingScene.h">
-      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
-    </ClInclude>
     <ClInclude Include="WorldMapScene.h">
       <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClInclude>
@@ -351,6 +351,9 @@
     </ClInclude>
     <ClInclude Include="Mr_Wheezy.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="LoaddingScene.h">
+      <Filter>01. App\02. Scene\01. LoadingScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

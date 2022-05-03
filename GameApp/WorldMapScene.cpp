@@ -21,17 +21,36 @@
 #include "WorldMapPlayer.h"
 
 
-WorldMapScene::WorldMapScene() // default constructer 디폴트 생성자
+WorldMapScene::WorldMapScene() 
+	: LoadState_(this)
 {
 
 }
 
 WorldMapScene::~WorldMapScene() // default destructer 디폴트 소멸자
 {
-
 }
 
-void WorldMapScene::LevelResourcesLoad()
+void WorldMapScene::LevelStart()
+{
+	LoadState_.CreateState("ResourcesLoad", &WorldMapScene::ResourcesLoad_Start, &WorldMapScene::ResourcesLoad_Update, &WorldMapScene::ResourcesLoad_End);
+	LoadState_.CreateState("LevelLoop", &WorldMapScene::LevelLoop_Start, &WorldMapScene::LevelLoop_Update, &WorldMapScene::LevelLoop_End);
+	LoadState_.CreateState("Init", nullptr, &WorldMapScene::Init_Update, nullptr);
+
+	//LoadState_.ChangeState("Init");
+}
+
+void WorldMapScene::LevelUpdate(float _DeltaTime)
+{
+	LoadState_.Update(_DeltaTime);
+}
+
+void WorldMapScene::Init_Update(float _DeltaTime)
+{
+	LoadState_.ChangeState("ResourcesLoad");
+}
+
+void WorldMapScene::ResourcesLoad_Start()
 {
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
@@ -105,78 +124,149 @@ void WorldMapScene::LevelResourcesLoad()
 			UserGame::LoadingFolder--;
 		}
 	);
+
+	ResourcesLoadFadeInit();
 }
 
-void WorldMapScene::LevelStart()
+void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 {
-
-}
-
-void WorldMapScene::LevelUpdate(float _DeltaTime)
-{
-	static bool CreateActorCheck = false;
-
-	if (0 >= UserGame::LoadingFolder
-		&& false == CreateActorCheck)
+	if (0 >= UserGame::LoadingFolder)
 	{
-		CreateActorCheck = true;
-
-		GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-		GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
-
-		{
-			// 1280 720
-			Map* _Map = CreateActor<Map>();
-			_Map->GetCollisionMap()->SetImage("WorldMap_PixelCheckBackground.png");
-			_Map->GetCollisionMap()->SetAdjustImzgeSize();
-			_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
-
-			Image* MapImage = CreateActor<Image>();
-			MapImage->ImageSetImage("WorldMap_Background.png");
-			MapImage->ImageRenderer_->SetAdjustImzgeSize();
-			MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
-		}
-
-		{
-			StagePoint* WorldMapPoint = CreateActor<StagePoint>();
-			WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
-
-			//WorldMapPoint->SetNextScene("DicePaclace");
-			WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
-		}
-
-		{
-			WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
-			WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
-			GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
-		}
-
-		{
-			//GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
-			//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
-
-		}
-
-		{
-			IrisImage_ = CreateActor<Image>();
-			IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
-			IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
-			IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris_Out");
-
-			IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
-
-			IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-			IrisImage_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,0.f,100.f });
-
-			IrisImage_->ImageRenderer_->Off();
-		}
+		LoadingComplete_ = true;
 	}
-	
 
+	if (false == LoadingComplete_)
+	{
+		BlendRate_ -= _DeltaTime * 2;
+
+		if (BlendRate_ < 0.f)
+		{
+			BlendRate_ = 0.f;
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
+	}
+
+	else
+	{
+		BlendRate_ += _DeltaTime * 2;
+
+		if (BlendRate_ >= 1.f)
+		{
+			//LoadingFadeComplete_ = true;
+
+			HourGlass_->Death();
+			HourGlass_ = nullptr;
+			LoadState_.ChangeState("LevelLoop");
+		}
+
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
 	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetWorldPosition());
 
 	//Map::ScreenFx->GetTransform()->SetWorldPosition(GetMainCameraActor()->GetTransform()->GetWorldPosition());
+}
+
+void WorldMapScene::ResourcesLoad_End()
+{
+}
+
+
+void WorldMapScene::LevelLoop_Start()
+{
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+
+	{
+		// 1280 720
+		Map* _Map = CreateActor<Map>();
+		_Map->GetCollisionMap()->SetImage("WorldMap_PixelCheckBackground.png");
+		_Map->GetCollisionMap()->SetAdjustImzgeSize();
+		_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
+
+		Map::CurrentMap = _Map;
+
+
+		Image* MapImage = CreateActor<Image>();
+		MapImage->ImageSetImage("WorldMap_Background.png");
+		MapImage->ImageRenderer_->SetAdjustImzgeSize();
+		MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
+	}
+
+	{
+		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
+		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
+
+		//WorldMapPoint->SetNextScene("DicePaclace");
+		WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
+	}
+
+	{
+		WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
+		WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
+		GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
+	}
+
+	{
+		//GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+		//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+
+	}
+
+	{
+		IrisImage_ = CreateActor<Image>();
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
+		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris_Out");
+
+		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
+
+		IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+		IrisImage_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,0.f,100.f });
+
+		IrisImage_->ImageRenderer_->Off();
+	}
+
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+
+	SetScreenIris(false);
+
+	WorldMapPlayer_->Entry();
+}
+
+void WorldMapScene::LevelLoop_Update(float _DeltaTime)
+{
+	LevelLoadFadeUpdate(_DeltaTime);
+}
+
+void WorldMapScene::LevelLoop_End()
+{
+}
+
+void WorldMapScene::LevelEnd_Start()
+{
+}
+
+void WorldMapScene::LevelEnd_Update(float _DeltaTime)
+{
+	TimeCheck_ += _DeltaTime;
+
+	if (TimeCheck_ > 1.f)
+	{
+		BlendRate_ += _DeltaTime * 2;
+
+		if (BlendRate_ >= 1.f)
+		{
+			// 씬 체인지
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
+}
+
+void WorldMapScene::LevelEnd_End()
+{
 }
 
 void WorldMapScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
@@ -186,13 +276,14 @@ void WorldMapScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 
 void WorldMapScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {	
-	
+	LoadState_.ChangeState("Init");
+
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
-	SetScreenIris(false);
+	//SetScreenIris(false);
 
-	WorldMapPlayer_->Entry();
+	//WorldMapPlayer_->Entry();
 
 }
 
@@ -206,9 +297,8 @@ void WorldMapScene::SetScreenIris(bool _In)
 {
 	if (IrisImage_ == nullptr)
 	{
-
+		GameEngineDebug::MsgBoxError("IrisImage 생성 안됨");
 	}
-
 
 	IrisImage_->ImageRenderer_->On();
 
@@ -237,10 +327,10 @@ void WorldMapScene::ScreenFadeEnd()
 	}
 #endif // _DEBUG
 
-	dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
-		->SetLoaddingNextLevel(WorldMapScene::GetName(), NextScene_);
+	//dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
+	//	->SetLoaddingNextLevel(WorldMapScene::GetName(), NextScene_);
 
-	GameEngineCore::LevelChange("LoaddingScene");
+	GameEngineCore::LevelChange(NextScene_);
 
 	//IrisImage_->Death();
 

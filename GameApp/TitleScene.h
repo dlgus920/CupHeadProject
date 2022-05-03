@@ -1,8 +1,9 @@
 #pragma once
-#include <GameEngine/GameEngineLevel.h>
+#include "SceneBase.h"
+#include <GameEngineBase/GameEngineFSM.h>
 
 // Ό³Έν :
-class TitleScene : public GameEngineLevel
+class TitleScene : public SceneBase
 {
 public:
 	// constrcuter destructer
@@ -16,16 +17,24 @@ public:
 	TitleScene& operator=(TitleScene&& _Other) = delete;
 
 protected:
-	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
+private:
+	GameEngineFSM<TitleScene> LoadState_;
+
+	void Init_Update(float _DeltaTime);
+
+	void ResourcesLoad_Start();
+	void ResourcesLoad_Update(float _DeltaTime);
+	void ResourcesLoad_End();
+
+	void LevelLoop_Start();
+	void LevelLoop_Update(float _DeltaTime);
+	void LevelLoop_End();
 
 private:
-	class Image* FadeImage_;
-
 	bool TobeNext_;
-	float BlendRate_;
 };
 

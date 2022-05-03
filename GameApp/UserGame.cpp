@@ -52,13 +52,12 @@ void UserGame::Initialize()
 	//Pipe->ShaderHelper.SettingConstantBufferLink("TransformData", TransData);
 
 	GameEngineCore::LevelCreate<TitleScene>("Title");
-	GameEngineCore::LevelCreate<LoaddingScene>("LoaddingScene");
 	GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
 	GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
 	GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
-	GameEngineCore::LevelFind("Title")->LevelResourcesLoad();
-	GameEngineCore::LevelFind("Title")->LevelStart();
+	//GameEngineCore::LevelFind("Title")->LevelResourcesLoad();
+	//GameEngineCore::LevelFind("Title")->LevelStart();
 
 	GameEngineCore::LevelChange("Title");
 

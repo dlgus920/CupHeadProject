@@ -1,9 +1,12 @@
 #pragma once
-#include <GameEngine/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineFSM.h>
+
+#include "SceneBase.h"
+
 #include "WorldMapPlayer.h"
 
 // Ό³Έν :
-class WorldMapScene : public GameEngineLevel
+class WorldMapScene : public SceneBase
 {
 	friend class LoaddingScene;
 
@@ -21,10 +24,25 @@ public:
 	class Image* IrisImage_;
 
 	std::string NextScene_;
-private:	// member Var
+
+private:	
+	GameEngineFSM<WorldMapScene> LoadState_;
+
+	void Init_Update(float _DeltaTime);
+
+	void ResourcesLoad_Start();
+	void ResourcesLoad_Update(float _DeltaTime);
+	void ResourcesLoad_End();
+
+	void LevelLoop_Start();
+	void LevelLoop_Update(float _DeltaTime);
+	void LevelLoop_End();
+
+	void LevelEnd_Start();
+	void LevelEnd_Update(float _DeltaTime);
+	void LevelEnd_End();
 
 private:
-	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;

@@ -18,7 +18,6 @@ protected:		// delete constructer
 	DicePaclace& operator=(const DicePaclace&& _other) = delete; 
 
 private:	
-	GameEngineFSM<DicePaclace> PhaseState_;
 	class GameEngineRandom Random_;
 
 	class King_Dice* King_Dice_;
@@ -39,7 +38,6 @@ private:
 	bool MoveEnd_;
 
 private:
-	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
@@ -124,9 +122,7 @@ public:
 	}
 
 private:
-	void ResourcesLoading_Start();
-	void ResourcesLoading_Update(float _DeltaTime);
-	void ResourcesLoading_End();
+	GameEngineFSM<DicePaclace> PhaseState_;
 
 	void Intro_Start();
 	void Intro_Update(float _DeltaTime);
@@ -136,8 +132,18 @@ private:
 	void Playing_Update(float _DeltaTime);
 	void Playing_End();
 
-	bool ThreadResourceLoad();
+private:
+	GameEngineFSM<DicePaclace> LoadState_;
+	
+	void Init_Update(float _DeltaTime);
 
+	void ResourcesLoad_Start();
+	void ResourcesLoad_Update(float _DeltaTime);
+	void ResourcesLoad_End();
+
+	void LevelLoop_Start();
+	void LevelLoop_Update(float _DeltaTime);
+	void LevelLoop_End();
 
 public:
 	//friend void WorldMapPlayer::ChangeScene(std::string _Scene);

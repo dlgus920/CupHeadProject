@@ -18,17 +18,32 @@ public:
 	float TimeCheck_;
 	float BlendRate_;
 
+
 private:
 	//std::map<std::string, GameEngineFolderTexture*> FolderResourcesMap;
 	//std::map<std::string, GameEngineTexture*> TextureResourcesMap;
 
 protected:
 	class Player* Player_;
+	class Image* HourGlass_;
 	bool Victory_;
+
+	bool LoadingComplete_;
+	bool LoadingFadeComplete_;
 
 private:
 
 protected:
+	virtual void Init_Update(float _DeltaTime) = 0;
+
+	virtual void ResourcesLoad_Start() = 0;
+	virtual void ResourcesLoad_Update(float _DeltaTime) = 0;
+	virtual void ResourcesLoad_End() = 0;
+
+	virtual void LevelLoop_Start() = 0;
+	virtual void LevelLoop_Update(float _DeltaTime) = 0;
+	virtual void LevelLoop_End() = 0;
+
 	//GameEngineTexture* SceneTextureLoad(const std::string& _Path);
 	//// 이름 직접 지정
 	//GameEngineTexture* SceneTextureLoad(const std::string& _Name, const std::string& _Path);
@@ -37,6 +52,10 @@ protected:
 
 	void PlayerResourceLoad();
 	void SceneResourceLoad();
+
+	void ResourcesLoadFadeInit();
+	void LevelLoadFadeUpdate(float _DeltaTime);
+	//void ResourcesLoadFadeUpdate(float _DeltaTime);
 	//void SceneResourceClear();
 public:
 	void Knockout();
@@ -44,7 +63,6 @@ public:
 	void KnockoutEnd();
 
 protected:
-	virtual void LevelResourcesLoad();
 	virtual void LevelStart();
 	virtual void LevelUpdate(float _DeltaTime);
 

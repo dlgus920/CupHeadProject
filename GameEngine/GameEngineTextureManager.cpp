@@ -179,8 +179,10 @@ void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 #ifdef _DEBUG
 	if (GlobalResourcesMap.end() == FindIterglobal)
 	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 레벨의 리소스를 제거함");
+		GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
+		return;
 	}
+
 #endif // _DEBUG
 
 	for (const std::pair<std::string, GameEngineTexture*>& Res : FindIterglobal->second)

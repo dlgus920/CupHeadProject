@@ -19,7 +19,6 @@ protected:		// delete constructer
 	Stage_Mr_Wheezy& operator=(const Stage_Mr_Wheezy&& _other) = delete;
 
 private:
-	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
 
 	class Mr_Wheezy* Mr_Wheezy_;
 
@@ -32,7 +31,6 @@ private:
 
 
 private:
-	void LevelResourcesLoad() override;
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
@@ -42,8 +40,22 @@ private:
 //	void Knockout();
 //	void ReadyWALLOP();
 //	void KnockoutEnd();
+private:
+	GameEngineFSM<Stage_Mr_Wheezy> LoadState_;
+
+	void Init_Update(float _DeltaTime);
+
+	void ResourcesLoad_Start();
+	void ResourcesLoad_Update(float _DeltaTime);
+	void ResourcesLoad_End();
+
+	void LevelLoop_Start();
+	void LevelLoop_Update(float _DeltaTime);
+	void LevelLoop_End();
 
 private:
+	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
+
 	void ResourcesLoading_Start();
 	void ResourcesLoading_Update(float _DeltaTime);
 	void ResourcesLoading_End();

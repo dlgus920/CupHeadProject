@@ -13,8 +13,7 @@
 
 TitleScene::TitleScene()
 	: TobeNext_(false)
-	, FadeImage_(nullptr)
-	, BlendRate_(0.f)
+	, LoadState_(this)
 {
 }
 
@@ -22,7 +21,39 @@ TitleScene::~TitleScene()
 {
 }
 
-void TitleScene::LevelResourcesLoad()
+void TitleScene::LevelStart()
+{
+	LoadState_.CreateState("ResourcesLoad", &TitleScene::ResourcesLoad_Start, &TitleScene::ResourcesLoad_Update, &TitleScene::ResourcesLoad_End);
+	LoadState_.CreateState("LevelLoop", &TitleScene::LevelLoop_Start, &TitleScene::LevelLoop_Update, &TitleScene::LevelLoop_End);
+	LoadState_.CreateState("Init", nullptr, &TitleScene::Init_Update, nullptr);
+
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
+}
+
+void TitleScene::LevelUpdate(float _DeltaTime)
+{
+	LoadState_.Update(_DeltaTime);
+}
+
+void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
+{
+}
+
+void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
+{
+	LoadState_.ChangeState("Init");
+
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
+}
+
+void TitleScene::Init_Update(float _DeltaTime)
+{
+	LoadState_.ChangeState("ResourcesLoad");
+}
+
+void TitleScene::ResourcesLoad_Start()
 {
 	{
 		GameEngineDirectory TextureDir;
@@ -37,19 +68,60 @@ void TitleScene::LevelResourcesLoad()
 		{
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 
-			GameEngineTextureManager::GetInst().LoadLevelRes(this,AllFile[i].GetFullPath());
+			GameEngineTextureManager::GetInst().LoadLevelRes(this, AllFile[i].GetFullPath());
 		}
 
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
 
 		GameEngineFolderTextureManager::GetInst().LoadLevelRes(this, TextureDir.PathToPlusFileName("TitleScreen"));
 	}
+
+	ResourcesLoadFadeInit();
 }
 
-void TitleScene::LevelStart()
+void TitleScene::ResourcesLoad_Update(float _DeltaTime)
 {
-	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
+	if (0 >= UserGame::LoadingFolder)
+	{
+		LoadingComplete_ = true;
+	}
+
+	if (false == LoadingComplete_)
+	{
+		BlendRate_ -= _DeltaTime * 2;
+
+		if (BlendRate_ < 0.f)
+		{
+			BlendRate_ = 0.f;
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
+	}
+
+	else
+	{
+		BlendRate_ += _DeltaTime * 2;
+
+		if (BlendRate_ >= 1.f)
+		{
+			//LoadingFadeComplete_ = true;
+
+			HourGlass_->Death();
+			HourGlass_ = nullptr;
+			LoadState_.ChangeState("LevelLoop");
+		}
+
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
+}
+
+void TitleScene::ResourcesLoad_End()
+{
+}
+
+void TitleScene::LevelLoop_Start()
+{
+	//FadeImage_->Death();
 
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
 
@@ -67,33 +139,22 @@ void TitleScene::LevelStart()
 		Actor->ImageRenderer_->SetAdjustImzgeSize();
 		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
 	}
-	
+
 	{
 		Image* Image_ = CreateActor<Image>();
 		Image_->ImageRenderer_->SetImage("Title_font.png");
 		Image_->ImageRenderer_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
-
-	{
-		FadeImage_ = CreateActor<Image>();
-		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
-		FadeImage_->ImageRenderer_->SetAdjustImzgeSize();
-		FadeImage_->GetTransform()->SetWorldPosition(float4(0.f, 0.f, static_cast<int>(ZOrder::Z00Fx00)));
-		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,0.f });
-	}
 }
 
-void TitleScene::LevelUpdate(float _DeltaTime)
+void TitleScene::LevelLoop_Update(float _DeltaTime)
 {
-
-	//if (WM_ACTIVATE)
-	//{
-	//	int a = 0;
-	//}
 
 	if (false == TobeNext_)
 	{
+		LevelLoadFadeUpdate(_DeltaTime);
+
 		if (GameEngineInput::GetInst().Down("Next"))
 		{
 			TobeNext_ = true;
@@ -101,30 +162,17 @@ void TitleScene::LevelUpdate(float _DeltaTime)
 	}
 	else
 	{
-		BlendRate_ += _DeltaTime*2;
+		BlendRate_ += _DeltaTime;
 
 		if (BlendRate_ >= 1.f)
 		{
-			LoaddingScene* LoaddingScene_ = dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"));
-
-			LoaddingScene_->SetLoaddingNextLevel(TitleScene::GetName(), "WorldMap");;
-			LoaddingScene_->LevelResourcesLoad();
-			LoaddingScene_->LevelStart();
-
-			GameEngineCore::LevelChange("LoaddingScene");
+			GameEngineCore::LevelChange("WorldMap");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
 }
 
-void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
+void TitleScene::LevelLoop_End()
 {
-	//Death();
-}
-
-void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
-{
-	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
 }
 

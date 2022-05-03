@@ -27,44 +27,23 @@ LoaddingScene::~LoaddingScene() // default destructer 디폴트 소멸자
 {
 }
 
-void LoaddingScene::LevelResourcesLoad()
-{
-	{
-		GameEngineDirectory TextureDir;
-		TextureDir.MoveParent(GV_GAMEFILENAME);
-		TextureDir.MoveChild("Resources");
-		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Loading");
-
-		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			GameEngineTextureManager::GetInst().LoadLevelRes(this, AllFile[i].GetFullPath());
-		}
-		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
-		//Texture = GameEngineTextureManager::GetInst().FindLevelRes(this, "HourGlass.png");
-		Texture->Cut(16, 3);
-	}
-}
 void LoaddingScene::LevelStart()
 {
-	{
-		Image* Back = CreateActor<Image>();
-		Back->ImageSetImage("Loading_background.png");
-		Back->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
-		Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+	//{
+	//	Image* Back = CreateActor<Image>();
+	//	Back->ImageSetImage("Loading_background.png");
+	//	Back->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back01)));
+	//	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
 
-		BlendRate_ = 1.f;
+	//	BlendRate_ = 1.f;
 
-		FadeImage_ = CreateActor<Image>();
+	//	FadeImage_ = CreateActor<Image>();
 
-		FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
-		FadeImage_->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z00Fx00) });
-		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
-		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
-	}
+	//	FadeImage_->ImageRenderer_->SetImage("title_screen_background.png");
+	//	FadeImage_->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z00Fx00) });
+	//	FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+	//	FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	//}
 }
 
 void LoaddingScene::LevelUpdate(float _DeltaTime)
@@ -103,7 +82,7 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 				/*
 				TODO: 
 				0. 레벨을 만들어만 놓고 리소스는 로드해 두지 않음,
-
+				1. 로딩 씬에서 리소스를 로드하고, 로드 완료시 스타트 호출
 
 				1. LevelCreate는 리소스 로드만 담당하게 한다.
 
@@ -125,7 +104,7 @@ void LoaddingScene::LevelUpdate(float _DeltaTime)
 				{
 					GameEngineCore::LevelDestroy(PrevScene_);
 				}
-
+				PrevScene_.clear();
 				NextScene_.clear();
 				LoadEnd_ = false;
 				HourGlass_->Death();
@@ -146,9 +125,9 @@ void LoaddingScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
 
 	HourGlass_ = CreateActor<Image>();
-	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
-	HourGlass_->ImageRenderer_->SetAdjustImzgeSize();
 	HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
+	HourGlass_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{200.f,320.f});
+	HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
 	HourGlass_->ImageRenderer_->SetEndCallBack("HourGlass", std::bind(&LoaddingScene::LoadEnd, this));
 
 	GameEngineCore::LevelFind(NextScene_)->LevelResourcesLoad();

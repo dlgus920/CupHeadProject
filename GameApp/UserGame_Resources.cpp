@@ -56,5 +56,24 @@ void UserGame::ResourcesLoad()
 		GameEngineFolderTextureManager::GetInst().LoadLevelRes(nullptr, TextureDir.PathToPlusFileName("ScreenFx"));
 	}
 
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("Loading");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			GameEngineTextureManager::GetInst().LoadLevelRes(nullptr, AllFile[i].GetFullPath());
+		}
+		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
+		//Texture = GameEngineTextureManager::GetInst().FindLevelRes(this, "HourGlass.png");
+		Texture->Cut(16, 3);
+	}
+
 	AppShaderLoad(); 
 }
