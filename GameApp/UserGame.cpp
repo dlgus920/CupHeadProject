@@ -36,8 +36,6 @@ void UserGame::Initialize()
 	GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
 	GameEngineCore::LevelChange("Title");
-
-	return;
 }
 
 void UserGame::Release()

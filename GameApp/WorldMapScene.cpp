@@ -89,7 +89,7 @@ void WorldMapScene::ResourcesLoad_Start()
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("Loading");
 
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("ScreenIris"));
 
 			UserGame::LoadingFolder--;
 		}
@@ -143,7 +143,6 @@ void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 			BlendRate_ = 0.f;
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
-
 	}
 
 	else
@@ -159,10 +158,6 @@ void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 
 	}
-	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
-	//GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetWorldPosition());
-
-	//Map::ScreenFx->GetTransform()->SetWorldPosition(GetMainCameraActor()->GetTransform()->GetWorldPosition());
 }
 
 void WorldMapScene::ResourcesLoad_End()
@@ -193,8 +188,6 @@ void WorldMapScene::LevelLoop_Start()
 	{
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
 		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
-
-		//WorldMapPoint->SetNextScene("DicePaclace");
 		WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
 	}
 
@@ -205,18 +198,13 @@ void WorldMapScene::LevelLoop_Start()
 	}
 
 	{
-		//GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
-		//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
-
-	}
-
-	{
 		IrisImage_ = CreateActor<Image>();
-		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
-		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateLevelAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateLevelAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
 		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris_Out");
 
-		IrisImage_->ImageRenderer_->SetEndCallBack("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
+		IrisImage_->ImageRenderer_->SetEndCallBack
+		("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
 
 		IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 		IrisImage_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,0.f,100.f });

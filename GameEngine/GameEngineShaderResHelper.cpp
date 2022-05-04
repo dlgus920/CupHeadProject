@@ -8,6 +8,7 @@
 #include "GameEngineRenderingPipeLine.h"
 #include "GameEngineVertexShader.h"
 #include "GameEnginePixelShader.h"
+#include "GameEngineCore.h"
 
 GameEngineShaderResHelper::GameEngineShaderResHelper() 
 {
@@ -228,6 +229,35 @@ void GameEngineShaderResHelper::SettingTexture(const std::string& _SettingName, 
 	std::string UpperNameImage = GameEngineString::toupper(_ImageName);
 
 	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().Find(UpperNameImage);
+
+#ifdef _DEBUG
+	if (nullptr == FindTexture)
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처를 세팅하려고 했습니다. >>> " + UpperNameImage);
+		return;
+	}
+#endif // _DEBUG
+
+	FindIter->second->Res_ = FindTexture;
+}
+
+void GameEngineShaderResHelper::SettingLevelTexture(const std::string& _SettingName, const std::string& _ImageName)
+{
+	std::string UpperName = GameEngineString::toupper(_SettingName);
+
+	std::map<std::string, GameEngineTextureSetting*>::iterator FindIter = AllTextureData_.find(UpperName);
+
+#ifdef _DEBUG
+	if (FindIter == AllTextureData_.end())
+	{
+		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처 슬롯에 세팅하려고 했습니다." + _SettingName);
+		return;
+	}
+#endif // _DEBUG
+
+	std::string UpperNameImage = GameEngineString::toupper(_ImageName);
+
+	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), UpperNameImage);
 
 #ifdef _DEBUG
 	if (nullptr == FindTexture)

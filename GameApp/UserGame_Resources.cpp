@@ -43,17 +43,17 @@ void UserGame::ResourcesLoad()
 		TextureDir.MoveChild("Image");
 		TextureDir.MoveChild("Effect");
 
-		std::vector<GameEngineDirectory> AllDir = TextureDir.GetAllDirectoryRecursive();
-		LoadingFolder = static_cast<int>(AllDir.size());
+		//std::vector<GameEngineDirectory> AllDir = TextureDir.GetAllDirectoryRecursive();
+		//LoadingFolder = static_cast<int>(AllDir.size());
 
-		for (size_t i = 0; i < AllDir.size(); i++)
-		{
-			GameEngineCore::ThreadQueue.JobPost(std::bind(TextureLoading, AllDir[i]));
-		}
+		//for (size_t i = 0; i < AllDir.size(); i++)
+		//{
+		//	GameEngineCore::ThreadQueue.JobPost(std::bind(TextureLoading, AllDir[i]));
+		//}
 
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenFx"));
 
-		GameEngineFolderTextureManager::GetInst().LoadLevelRes(nullptr, TextureDir.PathToPlusFileName("ScreenFx"));
+		//GameEngineFolderTextureManager::GetInst().LoadLevelRes(nullptr, TextureDir.PathToPlusFileName("ScreenFx"));
 	}
 
 	{
@@ -68,7 +68,7 @@ void UserGame::ResourcesLoad()
 		for (size_t i = 0; i < AllFile.size(); i++)
 		{
 			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-			GameEngineTextureManager::GetInst().LoadLevelRes(nullptr, AllFile[i].GetFullPath());
+			//GameEngineTextureManager::GetInst().LoadLevelRes(nullptr, AllFile[i].GetFullPath());
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
 		//Texture = GameEngineTextureManager::GetInst().FindLevelRes(this, "HourGlass.png");

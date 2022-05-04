@@ -71,27 +71,39 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-					//LevelTextureLoad(AllFile[i].GetFullPath());
+					//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes
+					(GameEngineCore::CurrentLevel(),AllFile[i].GetFullPath());
 				}
 			}
 
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Intro_Flame.png");
-			Texture->Cut(10, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Intro_Hand.png");
-			Texture->Cut(14, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Mr_Wheezy.png");
-			Texture->Cut(20, 6);
-			Texture = GameEngineTextureManager::GetInst().Find("Smoke_FX.png");
-			Texture->Cut(20, 3);
-			//GameEngineTexture* Texture = LevelTextureFind("Intro_Flame.png");
+			//GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Intro_Flame.png");
 			//Texture->Cut(10, 1);
-			//Texture = LevelTextureFind("Intro_Hand.png");
+			//Texture = GameEngineTextureManager::GetInst().Find("Intro_Hand.png");
 			//Texture->Cut(14, 1);
-			//Texture = LevelTextureFind("Mr_Wheezy.png");
+			//Texture = GameEngineTextureManager::GetInst().Find("Mr_Wheezy.png");
 			//Texture->Cut(20, 6);
-			//Texture = LevelTextureFind("Smoke_FX.png");
+			//Texture = GameEngineTextureManager::GetInst().Find("Smoke_FX.png");
 			//Texture->Cut(20, 3);
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes
+			(GameEngineCore::CurrentLevel(), "Intro_Flame.png");
+
+			Texture->Cut(10, 1);
+
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes
+			(GameEngineCore::CurrentLevel(), "Intro_Hand.png");
+
+			Texture->Cut(14, 1);
+
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes
+			(GameEngineCore::CurrentLevel(), "Mr_Wheezy.png");
+
+			Texture->Cut(20, 6);
+
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes
+			(GameEngineCore::CurrentLevel(), "Smoke_FX.png");
+
+			Texture->Cut(20, 3);
 
 			UserGame::LoadingFolder--;
 		}
@@ -111,25 +123,33 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			TextureDir.MoveChild("Mr_Wheezy");
 			TextureDir.MoveChild("BackGround");
 
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_top_smoke"));
+			//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_top_smoke"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes
+			(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("BG_top_smoke"));
 
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-					//LevelTextureLoad(AllFile[i].GetFullPath());
+					//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes
+					(GameEngineCore::CurrentLevel(), AllFile[i].GetFullPath());
 				}
 			}
 
 			TextureDir.MoveChild("BG_Fire");
+
 			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Back"));
 			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Front"));
 			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Back"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Front"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes
+			(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("BG_Fire_Back"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes
+			(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("BG_Fire_Front"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes
+			(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("BG_Fire_Middle"));
+			
 			UserGame::LoadingFolder--;
 		}
 	);
@@ -162,8 +182,6 @@ void Stage_Mr_Wheezy::ResourcesLoad_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
-			//LoadingFadeComplete_ = true;
-
 			HourGlass_->Death();
 			HourGlass_ = nullptr;
 			LoadState_.ChangeState("LevelLoop");
@@ -191,72 +209,72 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1320.f,732.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-360.f,static_cast<float>(ZOrder::Z02Back01) });
-		BackRenderer->CreateAnimationFolder("BG_top_smoke", "BG_top_smoke", 0.04f);
+		BackRenderer->CreateLevelAnimationFolder("BG_top_smoke", "BG_top_smoke", 0.04f);
 		BackRenderer->SetChangeAnimation("BG_top_smoke");
 		BackRenderer->SetResultColor(float4{ 1.f, 1.f, 1.f, 0.5f });
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 312.f,277.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1180,-600,static_cast<float>(ZOrder::Z02Back01) });
-		BackRenderer->SetImage("kd_cigar_bg_smoke_fg.png");
+		BackRenderer->SetLevelImage("kd_cigar_bg_smoke_fg.png");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-450.f,static_cast<float>(ZOrder::Z02Back02) });
-		BackRenderer->CreateAnimationFolder("BG_Fire_Front", "BG_Fire_Front", 0.04f);
+		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Front", "BG_Fire_Front", 0.04f);
 		BackRenderer->SetChangeAnimation("BG_Fire_Front");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 240.f,-550.f,static_cast<float>(ZOrder::Z02Back03) });
-		BackRenderer->SetImage("Ashtray_left_fr.png");
+		BackRenderer->SetLevelImage("Ashtray_left_fr.png");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 240.f,-550.f,static_cast<float>(ZOrder::Z02Back06) });
-		BackRenderer->SetImage("Ashtray_left_bk.png");
+		BackRenderer->SetLevelImage("Ashtray_left_bk.png");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1040.f,-550.f,static_cast<float>(ZOrder::Z02Back03) });
-		BackRenderer->SetImage("Ashtray_right_fr.png");
+		BackRenderer->SetLevelImage("Ashtray_right_fr.png");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1040.f,-550.f,static_cast<float>(ZOrder::Z02Back06) });
-		BackRenderer->SetImage("Ashtray_right_bk.png");
+		BackRenderer->SetLevelImage("Ashtray_right_bk.png");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-375.f,static_cast<float>(ZOrder::Z02Back07) });
-		BackRenderer->CreateAnimationFolder("BG_Fire_Middle", "BG_Fire_Middle", 0.04f);
+		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Middle", "BG_Fire_Middle", 0.04f);
 		BackRenderer->SetChangeAnimation("BG_Fire_Middle");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-300.f,static_cast<float>(ZOrder::Z02Back08) });
-		BackRenderer->CreateAnimationFolder("BG_Fire_Back", "BG_Fire_Back", 0.04f);
+		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Back", "BG_Fire_Back", 0.04f);
 		BackRenderer->SetChangeAnimation("BG_Fire_Back");
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1379.f,720.f });
 		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-360.f,static_cast<float>(ZOrder::Z02Back09) });
-		BackRenderer->SetImage("Mr_Wheezy_Back.png");
+		BackRenderer->SetLevelImage("Mr_Wheezy_Back.png");
 
 		BackImageRenderer_[0] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackImageRenderer_[0]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
 		BackImageRenderer_[0]->GetTransform()->SetWorldPosition(float4{ 0.f,-278.f,static_cast<float>(ZOrder::Z02Back10) });
-		BackImageRenderer_[0]->SetImage("BackGround_Cigar.png");
+		BackImageRenderer_[0]->SetLevelImage("BackGround_Cigar.png");
 
 		BackImageRenderer_[1] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackImageRenderer_[1]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
 		BackImageRenderer_[1]->GetTransform()->SetWorldPosition(float4{ 2048.f,-278.f ,static_cast<float>(ZOrder::Z02Back10) });
-		BackImageRenderer_[1]->SetImage("BackGround_Cigar.png");
+		BackImageRenderer_[1]->SetLevelImage("BackGround_Cigar.png");
 
 
 		Map::CurrentMap = CreateActor<Map>();
 		// 1280 720
-		Map::CurrentMap->GetCollisionMap()->SetImage("DicePalaceCol.png");
+		Map::CurrentMap->GetCollisionMap()->SetLevelImage("Mr_WheezyCol.png");
 		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1440.f, 750.f });
 		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 720.f, -375.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 
@@ -277,14 +295,14 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		Mr_Wheezy_->GetTransform()->SetWorldPosition(float4(1040.f, -60.f, static_cast<float>(ZOrder::Z02Back05)));
 
 		AshImageRenderer_Left = Mr_Wheezy_->CreateTransformComponent<GameEngineImageRenderer>();
-		AshImageRenderer_Left->CreateAnimation("Mr_Wheezy.png", "Mr_Wheezy-Ash_Pale", 94, 102, 0.04f, false);
+		AshImageRenderer_Left->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Ash_Pale", 94, 102, 0.04f, false);
 		AshImageRenderer_Left->SetChangeAnimation("Mr_Wheezy-Ash_Pale");
 		AshImageRenderer_Left->SetCurAnimationFrame(101);
 		AshImageRenderer_Left->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
 		AshImageRenderer_Left->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back04)));
 
 		AshImageRenderer_Right = Mr_Wheezy_->CreateTransformComponent<GameEngineImageRenderer>();
-		AshImageRenderer_Right->CreateAnimation("Mr_Wheezy.png", "Mr_Wheezy-Ash_Pale", 94, 102, 0.04f, false);
+		AshImageRenderer_Right->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Ash_Pale", 94, 102, 0.04f, false);
 		AshImageRenderer_Right->SetChangeAnimation("Mr_Wheezy-Ash_Pale");
 		AshImageRenderer_Right->SetCurAnimationFrame(102);
 		AshImageRenderer_Right->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
@@ -398,15 +416,6 @@ void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
-#ifdef _DEBUG
-			if (nullptr == GameEngineCore::LevelFind(NextScene_))
-			{
-				GameEngineDebug::MsgBoxError("존재하지 않는 레벨");
-			}
-#endif // _DEBUG
-			dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))->SetLoaddingNextLevel(Stage_Mr_Wheezy::GetName(),NextScene_);;
-
-			//GameEngineCore::LevelCreate<LoaddingScene>("Loading")->SetLoaddingNextLevel("Play");;
 			GameEngineCore::LevelChange("LoaddingScene");
 		}
 	}

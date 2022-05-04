@@ -49,12 +49,12 @@ void TitleScene::ResourcesLoad_Start()
 
 		for (size_t i = 0; i < AllFile.size(); i++)
 		{
-			GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 
 			GameEngineTextureManager::GetInst().LoadLevelRes(this, AllFile[i].GetFullPath());
 		}
 
-		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
+		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
 
 		GameEngineFolderTextureManager::GetInst().LoadLevelRes(this, TextureDir.PathToPlusFileName("TitleScreen"));
 	}

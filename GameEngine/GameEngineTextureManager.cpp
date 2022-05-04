@@ -201,6 +201,11 @@ void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 
 #endif // _DEBUG
 
+	if (FindIterglobal == GlobalResourcesMap.end())
+	{
+		return;
+	}
+
 	for (const std::pair<std::string, GameEngineTexture*>& Res : FindIterglobal->second)
 	{
 		if (nullptr != Res.second)

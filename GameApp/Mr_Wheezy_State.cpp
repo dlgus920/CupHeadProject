@@ -4,7 +4,7 @@
 
 void Mr_Wheezy::Intro_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDIce-Intro");
+	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Intro");
 }
 void Mr_Wheezy::Intro_Update( float _DeltaTime)
 {
@@ -13,59 +13,43 @@ void Mr_Wheezy::Intro_Update( float _DeltaTime)
 		State_.ChangeState("Idle");
 		return;
 	}
-
-	 
 }
 void Mr_Wheezy::Intro_End_()
 {
 	AniEnd_Intro_ = false;
+
+	AniStateClear();
 }
 
 void Mr_Wheezy::Idle_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
+	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Idle");
 }
 void Mr_Wheezy::Idle_Update(float _DeltaTime)
 {
-	if (true == BattleState_.IsCurStateName("BattleState_Battle"))
+	if (Hp_ < 0)
 	{
-		if (Hp_ < 0)
-		{
-			State_.ChangeState("Defeat");
-			return;
-		}
-
-		TimeCheck_ += _DeltaTime;
-
-		if (TimeCheck_ > 2.f)
-		{
-			State_.ChangeState("Attack");
-			return;
-		}
+		State_.ChangeState("Defeat");
+		return;
 	}
-	else if (true == BattleState_.IsCurStateName("BattleState_Dice"))
-	{
-		TimeCheck_ += _DeltaTime;
 
-		if (TimeCheck_ > 2.f)
-		{
-			State_.ChangeState("Clap");
-			return;
-		}
-	}
+	//TimeCheck_ += _DeltaTime;
+
+	//if (TimeCheck_ > 2.f)
+	//{
+	//	State_.ChangeState("Attack");
+	//	return;
+	//}
 }
 void Mr_Wheezy::Idle_End_()
 {
+	AniStateClear();
 	TimeCheck_ = 0.f;
 }
 
 void Mr_Wheezy::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
-	CardClear();
-
-	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
-
-	MonsterHitBox->On();
+	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Attack");
 }
 void Mr_Wheezy::Attack_Update( float _DeltaTime)
 {
@@ -75,53 +59,49 @@ void Mr_Wheezy::Attack_Update( float _DeltaTime)
 		return;
 	}
 
-	if (true == AniEnd_Attack_Body_End_)
+	if (true == AniEnd_Attack_)
 	{
-		//CardClear();
+		AniEnd_Attack_ = false;
+	}
 
+	if (true == AniEnd_Attack_End_)
+	{
 		State_.ChangeState("Idle");
 		return;
-	}
-
-	else
-	{
+	}	
 
 #ifdef _DEBUG
-
-
-#endif // !_DEBUG
-
+	else
+	{
 	}
+#endif // !_DEBUG
 	 
 }
 void Mr_Wheezy::Attack_End_()
 {
+	AniStateClear();
 	TimeCheck_ = 0.f;
-
-	MonsterImageRenderer->GetTransform()->SetLocalScaling({ 1440.f, 750.0f, 1.0f });
-
-	AniEnd_Attack_Body_Birth_ = false;
-	AniEnd_Attack_Body_End_ = false;
-	AniEnd_Attack_Hand_Birth_ = false;
 }
 
 void Mr_Wheezy::Defeat_Start()
 {
-	CardClear();
-
 	TimeCheck_ = 0.f;
 	MonsterHitBox->Off();
 
-	MonsterImageRenderer->SetChangeAnimation("KDice-Defeat");
+	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Death-Intro");
 
 	Defeat_ = true;
-
-	GetLevel<Stage_Mr_Wheezy>()->SetNextScene("WorldMap");
 
 	GetLevel<Stage_Mr_Wheezy>()->Knockout();
 }
 void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 {
+	if (true == AniEnd_Death_Intro_)
+	{
+		MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Death-Idle");
+		AniEnd_Death_Intro_ = false;
+	}
+
 	TimeCheck_ += _DeltaTime;
 
 	if (TimeCheck_ >= 0.2f)
@@ -129,84 +109,38 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 		TimeCheck_ = 0.f;
 
 		EffectDefeatRandom(250.f);
-	}
-
-	 
+	} 
 }
 void Mr_Wheezy::Defeat_End_()
 {
+	AniStateClear();
 	TimeCheck_ = 0.f;
 }
 
-void Mr_Wheezy::Chop_Start()
+void Mr_Wheezy::Telleport_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("KDice-Chomp");
+	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-In");
 }
-void Mr_Wheezy::Chop_Update( float _DeltaTime)
+void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 {
-	 
-}
-void Mr_Wheezy::Chop_End_()
-{
-}
-
-void Mr_Wheezy::Clap_Start()
-{
-	MonsterImageRenderer->SetChangeAnimation("KDice-Clap");
-}
-void Mr_Wheezy::Clap_Update(float _DeltaTime)
-{
-#ifdef _DEBUG
-	if (true == AniEnd_Clap_)
+	if (true == AniEnd_TellePort_In_)
 	{
-		AniEnd_Clap_ = false;
-		//State_.ChangeState("Idle");
-		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
-		return;
+		MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
+		AniEnd_TellePort_In_ = false;
+
+		//왼쪽에 있는지 오른쪽에 있는지 판별해서 옮겨주기
 	}
-#endif // !_DEBUG
 
-
-
-
-	//주사위 굴리기 끝나면
-
-
-
+	if (true == AniEnd_TellePort_HB_)
+	{
+		MonsterHitBox->On();
+	}
+	else
+	{
+		MonsterHitBox->Off();
+	}
 }
-void Mr_Wheezy::Clap_End_()
+void Mr_Wheezy::Telleport_End_()
 {
-}
-
-
-void Mr_Wheezy::BattleState_Battle_Start()
-{
-	MonsterHitBox->On();
-}
-void Mr_Wheezy::BattleState_Battle_Update( float _DeltaTime)
-{
-	//주기적인 싸이클 속에서 공격, idle 반복 시킴
-
-	 
-}
-void Mr_Wheezy::BattleState_Battle_End()
-{
-}
-
-void Mr_Wheezy::BattleState_Dice_Start()
-{
-
-	MonsterHitBox->Off();
-}
-void Mr_Wheezy::BattleState_Dice_Update( float _DeltaTime)
-{
-	//IdleNextState_ = "Attack";
-	//BattleState_.ChangeState("BattleState_Battle");
-	//return;
-
-
-	 
-}
-void Mr_Wheezy::BattleState_Dice_End()
-{
+	AniStateClear();
 }

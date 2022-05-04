@@ -100,6 +100,7 @@ public:
 	}
 
 	void SettingTexture(const std::string& _SettingName, const std::string& _ImageName);
+	void SettingLevelTexture(const std::string& _SettingName, const std::string& _ImageName);
 
 	void SettingTexture(const std::string& _SettingName, GameEngineTexture* _Texture);
 

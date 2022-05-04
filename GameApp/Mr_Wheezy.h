@@ -7,37 +7,32 @@
 class Mr_Wheezy : public Monster
 {
 public:
-	Mr_Wheezy(); // default constructer 디폴트 생성자
-	~Mr_Wheezy(); // default destructer 디폴트 소멸자
+	Mr_Wheezy(); 
+	~Mr_Wheezy(); 
 
-	Mr_Wheezy(const Mr_Wheezy& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	Mr_Wheezy(Mr_Wheezy&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
-	Mr_Wheezy& operator=(const Mr_Wheezy& _other) = delete; // default Copy operator 디폴트 대입 연산자
-	Mr_Wheezy& operator=(const Mr_Wheezy&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
+	Mr_Wheezy(const Mr_Wheezy& _other) = delete; 
+	Mr_Wheezy(Mr_Wheezy&& _other) = delete; 
+	Mr_Wheezy& operator=(const Mr_Wheezy& _other) = delete; 
+	Mr_Wheezy& operator=(const Mr_Wheezy&& _other) = delete; 
 
 private:
 	GameEngineFSM<Mr_Wheezy> State_;
-	GameEngineFSM<Mr_Wheezy> BattleState_;
 
 	GameEngineCollision* MonsterHitBox;
 	GameEngineImageRenderer* MonsterImageRenderer;
 
-	class PerryObjectDice* PerryObjectDice_;
-
 	bool Defeat_;
-
 	float TimeCheck_;
 
 #ifdef _DEBUG
 	bool AniEnd_Intro_;
-	bool AniEnd_Attack_Body_Birth_;
-	bool AniEnd_Attack_Body_End_;
-
-	bool AniEnd_Attack_Hand_Birth_;
-
+	bool AniEnd_Attack_;
+	bool AniEnd_TellePort_In_;
+	bool AniEnd_TellePort_HB_;
+	bool AniEnd_TellePort_Out_;
+	bool AniEnd_Death_Intro_;
+	bool AniEnd_Attack_End_;
 #endif // _DEBUG
-	bool AniEnd_Clap_Dice_;
-	bool AniEnd_Clap_;
 
 private:	// member Var
 	void Start() override;
@@ -60,93 +55,82 @@ private:
 	void Defeat_Update(float _DeltaTime);
 	void Defeat_End_();
 
-	void Chop_Start();
-	void Chop_Update(float _DeltaTime);
-	void Chop_End_();
-
-	void Clap_Start();
-	void Clap_Update(float _DeltaTime);
-	void Clap_End_();
-
-	void BattleState_Battle_Start();
-	void BattleState_Battle_Update(float _DeltaTime);
-	void BattleState_Battle_End();
-
-	void BattleState_Dice_Start();
-	void BattleState_Dice_Update(float _DeltaTime);
-	void BattleState_Dice_End();
+	void Telleport_Start();
+	void Telleport_Update(float _DeltaTime);
+	void Telleport_End_();
 
 private:	
-	void SpawnCard();
-	void SpawnParryCard();
-	void CardClear();
+
+	void SpawnSmokeFx();
 
 private:
-
-	void AniEnd_Clap_Dice()
+	
+#ifdef _DEBUG
+	void AniEnd_TellePort_HB_On()
 	{
-		AniEnd_Clap_Dice_ = true;
+		AniEnd_TellePort_HB_ = true;
+	}
+	void AniEnd_TellePort_HB_Off()
+	{
+		AniEnd_TellePort_HB_ = false;
 	}
 
-
-#ifdef _DEBUG
 	void AniEnd_Intro()
 	{
 		AniEnd_Intro_ = true;
 	}
-	void AniEnd_Attack_Body_Birth()
+	void AniEnd_TellePort_In()
 	{
-		AniEnd_Attack_Body_Birth_ = true;
+		AniEnd_TellePort_In_ = true;
 	}
-	void AniEnd_Attack_Body_End()
+	void AniEnd_TellePort_Out()
 	{
-		AniEnd_Attack_Body_End_ = true;
+		AniEnd_TellePort_Out_ = true;
 	}
-	void AniEnd_Attack_Hand_Birth()
+	void AniEnd_Death_Intro()
 	{
-		AniEnd_Attack_Hand_Birth_ = true;
-	}	
-	void AniEnd_Clap()
-	{
-		AniEnd_Clap_ = true;
+		AniEnd_Death_Intro_ = true;
 	}
+	void AniEnd_Attack()
+	{
+		AniEnd_Attack_ = true;
+	}
+	void AniEnd_Attack_End()
+	{
+		AniEnd_Attack_End_ = true;
+	}
+#endif // _DEBUG
 
-	void AniEnd_Reset()
+	void AniStateClear()
 	{
 		AniEnd_Intro_ = false;
-		AniEnd_Attack_Body_Birth_ = false;
-		AniEnd_Attack_Body_End_ = false;
-		AniEnd_Attack_Hand_Birth_ = false;
+		AniEnd_Attack_ = false;
+		AniEnd_TellePort_In_ = false;
+		AniEnd_TellePort_Out_ = false;
+		AniEnd_Death_Intro_ = false;
+		AniEnd_Attack_End_ = false;
 	}
-
-#endif // _DEBUG
 
 #ifndef _DEBUG
 	void AniEnd_Intro()
 	{
-		State_.ChangeState("Idle");
+		AniEnd_Intro_ = true;
 	}
-	void AniEnd_Attack_Body_Birth()
+	void AniEnd_TellePort_In()
 	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
-
-		Hand_.HandOn();
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
-
-		Hand_.IsAttacking_ = true;
+		AniEnd_TellePort_In_ = true;
 	}
-	void AniEnd_Attack_Body_End()
+	void AniEnd_TellePort_Out()
 	{
-		State_.ChangeState("Idle");
+		AniEnd_TellePort_Out_ = true;
 	}
-	void AniEnd_Attack_Hand_Birth()
+	void AniEnd_Death_Intro()
 	{
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
+		AniEnd_Death_Intro_ = true;
 	}
-	void AniEnd_Clap()
+	void AniEnd_Attack()
 	{
-		MonsterImageRenderer->SetChangeAnimation("KDIce-Idle");
-		AniEnd_Clap_ = true;
+		AniEnd_Attack_ = true;
 	}
 #endif // _DEBUG
 

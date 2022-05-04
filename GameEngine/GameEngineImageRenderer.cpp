@@ -435,7 +435,7 @@ void GameEngineImageRenderer::SetLevelImage(const std::string& _ImageName, const
 	}
 #endif // _DEBUG
 
-	ShaderHelper.SettingTexture("Tex", _ImageName);
+	ShaderHelper.SettingLevelTexture("Tex", _ImageName);
 
 	GameEngineSampler* Sampler = GameEngineSamplerManager::GetInst().Find(_Sampler);
 
