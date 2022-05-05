@@ -138,6 +138,9 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineSound.h" />
+    <ClInclude Include="GameEngineSoundManager.h" />
+    <ClInclude Include="GameEngineSoundPlayer.h" />
     <ClInclude Include="GameEngineTexture.h">
       <SubType>
       </SubType>
@@ -243,6 +246,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineImageRenderer_Animation2D.cpp" />
     <ClCompile Include="GameEngineImageShotWindow.cpp" />
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <SubType>
@@ -310,6 +314,9 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineSound.cpp" />
+    <ClCompile Include="GameEngineSoundManager.cpp" />
+    <ClCompile Include="GameEngineSoundPlayer.cpp" />
     <ClCompile Include="GameEngineTexture.cpp">
       <SubType>
       </SubType>

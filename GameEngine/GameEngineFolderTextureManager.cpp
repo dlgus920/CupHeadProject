@@ -1,14 +1,15 @@
 #include "PreCompile.h"
 #include "GameEngineFolderTextureManager.h"
 #include "GameEngineFolderTexture.h"
+#include "GameEngineCore.h"
 
 #include "GameEngineLevel.h"
 
 GameEngineFolderTextureManager* GameEngineFolderTextureManager::Inst = new GameEngineFolderTextureManager();
+std::mutex GameEngineFolderTextureManager::ManagerLock;
 
 GameEngineFolderTextureManager::GameEngineFolderTextureManager() // default constructer 디폴트 생성자
 {
-
 }
 
 GameEngineFolderTextureManager::~GameEngineFolderTextureManager() // default destructer 디폴트 소멸자
@@ -82,18 +83,18 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::Find(const std::string&
 	return nullptr;
 }
 
-GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Path)
+GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(const std::string& _Path)
 {
-	return LoadLevelRes(Level, GameEnginePath::GetFileName(_Path), _Path);
+	return LoadLevelRes(GameEnginePath::GetFileName(_Path), _Path);
 }
 
-GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path)
+GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(const std::string& _Name, const std::string& _Path)
 {
 	std::string UpName = GameEngineString::toupper(_Name);
+	GameEngineLevel* Level = GameEngineCore::CurrentLevel();
 
-	GameEngineFolderTexture* FindRes = FindLevelRes(Level, UpName);
 #ifdef _DEBUG
-	if (nullptr != FindRes)
+	if (nullptr != FindLevelRes(UpName))
 	{
 		GameEngineDebug::MsgBoxError(_Name + " Is Overlap Load");
 	}
@@ -120,13 +121,14 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::LoadLevelRes(GameEngine
 	return NewRes;
 }
 
-GameEngineFolderTexture* GameEngineFolderTextureManager::FindLevelRes(GameEngineLevel* Level, const std::string& _Name)
+GameEngineFolderTexture* GameEngineFolderTextureManager::FindLevelRes(const std::string& _Name)
 {
 	std::map<std::string, GameEngineFolderTexture*>::iterator FindIter;
 	std::map<GameEngineLevel*, std::map<std::string, GameEngineFolderTexture*>>::iterator FindIterglobal;
 
 	{
-		FindIterglobal = GlobalResourcesMap.find(Level);
+		std::lock_guard Lock(ManagerLock);
+		FindIterglobal = GlobalResourcesMap.find(GameEngineCore::CurrentLevel());
 	}
 
 	if (FindIterglobal == GlobalResourcesMap.end())
@@ -135,6 +137,7 @@ GameEngineFolderTexture* GameEngineFolderTextureManager::FindLevelRes(GameEngine
 	}
 
 	{
+		std::lock_guard Lock(ManagerLock);
 		FindIter = FindIterglobal->second.find(GameEngineString::toupper(_Name));
 	}
 

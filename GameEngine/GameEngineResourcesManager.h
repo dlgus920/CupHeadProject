@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GameEngineBase/GameEngineSoundManager.h>
 #include "GameEngineConstantBufferManager.h"
 #include "GameEngineVertexBufferManager.h"
 #include "GameEngineVertexShaderManager.h"
@@ -10,6 +9,7 @@
 #include "GameEngineRenderTargetManager.h"
 #include "GameEngineFolderTextureManager.h"
 #include "GameEngineTextureManager.h"
+#include "GameEngineSoundManager.h"
 #include "GameEngineSamplerManager.h"
 #include "GameEngineBlendManager.h"
 #include "GameEngineDepthStencilManager.h"

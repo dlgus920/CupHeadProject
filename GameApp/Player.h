@@ -2,6 +2,7 @@
 
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngineBase/GameEngineFSM.h>
+
 #include "Bullet.h"
 #include "PositionComponent.h"
 
@@ -135,7 +136,7 @@ private: //Member
 	bool KeyState_Dash_;
 
 	bool ColState_Ground;
-	float4 ColState_Pixel_;
+	bool4 ColState_Pixel_;
 	bool ColState_Hit_;
 	//bool ColState_Parry_;
 	bool ColState_Parry_;

@@ -38,9 +38,9 @@ public:
 
 
 
-	GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
-	GameEngineTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
-	GameEngineTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
+	GameEngineTexture* LoadLevelRes(const std::string& _Path);
+	GameEngineTexture* LoadLevelRes(const std::string& _Name, const std::string& _Path);
+	GameEngineTexture* FindLevelRes(const std::string& _Name);
 	void DestroyLevelRes(GameEngineLevel* _Level);
 
 private:

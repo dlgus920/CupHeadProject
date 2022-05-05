@@ -24,6 +24,12 @@ void Player::Idle_Update(float _DeltaTime)
 		return;
 	}
 
+	if (false == ColState_Pixel_.b_Down)
+	{
+		State_.ChangeState("Jump");
+		return;
+	}
+
 	if (KeyState_Shoot_)
 	{
 		ShootingInterTime_ += _DeltaTime;
@@ -85,6 +91,12 @@ void Player::Walk_Start()
 void Player::Walk_Update(float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
+
+	if (false == ColState_Pixel_.b_Down)
+	{
+		State_.ChangeState("Jump");
+		return;
+	}
 
 	if (TimeCheck_ <= 0.f)
 	{

@@ -123,28 +123,28 @@ void Player::AnimationSetting()
 {
 	// INTRO
 	{
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Intro", 220, 247, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Intro", 220, 247, C_AnimationInterTime_);
 		PlayerImageRenderer->SetEndCallBack("Cup-Intro", std::bind(&Player::IntroAniamtionEnd, this));
 	}
 	// IDLE
 	{		
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Idle", 0, 7, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Idle", 0, 7, C_AnimationInterTime_);
 	}
 	// JUMP
 	{
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump", 20, 27, 0.166f);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Jump", 20, 27, 0.166f);
 
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Jump-Parry", 120, 127, 0.166f);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Jump-Parry", 120, 127, 0.166f);
 	}
 
 	{
 		// HIT_GROUND
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Hit-Ground", 28, 33, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Hit-Ground", 28, 33, C_AnimationInterTime_);
 		}
 		// HIT_AIR
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Hit-Air", 34, 39, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Hit-Air", 34, 39, C_AnimationInterTime_);
 		}
 	}
 
@@ -154,15 +154,15 @@ void Player::AnimationSetting()
 		{
 			//UP
 			{
-				PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Shoot-Up", 80,95 , C_AnimationInterTime_);
+				PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Walk-Shoot-Up", 80,95 , C_AnimationInterTime_);
 			}
 			//STRAIGHT
 			{
-				PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Shoot-Str", 60, 75, C_AnimationInterTime_);
+				PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Walk-Shoot-Str", 60, 75, C_AnimationInterTime_);
 			}
 		}
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk", 40, 55, C_AnimationInterTime_);
-		PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, 0.05f);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Walk", 40, 55, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Walk-Turn", 57, 58, 0.05f);
 
 		PlayerImageRenderer->SetEndCallBack("Cup-Walk-Turn", std::bind(&Player::WalkState_Changed_End,this));
 	}
@@ -171,35 +171,35 @@ void Player::AnimationSetting()
 	{
 		//ROCK-ON
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up", 206, 210, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Up-Str", 186, 190, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Str", 200, 204, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down", 192, 196, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-RockOn-Down-Str", 180, 184, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-RockOn-Up", 206, 210, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-RockOn-Up-Str", 186, 190, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-RockOn-Str", 200, 204, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-RockOn-Down", 192, 196, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-RockOn-Down-Str", 180, 184, C_AnimationInterTime_);
 		}
 		//DUCK
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Start", 160, 166, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Idle", 168, 172, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Duck-Shoot", 174, 176, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Duck-Start", 160, 166, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Duck-Idle", 168, 172, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Duck-Shoot", 174, 176, C_AnimationInterTime_);
 		}
 
 		//
 		//SHOOT
 		{
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up", 116, 118, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Up-Str", 108, 110, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Str", 100, 102, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down", 112, 114, C_AnimationInterTime_);
-			PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Shoot-Down-Str", 104, 106, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Shoot-Up", 116, 118, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Shoot-Up-Str", 108, 110, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Shoot-Str", 100, 102, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Shoot-Down", 112, 114, C_AnimationInterTime_);
+			PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Shoot-Down-Str", 104, 106, C_AnimationInterTime_);
 		}
 	}
 
 	//Dash
 	{
-		PlayerImageRenderer->CreateAnimation("Cup_Dash.png", "Cup-Dash", 0, 7, C_AnimationInterTime_);
+		PlayerImageRenderer->CreateLevelAnimation("Cup_Dash.png", "Cup-Dash", 0, 7, C_AnimationInterTime_);
 		PlayerImageRenderer->SetEndCallBack("Cup-Dash", std::bind(&Player::DashAniamtionEnd, this));
 	}
-	PlayerImageRenderer->CreateAnimation("Cup.png", "Cup-Death", 140, 154, C_AnimationInterTime_);
+	PlayerImageRenderer->CreateLevelAnimation("Cup.png", "Cup-Death", 140, 154, C_AnimationInterTime_);
 }
 

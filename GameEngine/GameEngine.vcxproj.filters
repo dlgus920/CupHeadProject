@@ -100,6 +100,12 @@
     <Filter Include="Object\PostProcess\EngineEffect">
       <UniqueIdentifier>{67e16e24-f2bd-4c07-a0d1-f77e1e5a97d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Midia">
+      <UniqueIdentifier>{e6ea60e4-2066-4b3d-866f-9424e2428bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\99Manager\Resource">
+      <UniqueIdentifier>{295fa4c1-1e7e-4ccb-9e55-f1628ac05a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -129,9 +135,6 @@
       <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineIndexBufferManager.h">
-      <Filter>Resources\99Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineTextureManager.h">
       <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineRasterizerManager.h">
@@ -221,9 +224,6 @@
     <ClInclude Include="GameEngineBlend.h">
       <Filter>Resources\02Image</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineFolderTextureManager.h">
-      <Filter>Resources\99Manager</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineFolderTexture.h">
       <Filter>Resources\02Image</Filter>
     </ClInclude>
@@ -253,9 +253,6 @@
     </ClInclude>
     <ClInclude Include="MouseActor.h">
       <Filter>Object\EngineActor</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineFontManager.h">
-      <Filter>Resources\99Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFont.h">
       <Filter>Resources\02Image</Filter>
@@ -308,6 +305,24 @@
     <ClInclude Include="GameEnginePostProcessRender.h">
       <Filter>Object\PostProcess</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineSound.h">
+      <Filter>Resources\Midia</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineSoundPlayer.h">
+      <Filter>Resources\Midia</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineTextureManager.h">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineSoundManager.h">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFolderTextureManager.h">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFontManager.h">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -337,9 +352,6 @@
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineIndexBufferManager.cpp">
-      <Filter>Resources\99Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineTextureManager.cpp">
       <Filter>Resources\99Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineRasterizerManager.cpp">
@@ -426,9 +438,6 @@
     <ClCompile Include="GameEngineBlend.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineFolderTextureManager.cpp">
-      <Filter>Resources\99Manager</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineFolderTexture.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
@@ -450,9 +459,6 @@
     </ClCompile>
     <ClCompile Include="GameEngineDepthBuffer.cpp">
       <Filter>Resources\02Image</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineFontManager.cpp">
-      <Filter>Resources\99Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineFont.cpp">
       <Filter>Resources\02Image</Filter>
@@ -498,6 +504,27 @@
     </ClCompile>
     <ClCompile Include="GameEnginePostProcessRender.cpp">
       <Filter>Object\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSound.cpp">
+      <Filter>Resources\Midia</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSoundPlayer.cpp">
+      <Filter>Resources\Midia</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSoundManager.cpp">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTextureManager.cpp">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFolderTextureManager.cpp">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFontManager.cpp">
+      <Filter>Resources\99Manager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineImageRenderer_Animation2D.cpp">
+      <Filter>Object\Component\Renderer\Sub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

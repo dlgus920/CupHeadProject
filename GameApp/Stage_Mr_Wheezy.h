@@ -23,9 +23,6 @@ private:
 	class Mr_Wheezy* Mr_Wheezy_;
 
 	class GameEngineImageRenderer* BackImageRenderer_[2];
-
-	GameEngineImageRenderer* AshImageRenderer_Left;
-	GameEngineImageRenderer* AshImageRenderer_Right;
 	//class Player* Player_;
 	//bool Victory_;
 
@@ -36,8 +33,8 @@ private:
 private:
 	void LevelStart() override;
 	void LevelUpdate(float _DeltaTime) override;
-	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
+	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 
 //public:
 //	void Knockout();

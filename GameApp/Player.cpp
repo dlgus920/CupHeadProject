@@ -14,8 +14,14 @@ Player* Player::MainPlayer;
 
 Player::Player() 
 	: State_(this)
+	, JumpAcc_(0.f)
+	, JumpSpeed_(0.f)
 	, GameState_(this)
 	, blit_(true)
+	, Jumpend_(false)
+	, LongJump_(false)
+	, Parry_(false)
+	, KeyState_Jump_Press(false)
 	, KeyState_Up_(false)
 	, KeyState_Down_(false)
 	, KeyState_Left_(false)
@@ -72,13 +78,6 @@ void Player::Start()
 
 void Player::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-	//if (std::string::npos != _NextLevel->GetName().find("Title"))
-	//{
-	//	return;
-	//}
-
-	//GetLevel()->SetLevelActorMove(_NextLevel, this);
-	//_NextLevel->GetMainCameraActor()->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition() + float4(0.0f, 0.0F, -100.0F));
 }
 
 void Player::ChangeAnimation(std::string _animation)
@@ -88,10 +87,6 @@ void Player::ChangeAnimation(std::string _animation)
 
 const std::string Player::CheckState()
 {
-	//if (true == ColState_Parry_)
-	//{
-	//	return "Parry";
-	//}
 	if (true == ColState_Hit_)
 	{
 		return "Hit";
@@ -168,7 +163,7 @@ void Player::ShootDefalutBullet()
 
 	Image* Birth = GetLevel()->CreateActor<Image>();
 	Birth->GetTransform()->SetLocalScaling(float4{ 140.f,140.f,1.f });
-	Birth->ImageCreateAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.04f, false);
+	Birth->ImageRenderer_->CreateLevelAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.04f, false);
 	Birth->SetReserveDeath("Birth");
 	Birth->GetTransform()->SetWorldPosition(Pos);
 }
@@ -211,22 +206,22 @@ void Player::EffectDust()
 	switch (swit)
 	{
 	case 0:	
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 0, 18, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 0, 18, 0.04f);
 		break;
 	case 1:
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 20, 39, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 20, 39, 0.04f);
 		break;
 	case 2:
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 40, 57, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 40, 57, 0.04f);
 		break;
 	case 3:
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 60, 78, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 60, 78, 0.04f);
 		break;
 	case 4:
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 80, 99, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 80, 99, 0.04f);
 		break;
 	case 5:
-		Dust->CreateAnimation("PlayerDust.png", "PlayerDust", 100, 117, 0.04f);
+		Dust->CreateLevelAnimation("PlayerDust.png", "PlayerDust", 100, 117, 0.04f);
 		break;
 	}
 
@@ -245,7 +240,7 @@ void Player::EffectDashDust()
 	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
 	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
 
-	Dust->CreateAnimation("DashDust.png", "DashDust", 0, 12, 0.04f);
+	Dust->CreateLevelAnimation("DashDust.png", "DashDust", 0, 12, 0.04f);
 	Dust->SetEndCallBack("DashDust", std::bind(&GameEngineActor::Death, DustAct));
 	Dust->SetChangeAnimation("DashDust");
 	Dust->SetAdjustImzgeSize();
@@ -260,7 +255,7 @@ void Player::EffectParry()
 	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
 	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
 
-	Dust->CreateAnimation("ParryEffect.png", "ParryEffect", 0, 8, 0.04f);
+	Dust->CreateLevelAnimation("ParryEffect.png", "ParryEffect", 0, 8, 0.04f);
 	Dust->SetEndCallBack("ParryEffect", std::bind(&GameEngineActor::Death, DustAct));
 	Dust->SetChangeAnimation("ParryEffect");
 	Dust->SetAdjustImzgeSize();
@@ -282,13 +277,13 @@ void Player::EffectHit()
 	switch (swit)
 	{
 	case 0:
-		Dust->CreateAnimation("HitEffect.png", "HitEffect", 0, 8, 0.04f);
+		Dust->CreateLevelAnimation("HitEffect.png", "HitEffect", 0, 8, 0.04f);
 		break;
 	case 1:
-		Dust->CreateAnimation("HitEffect.png", "HitEffect", 9, 17, 0.04f);
+		Dust->CreateLevelAnimation("HitEffect.png", "HitEffect", 9, 17, 0.04f);
 		break;
 	case 2:
-		Dust->CreateAnimation("HitEffect.png", "HitEffect", 18, 26, 0.04f);
+		Dust->CreateLevelAnimation("HitEffect.png", "HitEffect", 18, 26, 0.04f);
 		break;
 	}
 
@@ -306,7 +301,7 @@ void Player::EffectJumpLanding()
 	GameEngineActor* DustAct = GetLevel()->CreateActor<GameEngineActor>();
 	GameEngineImageRenderer* Dust = DustAct->CreateTransformComponent<GameEngineImageRenderer>(); // 이미지 렌더러 하나를 미리 만들고 돌려쓰는게 나을듯???
 
-	Dust->CreateAnimation("LandDust.png", "LandDust", 0, 5, 0.04f);
+	Dust->CreateLevelAnimation("LandDust.png", "LandDust", 0, 5, 0.04f);
 	Dust->SetChangeAnimation("LandDust");
 	Dust->SetAdjustImzgeSize();
 

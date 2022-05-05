@@ -42,7 +42,7 @@ void DicePaclace::ResourcesLoad_Start()
 			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("YouDied"));
 
 			TextureDir.MoveChild("KingDice(Boss)");
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("KDice-Clap"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("KDice-Clap"));
 
 			UserGame::LoadingFolder--;
 		}

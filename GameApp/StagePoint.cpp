@@ -16,7 +16,7 @@ void StagePoint::Start()
 	ObjectCollision_ = CreateTransformComponent<GameEngineCollision>();
 	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 
-	ObjectRenderer_->SetImage("world_platforming_icon_0001.png");
+	ObjectRenderer_->SetLevelImage("world_platforming_icon_0001.png");
 
 	float4 size = ObjectRenderer_->GetImageSize();
 

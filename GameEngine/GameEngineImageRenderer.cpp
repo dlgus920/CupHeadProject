@@ -6,169 +6,7 @@
 #include "GameEngineSamplerManager.h"
 #include "GameEngineCore.h"
 
-void GameEngineImageRenderer::Animation2D::CallStart()
-{
-	for (auto& CallBack : StartCallBack_)
-	{
-		CallBack();
-	}
-}
-void GameEngineImageRenderer::Animation2D::CallEnd()
-{
-	for (auto& CallBack : EndCallBack_)
-	{
-		CallBack();
-	}
-}
-void GameEngineImageRenderer::Animation2D::CallFrame()
-{
-	for (auto& CallBack : FrameCallBack_)
-	{
-		if (CallBack.first != CurFrame_)
-		{
-			continue;
-		}
-
-		if (CallBack.second.size() == 0)
-		{
-			continue;
-		}
-
-		for (size_t i = 0; i < CallBack.second.size(); i++)
-		{
-			CallBack.second[i]();
-		}
-	}
-}
-
-void GameEngineImageRenderer::Animation2D::Reset()
-{
-	IsEnd = false;
-	CurTime_ = InterTime_;
-	CurFrame_ = StartFrame_;
-}
-
-void GameEngineImageRenderer::Animation2D::FrameUpdate()
-{
-	if (CurTime_ <= 0.0f)
-	{
-		CallFrame();
-		++CurFrame_;
-
-		CurTime_ = InterTime_;
-		if (true == Loop_
-			&& CurFrame_ > EndFrame_)
-		{
-			CallEnd();
-			CurFrame_ = StartFrame_;
-		}
-		else if (false == Loop_
-			&& CurFrame_ > EndFrame_)
-		{
-			if (false == IsEnd)
-			{
-				CallEnd();
-			}
-
-			IsEnd = true;
-
-			CurFrame_ = EndFrame_;
-		}
-	}
-
-}
-
-void GameEngineImageRenderer::Animation2D::ReverseFrameUpdate()
-{
-	if (CurTime_ <= 0.0f)
-	{
-		CallFrame();
-		--CurFrame_;
-		CurTime_ = InterTime_;
-		if (true == Loop_
-			&& CurFrame_ < EndFrame_)
-		{
-			CallEnd();
-			CurFrame_ = StartFrame_;
-		}
-		else if (false == Loop_
-			&& CurFrame_ < EndFrame_)
-		{
-			if (false == IsEnd)
-			{
-				CallEnd();
-			}
-
-			IsEnd = true;
-
-			CurFrame_ = EndFrame_;
-		}
-	}
-
-}
-
-void GameEngineImageRenderer::Animation2D::Update(float _DeltaTime)
-{
-
-	if (true == Renderer->IsPlay_)
-	{
-		CurTime_ -= _DeltaTime;
-	}
-
-	if (StartFrame_ < EndFrame_)
-	{
-		FrameUpdate();
-	}
-	else
-	{
-		ReverseFrameUpdate();
-	}
-
-	//CallFrame();
-	if (nullptr == FolderTextures_)
-	{
-		Renderer->ShaderHelper.SettingTexture("Tex", AnimationTexture_);
-		Renderer->CurTexture = AnimationTexture_;
-		Renderer->SetIndex(CurFrame_);
-	}
-	else
-	{
-		Renderer->CutData = float4(0, 0, 1, 1);
-		Renderer->ShaderHelper.SettingTexture("Tex", FolderTextures_->GetTextureIndex(CurFrame_));
-	}
-}
-
 /// ///////////////////////////////////////////////////////////////////
-
-const bool GameEngineImageRenderer::GetCurAnimation_End()
-{
-#ifdef _DEBUG
-	if (nullptr == CurAnimation_)
-	{
-		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
-	}
-#endif // _DEBUG
-
-
-	return CurAnimation_->IsAnimationEnd();
-}
-
-const bool GameEngineImageRenderer::GetCurAnimation_End(std::string Animation_Name)
-{
-#ifdef _DEBUG
-	if (nullptr == CurAnimation_)
-	{
-		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
-	}
-#endif // _DEBUG
-
-	if (CurAnimation_->GetName() != Animation_Name)
-	{
-		return false;
-	}
-
-	return CurAnimation_->IsAnimationEnd();
-}
 
 GameEngineImageRenderer::GameEngineImageRenderer()
 	: CutData(0, 0, 1, 1)
@@ -192,10 +30,27 @@ GameEngineImageRenderer::~GameEngineImageRenderer()
 	}
 }
 
+GameEngineImageRenderer::GameEngineImageRenderer(const GameEngineImageRenderer& _Other)
+	: CutData(0, 0, 1, 1)
+	, CurAnimation_(nullptr)
+	, CurTexture(nullptr)
+	, IsPlay_(true)
+{	
+}
+
 void GameEngineImageRenderer::Start()
 {
 	GameEngineRenderer::Start();
 	SetRenderingPipeLine("Texture");
+}
+void GameEngineImageRenderer::Update(float _DeltaTime)
+{
+	if (nullptr == CurAnimation_)
+	{
+		return;
+	}
+
+	CurAnimation_->Update(_DeltaTime);
 }
 
 void GameEngineImageRenderer::SetRenderingPipeLineSettingNext()
@@ -205,7 +60,6 @@ void GameEngineImageRenderer::SetRenderingPipeLineSettingNext()
 	ResultColor = float4::ONE;
 	ShaderHelper.SettingConstantBufferLink("ResultColor", ResultColor); // 색상 합성
 }
-
 void GameEngineImageRenderer::SetIndex(const int Index)
 {
 #ifdef _DEBUG
@@ -223,7 +77,6 @@ void GameEngineImageRenderer::SetIndex(const int Index)
 	CutData = CurTexture->GetCutData(Index);
 
 }
-
 void GameEngineImageRenderer::SetCurAnimationFrame(int _Frame)
 {
 	GetCurrentAnimation()->SetCurrentIndex(_Frame);
@@ -320,8 +173,6 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 
 	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
 }
-
-
 void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool _IsForce /*= false*/)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
@@ -352,37 +203,9 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 		ShaderHelper.SettingTexture("Tex", CurAnimation_->FolderTextures_->GetTextureIndex(CurAnimation_->CurFrame_));
 	}
 	CurAnimation_->Reset();
-	CurAnimation_->CallStart();
 	AnimationPlay();
 }
 
-void GameEngineImageRenderer::Update(float _DeltaTime)
-{
-	if (nullptr == CurAnimation_)
-	{
-		return;
-	}
-
-	CurAnimation_->Update(_DeltaTime);
-}
-
-void GameEngineImageRenderer::SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack)
-{
-	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-#ifdef _DEBUG
-	if (AllAnimations_.end() == FindIter)
-	{
-		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
-	}
-
-	if (nullptr == FindIter->second)
-	{
-		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
-	}
-#endif // _DEBUG
-
-	FindIter->second->StartCallBack_.push_back(_CallBack);
-}
 void GameEngineImageRenderer::SetEndCallBack(const std::string& _Name, std::function<void()> _CallBack)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
@@ -418,15 +241,9 @@ void GameEngineImageRenderer::SetFrameCallBack(const std::string& _Name, int _In
 	FindIter->second->FrameCallBack_[_Index].push_back(_CallBack);
 }
 
-
-
-
-
-
-
 void GameEngineImageRenderer::SetLevelImage(const std::string& _ImageName, const std::string& _Sampler/* = ""*/)
 {
-	CurTexture = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), _ImageName);
+	CurTexture = GameEngineTextureManager::GetInst().FindLevelRes(_ImageName);
 #ifdef _DEBUG
 	if (nullptr == CurTexture)
 	{
@@ -459,7 +276,7 @@ void GameEngineImageRenderer::CreateLevelAnimation(const std::string& _TextureNa
 
 	Animation2D* NewAnimation = new Animation2D();
 
-	NewAnimation->AnimationTexture_ = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(),_TextureName);
+	NewAnimation->AnimationTexture_ = GameEngineTextureManager::GetInst().FindLevelRes(_TextureName);
 #ifdef _DEBUG
 	if (nullptr == NewAnimation->AnimationTexture_)
 	{
@@ -483,7 +300,7 @@ void GameEngineImageRenderer::CreateLevelAnimation(const std::string& _TextureNa
 }
 void GameEngineImageRenderer::CreateLevelAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop /*= true*/)
 {
-	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), _FolderTexName);
+	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().FindLevelRes(_FolderTexName);
 
 #ifdef _DEBUG
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
@@ -514,4 +331,33 @@ void GameEngineImageRenderer::CreateLevelAnimationFolder(const std::string& _Fol
 	NewAnimation->Renderer = this;
 
 	AllAnimations_.insert(std::map<std::string, Animation2D*>::value_type(_Name, NewAnimation));
+}
+
+const bool GameEngineImageRenderer::GetCurAnimation_End()
+{
+#ifdef _DEBUG
+	if (nullptr == CurAnimation_)
+	{
+		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
+	}
+#endif // _DEBUG
+
+
+	return CurAnimation_->IsAnimationEnd();
+}
+const bool GameEngineImageRenderer::GetCurAnimation_End(std::string Animation_Name)
+{
+#ifdef _DEBUG
+	if (nullptr == CurAnimation_)
+	{
+		GameEngineDebug::MsgBoxError("현재 에니메이션이 없음");
+	}
+#endif // _DEBUG
+
+	if (CurAnimation_->GetName() != Animation_Name)
+	{
+		return false;
+	}
+
+	return CurAnimation_->IsAnimationEnd();
 }

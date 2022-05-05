@@ -9,6 +9,25 @@ public:
 	static const float RadianToDegree;
 };
 
+struct bool4
+{
+	bool4()
+		: b_Up(false)
+		, b_Down(false)
+		, b_Right(false)
+		, b_Left(false)
+	{
+	}
+
+	bool b_Up;
+	bool b_Down;
+	bool b_Right;
+	bool b_Left;
+
+};
+
+
+
 class float4x4;
 class float4
 {

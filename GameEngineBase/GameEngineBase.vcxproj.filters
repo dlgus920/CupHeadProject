@@ -22,15 +22,6 @@
     <ClInclude Include="GameEngineDebug.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineSoundManager.h">
-      <Filter>Midia</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineSound.h">
-      <Filter>Midia</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineSoundPlayer.h">
-      <Filter>Midia</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineString.h">
       <Filter>String</Filter>
     </ClInclude>
@@ -76,15 +67,6 @@
     <ClCompile Include="GameEngineDebug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineSound.cpp">
-      <Filter>Midia</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineSoundPlayer.cpp">
-      <Filter>Midia</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineSoundManager.cpp">
-      <Filter>Midia</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineString.cpp">
       <Filter>String</Filter>
     </ClCompile>
@@ -126,9 +108,6 @@
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{7fef56fa-182c-4929-9344-5fe6d40100c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Midia">
-      <UniqueIdentifier>{7e82b16e-2dc5-4f55-a1d4-e84fbbee7c9f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lib">
       <UniqueIdentifier>{9f34ff00-87d7-4f01-844a-989cc585df57}</UniqueIdentifier>

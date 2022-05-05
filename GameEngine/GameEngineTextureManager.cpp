@@ -2,6 +2,7 @@
 #include "GameEngineTextureManager.h"
 #include "GameEngineTexture.h"
 #include "GameEngineLevel.h"
+#include "GameEngineCore.h"
 
 
 GameEngineTextureManager* GameEngineTextureManager::Inst = new GameEngineTextureManager();
@@ -115,18 +116,19 @@ GameEngineTexture* GameEngineTextureManager::Find(const std::string& _Name)
 
 
 
-GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Path)
+GameEngineTexture* GameEngineTextureManager::LoadLevelRes(const std::string& _Path)
 {
-	return LoadLevelRes(Level, GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
+	return LoadLevelRes(GameEngineString::toupper(GameEnginePath::GetFileName(_Path)), _Path);
 }
 
-GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path)
+GameEngineTexture* GameEngineTextureManager::LoadLevelRes(const std::string& _Name, const std::string& _Path)
 {
 	std::string UpName = GameEngineString::toupper(_Name);
 
-	GameEngineTexture* FindRes = FindLevelRes(Level, UpName);
+	GameEngineLevel* Level = GameEngineCore::CurrentLevel();
+
 #ifdef _DEBUG
-	if (nullptr != FindRes)
+	if (nullptr != FindLevelRes(UpName))
 	{
 		GameEngineDebug::MsgBoxError(UpName + " Is Overlap Load");
 	}
@@ -156,7 +158,7 @@ GameEngineTexture* GameEngineTextureManager::LoadLevelRes(GameEngineLevel* Level
 	return NewRes;
 }
 
-GameEngineTexture* GameEngineTextureManager::FindLevelRes(GameEngineLevel* Level, const std::string& _Name)
+GameEngineTexture* GameEngineTextureManager::FindLevelRes(const std::string& _Name)
 {
 	std::string UpName = GameEngineString::toupper(_Name);
 
@@ -165,8 +167,7 @@ GameEngineTexture* GameEngineTextureManager::FindLevelRes(GameEngineLevel* Level
 
 	{
 		std::lock_guard Lock(ManagerLock);
-
-		FindIterglobal = GlobalResourcesMap.find(Level);
+		FindIterglobal = GlobalResourcesMap.find(GameEngineCore::CurrentLevel());
 	}
 
 	if (FindIterglobal == GlobalResourcesMap.end())
@@ -176,7 +177,6 @@ GameEngineTexture* GameEngineTextureManager::FindLevelRes(GameEngineLevel* Level
 
 	{
 		std::lock_guard Lock(ManagerLock);
-
 		FindIter = FindIterglobal->second.find(UpName);
 	}
 

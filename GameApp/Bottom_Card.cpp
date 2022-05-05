@@ -25,8 +25,8 @@ void Bottom_Card::Start()
 	for (int i = 0; i < 6; ++i)
 	{
 		UICard_[i] = CreateTransformComponent<GameEngineImageRenderer>();
-		UICard_[i]->CreateAnimation("BottomCard_Dia.png", "BottomCard_Dia", 0, 5, 0.1f);
-		UICard_[i]->CreateAnimation("BottomCard_Spade.png", "BottomCard_Spade", 0, 5, 0.1f);
+		UICard_[i]->CreateLevelAnimation("BottomCard_Dia.png", "BottomCard_Dia", 0, 5, 0.1f);
+		UICard_[i]->CreateLevelAnimation("BottomCard_Spade.png", "BottomCard_Spade", 0, 5, 0.1f);
 		UICard_[i]->GetTransform()->SetLocalPosition(float4{25.f * i,0.f,0.f});
 		UICard_[i]->GetTransform()->SetLocalScaling(float4{ 20.f,27.f,1.f });
 		UICard_[i]->SetChangeAnimation("BottomCard_Dia");

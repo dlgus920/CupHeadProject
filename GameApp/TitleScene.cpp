@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "TitleScene.h"
-#include "LoaddingScene.h"
 
 #include "UserGame.h"
 
@@ -51,12 +50,12 @@ void TitleScene::ResourcesLoad_Start()
 		{
 			//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 
-			GameEngineTextureManager::GetInst().LoadLevelRes(this, AllFile[i].GetFullPath());
+			GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 		}
 
 		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
 
-		GameEngineFolderTextureManager::GetInst().LoadLevelRes(this, TextureDir.PathToPlusFileName("TitleScreen"));
+		GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("TitleScreen"));
 	}
 
 	ResourcesLoadFadeInit();

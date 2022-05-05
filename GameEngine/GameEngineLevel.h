@@ -2,6 +2,7 @@
 #include <list>
 #include <map>
 #include <GameEngine\Enums.h>
+#include <GameEngineBase\GameEngineObjectNameBase.h>
 //#include <GameEngine\GameEngineRenderingPipeLine.h>
 //
 //// Ό³Έν : 

@@ -17,8 +17,6 @@ void Mr_Wheezy::Intro_Update( float _DeltaTime)
 void Mr_Wheezy::Intro_End_()
 {
 	AniEnd_Intro_ = false;
-
-	AniStateClear();
 }
 
 void Mr_Wheezy::Idle_Start()
@@ -43,7 +41,6 @@ void Mr_Wheezy::Idle_Update(float _DeltaTime)
 }
 void Mr_Wheezy::Idle_End_()
 {
-	AniStateClear();
 	TimeCheck_ = 0.f;
 }
 
@@ -79,7 +76,9 @@ void Mr_Wheezy::Attack_Update( float _DeltaTime)
 }
 void Mr_Wheezy::Attack_End_()
 {
-	AniStateClear();
+	AniEnd_Attack_ = false;
+	AniEnd_Attack_End_ = false;
+
 	TimeCheck_ = 0.f;
 }
 
@@ -113,22 +112,35 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 }
 void Mr_Wheezy::Defeat_End_()
 {
-	AniStateClear();
+	AniEnd_Death_Intro_ = false;
+	Defeat_ = false;
 	TimeCheck_ = 0.f;
 }
 
 void Mr_Wheezy::Telleport_Start()
 {
 	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-In");
+	AshImageRenderer_Left_Front->On();
+	AshImageRenderer_Right_Front->On();
 }
 void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 {
 	if (true == AniEnd_TellePort_In_)
 	{
 		MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
-		AniEnd_TellePort_In_ = false;
 
+		AshImageRenderer_Left_Front->Off();
+		AshImageRenderer_Right_Front->Off();
+
+		AniEnd_TellePort_In_ = false;
 		//왼쪽에 있는지 오른쪽에 있는지 판별해서 옮겨주기
+	}
+
+	if (true == AniEnd_TellePort_Out_)
+	{
+		State_.ChangeState("Idle");
+		AniEnd_TellePort_Out_ = false;
+		return;
 	}
 
 	if (true == AniEnd_TellePort_HB_)
@@ -142,5 +154,6 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 }
 void Mr_Wheezy::Telleport_End_()
 {
-	AniStateClear();
+	AniEnd_TellePort_In_ = false;
+	AniEnd_TellePort_HB_ = false;
 }

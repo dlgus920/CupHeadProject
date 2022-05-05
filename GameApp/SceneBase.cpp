@@ -82,15 +82,15 @@ void SceneBase::PlayerResourceLoad()
 
 			for (size_t i = 0; i < AllFile.size(); i++)
 			{
-				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+				GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 			}
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bottom_HP.png");
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bottom_HP.png");
 			Texture->Cut(6, 2);
 
-			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Dia.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BottomCard_Dia.png");
 			Texture->Cut(6, 1);
 
-			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Spade.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BottomCard_Spade.png");
 			Texture->Cut(6, 1);
 
 			UserGame::LoadingFolder--;
@@ -112,24 +112,24 @@ void SceneBase::PlayerResourceLoad()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
 
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Cup.png");
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Cup.png");
 
 			Texture->Cut(20, 20);
-			Texture = GameEngineTextureManager::GetInst().Find("Cup_Dash.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Cup_Dash.png");
 			Texture->Cut(8, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("PlayerDust.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("PlayerDust.png");
 			Texture->Cut(20, 6);
-			Texture = GameEngineTextureManager::GetInst().Find("DashDust.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("DashDust.png");
 			Texture->Cut(13, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("HitEffect.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("HitEffect.png");
 			Texture->Cut(9, 3);
-			Texture = GameEngineTextureManager::GetInst().Find("ParryEffect.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("ParryEffect.png");
 			Texture->Cut(9, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("LandDust.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("LandDust.png");
 			Texture->Cut(6, 1);
 
 			TextureDir.MoveChild("Bullet");
@@ -139,15 +139,15 @@ void SceneBase::PlayerResourceLoad()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
 
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default.png");
 			Texture->Cut(8, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Birth.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default_Birth.png");
 			Texture->Cut(4, 1);
-			Texture = GameEngineTextureManager::GetInst().Find("Bullet_Default_Death.png");
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default_Death.png");
 			Texture->Cut(6, 1);
 
 			UserGame::LoadingFolder--;
@@ -168,9 +168,9 @@ void SceneBase::SceneResourceLoad()
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
 
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("Knockout"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ReadyWALLOP!"));
-			GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("YouDied"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Knockout"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("ReadyWALLOP!"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("YouDied"));
 
 			UserGame::LoadingFolder--;
 		}

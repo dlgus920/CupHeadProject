@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineDevice.h"
+#include <mutex>
 
 // 설명 : 
 class GameEngineFolderTexture;
@@ -8,6 +9,7 @@ class GameEngineFolderTextureManager
 {
 private:
 	static GameEngineFolderTextureManager* Inst;
+	static std::mutex ManagerLock;
 
 public:
 	static GameEngineFolderTextureManager& GetInst()
@@ -37,9 +39,9 @@ public:
 	// 목록에서 찾는다.
 	GameEngineFolderTexture* Find(const std::string& _Name);
 
-	GameEngineFolderTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Path);
-	GameEngineFolderTexture* LoadLevelRes(GameEngineLevel* Level, const std::string& _Name, const std::string& _Path);
-	GameEngineFolderTexture* FindLevelRes(GameEngineLevel* Level, const std::string& _Name);
+	GameEngineFolderTexture* LoadLevelRes(const std::string& _Path);
+	GameEngineFolderTexture* LoadLevelRes(const std::string& _Name, const std::string& _Path);
+	GameEngineFolderTexture* FindLevelRes(const std::string& _Name);
 	void DestroyLevelRes(GameEngineLevel* _Level);
 
 private:

@@ -257,7 +257,7 @@ void GameEngineShaderResHelper::SettingLevelTexture(const std::string& _SettingN
 
 	std::string UpperNameImage = GameEngineString::toupper(_ImageName);
 
-	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().FindLevelRes(GameEngineCore::CurrentLevel(), UpperNameImage);
+	GameEngineTexture* FindTexture = GameEngineTextureManager::GetInst().FindLevelRes(UpperNameImage);
 
 #ifdef _DEBUG
 	if (nullptr == FindTexture)

@@ -1,15 +1,12 @@
 #include "PreCompile.h"
 #include "WorldMapScene.h"
 
-#include "LoaddingScene.h"
 #include "DicePaclace.h"
 #include "Stage_Mr_Wheezy.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
-#include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCore.h>
-#include <GameEngine/GameEngineTransform.h>
 #include <GameEngine/MouseActor.h>
 
 #include "UserGame.h"
@@ -69,7 +66,7 @@ void WorldMapScene::ResourcesLoad_Start()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
 
@@ -89,7 +86,7 @@ void WorldMapScene::ResourcesLoad_Start()
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("Loading");
 
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(GameEngineCore::CurrentLevel(), TextureDir.PathToPlusFileName("ScreenIris"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("ScreenIris"));
 
 			UserGame::LoadingFolder--;
 		}
@@ -113,11 +110,11 @@ void WorldMapScene::ResourcesLoad_Start()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
-				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("WorldCuphead.png");
+				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("WorldCuphead.png");
 				Texture->Cut(16, 8);
-				Texture = GameEngineTextureManager::GetInst().Find("Dust.png");
+				Texture = GameEngineTextureManager::GetInst().FindLevelRes("Dust.png");
 				Texture->Cut(20, 6);
 			}
 			UserGame::LoadingFolder--;
@@ -172,7 +169,7 @@ void WorldMapScene::LevelLoop_Start()
 	{
 		// 1280 720
 		Map* _Map = CreateActor<Map>();
-		_Map->GetCollisionMap()->SetImage("WorldMap_PixelCheckBackground.png");
+		_Map->GetCollisionMap()->SetLevelImage("WorldMap_PixelCheckBackground.png");
 		_Map->GetCollisionMap()->SetAdjustImzgeSize();
 		_Map->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z04CollisonMap00) });
 
@@ -180,7 +177,7 @@ void WorldMapScene::LevelLoop_Start()
 
 
 		Image* MapImage = CreateActor<Image>();
-		MapImage->ImageSetImage("WorldMap_Background.png");
+		MapImage->ImageRenderer_->SetLevelImage("WorldMap_Background.png");
 		MapImage->ImageRenderer_->SetAdjustImzgeSize();
 		MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
 	}

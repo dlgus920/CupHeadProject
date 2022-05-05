@@ -28,7 +28,6 @@ WorldMapPlayer::WorldMapPlayer()
 
 WorldMapPlayer::~WorldMapPlayer() // default destructer 디폴트 소멸자
 {
-
 }
 
 void WorldMapPlayer::Start()
@@ -56,13 +55,11 @@ void WorldMapPlayer::Entry()
 
 void WorldMapPlayer::Move(float4 MoveDir, float _DeltaTime)
 {
-	//GetTransform()->SetLocalMove(MoveDir * _DeltaTime);
 	GetTransform()->SetWorldMove(MoveDir * _DeltaTime);
 }
 
 void WorldMapPlayer::Move(float DirX, float DirY, float _DeltaTime)
 {
-	//GetTransform()->SetLocalMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 	GetTransform()->SetWorldMove(float4(DirX, DirY, 0.f) * _DeltaTime);
 }
 
@@ -104,22 +101,22 @@ void WorldMapPlayer::EffectDust()
 	switch (swit)
 	{
 	case 0:
-		Dust->CreateAnimation("Dust.png", "Dust", 0, 18, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 0, 18, 0.04);
 		break;
 	case 1:
-		Dust->CreateAnimation("Dust.png", "Dust", 20, 39, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 20, 39, 0.04);
 		break;
 	case 2:
-		Dust->CreateAnimation("Dust.png", "Dust", 40, 57, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 40, 57, 0.04);
 		break;
 	case 3:
-		Dust->CreateAnimation("Dust.png", "Dust", 60, 78, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 60, 78, 0.04);
 		break;
 	case 4:
-		Dust->CreateAnimation("Dust.png", "Dust", 80, 99, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 80, 99, 0.04);
 		break;
 	case 5:
-		Dust->CreateAnimation("Dust.png", "Dust", 100, 117, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 100, 117, 0.04);
 		break;
 	}
 

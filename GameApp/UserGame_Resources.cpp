@@ -11,6 +11,18 @@ void TextureLoading(GameEngineDirectory Dir)
 	for (size_t i = 0; i < AllFile.size(); i++)
 	{
 		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+		// Sleep(10);
+	}
+
+	--UserGame::LoadingFolder;
+}
+
+void TextureLevelLoading(GameEngineDirectory Dir)
+{
+	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
+
+	for (size_t i = 0; i < AllFile.size(); i++)
+	{
 		GameEngineTextureManager::GetInst().LoadLevelRes(nullptr, AllFile[i].GetFullPath());
 		// Sleep(10);
 	}
@@ -22,19 +34,19 @@ void UserGame::ResourcesLoad()
 {
 	GameEngineFontManager::GetInst().Load("±Ã¼­");
 
-	{
-		GameEngineDirectory SoundDir;
-		SoundDir.MoveParent(GV_GAMEFILENAME);
-		SoundDir.MoveChild("Resources");
-		SoundDir.MoveChild("Sound");
+	//{
+	//	GameEngineDirectory SoundDir;
+	//	SoundDir.MoveParent(GV_GAMEFILENAME);
+	//	SoundDir.MoveChild("Resources");
+	//	SoundDir.MoveChild("Sound");
 
-		std::vector<GameEngineFile> AllFile = SoundDir.GetAllFile("mp3");
+	//	std::vector<GameEngineFile> AllFile = SoundDir.GetAllFile("mp3");
 
-		for (size_t i = 0; i < AllFile.size(); i++)
-		{
-			GameEngineSoundManager::GetInst().Load(AllFile[i].GetFullPath());
-		}
-	}
+	//	for (size_t i = 0; i < AllFile.size(); i++)
+	//	{
+	//		GameEngineSoundManager::GetInst().Load(AllFile[i].GetFullPath());
+	//	}
+	//}
 
 	{
 		GameEngineDirectory TextureDir;

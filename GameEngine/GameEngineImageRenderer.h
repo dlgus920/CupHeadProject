@@ -3,8 +3,6 @@
 #include "GameEngineFolderTexture.h"
 #include <GameEngineBase\GameEngineObjectNameBase.h>
 
-
-// 설명 :
 class GameEngineTexture;
 class GameEngineFolderTexture;
 class GameEngineImageRenderer : public GameEngineRenderer
@@ -27,10 +25,17 @@ private:
 
 		std::map<int, std::vector<std::function<void()>>> FrameCallBack_;
 		std::vector<std::function<void()>> EndCallBack_;
-		std::vector<std::function<void()>> StartCallBack_;
 
 	public:
+		void Reset();
+		void CallEnd();
+		void CallFrame();
+		void Update(float _DeltaTime);
 
+		void FrameUpdate();
+		void ReverseFrameUpdate();
+
+	public:
 		void SetCurrentIndex(int _Index)
 		{
 			CurFrame_ = _Index;
@@ -46,16 +51,6 @@ private:
 			return IsEnd;
 		}
 
-		void Reset();
-		void CallStart();
-		void CallEnd();
-		void CallFrame();
-		void Update(float _DeltaTime);
-
-		void FrameUpdate();
-		void ReverseFrameUpdate();
-
-	public:
 		GameEngineTexture* GetCurAnimation(int index = 0)
 		{
 			if(AnimationTexture_)
@@ -70,14 +65,58 @@ private:
 	};
 
 public:
-	//custom
+	GameEngineImageRenderer();
+	~GameEngineImageRenderer();
+
+	GameEngineImageRenderer(const GameEngineImageRenderer& _Other);
+	GameEngineImageRenderer(GameEngineImageRenderer&& _Other) = delete;
+	GameEngineImageRenderer& operator=(const GameEngineImageRenderer& _Other) = delete;
+	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
+
+private:
+	void Start() override;
+
+protected:
+	void SetRenderingPipeLineSettingNext() override;
+	void Update(float _DeltaTime) override;
+
+private:
+	std::map<std::string, Animation2D*> AllAnimations_;
+
+	GameEngineTexture* CurTexture;
+	Animation2D* CurAnimation_;
+
+	bool IsPlay_;
+
+	float4 ResultColor; 
+	float4 CutData;
+
+public:
+
+	void SetImage(const std::string& _ImageName, const std::string& _Sampler = "");
+	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
+	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
+
+	void SetLevelImage(const std::string& _ImageName, const std::string& _Sampler = "");
+	void CreateLevelAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
+	void CreateLevelAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
+
+	void SetIndex(const int Index);
+	void SetCurAnimationFrame(int _Frame);
+	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);
+
+	void SetEndCallBack(const std::string& _Name, std::function<void()> _CallBack);
+	void SetFrameCallBack(const std::string& _Name, int _Index, std::function<void()> _CallBack);
+
+public:
+	const bool GetCurAnimation_End();
+
+	const bool GetCurAnimation_End(std::string Animation_Name);
+
 	void SetResultColor(float4 _ResultColor)
 	{
 		ResultColor = _ResultColor;
 	}
-
-	const bool GetCurAnimation_End();
-	const bool GetCurAnimation_End(std::string Animation_Name);
 
 	void SetAdjustImzgeSize()
 	{
@@ -134,38 +173,6 @@ public:
 		return float4::ZERO;
 	}
 
-
-public:
-	// constrcuter destructer
-	GameEngineImageRenderer();
-	~GameEngineImageRenderer();
-
-	// delete Function
-	GameEngineImageRenderer(const GameEngineImageRenderer& _Other) = delete;
-	GameEngineImageRenderer(GameEngineImageRenderer&& _Other) noexcept = delete;
-	GameEngineImageRenderer& operator=(const GameEngineImageRenderer& _Other) = delete;
-	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
-
-	void SetImage(const std::string& _ImageName, const std::string& _Sampler = "");
-	void CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
-	void CreateAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
-
-	void SetLevelImage(const std::string& _ImageName, const std::string& _Sampler = "");
-	void CreateLevelAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop = true);
-	void CreateLevelAnimationFolder(const std::string& _FolderTexName, const std::string& _Name, float _InterTime, bool _Loop = true);
-
-
-	void SetIndex(const int Index);
-
-	void SetCurAnimationFrame(int _Frame);
-
-	void SetChangeAnimation(const std::string& _Name, bool _IsForce = false);
-
-	void SetStartCallBack(const std::string& _Name, std::function<void()> _CallBack);
-	void SetEndCallBack(const std::string& _Name, std::function<void()> _CallBack);
-	void SetFrameCallBack(const std::string& _Name, int _Index, std::function<void()> _CallBack);
-
-
 	inline GameEngineTexture* GetCurrentTexture()
 	{
 		return CurTexture;
@@ -215,22 +222,6 @@ public:
 	{
 		IsPlay_ = true;
 	}
-
-protected:
-	void SetRenderingPipeLineSettingNext() override;
-	void Update(float _DeltaTime) override;
-
-private:
-	std::map<std::string, Animation2D*> AllAnimations_;
-	Animation2D* CurAnimation_;
-
-	float4 ResultColor; //색상 합성용
-	float4 CutData;
-	bool IsPlay_;
-	GameEngineTexture* CurTexture;
-
-
-	void Start() override;
 
 };
 

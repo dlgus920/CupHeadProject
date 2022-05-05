@@ -55,7 +55,7 @@ private:	// member Var
 
 	//bool ColState_;
 
-	float4 ColState_;
+	bool4 ColState_;
 	class StagePoint* ColState_Chose_;
 	//bool AniState_ScreenIris_End_;
 

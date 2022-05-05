@@ -21,22 +21,35 @@ private:
 	GameEngineCollision* MonsterHitBox;
 	GameEngineImageRenderer* MonsterImageRenderer;
 
+	GameEngineImageRenderer* WheezyImageRenderer_Left_[3];
+	GameEngineImageRenderer* WheezyImageRenderer_Right_[3];
+
+
+	GameEngineImageRenderer* AshImageRenderer_Left_Front;
+	GameEngineImageRenderer* AshImageRenderer_Right_Front;
+	GameEngineImageRenderer* AshImageRenderer_Left_Back;
+	GameEngineImageRenderer* AshImageRenderer_Right_Back;
+
 	bool Defeat_;
 	float TimeCheck_;
 
-#ifdef _DEBUG
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_;
 	bool AniEnd_TellePort_In_;
-	bool AniEnd_TellePort_HB_;
 	bool AniEnd_TellePort_Out_;
+	bool AniEnd_TellePort_HB_;
 	bool AniEnd_Death_Intro_;
 	bool AniEnd_Attack_End_;
+#ifdef _DEBUG
 #endif // _DEBUG
 
 private:	// member Var
 	void Start() override;
 	void Update(float _DeltaTime) override;
+
+public:
+	void SetAshPale();
+
 
 private:
 	void Intro_Start();
@@ -74,7 +87,6 @@ private:
 	{
 		AniEnd_TellePort_HB_ = false;
 	}
-
 	void AniEnd_Intro()
 	{
 		AniEnd_Intro_ = true;
