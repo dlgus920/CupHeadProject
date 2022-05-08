@@ -70,7 +70,7 @@ void TitleScene::ResourcesLoad_Update(float _DeltaTime)
 
 	if (false == LoadingComplete_)
 	{
-		BlendRate_ -= _DeltaTime * 2;
+		BlendRate_ -= _DeltaTime * 2.f;
 
 		if (BlendRate_ < 0.f)
 		{
@@ -82,7 +82,7 @@ void TitleScene::ResourcesLoad_Update(float _DeltaTime)
 
 	else
 	{
-		BlendRate_ += _DeltaTime * 2;
+		BlendRate_ += _DeltaTime * 2.f;
 
 		if (BlendRate_ >= 1.f)
 		{
@@ -145,7 +145,7 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 	}
 	else
 	{
-		BlendRate_ += _DeltaTime;
+		BlendRate_ += _DeltaTime * 2.f;
 
 		if (BlendRate_ >= 1.f)
 		{

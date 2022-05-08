@@ -100,14 +100,22 @@ const bool Player::ParryCollisonUpdate()
 
 const bool Player::HitCollisonUpdate()
 {
-	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::Monster));
+	ColState_Hit_ = PlayerHitBox->Collision(static_cast<int>(CollisionGruop::MonsterAttack));
 
 	if (true == ColState_Hit_)
 	{
-		float4 MonsterPos = PlayerHitBox->CollisionPtr(static_cast<int>(CollisionGruop::Monster))->GetTransform()->GetWorldPosition();
+		float4 MonsterPos = PlayerHitBox->CollisionPtr(static_cast<int>(CollisionGruop::MonsterAttack))->GetTransform()->GetWorldPosition();
 
-		HitDir_ = MonsterPos - GetTransform()->GetWorldPosition();
-		//HitDir_.Normalize2D();
+		MonsterPos -= GetTransform()->GetWorldPosition();
+
+		if (MonsterPos.x > 0)
+		{
+			HitDir_ = float4::RIGHT;
+		}
+		else
+		{
+			HitDir_ = float4::LEFT;
+		}
 	}
 
 	return ColState_Hit_;

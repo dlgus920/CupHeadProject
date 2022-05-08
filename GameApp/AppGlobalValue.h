@@ -11,7 +11,7 @@ enum class CollisionGruop
 	Bullet,
 	Parry,
 	MonsterHitBox,
-	Monster,
+	MonsterAttack,
 	UI
 };
 

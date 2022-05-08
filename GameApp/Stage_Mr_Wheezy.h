@@ -6,7 +6,6 @@
 
 class Stage_Mr_Wheezy : public SceneBase
 {
-	friend class LoaddingScene;
 
 public:
 	Stage_Mr_Wheezy();
@@ -21,7 +20,7 @@ protected:		// delete constructer
 private:
 
 	class Mr_Wheezy* Mr_Wheezy_;
-
+	class Flying_Cigar* Flying_Cigar_;
 	class GameEngineImageRenderer* BackImageRenderer_[2];
 	//class Player* Player_;
 	//bool Victory_;
@@ -47,18 +46,12 @@ private:
 
 	void ResourcesLoad_Start();
 	void ResourcesLoad_Update(float _DeltaTime);
-	void ResourcesLoad_End();
 
 	void LevelLoop_Start();
 	void LevelLoop_Update(float _DeltaTime);
-	void LevelLoop_End();
 
 private:
 	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
-
-	void ResourcesLoading_Start();
-	void ResourcesLoading_Update(float _DeltaTime);
-	void ResourcesLoading_End();
 
 	void Intro_Start();
 	void Intro_Update(float _DeltaTime);

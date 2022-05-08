@@ -193,6 +193,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Dice_Palace_State.cpp" />
+    <ClCompile Include="Flying_Cigar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="KingDice_Marker.cpp" />
     <ClCompile Include="Dice_Card.cpp">
       <SubType>
@@ -328,6 +332,10 @@
     </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
+    <ClInclude Include="Flying_Cigar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KingDice_Marker.h" />
     <ClInclude Include="Dice_Card.h">
       <SubType>

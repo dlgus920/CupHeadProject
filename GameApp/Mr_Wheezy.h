@@ -1,9 +1,9 @@
 #pragma once
 #include "Monster.h"
-#include <GameEngine/GameEngineImageRenderer.h>
-#include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineFSM.h>
 
+class GameEngineCollision;
+class GameEngineImageRenderer;
 class Mr_Wheezy : public Monster
 {
 public:
@@ -14,19 +14,19 @@ public:
 	Mr_Wheezy(Mr_Wheezy&& _other) = delete; 
 	Mr_Wheezy& operator=(const Mr_Wheezy& _other) = delete; 
 	Mr_Wheezy& operator=(const Mr_Wheezy&& _other) = delete; 
-
 private:
 	GameEngineFSM<Mr_Wheezy> State_;
 
 	GameEngineCollision* MonsterHitBox;
-	GameEngineImageRenderer* MonsterImageRenderer;
 
-	GameEngineImageRenderer* WheezyImageRenderer_Left_[3];
-	GameEngineImageRenderer* WheezyImageRenderer_Right_[3];
+	GameEngineImageRenderer* WheezyImageRenderer_Left_;
+	GameEngineImageRenderer* WheezyImageRenderer_Right_;
 
+	GameEngineImageRenderer* Cur_WheezyImageRenderer_;
 
 	GameEngineImageRenderer* AshImageRenderer_Left_Front;
 	GameEngineImageRenderer* AshImageRenderer_Right_Front;
+
 	GameEngineImageRenderer* AshImageRenderer_Left_Back;
 	GameEngineImageRenderer* AshImageRenderer_Right_Back;
 
@@ -48,7 +48,6 @@ private:	// member Var
 	void Update(float _DeltaTime) override;
 
 public:
-	void SetAshPale();
 
 
 private:
@@ -73,6 +72,9 @@ private:
 	void Telleport_End_();
 
 private:	
+	void ChangeCurRenderer();
+	void ChangeAshImageRenderer();
+	void MoveHitBox();
 
 	void SpawnSmokeFx();
 
@@ -82,10 +84,6 @@ private:
 	void AniEnd_TellePort_HB_On()
 	{
 		AniEnd_TellePort_HB_ = true;
-	}
-	void AniEnd_TellePort_HB_Off()
-	{
-		AniEnd_TellePort_HB_ = false;
 	}
 	void AniEnd_Intro()
 	{

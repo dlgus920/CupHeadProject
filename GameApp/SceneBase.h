@@ -31,19 +31,7 @@ protected:
 	bool LoadingComplete_;
 	bool LoadingFadeComplete_;
 
-private:
-
 protected:
-	virtual void Init_Update(float _DeltaTime) = 0;
-
-	virtual void ResourcesLoad_Start() = 0;
-	virtual void ResourcesLoad_Update(float _DeltaTime) = 0;
-	virtual void ResourcesLoad_End() = 0;
-
-	virtual void LevelLoop_Start() = 0;
-	virtual void LevelLoop_Update(float _DeltaTime) = 0;
-	virtual void LevelLoop_End() = 0;
-
 	//GameEngineTexture* SceneTextureLoad(const std::string& _Path);
 	//// 이름 직접 지정
 	//GameEngineTexture* SceneTextureLoad(const std::string& _Name, const std::string& _Path);

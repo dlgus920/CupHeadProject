@@ -6,7 +6,6 @@
 
 class DicePaclace : public SceneBase
 {
-	friend class LoaddingScene;
 public:
 	DicePaclace(); 
 	~DicePaclace(); 

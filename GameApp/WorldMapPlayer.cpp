@@ -101,22 +101,22 @@ void WorldMapPlayer::EffectDust()
 	switch (swit)
 	{
 	case 0:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 0, 18, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 0, 18, 0.04f);
 		break;
 	case 1:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 20, 39, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 20, 39, 0.04f);
 		break;
 	case 2:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 40, 57, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 40, 57, 0.04f);
 		break;
 	case 3:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 60, 78, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 60, 78, 0.04f);
 		break;
 	case 4:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 80, 99, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 80, 99, 0.04f);
 		break;
 	case 5:
-		Dust->CreateLevelAnimation("Dust.png", "Dust", 100, 117, 0.04);
+		Dust->CreateLevelAnimation("Dust.png", "Dust", 100, 117, 0.04f);
 		break;
 	}
 

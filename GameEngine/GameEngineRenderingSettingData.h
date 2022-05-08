@@ -129,6 +129,8 @@ public:
 public:
 	GameEngineTextureSetting()
 		: Res_(nullptr)
+		, Shader(nullptr)
+		, SettingIndex_(0)
 	{
 
 	}

@@ -29,6 +29,7 @@ DicePaclace::DicePaclace()
 	, MoveEnd_(false)
 	, CurStageNum_(0)
 	, StageMoveCount_(0)
+	, NextStageNum_(0)
 {
 }
 

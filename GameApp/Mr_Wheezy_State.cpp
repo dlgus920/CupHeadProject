@@ -1,10 +1,16 @@
 #include "PreCompile.h"
 #include "Mr_Wheezy.h"
+#include "Effect.h"
+
 #include "Stage_Mr_Wheezy.h"
+
+#include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngine/GameEngineImageRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
 
 void Mr_Wheezy::Intro_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Intro");
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Intro");
 }
 void Mr_Wheezy::Intro_Update( float _DeltaTime)
 {
@@ -21,7 +27,7 @@ void Mr_Wheezy::Intro_End_()
 
 void Mr_Wheezy::Idle_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Idle");
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Idle");
 }
 void Mr_Wheezy::Idle_Update(float _DeltaTime)
 {
@@ -46,7 +52,7 @@ void Mr_Wheezy::Idle_End_()
 
 void Mr_Wheezy::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
-	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Attack");
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Attack");
 }
 void Mr_Wheezy::Attack_Update( float _DeltaTime)
 {
@@ -87,7 +93,7 @@ void Mr_Wheezy::Defeat_Start()
 	TimeCheck_ = 0.f;
 	MonsterHitBox->Off();
 
-	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Death-Intro");
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Death-Intro");
 
 	Defeat_ = true;
 
@@ -97,7 +103,7 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 {
 	if (true == AniEnd_Death_Intro_)
 	{
-		MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-Death-Idle");
+		Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Death-Idle");
 		AniEnd_Death_Intro_ = false;
 	}
 
@@ -119,37 +125,34 @@ void Mr_Wheezy::Defeat_End_()
 
 void Mr_Wheezy::Telleport_Start()
 {
-	MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-In");
-	AshImageRenderer_Left_Front->On();
-	AshImageRenderer_Right_Front->On();
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-TellePort-In");
 }
 void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 {
 	if (true == AniEnd_TellePort_In_)
 	{
-		MonsterImageRenderer->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
+		ChangeCurRenderer();
 
-		AshImageRenderer_Left_Front->Off();
-		AshImageRenderer_Right_Front->Off();
+		Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
+
 
 		AniEnd_TellePort_In_ = false;
 		//왼쪽에 있는지 오른쪽에 있는지 판별해서 옮겨주기
 	}
 
+	if (true == AniEnd_TellePort_HB_)
+	{
+		MoveHitBox();
+		AniEnd_TellePort_HB_ = false;
+	}
+
 	if (true == AniEnd_TellePort_Out_)
 	{
+		ChangeAshImageRenderer();
+
 		State_.ChangeState("Idle");
 		AniEnd_TellePort_Out_ = false;
 		return;
-	}
-
-	if (true == AniEnd_TellePort_HB_)
-	{
-		MonsterHitBox->On();
-	}
-	else
-	{
-		MonsterHitBox->Off();
 	}
 }
 void Mr_Wheezy::Telleport_End_()

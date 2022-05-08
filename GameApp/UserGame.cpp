@@ -7,10 +7,7 @@
 #include <GameEngine/GameEngineRenderingPipeLine.h>
 
 #include "TitleScene.h"
-#include "LoaddingScene.h"
-
 #include "WorldMapScene.h"
-
 #include "DicePaclace.h"
 #include "Stage_Mr_Wheezy.h"
 
