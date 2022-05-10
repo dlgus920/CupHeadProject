@@ -75,7 +75,9 @@ private: //Member
 
 	GameEngineCollision* PlayerHitBox;
 
-	GameEngineCollision* PlayerMovingCollision;
+	GameEngineCollision* PlayerMovingCollision_Top;
+	GameEngineCollision* PlayerMovingCollision_Middle;
+	GameEngineCollision* PlayerMovingCollision_Bot;
 
 	GameEngineCollision* PlayerParryCollision;
 
@@ -135,8 +137,17 @@ private: //Member
 	//bool KeyState_Hit_;
 	bool KeyState_Dash_;
 
-	bool ColState_Ground;
+	bool ColState_Ground_Top_;
+	bool ColState_Ground_Middle_;
+	bool ColState_Ground_Bot_;
+
+
+	bool PlayerGround_Stuck_;
+
+
+
 	bool4 ColState_Pixel_;
+
 	bool ColState_Hit_;
 	//bool ColState_Parry_;
 	bool ColState_Parry_;
@@ -191,8 +202,6 @@ private: //Func
 
 	const float4 GetShootPos();
 
-
-
 private: //Effect
 	void EffectDust();
 	void EffectDashDust();
@@ -213,6 +222,7 @@ private: //Update
 	void KeyUpdate();
 
 	const bool GroundCollisonUpdate();
+	const bool4 SideCollisonUpdate();
 	const bool ParryCollisonUpdate();
 	const bool HitCollisonUpdate();
 
@@ -236,6 +246,10 @@ private: //State
 	void Jump_Start();
 	void Jump_Update(float _DeltaTime);
 	void Jump_End();
+
+	void Fall_Start();
+	void Fall_Update(float _DeltaTime);
+	void Fall_End();
 
 	void Idle_Start();
 	void Idle_Update(float _DeltaTime);

@@ -37,13 +37,20 @@ void Mr_Wheezy::Idle_Update(float _DeltaTime)
 		return;
 	}
 
-	//TimeCheck_ += _DeltaTime;
+	TimeCheck_ += _DeltaTime;
 
-	//if (TimeCheck_ > 2.f)
-	//{
-	//	State_.ChangeState("Attack");
-	//	return;
-	//}
+	if (TimeCheck_ > 2.5f)
+	{
+		if (FireCount_ == 3)
+		{
+			FireCount_ = 0;
+			State_.ChangeState("Telleport");
+			return;
+		}
+
+		State_.ChangeState("Attack");
+		return;
+	}
 }
 void Mr_Wheezy::Idle_End_()
 {
@@ -64,6 +71,9 @@ void Mr_Wheezy::Attack_Update( float _DeltaTime)
 
 	if (true == AniEnd_Attack_)
 	{
+		Firefire();
+		FireCount_++;
+
 		AniEnd_Attack_ = false;
 	}
 
@@ -92,6 +102,7 @@ void Mr_Wheezy::Defeat_Start()
 {
 	TimeCheck_ = 0.f;
 	MonsterHitBox->Off();
+	MonsterBox->Off();
 
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Death-Intro");
 
@@ -129,29 +140,56 @@ void Mr_Wheezy::Telleport_Start()
 }
 void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 {
-	if (true == AniEnd_TellePort_In_)
-	{
-		ChangeCurRenderer();
-
-		Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
-
-
-		AniEnd_TellePort_In_ = false;
-		//왼쪽에 있는지 오른쪽에 있는지 판별해서 옮겨주기
-	}
 
 	if (true == AniEnd_TellePort_HB_)
 	{
-		MoveHitBox();
+		MonsterHitBox->Off();
+		MonsterBox->Off();
+
 		AniEnd_TellePort_HB_ = false;
+	}
+
+	if (true == AniEnd_TellePort_In_)
+	{
+		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+		{
+			WheezyImageRenderer_Right_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
+			WheezyImageRenderer_Right_->AnimationStop();
+
+			WheezyImageRenderer_Left_->AnimationPlay();
+			PossitionLeft_ = false;
+			AniEnd_TellePort_In_ = false;
+		}
+		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+		{
+			WheezyImageRenderer_Left_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
+			WheezyImageRenderer_Left_->AnimationStop();
+
+			WheezyImageRenderer_Right_->AnimationPlay();
+			PossitionLeft_ = true;
+			AniEnd_TellePort_In_ = false;
+		}
 	}
 
 	if (true == AniEnd_TellePort_Out_)
 	{
-		ChangeAshImageRenderer();
+		MonsterHitBox->On();
+		MonsterBox->On();
+		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+		{
+			MonsterHitBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+			MonsterBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+			Cur_WheezyImageRenderer_ = WheezyImageRenderer_Left_;
+		}
+		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+		{
+			MonsterHitBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+			MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+			Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
+		}
 
-		State_.ChangeState("Idle");
 		AniEnd_TellePort_Out_ = false;
+		State_.ChangeState("Idle");
 		return;
 	}
 }

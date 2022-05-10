@@ -7,7 +7,16 @@
 #ifdef _DEBUG
 void Player::Update_DEBUG()
 {
-	GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
+
+	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::MonsterAttack)))
+	{
+		GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect, float4::PINK);
+	}
+	else
+	{
+		GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect, float4::BLUE);
+	}
 
 	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::Parry)))
 	{
@@ -85,10 +94,26 @@ void Player::KeyUpdate()
 
 const bool Player::GroundCollisonUpdate()
 {
-	ColState_Pixel_ = Map::PixelCollisionTransform(PlayerMovingCollision, 10);
-	ColState_Ground = ColState_Pixel_.b_Down;
+	//ColState_Ground_Top_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Top, 5);
+	ColState_Ground_Middle_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Middle, 5);
+	ColState_Ground_Bot_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Bot, 5);
 
-	return ColState_Ground;
+	if (ColState_Ground_Bot_ && ColState_Ground_Middle_)
+	{
+		PlayerGround_Stuck_ = true;
+	}
+
+	if (ColState_Ground_Bot_ && !ColState_Ground_Middle_)
+	{
+		PlayerGround_Stuck_ = false;
+	}
+
+	return PlayerGround_Stuck_;
+}
+
+const bool4 Player::SideCollisonUpdate()
+{
+	return ColState_Pixel_ = Map::PixelSideCollisionTransform(PlayerMovingCollision_Middle, 10);
 }
 
 const bool Player::ParryCollisonUpdate()
@@ -130,8 +155,6 @@ void Player::ImageScaleUpdate() //아직 미사용
 		PrevAniSize_ = size;
 
 		PlayerImageRenderer->GetTransform()->SetLocalScaling(size);
-		PlayerMovingCollision->GetTransform()->SetLocalScaling(size);
-		//PlayerHitBox->GetTransform()->SetLocalScaling(size);
 	}
 
 }

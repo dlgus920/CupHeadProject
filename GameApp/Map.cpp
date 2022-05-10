@@ -135,3 +135,83 @@ bool4 Map::PixelCollisionTransform(GameEngineCollision* _Collision, int Precissi
 {
 	return PixelCollisionTransform(_Collision->GetTransform(), Precission_coefficient);
 }
+
+bool Map::PixelGroundCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient)
+{
+	GameEngineTransform * _Transform = _Collision->GetTransform();
+
+	float4 size = _Transform->GetLocalScaling(); 
+
+	float4 Pos = _Transform->GetWorldPosition();
+	Pos.y *= -1.0f;
+
+	int HorizenConst = static_cast<int>(size.x / Precission_coefficient);
+
+	if (HorizenConst < 1)
+	{
+		HorizenConst = 1;
+	}
+
+	int Left = static_cast<int>(Pos.x - size.x / 2);
+	int Right = static_cast<int>(Pos.x + size.x / 2);
+	int Bot = static_cast<int>(Pos.y + size.y / 2);
+
+	for (int i = Left + HorizenConst; i < Right; i += HorizenConst)
+	{
+		if (GetColor(i, Bot) == float4::BLACK)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool4 Map::PixelSideCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient)
+{
+	GameEngineTransform* _Transform = _Collision->GetTransform();
+
+	float4 size = _Transform->GetLocalScaling(); // ex) 100.f ,100.f;
+
+	float4 Pos = _Transform->GetWorldPosition();
+	Pos.y *= -1.0f;
+
+	bool4 Retern;
+
+	RECT Rect = { static_cast<int>(Pos.x - size.x / 2)  ,static_cast<int>(Pos.y - size.y / 2),
+				 static_cast<int>(Pos.x + size.x / 2) ,static_cast<int>(Pos.y + size.y / 2) };
+
+	int HorizenConst = static_cast<int>(size.x / Precission_coefficient);
+	int VerticalConst = static_cast<int>(size.y / Precission_coefficient);
+
+	if (HorizenConst < 1)
+	{
+		HorizenConst = 1;
+	}
+	if (VerticalConst < 1)
+	{
+		VerticalConst = 1;
+	}
+
+	for (int i = Rect.left + HorizenConst; i < Rect.right; i += HorizenConst)
+	{
+		if (GetColor(i, Rect.top) == float4::BLACK)
+		{
+			Retern.b_Up = true;
+		}
+	}
+
+	for (int i = Rect.top + VerticalConst; i < Rect.bottom; i += VerticalConst)
+	{
+		if (GetColor(Rect.left, i) == float4::BLACK)
+		{
+			Retern.b_Left = true;
+		}
+		if (GetColor(Rect.right, i) == float4::BLACK)
+		{
+			Retern.b_Right = true;
+		}
+	}
+
+	return Retern;
+}

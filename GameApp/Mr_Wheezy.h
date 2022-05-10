@@ -18,6 +18,7 @@ private:
 	GameEngineFSM<Mr_Wheezy> State_;
 
 	GameEngineCollision* MonsterHitBox;
+	GameEngineCollision* MonsterBox;
 
 	GameEngineImageRenderer* WheezyImageRenderer_Left_;
 	GameEngineImageRenderer* WheezyImageRenderer_Right_;
@@ -30,8 +31,11 @@ private:
 	GameEngineImageRenderer* AshImageRenderer_Left_Back;
 	GameEngineImageRenderer* AshImageRenderer_Right_Back;
 
+	bool PossitionLeft_;
 	bool Defeat_;
 	float TimeCheck_;
+
+	int FireCount_;
 
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_;
@@ -79,7 +83,20 @@ private:
 	void SpawnSmokeFx();
 
 private:
-	
+	void SwapPosition()
+	{
+		if (true == PossitionLeft_)
+		{
+			PossitionLeft_ = false;
+		}
+		else
+		{
+			PossitionLeft_ = true;
+		}
+	}
+
+	void Firefire();
+
 #ifdef _DEBUG
 	void AniEnd_TellePort_HB_On()
 	{

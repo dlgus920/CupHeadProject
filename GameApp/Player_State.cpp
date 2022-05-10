@@ -13,20 +13,23 @@
 void Player::Idle_Start()
 {
 	ChangeAnimation("Cup-Idle");
+
+	while (GroundCollisonUpdate())
+	{
+		Move(float4(0.f, 1.f, 0.f), 1.f);
+	}
 }
 void Player::Idle_Update(float _DeltaTime)
 {
-	//StateUpdate(_DeltaTime);
-
 	if (CheckState() != "Idle")
 	{
 		State_.ChangeState(CheckState());
 		return;
 	}
 
-	if (false == ColState_Pixel_.b_Down)
+	if (false == ColState_Ground_Bot_)
 	{
-		State_.ChangeState("Jump");
+		State_.ChangeState("Fall");
 		return;
 	}
 
@@ -92,9 +95,9 @@ void Player::Walk_Update(float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
 
-	if (false == ColState_Pixel_.b_Down)
+	if (false == ColState_Ground_Bot_)
 	{
-		State_.ChangeState("Jump");
+		State_.ChangeState("Fall");
 		return;
 	}
 
@@ -303,9 +306,8 @@ void Player::Jump_Update(float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
+					if (true == ColState_Ground_Bot_)
 					{
-						TimeCheck_ = 0.f;
 						State_.ChangeState("Idle");
 						return;
 					}
@@ -314,7 +316,6 @@ void Player::Jump_Update(float _DeltaTime)
 
 			else if (false == LongJump_)
 			{
-				//TODO:: 여ㅣ서 0.35초 만큼의 ACC 조정이 필요해짐
 				if (TimeCheck_ < 0.35f)
 				{	
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
@@ -332,9 +333,8 @@ void Player::Jump_Update(float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
+					if (true == ColState_Ground_Bot_)
 					{
-						TimeCheck_ = 0.f;
 						State_.ChangeState("Idle");
 						return;
 					}
@@ -347,7 +347,12 @@ void Player::Jump_Update(float _DeltaTime)
 	{
 		if (ColState_Pixel_.b_Right == 0.f)
 		{
-			Move(C_MoveSpeed_, 0.f, _DeltaTime);
+			Move(C_MoveSpeed_, 0.f, _DeltaTime); 
+			
+			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 10).b_Right)
+			{
+				Move(-C_MoveSpeed_, 0.f, _DeltaTime *-1.f);
+			}
 		}
 	}
 	else if (KeyState_Left_)
@@ -355,8 +360,14 @@ void Player::Jump_Update(float _DeltaTime)
 		if (ColState_Pixel_.b_Left == 0.f)
 		{
 			Move(-C_MoveSpeed_, 0.f, _DeltaTime);
+
+			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 10).b_Left)
+			{
+				Move(C_MoveSpeed_, 0.f, _DeltaTime * -1.f);
+			}
 		}
 	}
+
 	if (KeyState_Shoot_)
 	{
 		ShootingInterTime_ += _DeltaTime;
@@ -384,6 +395,146 @@ void Player::Jump_Update(float _DeltaTime)
 	}
 }
 void Player::Jump_End()
+{
+	GameEngineCore::SetTimeRate(1.f);
+	EffectJumpLanding();
+
+	Jumpend_ = false;
+	LongJump_ = false;
+	Parry_ = false;
+	JumpSpeed_ = 0.f;
+	TimeCheck_ = 0.f;
+	ShootingInterTime_ = 0.f;
+}
+
+void Player::Fall_Start()
+{
+	ChangeAnimation("Cup-Jump");
+
+	TimeCheck_ = 0.f;
+}
+void Player::Fall_Update(float _DeltaTime)
+{
+	if (true == ColState_Hit_)
+	{
+		TimeCheck_ = 0.f;
+		State_.ChangeState("Hit");
+		return;
+	}
+
+	if (true == KeyState_Dash_)
+	{
+		TimeCheck_ = 0.f;
+		State_.ChangeState("Dash");
+		return;
+	}
+
+	if (true == KeyState_Bomb)
+	{
+		TimeCheck_ = 0.f;
+		State_.ChangeState("Bomb");
+		return;
+	}
+
+	if (true == ColState_Parry_)
+	{
+		if (false == Parry_)
+		{
+			if (GameEngineInput::GetInst().Down("Jump"))
+			{
+				Parry_ = true; // 페리중이다.
+
+				dynamic_cast<PerryObjectDice*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
+
+				ChangeAnimation("Cup-Jump-Parry");
+
+				EffectParry();
+
+				Bottom_Card_->Increase();
+
+				Jumpend_ = false;
+				LongJump_ = false;
+				JumpSpeed_ = 0.f;
+				TimeCheck_ = 0.f;
+			}
+		}
+	}
+
+	if (true == Parry_)
+	{
+		if (TimeCheck_ < 0.35f)
+		{
+			GameEngineCore::SetTimeRate(0.3f);
+
+			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+		}
+
+		else if (TimeCheck_ >= 0.35f)
+		{
+			GameEngineCore::SetTimeRate(1.f);
+			if (false == Jumpend_)
+			{
+				Jumpend_ = true;
+				JumpSpeed_ = 0.f;
+			}
+
+			Parry_ = false;
+		}
+	}
+
+
+	JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+	Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
+
+	if (true == ColState_Ground_Bot_)
+	{
+		State_.ChangeState("Idle");
+		return;
+	}
+
+	if (KeyState_Right_)
+	{
+		if (ColState_Pixel_.b_Right == false)
+		{
+			Move(C_MoveSpeed_, 0.f, _DeltaTime);
+		}
+	}
+	else if (KeyState_Left_)
+	{
+		if (ColState_Pixel_.b_Left == false)
+		{
+			Move(-C_MoveSpeed_, 0.f, _DeltaTime);
+		}
+	}
+
+	if (KeyState_Shoot_)
+	{
+		ShootingInterTime_ += _DeltaTime;
+
+		if (Dir_ == AnimationDirection::Left)
+		{
+			BulletInfo_.MoveDir_ = float4::LEFT;
+			ShootingDir_ = ShootingDir::Left;
+		}
+		else
+		{
+			BulletInfo_.MoveDir_ = float4::RIGHT;
+			ShootingDir_ = ShootingDir::Right;
+		}
+
+		if (ShootingInterTime_ >= 0.2f)
+		{
+			BulletShootFunc_();
+			ShootingInterTime_ = 0.f;
+		}
+	}
+	else
+	{
+		ShootingInterTime_ = 0.f;
+	}
+}
+void Player::Fall_End()
 {
 	GameEngineCore::SetTimeRate(1.f);
 	EffectJumpLanding();
@@ -633,7 +784,7 @@ void Player::Hit_Start()
 
 	EffectHit();
 
-	if (true == ColState_Ground)
+	if (true == ColState_Ground_Bot_)
 	{
 		ChangeAnimation("Cup-Hit-Ground");
 	}
@@ -661,7 +812,17 @@ void Player::Hit_Update(float _DeltaTime)
 	if (TimeCheck_ < 0.35f)
 	{
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
-		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+
+		if (ColState_Pixel_.b_Up == 0.f)
+		{
+			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+
+			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 10).b_Up)
+			{
+				Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), -_DeltaTime);
+			}
+
+		}
 	}
 
 	else if (TimeCheck_ >= 0.35f)
@@ -669,9 +830,8 @@ void Player::Hit_Update(float _DeltaTime)
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 
-		if (Map::PixelCollisionTransform(PlayerMovingCollision, 10).b_Down)
+		if (true == ColState_Ground_Bot_)
 		{
-			TimeCheck_ = 0.f;
 			State_.ChangeState("Idle");
 			return;
 		}
@@ -686,6 +846,11 @@ void Player::Hit_Update(float _DeltaTime)
 		if (ColState_Pixel_.b_Left == 0.f)
 		{
 			Move(-400.f, 0.f, _DeltaTime);
+
+			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 5).b_Left)
+			{
+				Move(400.f, 0.f, _DeltaTime);
+			}
 		}
 	}
 	else if (HitDir_.x < 0.f)
@@ -693,6 +858,11 @@ void Player::Hit_Update(float _DeltaTime)
 		if (ColState_Pixel_.b_Right == 0.f)
 		{
 			Move(400.f, 0.f, _DeltaTime);
+
+			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 5).b_Right)
+			{
+				Move(-400.f, 0.f, _DeltaTime);
+			}
 		}
 	}
 }
@@ -705,6 +875,7 @@ void Player::Hit_End()
 
 void Player::Dash_Start()
 {
+	PlayerHitBox->Off();
 	EffectDashDust();
 	ChangeAnimation("Cup-Dash");
 	AniState_DashEnd_ = false;
@@ -728,6 +899,7 @@ void Player::Dash_Update(float _DeltaTime)
 }
 void Player::Dash_End()
 {
+	PlayerHitBox->On();
 	AniState_DashEnd_ = false;
 }
 
@@ -760,6 +932,7 @@ void Player::Playing_Update(float _DeltaTime)
 {
 	KeyUpdate();
 	GroundCollisonUpdate();
+	SideCollisonUpdate();
 	ParryCollisonUpdate();
 	HitCollisonUpdate();
 	StateUpdate(_DeltaTime);

@@ -132,6 +132,20 @@ void SceneBase::PlayerResourceLoad()
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("LandDust.png");
 			Texture->Cut(6, 1);
 
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("CharactorSprite");
 			TextureDir.MoveChild("Bullet");
 
 			{
@@ -142,8 +156,7 @@ void SceneBase::PlayerResourceLoad()
 					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
-
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default.png");
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default.png");
 			Texture->Cut(8, 1);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bullet_Default_Birth.png");
 			Texture->Cut(4, 1);
@@ -192,7 +205,8 @@ void SceneBase::ResourcesLoadFadeInit()
 		HourGlass_ = CreateActor<Image>();
 		HourGlass_->GetTransform()->SetWorldPosition(float4(450.f, -180.0f, static_cast<int>(ZOrder::Z01Actor02)));
 		HourGlass_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 200.f,320.f });
-		HourGlass_->ImageCreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+		HourGlass_->ImageRenderer_->CreateAnimation("HourGlass.png", "HourGlass", 0, 45, 0.05f, true);
+		HourGlass_->ImageRenderer_->SetChangeAnimation("HourGlass");
 		HourGlass_->CreateImageRenderer(float4{ 1280.f,720.f }, float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z02Back10) })
 			->SetImage("Loading_background.png");
 	}

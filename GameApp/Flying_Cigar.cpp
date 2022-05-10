@@ -20,15 +20,16 @@ void Flying_Cigar::Start()
 	Flying_CigarHitBox_ = CreateTransformComponent<GameEngineCollision>();
 	Flying_CigarHitBox_->SetCollisionType(CollisionType::Rect);
 	Flying_CigarHitBox_->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
+	Flying_CigarHitBox_->GetTransform()->SetLocalScaling(float4{ 160.f,200.f });
 
 	Flying_CigarImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 	Flying_CigarImageRenderer_->CreateLevelAnimation("Fly_cigar.png","Fly_cigar",0,19,0.04f);
 	Flying_CigarImageRenderer_->SetChangeAnimation("Fly_cigar");
-
-	GetTransform()->SetLocalScaling(float4{200.f,230.f});
+	Flying_CigarImageRenderer_->GetTransform()->SetLocalScaling(float4{ 200.f,230.f });
 }
 
 void Flying_Cigar::Update(float _DeltaTime)
 {
+	GetLevel()->PushDebugRender(Flying_CigarHitBox_->GetTransform(), CollisionType::Rect);
 }
 

@@ -108,6 +108,12 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			Texture->Cut(20, 3);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Fly_cigar.png");
 			Texture->Cut(10, 2);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire.png");
+			Texture->Cut(3, 1);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
+			Texture->Cut(10, 1);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire_Cloud.png");
+			Texture->Cut(16, 1);
 
 			UserGame::LoadingFolder--;
 		}
@@ -260,12 +266,12 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 	{
 		BackImageRenderer_[0] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackImageRenderer_[0]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
-		BackImageRenderer_[0]->GetTransform()->SetWorldPosition(float4{ 0.f,-278.f,static_cast<float>(ZOrder::Z02Back10) });
+		BackImageRenderer_[0]->GetTransform()->SetWorldPosition(float4{ 0.f,-278.f,static_cast<float>(ZOrder::Z02Back11) });
 		BackImageRenderer_[0]->SetLevelImage("BackGround_Cigar.png");
 
 		BackImageRenderer_[1] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackImageRenderer_[1]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
-		BackImageRenderer_[1]->GetTransform()->SetWorldPosition(float4{ 2048.f,-278.f ,static_cast<float>(ZOrder::Z02Back10) });
+		BackImageRenderer_[1]->GetTransform()->SetWorldPosition(float4{ 2048.f,-278.f ,static_cast<float>(ZOrder::Z02Back11) });
 		BackImageRenderer_[1]->SetLevelImage("BackGround_Cigar.png");
 	}
 
@@ -273,8 +279,8 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		// 1280 720
 		Map::CurrentMap = CreateActor<Map>();
 		Map::CurrentMap->GetCollisionMap()->SetLevelImage("Mr_WheezyCol.png");
-		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1440.f, 750.f });
-		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 720.f, -375.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
+		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 	}
 
 	{
@@ -287,7 +293,7 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		Mr_Wheezy_ = CreateActor<Mr_Wheezy>();
 
 		Flying_Cigar_ = CreateActor<Flying_Cigar>();
-		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -500.f, static_cast<float>(ZOrder::Z02Back05)));
+		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z02Back05)));
 	}
 
 	{
@@ -303,6 +309,8 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		Effect* IntroEffect = CreateActor<Effect>();
 		IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
 		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back05)));
+
+		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
 	}
 	PhaseState_.ChangeState("Intro");
 

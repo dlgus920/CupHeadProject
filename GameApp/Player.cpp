@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include "Map.h"
 #include "Image.h"
+#include "Effect.h"
 
 Player* Player::MainPlayer;
 
@@ -31,7 +32,9 @@ Player::Player()
 	, KeyState_Bomb(false)
 	, KeyState_Jump_(false)
 	, KeyState_Dash_(false)
-	, ColState_Ground(false)
+	, ColState_Ground_Top_(false)
+	, ColState_Ground_Middle_(false)
+	, ColState_Ground_Bot_(false)
 	, ColState_Hit_(false)
 	, ColState_Parry_(false)
 	, HitInvince_(false)
@@ -41,7 +44,9 @@ Player::Player()
 	, Update_State_(true)
 	, Camera_(nullptr)
 	, PlayerHitBox(nullptr)
-	, PlayerMovingCollision(nullptr)
+	, PlayerMovingCollision_Top(nullptr)
+	, PlayerMovingCollision_Middle(nullptr)
+	, PlayerMovingCollision_Bot(nullptr)
 	, PlayerParryCollision(nullptr)
 	, PlayerImageRenderer(nullptr)
 	, Bottom_Card_(nullptr)
@@ -91,7 +96,7 @@ const std::string Player::CheckState()
 	{
 		return "Hit";
 	}
-	else if (true == KeyState_Bomb)
+	if (true == KeyState_Bomb)
 	{
 		if (Bottom_Card_->GetCardCount() != 0)
 		{
@@ -161,10 +166,8 @@ void Player::ShootDefalutBullet()
 	Bullet->GetTransform()->SetWorldPosition(Pos);
 	Bullet->SetBulletInfo(BulletInfo_);
 
-	Image* Birth = GetLevel()->CreateActor<Image>();
-	Birth->GetTransform()->SetLocalScaling(float4{ 140.f,140.f,1.f });
-	Birth->ImageRenderer_->CreateLevelAnimation("Bullet_Default_Birth.png", "Birth", 0, 3, 0.04f, false);
-	Birth->SetReserveDeath("Birth");
+	Effect* Birth = GetLevel()->CreateActor<Effect>();
+	Birth->EffectAnimationActor("Bullet_Default_Birth.png", "Birth", float4{ 140.f,140.f }, 0, 3, 0.04f, false);
 	Birth->GetTransform()->SetWorldPosition(Pos);
 }
 

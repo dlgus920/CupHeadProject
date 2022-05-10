@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Mr_Wheezy.h"
 #include "Effect.h"
+#include "Wheezy_Fire.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -16,6 +17,7 @@ Mr_Wheezy::Mr_Wheezy()
 	, AshImageRenderer_Right_Back(nullptr)
 	, Cur_WheezyImageRenderer_(nullptr)
 	, MonsterHitBox(nullptr)
+	, MonsterBox(nullptr)
 	, TimeCheck_(0.f)
 	, Defeat_(false)
 	, AniEnd_Intro_(false)
@@ -25,6 +27,8 @@ Mr_Wheezy::Mr_Wheezy()
 	, AniEnd_TellePort_Out_(false)
 	, AniEnd_Death_Intro_(false)
 	, AniEnd_Attack_End_(false)
+	, PossitionLeft_(true)
+	, FireCount_(0)
 
 
 #ifdef _DEBUG
@@ -43,8 +47,8 @@ void Mr_Wheezy::Start()
 		WheezyImageRenderer_Left_->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
 		WheezyImageRenderer_Left_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
 
-
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.04f, false);
+		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Idle", 20, 36, 0.04f);
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Attack", 40, 56, 0.04f);
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-TellePort-In", 60, 101, 0.04f, false);
@@ -66,7 +70,7 @@ void Mr_Wheezy::Start()
 	{
 		WheezyImageRenderer_Right_ = CreateTransformComponent<GameEngineImageRenderer>();
 		WheezyImageRenderer_Right_->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
-		WheezyImageRenderer_Right_->GetTransform()->SetWorldPosition(float4(1040.f, -80.f, static_cast<float>(ZOrder::Z02Back05)));
+		WheezyImageRenderer_Right_->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
 
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.05555f, false);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Idle", 20, 36, 0.04f);
@@ -93,7 +97,6 @@ void Mr_Wheezy::Start()
 		AshImageRenderer_Left_Front->GetTransform()->SetLocalScaling({ -550.f, 825.f, 1.0f });
 		AshImageRenderer_Left_Front->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back04)));
 		AshImageRenderer_Left_Front->SetLevelImage("AshPaleFront.png");
-		AshImageRenderer_Left_Front->Off();
 
 		AshImageRenderer_Left_Back = CreateTransformComponent<GameEngineImageRenderer>();
 		AshImageRenderer_Left_Back->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
@@ -117,6 +120,12 @@ void Mr_Wheezy::Start()
 		MonsterHitBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
 		MonsterHitBox->GetTransform()->SetLocalScaling(float4{ 350.f,625.f,1.f});
 		MonsterHitBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+
+		MonsterBox = CreateTransformComponent<GameEngineCollision>();
+		MonsterBox->SetCollisionType(CollisionType::Rect);
+		MonsterBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
+		MonsterBox->GetTransform()->SetLocalScaling(float4{ 350.f,625.f,1.f});
+		MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 	}
 
 	{
@@ -147,6 +156,11 @@ void Mr_Wheezy::ChangeCurRenderer()
 {
 	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 	{
+		WheezyImageRenderer_Right_->AnimationPlay();
+		WheezyImageRenderer_Left_->AnimationStop();
+
+		Cur_WheezyImageRenderer_->AnimationStop();
+
 		Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
 	}
 
@@ -165,14 +179,12 @@ void Mr_Wheezy::ChangeAshImageRenderer()
 {
 	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 	{
-		AshImageRenderer_Right_Front->On();
-		AshImageRenderer_Left_Front->Off();
+		Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
 	}
 
 	else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 	{
-		AshImageRenderer_Right_Front->Off();
-		AshImageRenderer_Left_Front->On();
+		Cur_WheezyImageRenderer_ = WheezyImageRenderer_Left_;
 	}
 
 	else
@@ -204,9 +216,37 @@ void Mr_Wheezy::SpawnSmokeFx()
 	Effect* Effect_ = GetLevel()->CreateActor<Effect>();
 	Effect_->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
 
-	Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front1", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
-	Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front2", float4{ 552.f,228.f }, 20, 36, 0.04f, false);
+	int ran = Random_.RandomInt(0, 1);
 
-	Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back1", float4{ 552.f,228.f }, 40, 50, 0.04f, false);
-	Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back2", float4{ 552.f,228.f }, 60, 70, 0.04f, false);
+	switch (ran)
+	{
+	case 0:
+	{
+		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front1", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
+		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back1", float4{ 552.f,228.f }, 40, 50, 0.04f, false);
+		break;
+	}
+	case 1:
+	{
+		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front2", float4{ 552.f,228.f }, 20, 36, 0.04f, false);
+		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back2", float4{ 552.f,228.f }, 60, 70, 0.04f, false);
+		break;
+	}
+	}
+}
+
+void Mr_Wheezy::Firefire()
+{
+	if (true == PossitionLeft_)
+	{
+		Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
+		Fire->GetTransform()->SetWorldPosition(float4{ 850.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+		Fire->SetDir(false);
+	}
+	else
+	{
+		Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
+		Fire->GetTransform()->SetWorldPosition(float4{ 430.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+		Fire->SetDir(true);
+	}
 }

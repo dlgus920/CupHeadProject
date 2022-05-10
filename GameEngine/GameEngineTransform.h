@@ -141,6 +141,9 @@ public:
 	void SetLocalRotationDegree(const float4& _Value);
 	void SetWorldRotationDegree(const float4& _Value);
 
+	void SetMoveLocalRotationDegree(const float4& _Value);
+	void SetMoveWorldRotationDegree(const float4& _Value);
+
 	void AddLocalRotationDegreeX(const float _Value) 
 	{
 		float4 Local = TransformData_.vLocalRotation_;

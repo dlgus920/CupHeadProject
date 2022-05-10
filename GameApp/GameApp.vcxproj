@@ -308,6 +308,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="UserGame_Resources_Shader.cpp" />
+    <ClCompile Include="Wheezy_Fire.cpp" />
     <ClCompile Include="WorldMapPlayer.cpp">
       <SubType>
       </SubType>
@@ -413,6 +414,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="UserGame_Resources_Shader.h" />
+    <ClInclude Include="Wheezy_Fire.h" />
     <ClInclude Include="WorldMapPlayer.h">
       <SubType>
       </SubType>

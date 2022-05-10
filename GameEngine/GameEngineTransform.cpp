@@ -196,6 +196,41 @@ void GameEngineTransform::SetWorldRotationDegree(const float4& _Value)
 	TransformUpdate();
 }
 
+void GameEngineTransform::SetMoveLocalRotationDegree(const float4& _Value)
+{
+	if (nullptr == Parent_)
+	{
+		TransformData_.vLocalRotation_ += _Value;
+		TransformData_.vWorldRotation_ += _Value;
+		AllChildCalculationRotation();
+		TransformUpdate();
+		return;
+	}
+
+	TransformData_.vLocalRotation_ += _Value;
+	CalculationWorldRotation();
+	AllChildCalculationRotation();
+
+}
+
+void GameEngineTransform::SetMoveWorldRotationDegree(const float4& _Value)
+{
+	if (nullptr == Parent_)
+	{
+		TransformData_.vLocalRotation_ += _Value;
+		TransformData_.vWorldRotation_ += _Value;
+		AllChildCalculationRotation();
+		TransformUpdate();
+		return;
+	}
+
+	TransformData_.vWorldRotation_ += _Value;
+	CalculationLocalRotation();
+	AllChildCalculationRotation();
+
+	TransformUpdate();
+}
+
 
 void GameEngineTransform::SetLocalPosition(const float4& _Value)
 {

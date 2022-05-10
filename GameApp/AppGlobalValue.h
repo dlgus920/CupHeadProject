@@ -43,6 +43,8 @@ enum class ZOrder
 	Z02Back08,
 	Z02Back09,
 	Z02Back10,
+	Z02Back11,
+	Z02Back12,
 	Z03Map00,
 	Z04CollisonMap00,
 	Z04CollisonMap01

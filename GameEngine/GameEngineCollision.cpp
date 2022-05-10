@@ -20,12 +20,19 @@ void GameEngineCollision::Init()
 	CollisionCheckFunction[static_cast<int>(CollisionType::Rect)][static_cast<int>(CollisionType::Rect)]
 		= std::bind(&GameEngineCollision::RectToRect, std::placeholders::_1, std::placeholders::_2);
 
+	CollisionCheckFunction[static_cast<int>(CollisionType::Rect)][static_cast<int>(CollisionType::CirCle)]
+		= std::bind(&GameEngineCollision::RectToCirCle, std::placeholders::_1, std::placeholders::_2);
+	CollisionCheckFunction[static_cast<int>(CollisionType::CirCle)][static_cast<int>(CollisionType::Rect)]
+		= std::bind(&GameEngineCollision::CirCleToRect, std::placeholders::_1, std::placeholders::_2);
+
 	CollisionCheckFunction[static_cast<int>(CollisionType::AABBBox3D)][static_cast<int>(CollisionType::AABBBox3D)]
 		= std::bind(&GameEngineCollision::AABBToAABB, std::placeholders::_1, std::placeholders::_2);
 
 
 	CollisionCheckFunction[static_cast<int>(CollisionType::OBBBox3D)][static_cast<int>(CollisionType::OBBBox3D)]
 		= std::bind(&GameEngineCollision::OBBToOBB, std::placeholders::_1, std::placeholders::_2);
+
+
 }
 
 
@@ -35,11 +42,28 @@ bool GameEngineCollision::OBBToOBB(GameEngineTransform* _Left, GameEngineTransfo
 
 bool GameEngineCollision::RectToRect(GameEngineTransform* _Left, GameEngineTransform* _Right)
 {
-	DirectX::BoundingBox Left = _Left->GetAABB();
-	DirectX::BoundingBox Right = _Right->GetAABB();
+	//DirectX::BoundingBox Left = _Left->GetAABB();
+	//DirectX::BoundingBox Right = _Right->GetAABB();
+	DirectX::BoundingOrientedBox Left = _Left->GetOBB();
+	DirectX::BoundingOrientedBox Right = _Right->GetOBB();
 	Left.Center.z = 0.0f;
 	Right.Center.z = 0.0f;
 	return Left.Intersects(Right);
+}
+
+bool GameEngineCollision::RectToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right)
+{
+	DirectX::BoundingOrientedBox Left = _Left->GetOBB();
+	DirectX::BoundingSphere Right = _Right->GetSphere();
+	Left.Center.z = 0.0f;
+	Right.Center.z = 0.0f;
+	return Left.Intersects(Right);
+}
+
+bool GameEngineCollision::CirCleToRect(GameEngineTransform* _Left, GameEngineTransform* _Right)
+{
+	RectToCirCle(_Right, _Left);
+	return false;
 }
 
 bool GameEngineCollision::AABBToAABB(GameEngineTransform* _Left, GameEngineTransform* _Right)
@@ -178,7 +202,7 @@ GameEngineCollision* GameEngineCollision::CollisionPtr(int _OtherGroup)
 			}
 
 			return OtherCollision;
-		}
+   		}
 		return nullptr;
 	}
 	return nullptr;

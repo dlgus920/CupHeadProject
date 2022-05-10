@@ -12,7 +12,6 @@ void Player::DefalutSetting()
 	PlayerImageRenderer->SetChangeAnimation("Cup-Idle");
 
 	PlayerImageRenderer->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
-	PlayerMovingCollision->GetTransform()->SetLocalScaling(PlayerImageRenderer->GetImageSize());
 
 	Dir_ = AnimationDirection::Right;
 
@@ -66,6 +65,7 @@ void Player::StateSetting()
 	State_.CreateState("Idle", &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);
 	State_.CreateState("Walk", &Player::Walk_Start, &Player::Walk_Update, &Player::Walk_End);
 	State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
+	State_.CreateState("Fall", &Player::Fall_Start, &Player::Fall_Update, &Player::Fall_End);
 	State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
 	State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
 
@@ -94,10 +94,24 @@ void Player::ComponentSetting()
 	}
 
 	{
-		PlayerMovingCollision = CreateTransformComponent<GameEngineCollision>();
-		PlayerMovingCollision->SetCollisionType(CollisionType::Rect);
-		PlayerMovingCollision->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
-		PlayerMovingCollision->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
+
+		PlayerMovingCollision_Top = CreateTransformComponent<GameEngineCollision>();
+		PlayerMovingCollision_Top->SetCollisionType(CollisionType::Rect);
+		PlayerMovingCollision_Top->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		PlayerMovingCollision_Top->GetTransform()->SetLocalMove(float4{ 0.f,-74.f,0.f });
+		PlayerMovingCollision_Top->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
+
+		PlayerMovingCollision_Middle = CreateTransformComponent<GameEngineCollision>();
+		PlayerMovingCollision_Middle->SetCollisionType(CollisionType::Rect);
+		PlayerMovingCollision_Middle->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		PlayerMovingCollision_Middle->GetTransform()->SetLocalMove(float4{ 0.f,-75.f,0.f });
+		PlayerMovingCollision_Middle->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
+
+		PlayerMovingCollision_Bot = CreateTransformComponent<GameEngineCollision>();
+		PlayerMovingCollision_Bot->SetCollisionType(CollisionType::Rect);
+		PlayerMovingCollision_Bot->SetCollisionGroup(static_cast<int>(CollisionGruop::Player));
+		PlayerMovingCollision_Bot->GetTransform()->SetLocalMove(float4{ 0.f,-76.f,0.f });
+		PlayerMovingCollision_Bot->GetTransform()->SetLocalScaling(float4{ 125.f,125.f,1.f });
 	}
 
 	{

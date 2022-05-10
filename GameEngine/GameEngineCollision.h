@@ -24,6 +24,10 @@ public:
 	static bool Sphere3DToSphere3D(GameEngineTransform* _Left, GameEngineTransform* _Right);
 
 	static bool RectToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
+
+	static bool RectToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
+	static bool CirCleToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
+
 	static bool AABBToAABB(GameEngineTransform* _Left, GameEngineTransform* _Right);
 
 	static bool OBBToOBB(GameEngineTransform* _Left, GameEngineTransform* _Right);
