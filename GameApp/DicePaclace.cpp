@@ -38,18 +38,14 @@ DicePaclace::~DicePaclace() // default destructer 디폴트 소멸자
 }
 void DicePaclace::LevelStart()
 {
-	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
-
-	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
-
 	PhaseState_.CreateState("Intro", &DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
 	PhaseState_.CreateState("Playing", &DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
+	PhaseState_.CreateState("PlayingEnd", &DicePaclace::PlayingEnd_Start, &DicePaclace::PlayingEnd_Update, nullptr);
 
-	PhaseState_.ChangeState("Intro");
+	//PhaseState_.ChangeState("Intro");
 
-	LoadState_.CreateState("ResourcesLoad", &DicePaclace::ResourcesLoad_Start, &DicePaclace::ResourcesLoad_Update, &DicePaclace::ResourcesLoad_End);
-	LoadState_.CreateState("LevelLoop", &DicePaclace::LevelLoop_Start, &DicePaclace::LevelLoop_Update, &DicePaclace::LevelLoop_End);
+	LoadState_.CreateState("ResourcesLoad", &DicePaclace::ResourcesLoad_Start, &DicePaclace::ResourcesLoad_Update, nullptr);
+	LoadState_.CreateState("LevelLoop", &DicePaclace::LevelLoop_Start, &DicePaclace::LevelLoop_Update, nullptr);
 	LoadState_.CreateState("Init", nullptr, &DicePaclace::Init_Update, nullptr);
 }
 void DicePaclace::LevelUpdate(float _DeltaTime)
@@ -101,8 +97,10 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 {
 	if (true == IsStageMove_)
 	{
-		KingDice_Marker_->Clear(StageMoveCount_);
+		PhaseState_.ChangeState("PlayingEnd");
+		/*KingDice_Marker_->Clear(StageMoveCount_);*/
 	}
+
 
 	if (true == Victory_)
 	{
@@ -128,4 +126,24 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 }
 void DicePaclace::Playing_End()
 {
+}
+
+void DicePaclace::PlayingEnd_Start()
+{
+}
+
+void DicePaclace::PlayingEnd_Update(float _DeltaTime)
+{
+	TimeCheck_ += _DeltaTime;
+
+	if (TimeCheck_ > 2.f)
+	{
+		BlendRate_ += _DeltaTime * 2;
+
+		if (BlendRate_ >= 1.f)
+		{
+			GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
 }

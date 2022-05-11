@@ -8,6 +8,7 @@
 #include "UserGame.h"
 
 #include <GameEngineBase/GameEngineFSM.h>
+#include <GameEngineBase/GameEngineDirectory.h>
 
 SceneBase::SceneBase() 
 	: FadeImage_(nullptr)
@@ -45,7 +46,7 @@ void SceneBase::LevelChangeStartEvent()
 void SceneBase::ReadyWALLOP()
 {
 	Image* Back = CreateActor<Image>();
-	Back->ImageSetImage("Loading_background.png");
+	Back->ImageRenderer_->SetImage("Loading_background.png");
 	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
 	Back->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
@@ -210,6 +211,10 @@ void SceneBase::ResourcesLoadFadeInit()
 		HourGlass_->CreateImageRenderer(float4{ 1280.f,720.f }, float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z02Back10) })
 			->SetImage("Loading_background.png");
 	}
+
+	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
+	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.f, 0.f, static_cast<float>(ZOrder::Z00Camera00)));
+
 }
 
 void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)

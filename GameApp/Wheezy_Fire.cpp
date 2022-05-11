@@ -64,7 +64,7 @@ void Wheezy_Fire::Update(float _DeltaTime)
 		temppos.z = static_cast<float>(ZOrder::Z01Actor02);
 		GameEngineImageRenderer* FireRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 		FireRenderer_->CreateLevelAnimation("Wheezy_Fire_Cloud.png", "Wheezy_Fire_Cloud", 0, 15, 0.04f, false);
-		FireRenderer_->SetEndCallBack("Wheezy_Fire_Cloud", std::bind(&Effect::Death, FireRenderer_));
+		FireRenderer_->SetEndCallBack("Wheezy_Fire_Cloud", std::bind(&GameEngineImageRenderer::Death, FireRenderer_));
 		FireRenderer_->SetChangeAnimation("Wheezy_Fire_Cloud");
 		FireRenderer_->GetTransform()->SetLocalScaling(float4{ 100.f,100.f });
 		FireRenderer_->GetTransform()->SetWorldPosition(temppos);

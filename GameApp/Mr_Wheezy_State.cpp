@@ -143,6 +143,20 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 
 	if (true == AniEnd_TellePort_HB_)
 	{
+		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+		{
+			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 99999.f, false);
+			Effectfx->GetTransform()->SetWorldPosition(float4{ 1040.f, -240.f, static_cast<float>(ZOrder::Z00Fx02) });
+
+		}
+		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+		{
+			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 99999.f, false);
+			Effectfx->GetTransform()->SetWorldPosition(float4{ 240.f, -240.f, static_cast<float>(ZOrder::Z00Fx02) });
+		}
+
 		MonsterHitBox->Off();
 		MonsterBox->Off();
 
@@ -151,8 +165,13 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 
 	if (true == AniEnd_TellePort_In_)
 	{
+
 		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 		{
+			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 9999.f, false);
+			Effectfx->GetTransform()->SetWorldPosition(float4{ 1040.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
+
 			WheezyImageRenderer_Right_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
 			WheezyImageRenderer_Right_->AnimationStop();
 
@@ -162,6 +181,10 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		}
 		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 		{
+			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 9999.f, false);
+			Effectfx->GetTransform()->SetWorldPosition(float4{ 240.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
+
 			WheezyImageRenderer_Left_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
 			WheezyImageRenderer_Left_->AnimationStop();
 

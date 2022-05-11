@@ -201,7 +201,6 @@ void King_Dice::Chop_Start()
 }
 void King_Dice::Chop_Update( float _DeltaTime)
 {
-	 
 }
 void King_Dice::Chop_End_()
 {

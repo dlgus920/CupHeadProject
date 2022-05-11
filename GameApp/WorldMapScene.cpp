@@ -175,7 +175,6 @@ void WorldMapScene::LevelLoop_Start()
 
 		Map::CurrentMap = _Map;
 
-
 		Image* MapImage = CreateActor<Image>();
 		MapImage->ImageRenderer_->SetLevelImage("WorldMap_Background.png");
 		MapImage->ImageRenderer_->SetAdjustImzgeSize();
@@ -185,7 +184,8 @@ void WorldMapScene::LevelLoop_Start()
 	{
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
 		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
-		WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
+		//WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
+		WorldMapPoint->SetNextScene("DicePaclace");
 	}
 
 	{

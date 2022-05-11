@@ -45,7 +45,7 @@ void Mr_Wheezy::Start()
 	{
 		WheezyImageRenderer_Left_ = CreateTransformComponent<GameEngineImageRenderer>();
 		WheezyImageRenderer_Left_->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
-		WheezyImageRenderer_Left_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+		WheezyImageRenderer_Left_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.04f, false);
 		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
@@ -70,7 +70,7 @@ void Mr_Wheezy::Start()
 	{
 		WheezyImageRenderer_Right_ = CreateTransformComponent<GameEngineImageRenderer>();
 		WheezyImageRenderer_Right_->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
-		WheezyImageRenderer_Right_->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+		WheezyImageRenderer_Right_->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.05555f, false);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Idle", 20, 36, 0.04f);
@@ -100,7 +100,7 @@ void Mr_Wheezy::Start()
 
 		AshImageRenderer_Left_Back = CreateTransformComponent<GameEngineImageRenderer>();
 		AshImageRenderer_Left_Back->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
-		AshImageRenderer_Left_Back->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+		AshImageRenderer_Left_Back->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back07)));
 		AshImageRenderer_Left_Back->SetLevelImage("AshPaleBack.png");
 
 		AshImageRenderer_Right_Front = CreateTransformComponent<GameEngineImageRenderer>();
@@ -110,7 +110,7 @@ void Mr_Wheezy::Start()
 
 		AshImageRenderer_Right_Back = CreateTransformComponent<GameEngineImageRenderer>();
 		AshImageRenderer_Right_Back->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
-		AshImageRenderer_Right_Back->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+		AshImageRenderer_Right_Back->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back07)));
 		AshImageRenderer_Right_Back->SetLevelImage("AshPaleBack.png");
 	}
 
@@ -222,13 +222,13 @@ void Mr_Wheezy::SpawnSmokeFx()
 	{
 	case 0:
 	{
-		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front1", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
+		Effect_->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX_Front1", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
 		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back1", float4{ 552.f,228.f }, 40, 50, 0.04f, false);
 		break;
 	}
 	case 1:
 	{
-		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Front2", float4{ 552.f,228.f }, 20, 36, 0.04f, false);
+		Effect_->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX_Front2", float4{ 552.f,228.f }, 20, 36, 0.04f, false);
 		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back2", float4{ 552.f,228.f }, 60, 70, 0.04f, false);
 		break;
 	}

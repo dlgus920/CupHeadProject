@@ -30,10 +30,6 @@ private:
 public:
 	GameEngineImageRenderer*  CreateImageRenderer(float4 _Scale, float4 _Pos);
 
-	void ImageSetImage(const std::string& _TextureName);
-	void ImageCreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop);
-	void ImageCreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop = true);
-
 	void SetReserveDeath(std::string _Name);
 
 	void SetAnimationFrame(int Frame);

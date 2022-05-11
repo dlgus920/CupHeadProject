@@ -50,6 +50,9 @@ private:
 	void LevelLoop_Start();
 	void LevelLoop_Update(float _DeltaTime);
 
+	void PlayingEnd_Start();
+	void PlayingEnd_Update(float _DeltaTime);
+
 private:
 	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
 
@@ -60,6 +63,7 @@ private:
 	void Playing_Start();
 	void Playing_Update(float _DeltaTime);
 	void Playing_End();
+
 
 public:
 	void SetNextScene(std::string _NextScene)

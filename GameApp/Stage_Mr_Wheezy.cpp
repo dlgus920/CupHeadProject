@@ -32,11 +32,9 @@ void Stage_Mr_Wheezy::LevelStart()
 {
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
-	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
-	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));
-
 	PhaseState_.CreateState("Intro", &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
 	PhaseState_.CreateState("Playing", &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
+	PhaseState_.CreateState("PlayingEnd", &Stage_Mr_Wheezy::PlayingEnd_Start, &Stage_Mr_Wheezy::PlayingEnd_Update, nullptr);
 
 	LoadState_.CreateState("ResourcesLoad", &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
 	LoadState_.CreateState("Init", nullptr, &Stage_Mr_Wheezy::Init_Update, nullptr);
@@ -84,19 +82,10 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
 
-			//GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Intro_Flame.png");
-			//Texture->Cut(10, 1);
-			//Texture = GameEngineTextureManager::GetInst().Find("Intro_Hand.png");
-			//Texture->Cut(14, 1);
-			//Texture = GameEngineTextureManager::GetInst().Find("Mr_Wheezy.png");
-			//Texture->Cut(20, 6);
-			//Texture = GameEngineTextureManager::GetInst().Find("Smoke_FX.png");
-			//Texture->Cut(20, 3);
 			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Intro_Flame.png");
 
 			Texture->Cut(10, 1);
@@ -104,8 +93,10 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			Texture->Cut(14, 1);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Mr_Wheezy.png");
 			Texture->Cut(20, 6);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Smoke_FX.png");
-			Texture->Cut(20, 3);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Smoke_FX_Front.png");
+			Texture->Cut(17, 2);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Smoke_FX_Back.png");
+			Texture->Cut(12, 2);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Fly_cigar.png");
 			Texture->Cut(10, 2);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire.png");
@@ -114,6 +105,8 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			Texture->Cut(10, 1);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire_Cloud.png");
 			Texture->Cut(16, 1);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Cigar_dust.png");
+			Texture->Cut(9, 1);
 
 			UserGame::LoadingFolder--;
 		}
@@ -177,7 +170,6 @@ void Stage_Mr_Wheezy::ResourcesLoad_Update(float _DeltaTime)
 			BlendRate_ = 0.f;
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
-
 	}
 
 	else
@@ -197,6 +189,8 @@ void Stage_Mr_Wheezy::ResourcesLoad_Update(float _DeltaTime)
 
 void Stage_Mr_Wheezy::LevelLoop_Start()
 {
+	PhaseState_.ChangeState("Intro");
+
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
 	FadeImage_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00)));
@@ -286,14 +280,14 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z01Actor00Player01)));
+		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z02Back05)));
 	}
 
 	{
 		Mr_Wheezy_ = CreateActor<Mr_Wheezy>();
 
 		Flying_Cigar_ = CreateActor<Flying_Cigar>();
-		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z02Back05)));
+		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z02Back06)));
 	}
 
 	{
@@ -303,12 +297,12 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 
 		Effect* IntroEffect = CreateActor<Effect>();
 		IntroEffect->EffectAnimationActor("Intro_Hand.png", "Intro_Hand", float4{498.f,506.f}, 0, 13, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back05)));
+		IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back06)));
 	} 
 	{
 		Effect* IntroEffect = CreateActor<Effect>();
 		IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back05)));
+		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back06)));
 
 		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
 	}
@@ -325,6 +319,26 @@ void Stage_Mr_Wheezy::LevelLoop_Update(float _DeltaTime)
 	LevelLoadFadeUpdate(_DeltaTime);
 
 	PhaseState_.Update(_DeltaTime);
+}
+
+void Stage_Mr_Wheezy::PlayingEnd_Start()
+{
+}
+
+void Stage_Mr_Wheezy::PlayingEnd_Update(float _DeltaTime)
+{
+	TimeCheck_ += _DeltaTime;
+
+	if (TimeCheck_ > 1.f)
+	{
+		BlendRate_ += _DeltaTime * 2;
+
+		if (BlendRate_ >= 1.f)
+		{
+			GameEngineCore::LevelChange("DicePaclace");
+		}
+		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+	}
 }
 
 void Stage_Mr_Wheezy::Intro_Start()
@@ -399,7 +413,8 @@ void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)
 	}
 }
 void Stage_Mr_Wheezy::Playing_End()
-{
+{	
+
 }
 
 

@@ -23,6 +23,15 @@ private:
 	//class Player* Player_;
 	class KingDice_Marker* KingDice_Marker_;
 
+	class GameEngineImageRenderer* NumRenderer_[9];
+
+	struct StageInfo
+	{
+		bool ClearStage_[9];
+	};
+
+	StageInfo StageInfo_;
+
 	class Image* ScreenFx;
 
 	std::string NextScene_;
@@ -131,6 +140,8 @@ private:
 	void Playing_Update(float _DeltaTime);
 	void Playing_End();
 
+	void PlayingEnd_Start();
+	void PlayingEnd_Update(float _DeltaTime);
 private:
 	GameEngineFSM<DicePaclace> LoadState_;
 	
@@ -138,11 +149,10 @@ private:
 
 	void ResourcesLoad_Start();
 	void ResourcesLoad_Update(float _DeltaTime);
-	void ResourcesLoad_End();
 
 	void LevelLoop_Start();
 	void LevelLoop_Update(float _DeltaTime);
-	void LevelLoop_End();
+
 
 public:
 	//friend void WorldMapPlayer::ChangeScene(std::string _Scene);

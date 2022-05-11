@@ -35,22 +35,6 @@ void Image::Update(float _DeltaTime)
 	}
 }
 
-void Image::ImageCreateAnimation(const std::string& _TextureName,const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop)
-{
-	ImageRenderer_->CreateLevelAnimation(_TextureName,_Name, _StartFrame, _EndFrame, _InterTime, _Loop);
-	ImageRenderer_->SetChangeAnimation(_Name);
-}
-
-void Image::ImageCreateAnimationFolder(const std::string& _Name, const std::string& _FolderTexName, float _InterTime, bool _Loop)
-{
-	ImageRenderer_->CreateLevelAnimationFolder(_Name, _FolderTexName, _InterTime, _Loop);
-	ImageRenderer_->SetChangeAnimation(_Name);
-}
-void Image::ImageSetImage(const std::string& _TextureName)
-{
-	ImageRenderer_->SetImage(_TextureName);
-}
-
 void Image::SetReserveDeath(std::string _Name)
 {
 	ImageRenderer_->SetEndCallBack(_Name, std::bind(& Image::Death, this));

@@ -37,23 +37,23 @@ void King_Dice::Start()
 {
 	{
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Idle", "KDice-Idle", 0.04f);
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Intro", "KDice-Intro", 0.04f, false);
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.04f, true);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Idle", "KDice-Idle", 0.04f);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Intro", "KDice-Intro", 0.04f, false);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Defeat", "KDice-Defeat", 0.04f, true);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.04f, false);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Chomp", "KDice-Chomp", 0.04f, false);
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Clap", "KDice-Clap", 0.04f, false);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Clap", "KDice-Clap", 0.04f, false);
 		MonsterImageRenderer->SetFrameCallBack("KDice-Clap", 26 ,std::bind(&King_Dice::AniEnd_Clap_Dice, this));
 
 		MonsterImageRenderer->SetEndCallBack("KDice-Idle" ,std::bind(&King_Dice::Ani_Idle_Ready, this));
 		MonsterImageRenderer->SetEndCallBack("KDice-Clap" ,std::bind(&King_Dice::AniEnd_Clap, this));
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04f, false);
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-End", 0.04f, false);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-Birth", 0.04f, false);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Attack-Body-Birth", "KDice-Attack-Body-End", 0.04f, false);
 		MonsterImageRenderer->SetAnimationReverse("KDice-Attack-Body-End");
 
-		MonsterImageRenderer->CreateAnimationFolder("KDice-Attack-Body-Idle", "KDice-Attack-Body-Idle", 0.04f);
+		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Attack-Body-Idle", "KDice-Attack-Body-Idle", 0.04f);
 
 		MonsterImageRenderer->SetEndCallBack("KDice-Intro", std::bind(&King_Dice::AniEnd_Intro, this));
 		MonsterImageRenderer->SetEndCallBack("KDice-Attack-Body-Birth", std::bind(&King_Dice::AniEnd_Attack_Body_Birth, this));
@@ -66,8 +66,8 @@ void King_Dice::Start()
 		Hand_.ImageRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,650.f, 1.f });
 		Hand_.ImageRenderer->GetTransform()->SetLocalPosition(float4{ -310.f, 38.f, static_cast<int>(ZOrder::Z01Actor04) });
 
-		Hand_.ImageRenderer->CreateAnimationFolder("KDice-Attack-Hand-Birth", "KDice-Attack-Hand-Birth", 0.04f, false);
-		Hand_.ImageRenderer->CreateAnimationFolder("KDice-Attack-Hand-Idle", "KDice-Attack-Hand-Idle", 0.04f, true);
+		Hand_.ImageRenderer->CreateLevelAnimationFolder("KDice-Attack-Hand-Birth", "KDice-Attack-Hand-Birth", 0.04f, false);
+		Hand_.ImageRenderer->CreateLevelAnimationFolder("KDice-Attack-Hand-Idle", "KDice-Attack-Hand-Idle", 0.04f, true);
 
 		Hand_.ImageRenderer->SetEndCallBack("KDice-Attack-Hand-Birth", std::bind(&King_Dice::AniEnd_Attack_Hand_Birth, this));
 	}
@@ -261,7 +261,7 @@ void King_Dice::CardClear()
 void King_Dice::SpawnDice()
 {
 	PerryObjectDice_ = GetLevel()->CreateActor<PerryObjectDice>();
-	PerryObjectDice_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z01Actor05)));
+	PerryObjectDice_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z01Actor10)));
 	PerryObjectDice_->SetKing_Dice(this);
 }
 

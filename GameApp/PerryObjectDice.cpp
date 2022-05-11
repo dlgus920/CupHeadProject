@@ -25,18 +25,18 @@ void PerryObjectDice::Start()
 	ObjectCollision_->SetCollisionType(CollisionType::Rect);
 	ObjectCollision_->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Idle",50,73,0.05,true);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png","Idle",50,73,0.05,true);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Rolling1-1",0,4, 0.05, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Rolling1-2",20,22, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png","Rolling1-1",0,4, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png","Rolling1-2",20,22, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling2-1", 5, 9, 0.05, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling2-2", 23, 25, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png", "Rolling2-1", 5, 9, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png", "Rolling2-2", 23, 25, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-1", 10, 14, 0.05, false);
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png", "Rolling3-2", 26, 28, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png", "Rolling3-1", 10, 14, 0.05, false);
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png", "Rolling3-2", 26, 28, 0.05, false);
 
-	ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Death",40,57, 0.05,false);// 57프레임 도달시 업데이트 멈춤
+	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png","Death",30,47, 0.05,false);// 57프레임 도달시 업데이트 멈춤
 
 	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num1",50,73, 0.05,true);
 	//ObjectRenderer_->CreateAnimation("ParryObjectDice.png","Num2",50,73, 0.05,true);
