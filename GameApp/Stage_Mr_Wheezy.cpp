@@ -1,5 +1,6 @@
 #include "Precompile.h"
 #include "Stage_Mr_Wheezy.h"
+#include "DicePaclace.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
@@ -408,7 +409,18 @@ void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
-			GameEngineCore::LevelChange("LoaddingScene");
+			GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+
+			SceneBase* sc = (SceneBase*)GameEngineCore::LevelFind("DicePaclace");
+
+			//dynamic_cast<SceneBase*>(GameEngineCore::LevelFind("DicePaclace"))->SetStageInfo();
+
+
+			StageInfo_.ClearStage_[3] = true;
+
+			sc->SetStageInfo(StageInfo_);
+
+			GameEngineCore::LevelChange("DicePaclace");
 		}
 	}
 }

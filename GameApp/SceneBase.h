@@ -18,11 +18,6 @@ public:
 	float TimeCheck_;
 	float BlendRate_;
 
-
-private:
-	//std::map<std::string, GameEngineFolderTexture*> FolderResourcesMap;
-	//std::map<std::string, GameEngineTexture*> TextureResourcesMap;
-
 protected:
 	class Player* Player_;
 	class Image* HourGlass_;
@@ -31,12 +26,25 @@ protected:
 	bool LoadingComplete_;
 	bool LoadingFadeComplete_;
 
+
+public:
+	struct StageInfo
+	{
+		bool ClearStage_[9];
+	};
+
+	StageInfo StageInfo_;
+
+	StageInfo GetStageInfo()
+	{
+		return StageInfo_;
+	}
+
+	void SetStageInfo(StageInfo _StageInfo)
+	{
+		StageInfo_ = _StageInfo;
+	}
 protected:
-	//GameEngineTexture* SceneTextureLoad(const std::string& _Path);
-	//// 이름 직접 지정
-	//GameEngineTexture* SceneTextureLoad(const std::string& _Name, const std::string& _Path);
-	//// 목록에서 찾는다.
-	//GameEngineTexture* SceneTextureFind(const std::string& _Name);
 
 	void PlayerResourceLoad();
 	void SceneResourceLoad();

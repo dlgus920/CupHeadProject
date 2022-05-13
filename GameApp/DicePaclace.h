@@ -25,13 +25,6 @@ private:
 
 	class GameEngineImageRenderer* NumRenderer_[9];
 
-	struct StageInfo
-	{
-		bool ClearStage_[9];
-	};
-
-	StageInfo StageInfo_;
-
 	class Image* ScreenFx;
 
 	std::string NextScene_;
