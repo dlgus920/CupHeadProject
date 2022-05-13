@@ -184,7 +184,7 @@ void King_Dice::Defeat_Update( float _DeltaTime)
 	{
 		TimeCheck_ = 0.f;
 
-		EffectDefeatRandom(250.f);
+		EffectDefeatRandom(250.f, GetTransform()->GetWorldPosition());
 	}
 
 	 

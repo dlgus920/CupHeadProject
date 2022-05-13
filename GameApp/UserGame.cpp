@@ -7,11 +7,10 @@
 #include <GameEngine/GameEngineRenderingPipeLine.h>
 
 #include "TitleScene.h"
-#include "WorldMapScene.h"
-#include "DicePaclace.h"
-#include "Stage_Mr_Wheezy.h"
 
 std::atomic<int> UserGame::LoadingFolder = 0;
+
+UserGame::StageInfo UserGame::StageInfo_;
 
 UserGame::UserGame() 
 {
@@ -27,11 +26,10 @@ UserGame::UserGame(UserGame&& _other) noexcept
 
 void UserGame::Initialize()
 {	
-	GameEngineCore::LevelCreate<TitleScene>("Title");
-	GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
-	GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
-	GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
+	StageInfo_.WorldMapPlayer_Pos_ = float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01));
+
+	GameEngineCore::LevelCreate<TitleScene>("Title");
 	GameEngineCore::LevelChange("Title");
 }
 

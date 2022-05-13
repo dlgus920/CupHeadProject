@@ -36,6 +36,8 @@ King_Dice::~King_Dice() // default destructer 디폴트 소멸자
 void King_Dice::Start()
 {
 	{
+		GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
+
 		MonsterImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();
 		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Idle", "KDice-Idle", 0.04f);
 		MonsterImageRenderer->CreateLevelAnimationFolder("KDice-Intro", "KDice-Intro", 0.04f, false);

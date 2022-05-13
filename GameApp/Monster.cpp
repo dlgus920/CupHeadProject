@@ -39,7 +39,7 @@ void Monster::EffectDefeat(float4 _Pos)
 	effect->GetTransform()->SetWorldPosition(_Pos);
 }
 
-void Monster::EffectDefeatRandom(float _Radius)
+void Monster::EffectDefeatRandom(float _Radius, float4 _Pos)
 {
 	float dist = Random_.RandomFloat(0.f, _Radius);
 	float RanDegree = Random_.RandomFloat(0.f, 360.f);
@@ -48,7 +48,7 @@ void Monster::EffectDefeatRandom(float _Radius)
 
 	float4 Pos = float4{ cosf(RanDegree) * dist,sinf(RanDegree) * dist };
 
-	Pos += GetTransform()->GetWorldPosition();
+	Pos += _Pos;
 
 	EffectDefeat(Pos);
 }

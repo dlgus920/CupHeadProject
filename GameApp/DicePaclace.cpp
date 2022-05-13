@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "DicePaclace.h"
-#include "LoaddingScene.h"
+#include "Stage_Mr_Wheezy.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
@@ -142,6 +142,8 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
+			GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+
 			GameEngineCore::LevelChange("Stage_Mr_Wheezy");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });

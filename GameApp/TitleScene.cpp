@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "TitleScene.h"
+#include "WorldMapScene.h"
 
 #include "UserGame.h"
 
@@ -149,6 +150,7 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
+			GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
 			GameEngineCore::LevelChange("WorldMap");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });

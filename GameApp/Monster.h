@@ -31,7 +31,7 @@ public:
 protected:
 
 	void EffectDefeat(float4 _Pos);
-	void EffectDefeatRandom(float _Radius);
+	void EffectDefeatRandom(float _Radius, float4 _Pos);
 
 
 };

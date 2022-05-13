@@ -83,7 +83,6 @@ void DicePaclace::ResourcesLoad_Start()
 			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
-
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
@@ -96,9 +95,21 @@ void DicePaclace::ResourcesLoad_Start()
 				Texture->Cut(10, 8);
 				Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
 				Texture->Cut(10, 1);
-
 			}
+			UserGame::LoadingFolder--;
+		}
+	);
 
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("DicePalaceMain_Numbers");
 
 			{
@@ -113,7 +124,6 @@ void DicePaclace::ResourcesLoad_Start()
 			UserGame::LoadingFolder--;
 		}
 	);
-
 
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
@@ -210,19 +220,36 @@ void DicePaclace::LevelLoop_Start()
 		BackImage->ImageRenderer_->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
-		//for (int i = 0; i < 9; ++i)
-		//{
-		//	NumRenderer_[i] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
+		for (int i = 0; i < 9; ++i)
+		{
+			NumRenderer_[i] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
+			NumRenderer_[i]->GetTransform()->SetLocalScaling(float4{870.4,400.f});
 
-		//	if (false == StageInfo_.ClearStage_[i])
-		//	{
-		//		NumRenderer_[i]->SetLevelImage("");
-		//	}
-		//	else
-		//	{
-		//		NumRenderer_[i]->SetLevelImage("");
-		//	}
-		//}
+			if (false == UserGame::StageInfo_.Dice_ClearStage_[i])
+			{
+				std::string str = "Num_00";
+
+				std::string numstr = std::to_string(i+1);
+
+				str += numstr;
+				str += ".png";
+
+				NumRenderer_[i]->SetLevelImage(str);
+				NumRenderer_[i]->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
+			}
+			else
+			{
+				std::string str = "Clear_00";
+
+				std::string numstr = std::to_string(i+1);
+
+				str += numstr;
+				str += ".png";
+
+				NumRenderer_[i]->SetLevelImage(str);
+				NumRenderer_[i]->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
+			}
+		}
 
 		Map::CurrentMap = CreateActor<Map>();
 		// 1280 720
@@ -249,7 +276,7 @@ void DicePaclace::LevelLoop_Start()
 
 	{
 		King_Dice_ = CreateActor<King_Dice>();
-		King_Dice_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
+		//King_Dice_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
 	}
 
 }

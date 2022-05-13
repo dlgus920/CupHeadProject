@@ -124,7 +124,10 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 	{
 		TimeCheck_ = 0.f;
 
-		EffectDefeatRandom(250.f);
+		float4 pos = Cur_WheezyImageRenderer_->GetTransform()->GetWorldPosition();
+		pos.y - 250.f;
+
+		EffectDefeatRandom(250.f, pos);
 	} 
 }
 void Mr_Wheezy::Defeat_End_()
@@ -146,14 +149,14 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 		{
 			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
-			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 99999.f, false);
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
 			Effectfx->GetTransform()->SetWorldPosition(float4{ 1040.f, -240.f, static_cast<float>(ZOrder::Z00Fx02) });
 
 		}
 		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 		{
 			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
-			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 99999.f, false);
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
 			Effectfx->GetTransform()->SetWorldPosition(float4{ 240.f, -240.f, static_cast<float>(ZOrder::Z00Fx02) });
 		}
 
@@ -169,7 +172,7 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 		{
 			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
-			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 9999.f, false);
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
 			Effectfx->GetTransform()->SetWorldPosition(float4{ 1040.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
 
 			WheezyImageRenderer_Right_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
@@ -182,7 +185,7 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 		{
 			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
-			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 9999.f, false);
+			Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
 			Effectfx->GetTransform()->SetWorldPosition(float4{ 240.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
 
 			WheezyImageRenderer_Left_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");

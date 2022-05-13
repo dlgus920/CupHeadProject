@@ -27,23 +27,26 @@ protected:
 	bool LoadingFadeComplete_;
 
 
-public:
-	struct StageInfo
-	{
-		bool ClearStage_[9];
-	};
-
-	StageInfo StageInfo_;
-
-	StageInfo GetStageInfo()
-	{
-		return StageInfo_;
-	}
-
-	void SetStageInfo(StageInfo _StageInfo)
-	{
-		StageInfo_ = _StageInfo;
-	}
+//public:
+//
+//	struct StageInfo
+//	{
+//		bool Dice_ClearStage_[9];
+//		float4 WorldMapPlayer_Pos_;
+//	};
+//
+//	static StageInfo StageInfo_;
+//
+//	//StageInfo GetStageInfo()
+//	//{
+//	//	return StageInfo_;
+//	//}
+//
+//public:
+//	void SetStageInfo(StageInfo _StageInfo)
+//	{
+//		StageInfo_ = _StageInfo;
+//	}
 protected:
 
 	void PlayerResourceLoad();

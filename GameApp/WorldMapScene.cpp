@@ -2,7 +2,6 @@
 #include "WorldMapScene.h"
 
 #include "DicePaclace.h"
-#include "Stage_Mr_Wheezy.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
@@ -190,7 +189,8 @@ void WorldMapScene::LevelLoop_Start()
 
 	{
 		WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
-		WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
+		//WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
+		WorldMapPlayer_->GetTransform()->SetWorldPosition(UserGame::StageInfo_.WorldMapPlayer_Pos_);
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 	}
 
@@ -301,6 +301,8 @@ void WorldMapScene::ScreenFadeEnd()
 {
 	ScreenFadeEnd_ = true;
 
+	GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
+
 #ifdef _DEBUG
 	if (nullptr == GameEngineCore::LevelFind(NextScene_))
 	{
@@ -311,8 +313,8 @@ void WorldMapScene::ScreenFadeEnd()
 	//dynamic_cast <LoaddingScene*>(GameEngineCore::LevelFind("LoaddingScene"))
 	//	->SetLoaddingNextLevel(WorldMapScene::GetName(), NextScene_);
 
+	UserGame::StageInfo_.WorldMapPlayer_Pos_ = WorldMapPlayer_->GetTransform()->GetWorldPosition();
+
+
 	GameEngineCore::LevelChange(NextScene_);
-
-	//IrisImage_->Death();
-
 }

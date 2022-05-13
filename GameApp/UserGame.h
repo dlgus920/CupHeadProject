@@ -27,6 +27,17 @@ private:		//delete operator
 	UserGame& operator=(const UserGame&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
+
+	struct StageInfo
+	{
+		bool Dice_ClearStage_[9];
+		float4 WorldMapPlayer_Pos_;
+	};
+
+	static StageInfo StageInfo_;
+	
+
+public:
 	virtual void Initialize() override;
 	virtual void ResourcesLoad() override;
 	virtual void Release() override;
