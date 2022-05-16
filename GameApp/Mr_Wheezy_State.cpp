@@ -110,7 +110,7 @@ void Mr_Wheezy::Defeat_Start()
 
 	GetLevel<Stage_Mr_Wheezy>()->Knockout();
 }
-void Mr_Wheezy::Defeat_Update( float _DeltaTime)
+void Mr_Wheezy::Defeat_Update(float _DeltaTime)
 {
 	if (true == AniEnd_Death_Intro_)
 	{
@@ -120,6 +120,8 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 
 	TimeCheck_ += _DeltaTime;
 
+	static bool updown = true;
+
 	if (TimeCheck_ >= 0.2f)
 	{
 		TimeCheck_ = 0.f;
@@ -128,7 +130,21 @@ void Mr_Wheezy::Defeat_Update( float _DeltaTime)
 		pos.y - 250.f;
 
 		EffectDefeatRandom(250.f, pos);
+
+		if (updown)
+			updown = false;
+		else
+			updown = true;
 	} 
+
+	if (updown)
+	{
+		Cur_WheezyImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,400.f * _DeltaTime });
+	}
+	else
+	{
+		Cur_WheezyImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,-400.f * _DeltaTime });
+	}
 }
 void Mr_Wheezy::Defeat_End_()
 {
@@ -168,7 +184,6 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 
 	if (true == AniEnd_TellePort_In_)
 	{
-
 		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 		{
 			Effect* Effectfx = GetLevel()->CreateActor<Effect>();
@@ -197,26 +212,29 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		}
 	}
 
-	if (true == AniEnd_TellePort_Out_)
+	if (false == AniEnd_TellePort_In_)
 	{
-		MonsterHitBox->On();
-		MonsterBox->On();
-		if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+		if (true == AniEnd_TellePort_Out_)
 		{
-			MonsterHitBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
-			MonsterBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
-			Cur_WheezyImageRenderer_ = WheezyImageRenderer_Left_;
-		}
-		else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
-		{
-			MonsterHitBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
-			MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
-			Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
-		}
+			MonsterHitBox->On();
+			MonsterBox->On();
+			if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+			{
+				MonsterHitBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+				MonsterBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+				Cur_WheezyImageRenderer_ = WheezyImageRenderer_Left_;
+			}
+			else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+			{
+				MonsterHitBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+				MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
+				Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
+			}
 
-		AniEnd_TellePort_Out_ = false;
-		State_.ChangeState("Idle");
-		return;
+			AniEnd_TellePort_Out_ = false;
+			State_.ChangeState("Idle");
+			return;
+		}
 	}
 }
 void Mr_Wheezy::Telleport_End_()

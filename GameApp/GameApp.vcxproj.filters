@@ -122,12 +122,6 @@
     <ClCompile Include="Stage_Mr_Wheezy.cpp">
       <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
     </ClCompile>
-    <ClCompile Include="Mr_Wheezy.cpp">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="Mr_Wheezy_State.cpp">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
-    </ClCompile>
     <ClCompile Include="Dice_Palace_State.cpp">
       <Filter>01. App\02. Scene\04. PlayLevel</Filter>
     </ClCompile>
@@ -135,10 +129,25 @@
       <Filter>01. App\02. Scene\01. TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Flying_Cigar.cpp">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Flying_Cigar</Filter>
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Flying_Cigar</Filter>
     </ClCompile>
     <ClCompile Include="Wheezy_Fire.cpp">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Bullet</Filter>
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_Hopus_Pocus.cpp">
+      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+    </ClCompile>
+    <ClCompile Include="Hopus_pocus.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus</Filter>
+    </ClCompile>
+    <ClCompile Include="Hopus_pocus_State.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus</Filter>
+    </ClCompile>
+    <ClCompile Include="Mr_Wheezy_State.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mr_Wheezy.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,10 +265,16 @@
     <Filter Include="01. App\02. Scene\01. TitleScene">
       <UniqueIdentifier>{bc8e05dd-6abe-4a27-8fc5-b834cef5419c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Flying_Cigar">
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus">
+      <UniqueIdentifier>{c3758464-62a0-4435-bac3-b143ff548a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy">
+      <UniqueIdentifier>{fbce0dcc-cb43-4947-97bf-6ed05d843e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Flying_Cigar">
       <UniqueIdentifier>{4c02e340-6fd8-4b33-baf9-fe0f98df9d67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Bullet">
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet">
       <UniqueIdentifier>{c10b0abc-0b9f-404b-9ab9-b3bfe809a16e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -355,17 +370,23 @@
     <ClInclude Include="Stage_Mr_Wheezy.h">
       <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
     </ClInclude>
-    <ClInclude Include="Mr_Wheezy.h">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss</Filter>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>01. App\02. Scene\01. TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Flying_Cigar.h">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Flying_Cigar</Filter>
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Flying_Cigar</Filter>
     </ClInclude>
     <ClInclude Include="Wheezy_Fire.h">
-      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Bullet</Filter>
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Hopus_Pocus.h">
+      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+    </ClInclude>
+    <ClInclude Include="Hopus_pocus.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus</Filter>
+    </ClInclude>
+    <ClInclude Include="Mr_Wheezy.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

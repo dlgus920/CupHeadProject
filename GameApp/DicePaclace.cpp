@@ -90,8 +90,12 @@ void DicePaclace::Intro_End()
 void DicePaclace::Playing_Start()
 {
 	//NextScene_ = "WorldMap";
+	if (true == UserGame::StageInfo_.Dice_First_)
+	{
+		ReadyWALLOP();
 
-	ReadyWALLOP();
+		UserGame::StageInfo_.Dice_First_ = false;
+	}
 }
 void DicePaclace::Playing_Update(float _DeltaTime)
 {

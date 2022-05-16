@@ -225,9 +225,22 @@ void Player::Jump_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				dynamic_cast<PerryObjectDice*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
+				PerryObjectDice* PerryObject = dynamic_cast<PerryObjectDice*>(PlayerParryCollision->
+					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor());
+
+				PerryObject ->Parry();
 
 				ChangeAnimation("Cup-Jump-Parry");
+
+				ParryRenderer[0] = CreateTransformComponent<GameEngineImageRenderer>();
+				ParryRenderer[0]->GetTransform()->SetLocalScaling(float4{712.f,712.f} );
+				ParryRenderer[0]->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer[0]->SetLevelImage("ParryEffect_A.png");
+
+				ParryRenderer[1] = CreateTransformComponent<GameEngineImageRenderer>();
+				ParryRenderer[1]->GetTransform()->SetLocalScaling(float4{ 712.f,712.f });
+				ParryRenderer[1]->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer[1]->SetLevelImage("ParryEffect_B.png");
 
 				EffectParry();
 
@@ -243,17 +256,25 @@ void Player::Jump_Update(float _DeltaTime)
 
 	if (true == Parry_)
 	{
+		Parrytimecheck_ += GameEngineTime::GetInst().GetDeltaTime();
+
+		if (Parrytimecheck_ < 0.3f)
+		{
+			GameEngineCore::SetTimeRate(0.0f);
+		}
+		else
+		{
+			GameEngineCore::SetTimeRate(1.f);
+		}
+
 		if (TimeCheck_ < 0.35f)
 		{
-			GameEngineCore::SetTimeRate(0.3f);
-
 			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 		}
 
 		else if (TimeCheck_ >= 0.35f)
 		{
-			GameEngineCore::SetTimeRate(1.f);
 			if (false == Jumpend_)
 			{
 				Jumpend_ = true;

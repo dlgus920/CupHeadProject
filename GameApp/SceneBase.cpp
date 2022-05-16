@@ -200,7 +200,7 @@ void SceneBase::ResourcesLoadFadeInit()
 
 		FadeImage_->ImageRenderer_->SetImage("Loading_background.png");
 		FadeImage_->GetTransform()->SetWorldPosition(float4{ 0.f, 0.f, static_cast<float>(ZOrder::Z00Fx00) });
-		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f });
+		FadeImage_->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,900.f });
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 
 		HourGlass_ = CreateActor<Image>();

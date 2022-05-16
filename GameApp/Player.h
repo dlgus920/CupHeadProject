@@ -83,6 +83,7 @@ private: //Member
 
 	float4 PrevAniSize_;
 
+	GameEngineImageRenderer* ParryRenderer[2];
 
 	bool blit_;
 
@@ -110,6 +111,7 @@ private: //Member
 
 	float ShootingInterTime_;
 
+	float Parrytimecheck_;
 		// state
 	bool WalkState_Changed_;
 

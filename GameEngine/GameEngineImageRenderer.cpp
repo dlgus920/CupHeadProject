@@ -202,8 +202,17 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	{
 		ShaderHelper.SettingTexture("Tex", CurAnimation_->FolderTextures_->GetTextureIndex(CurAnimation_->CurFrame_));
 	}
+
 	CurAnimation_->Reset();
+
 	AnimationPlay();
+
+	if (FindIter->second->FolderTextures_ == nullptr)
+	{
+		CurTexture = FindIter->second->AnimationTexture_;
+
+		SetIndex(CurAnimation_->StartFrame_);
+	}
 }
 
 void GameEngineImageRenderer::SetEndCallBack(const std::string& _Name, std::function<void()> _CallBack)

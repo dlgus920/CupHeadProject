@@ -127,7 +127,6 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			TextureDir.MoveChild("Mr_Wheezy");
 			TextureDir.MoveChild("BackGround");
 
-			//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("BG_top_smoke"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_top_smoke"));
 
 			{
@@ -135,16 +134,11 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 
 				for (size_t i = 0; i < AllFile.size(); i++)
 				{
-					//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
 					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
 				}
 			}
 
 			TextureDir.MoveChild("BG_Fire");
-
-			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Back"));
-			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Front"));
-			//LevelFolderTextureLoad(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Back"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Front"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
@@ -292,20 +286,15 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 	}
 
 	{
-		//float4{35.f,272.5f};
-
-		//GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
-
 		Effect* IntroEffect = CreateActor<Effect>();
 		IntroEffect->EffectAnimationActor("Intro_Hand.png", "Intro_Hand", float4{498.f,506.f}, 0, 13, 0.07142f, false);
 		IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back06)));
 	} 
+
 	{
 		Effect* IntroEffect = CreateActor<Effect>();
 		IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
 		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back06)));
-
-		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
 	}
 	PhaseState_.ChangeState("Intro");
 
@@ -365,8 +354,6 @@ void Stage_Mr_Wheezy::Intro_End()
 
 void Stage_Mr_Wheezy::Playing_Start()
 {
-	//NextScene_ = "WorldMap";
-
 	ReadyWALLOP();
 }
 void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)

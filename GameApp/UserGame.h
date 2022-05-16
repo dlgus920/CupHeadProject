@@ -30,6 +30,14 @@ public:
 
 	struct StageInfo
 	{
+		StageInfo()
+			: Dice_First_(true)
+			, Dice_ClearStage_{false}
+		{}
+		~StageInfo()
+		{}
+
+		bool Dice_First_;
 		bool Dice_ClearStage_[9];
 		float4 WorldMapPlayer_Pos_;
 	};
