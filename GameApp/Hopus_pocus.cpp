@@ -14,6 +14,7 @@ Hopus_pocus::Hopus_pocus()
 	, MonsterBox(nullptr)
 	, TimeCheck_(0.f)
 	, Defeat_(false)
+	, AniEnd_Idle_(false)
 	, AniEnd_Intro_(false)
 	, AniEnd_Attack_(false)
 	, AniEnd_Death_Intro_(false)
@@ -32,34 +33,36 @@ Hopus_pocus::~Hopus_pocus() // default destructer 디폴트 소멸자
 
 void Hopus_pocus::Start()
 {
+	GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+
 	{
 		Hopus_pocusImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
-		Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
-		Hopus_pocusImageRenderer_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 
-		Hopus_pocusImageRenderer_->CreateLevelAnimation("Hopus_pocus.png", "Hopus_pocus-Intro", 0, 17, 0.04f, false);
-		Hopus_pocusImageRenderer_->CreateLevelAnimation("Hopus_pocus.png", "Hopus_pocus-Idle", 20, 36, 0.04f);
-		Hopus_pocusImageRenderer_->CreateLevelAnimation("Hopus_pocus.png", "Hopus_pocus-Attack", 40, 56, 0.04f);
-		Hopus_pocusImageRenderer_->CreateLevelAnimation("Hopus_pocus.png", "Hopus_pocus-Death", 109, 117, 0.04f);
-		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_pocus-Intro", std::bind(&Hopus_pocus::AniEnd_Intro, this));
-		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_pocus-Death", std::bind(&Hopus_pocus::AniEnd_Death_Intro, this));
-		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_pocus-Attack", std::bind(&Hopus_pocus::AniEnd_Attack_End, this));
-		Hopus_pocusImageRenderer_->SetFrameCallBack("Hopus_pocus-Attack", 49, std::bind(&Hopus_pocus::AniEnd_Attack, this));
-		Hopus_pocusImageRenderer_->AnimationStop();
+		Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling(float4{ 800.f,740.f });
+		//Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling({620.f, 740.f, 1.0f });
+		//Hopus_pocusImageRenderer_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+
+		Hopus_pocusImageRenderer_->CreateLevelAnimationFolder("Hopus_Pocus_Intro","Hopus_Pocus-Intro",0.04f);
+		Hopus_pocusImageRenderer_->CreateLevelAnimationFolder("Hopus_Pocus_Attack","Hopus_Pocus-Attack",0.04f);
+		Hopus_pocusImageRenderer_->CreateLevelAnimationFolder("Hopus_Pocus_Idle","Hopus_Pocus-Idle",0.04f);
+		Hopus_pocusImageRenderer_->CreateLevelAnimationFolder("Hopus_Pocus_Death","Hopus_Pocus-Death",0.04f);
+
+		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Intro", std::bind(&Hopus_pocus::AniEnd_Intro, this));
+		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Attack", std::bind(&Hopus_pocus::AniEnd_Attack_End, this));
+		Hopus_pocusImageRenderer_->SetFrameCallBack("Hopus_Pocus-Attack", 24,std::bind(&Hopus_pocus::AniEnd_Attack, this));
+		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Idle", std::bind(&Hopus_pocus::AniEnd_Idle, this));
 	}
 
 	{
 		MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
 		MonsterHitBox->SetCollisionType(CollisionType::Rect);
 		MonsterHitBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
-		MonsterHitBox->GetTransform()->SetLocalScaling(float4{ 350.f,625.f,1.f});
-		MonsterHitBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+		MonsterHitBox->GetTransform()->SetLocalScaling(float4{ 640.f,740.f });
 
 		MonsterBox = CreateTransformComponent<GameEngineCollision>();
 		MonsterBox->SetCollisionType(CollisionType::Rect);
 		MonsterBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
-		MonsterBox->GetTransform()->SetLocalScaling(float4{ 350.f,625.f,1.f});
-		MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
+		MonsterBox->GetTransform()->SetLocalScaling(float4{ 640.f,740.f });
 	}
 
 	{

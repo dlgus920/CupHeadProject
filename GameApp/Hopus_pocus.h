@@ -23,13 +23,12 @@ private:
 	GameEngineImageRenderer* Hopus_pocusImageRenderer_;
 
 	bool Defeat_;
+
 	float TimeCheck_;
 
-	int FireCount_;
-
+	bool AniEnd_Idle_;
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_;
-	bool AniEnd_Death_Intro_;
 	bool AniEnd_Attack_End_;
 
 #ifdef _DEBUG
@@ -62,16 +61,25 @@ private:
 
 	void Firefire();
 
+
+private:
+
+	void AniEnd_Intro()
+	{
+		Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling(float4{640.f,740.f});
+		Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{-90.f,0.f});
+	}
+
+
+
+
+
+
 #ifdef _DEBUG
 
 	void AniEnd_Intro()
 	{
 		AniEnd_Intro_ = true;
-	}
-
-	void AniEnd_Death_Intro()
-	{
-		AniEnd_Death_Intro_ = true;
 	}
 	void AniEnd_Attack()
 	{
@@ -81,14 +89,18 @@ private:
 	{
 		AniEnd_Attack_End_ = true;
 	}
+	void AniEnd_Idle()
+	{
+		AniEnd_Idle_ = true;
+	}
 #endif // _DEBUG
 
 	void AniStateClear()
 	{
 		AniEnd_Intro_ = false;
 		AniEnd_Attack_ = false;
-		AniEnd_Death_Intro_ = false;
 		AniEnd_Attack_End_ = false;
+		AniEnd_Idle_ = false;
 	}
 
 #ifndef _DEBUG

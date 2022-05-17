@@ -21,12 +21,12 @@ private:
 
 	class Hopus_pocus* Hopus_pocus_;
 	class Floating_Card* Floating_Card_;
-	class GameEngineImageRenderer* BackImageRenderer_[2];
-	//class Player* Player_;
-	//bool Victory_;
+	class GameEngineImageRenderer* BackRightImageRenderer_[2];
+
+	float4 LightBlendRate_[2];
+	bool LightBlendCheck_;
 
 	class GameEngineRandom Random_;
-	std::string NextScene_;
 
 
 private:

@@ -1,5 +1,6 @@
 #include "Precompile.h"
 #include "Stage_Hopus_pocus.h"
+#include "Hopus_pocus.h"
 #include "DicePaclace.h"
 
 #include <GameEngine/CameraComponent.h>
@@ -18,8 +19,11 @@
 Stage_Hopus_pocus::Stage_Hopus_pocus()
 	: PhaseState_(this)
 	, LoadState_(this)
-	, Mr_Wheezy_(nullptr)
-	, BackImageRenderer_{nullptr}
+	, Hopus_pocus_(nullptr)
+	, Floating_Card_(nullptr)
+	, BackRightImageRenderer_{nullptr}
+	, LightBlendRate_{ { 1.f,1.f,1.f,1.f } }
+	, LightBlendCheck_(false)
 {
 }
 
@@ -74,7 +78,7 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("MiniBoss");
-			TextureDir.MoveChild("Mr_Wheezy");
+			TextureDir.MoveChild("Hopus_Pocus");
 
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -85,62 +89,15 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 				}
 			}
 
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Intro_Flame.png");
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Rabit_Skull.png");
 
-			Texture->Cut(10, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes( "Intro_Hand.png");
-			Texture->Cut(14, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Mr_Wheezy.png");
-			Texture->Cut(20, 6);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Smoke_FX_Front.png");
-			Texture->Cut(17, 2);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Smoke_FX_Back.png");
-			Texture->Cut(12, 2);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Fly_cigar.png");
-			Texture->Cut(10, 2);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire.png");
-			Texture->Cut(3, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
-			Texture->Cut(10, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire_Cloud.png");
-			Texture->Cut(16, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Cigar_dust.png");
-			Texture->Cut(9, 1);
+			Texture->Cut(11, 2);
 
-			UserGame::LoadingFolder--;
-		}
-	);
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Attack"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Death"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Idle"));
+			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Intro"));
 
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("DicePalace");
-			TextureDir.MoveChild("MiniBoss");
-			TextureDir.MoveChild("Mr_Wheezy");
-			TextureDir.MoveChild("BackGround");
-
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_top_smoke"));
-
-			{
-				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-				for (size_t i = 0; i < AllFile.size(); i++)
-				{
-					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
-				}
-			}
-
-			TextureDir.MoveChild("BG_Fire");
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Back"));
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Front"));
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("BG_Fire_Middle"));
-			
 			UserGame::LoadingFolder--;
 		}
 	);
@@ -195,107 +152,56 @@ void Stage_Hopus_pocus::LevelLoop_Start()
 	GameEngineImageRenderer* BackRenderer;
 	{
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1320.f,732.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-360.f,static_cast<float>(ZOrder::Z02Back01) });
-		BackRenderer->CreateLevelAnimationFolder("BG_top_smoke", "BG_top_smoke", 0.04f);
-		BackRenderer->SetChangeAnimation("BG_top_smoke");
-		BackRenderer->SetResultColor(float4{ 1.f, 1.f, 1.f, 0.5f });
+		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRenderer->SetLevelImage("Hopus_Back_6.png");
+		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back15)));
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 312.f,277.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1180,-600,static_cast<float>(ZOrder::Z02Back01) });
-		BackRenderer->SetLevelImage("kd_cigar_bg_smoke_fg.png");
+		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRenderer->SetLevelImage("Hopus_Back_5_floar.png");
+		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back14)));
+
+		BackRightImageRenderer_[0] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
+		BackRightImageRenderer_[0]->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRightImageRenderer_[0]->SetLevelImage("Hopus_Back_4_Blue.png");
+		BackRightImageRenderer_[0]->SetResultColor(float4{1.f,1.f,1.f,1.f});
+		BackRightImageRenderer_[0]->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back13)));
+
+		BackRightImageRenderer_[1] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
+		BackRightImageRenderer_[1]->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRightImageRenderer_[1]->SetLevelImage("Hopus_Back_3_Bright.png");
+		BackRightImageRenderer_[1]->SetResultColor(float4{1.f,1.f,1.f,1.f});
+		BackRightImageRenderer_[1]->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back12)));
+
+		Hopus_pocus_ = CreateActor<Hopus_pocus>();
+		Hopus_pocus_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back11)));
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-450.f,static_cast<float>(ZOrder::Z02Back02) });
-		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Front", "BG_Fire_Front", 0.04f);
-		BackRenderer->SetChangeAnimation("BG_Fire_Front");
+		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRenderer->SetLevelImage("Hopus_Back_2.png");
+		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back10)));
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 240.f,-550.f,static_cast<float>(ZOrder::Z02Back03) });
-		BackRenderer->SetLevelImage("Ashtray_left_fr.png");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1040.f,-550.f,static_cast<float>(ZOrder::Z02Back03) });
-		BackRenderer->SetLevelImage("Ashtray_right_fr.png");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 240.f,-550.f,static_cast<float>(ZOrder::Z02Back07) });
-		BackRenderer->SetLevelImage("Ashtray_left_bk.png");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 500.f,360.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 1040.f,-550.f,static_cast<float>(ZOrder::Z02Back07) });
-		BackRenderer->SetLevelImage("Ashtray_right_bk.png");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-375.f,static_cast<float>(ZOrder::Z02Back08) });
-		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Middle", "BG_Fire_Middle", 0.04f);
-		BackRenderer->SetChangeAnimation("BG_Fire_Middle");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1500.f,750.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-300.f,static_cast<float>(ZOrder::Z02Back09) });
-		BackRenderer->CreateLevelAnimationFolder("BG_Fire_Back", "BG_Fire_Back", 0.04f);
-		BackRenderer->SetChangeAnimation("BG_Fire_Back");
-
-		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1379.f,720.f });
-		BackRenderer->GetTransform()->SetLocalPosition(float4{ 640.f,-360.f,static_cast<float>(ZOrder::Z02Back10) });
-		BackRenderer->SetLevelImage("Mr_Wheezy_Back.png");
-	}
-
-	{
-		BackImageRenderer_[0] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackImageRenderer_[0]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
-		BackImageRenderer_[0]->GetTransform()->SetWorldPosition(float4{ 0.f,-278.f,static_cast<float>(ZOrder::Z02Back11) });
-		BackImageRenderer_[0]->SetLevelImage("BackGround_Cigar.png");
-
-		BackImageRenderer_[1] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
-		BackImageRenderer_[1]->GetTransform()->SetLocalScaling(float4{ 2048.f,556.f });
-		BackImageRenderer_[1]->GetTransform()->SetWorldPosition(float4{ 2048.f,-278.f ,static_cast<float>(ZOrder::Z02Back11) });
-		BackImageRenderer_[1]->SetLevelImage("BackGround_Cigar.png");
+		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
+		BackRenderer->SetLevelImage("Hopus_Back_1.png");
+		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back09)));
 	}
 
 	{
 		// 1280 720
 		Map::CurrentMap = CreateActor<Map>();
-		Map::CurrentMap->GetCollisionMap()->SetLevelImage("Mr_WheezyCol.png");
-		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
 		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1356.f, 720.f });
+		Map::CurrentMap->GetCollisionMap()->SetLevelImage("Rabbit_Background_col.png");
 	}
 
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z02Back05)));
+		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z00PlayerFront00)));
 	}
 
-	{
-		Mr_Wheezy_ = CreateActor<Mr_Wheezy>();
-
-		Flying_Cigar_ = CreateActor<Flying_Cigar>();
-		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z02Back06)));
-	}
-
-	{
-		Effect* IntroEffect = CreateActor<Effect>();
-		IntroEffect->EffectAnimationActor("Intro_Hand.png", "Intro_Hand", float4{498.f,506.f}, 0, 13, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back06)));
-	} 
-
-	{
-		Effect* IntroEffect = CreateActor<Effect>();
-		IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back06)));
-	}
 	PhaseState_.ChangeState("Intro");
-
 }
 void Stage_Hopus_pocus::LevelLoop_Update(float _DeltaTime)
 {
@@ -357,23 +263,33 @@ void Stage_Hopus_pocus::Playing_Start()
 void Stage_Hopus_pocus::Playing_Update(float _DeltaTime)
 {
 	{
-		Flying_Cigar_->GetTransform()->SetWorldMove(float4{ 0.f,300.f * _DeltaTime });
-		if (Flying_Cigar_->GetTransform()->GetWorldPosition().y >= 360)
+		if (true == LightBlendCheck_)
 		{
-			Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -650, static_cast<float>(ZOrder::Z02Back05)));
+			LightBlendRate_[0].a -= _DeltaTime;
+
+			if (LightBlendRate_[0].a < 0.f)
+			{
+				LightBlendRate_[0].a = 0.f;
+				LightBlendCheck_ = false;
+			}
+
+		}
+		else
+		{
+			LightBlendRate_[0].a += _DeltaTime;
+
+			if (LightBlendRate_[0].a > 1.f)
+			{
+				LightBlendRate_[0].a = 1.f;
+				LightBlendCheck_ = true;
+			}
 		}
 
-		BackImageRenderer_[0]->GetTransform()->SetWorldMove(float4{ -_DeltaTime * 100.f ,0.f });
-		if (BackImageRenderer_[0]->GetTransform()->GetWorldPosition().x <= -1024.f)
-		{
-			BackImageRenderer_[0]->GetTransform()->SetWorldMove(float4{ 4096.f,0.f });
-		}
+		LightBlendRate_[1] = LightBlendRate_[0];
+		LightBlendRate_[1].a = 1.f - LightBlendRate_[1].a;
 
-		BackImageRenderer_[1]->GetTransform()->SetWorldMove(float4{ -_DeltaTime * 100.f ,0.f });
-		if (BackImageRenderer_[1]->GetTransform()->GetWorldPosition().x <= -1024.f)
-		{
-			BackImageRenderer_[1]->GetTransform()->SetWorldMove(float4{ 4096.f,0.f });
-		}
+		BackRightImageRenderer_[0]->SetResultColor(LightBlendRate_[0]);
+		BackRightImageRenderer_[1]->SetResultColor(LightBlendRate_[1]);
 	}
 
 	if (true == Victory_)
@@ -394,7 +310,7 @@ void Stage_Hopus_pocus::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
-			UserGame::StageInfo_.Dice_ClearStage_[2] = true;
+			UserGame::StageInfo_.Dice_ClearStage_[4] = true;
 
 			GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
 

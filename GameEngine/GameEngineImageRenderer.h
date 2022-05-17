@@ -208,11 +208,6 @@ public:
 		return CurAnimation_->GetName() == _Name;
 	}
 
-	inline void SetAlpha(float _Value)
-	{
-		ResultColor.a = _Value;
-	}
-
 	inline void AnimationStop()
 	{
 		IsPlay_ = false;
