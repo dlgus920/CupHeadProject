@@ -17,9 +17,7 @@ Hopus_pocus::Hopus_pocus()
 	, AniEnd_Idle_(false)
 	, AniEnd_Intro_(false)
 	, AniEnd_Attack_(false)
-	, AniEnd_Death_Intro_(false)
 	, AniEnd_Attack_End_(false)
-	, FireCount_(0)
 
 
 #ifdef _DEBUG
@@ -66,10 +64,10 @@ void Hopus_pocus::Start()
 	}
 
 	{
-		State_.CreateState("Intro", &Hopus_pocus::Intro_Start, &Hopus_pocus::Intro_Update, &Hopus_pocus::Intro_End_);
-		State_.CreateState("Idle", &Hopus_pocus::Idle_Start, &Hopus_pocus::Idle_Update, &Hopus_pocus::Idle_End_);
-		State_.CreateState("Attack", &Hopus_pocus::Attack_Start, &Hopus_pocus::Attack_Update, &Hopus_pocus::Attack_End_);
-		State_.CreateState("Defeat", &Hopus_pocus::Defeat_Start, &Hopus_pocus::Defeat_Update, &Hopus_pocus::Defeat_End_);
+		State_.CreateState("Intro", &Hopus_pocus::Intro_Start, &Hopus_pocus::Intro_Update, &Hopus_pocus::Intro_End);
+		State_.CreateState("Idle", &Hopus_pocus::Idle_Start, &Hopus_pocus::Idle_Update, &Hopus_pocus::Idle_End);
+		State_.CreateState("Attack", &Hopus_pocus::Attack_Start, &Hopus_pocus::Attack_Update, &Hopus_pocus::Attack_End);
+		State_.CreateState("Defeat", &Hopus_pocus::Defeat_Start, &Hopus_pocus::Defeat_Update, &Hopus_pocus::Defeat_End);
 
 		State_.ChangeState("Intro");
 	}
@@ -114,16 +112,24 @@ void Hopus_pocus::SpawnSmokeFx()
 
 void Hopus_pocus::Firefire()
 {
-	if (true == PossitionLeft_)
-	{
-		Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
-		Fire->GetTransform()->SetWorldPosition(float4{ 850.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
-		Fire->SetDir(false);
-	}
-	else
-	{
-		Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
-		Fire->GetTransform()->SetWorldPosition(float4{ 430.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
-		Fire->SetDir(true);
-	}
+	//if (true == PossitionLeft_)
+	//{
+	//	Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
+	//	Fire->GetTransform()->SetWorldPosition(float4{ 850.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+	//	Fire->SetDir(false);
+	//}
+	//else
+	//{
+	//	Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
+	//	Fire->GetTransform()->SetWorldPosition(float4{ 430.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+	//	Fire->SetDir(true);
+	//}
+}
+
+
+void Hopus_pocus::AniEnd_Intro()
+{
+	AniEnd_Intro_ = true;
+	Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling(float4{ 640.f,740.f });
+	Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{ -90.f,0.f });
 }

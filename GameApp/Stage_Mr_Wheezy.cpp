@@ -35,7 +35,6 @@ void Stage_Mr_Wheezy::LevelStart()
 
 	PhaseState_.CreateState("Intro", &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
 	PhaseState_.CreateState("Playing", &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
-	PhaseState_.CreateState("PlayingEnd", &Stage_Mr_Wheezy::PlayingEnd_Start, &Stage_Mr_Wheezy::PlayingEnd_Update, nullptr);
 
 	LoadState_.CreateState("ResourcesLoad", &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
 	LoadState_.CreateState("Init", nullptr, &Stage_Mr_Wheezy::Init_Update, nullptr);
@@ -309,26 +308,6 @@ void Stage_Mr_Wheezy::LevelLoop_Update(float _DeltaTime)
 	LevelLoadFadeUpdate(_DeltaTime);
 
 	PhaseState_.Update(_DeltaTime);
-}
-
-void Stage_Mr_Wheezy::PlayingEnd_Start()
-{
-}
-
-void Stage_Mr_Wheezy::PlayingEnd_Update(float _DeltaTime)
-{
-	TimeCheck_ += _DeltaTime;
-
-	if (TimeCheck_ > 1.f)
-	{
-		BlendRate_ += _DeltaTime * 2;
-
-		if (BlendRate_ >= 1.f)
-		{
-			GameEngineCore::LevelChange("DicePaclace");
-		}
-		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
-	}
 }
 
 void Stage_Mr_Wheezy::Intro_Start()

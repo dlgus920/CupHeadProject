@@ -50,9 +50,6 @@ private:
 	void LevelLoop_Start();
 	void LevelLoop_Update(float _DeltaTime);
 
-	void PlayingEnd_Start();
-	void PlayingEnd_Update(float _DeltaTime);
-
 private:
 	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
 

@@ -41,19 +41,19 @@ private:	// member Var
 private:
 	void Intro_Start();
 	void Intro_Update(float _DeltaTime);
-	void Intro_End_();
+	void Intro_End();
 
 	void Idle_Start();
 	void Idle_Update(float _DeltaTime);
-	void Idle_End_();
+	void Idle_End();
 
 	void Attack_Start();
 	void Attack_Update(float _DeltaTime);
-	void Attack_End_();
+	void Attack_End();
 
 	void Defeat_Start();
 	void Defeat_Update(float _DeltaTime);
-	void Defeat_End_();
+	void Defeat_End();
 
 private:	
 
@@ -64,23 +64,8 @@ private:
 
 private:
 
-	void AniEnd_Intro()
-	{
-		Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling(float4{640.f,740.f});
-		Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{-90.f,0.f});
-	}
+	void AniEnd_Intro();
 
-
-
-
-
-
-#ifdef _DEBUG
-
-	void AniEnd_Intro()
-	{
-		AniEnd_Intro_ = true;
-	}
 	void AniEnd_Attack()
 	{
 		AniEnd_Attack_ = true;
@@ -93,7 +78,6 @@ private:
 	{
 		AniEnd_Idle_ = true;
 	}
-#endif // _DEBUG
 
 	void AniStateClear()
 	{
@@ -102,31 +86,5 @@ private:
 		AniEnd_Attack_End_ = false;
 		AniEnd_Idle_ = false;
 	}
-
-#ifndef _DEBUG
-	void AniEnd_Intro()
-	{
-		AniEnd_Intro_ = true;
-	}
-	void AniEnd_TellePort_In()
-	{
-		AniEnd_TellePort_In_ = true;
-	}
-	void AniEnd_TellePort_Out()
-	{
-		AniEnd_TellePort_Out_ = true;
-	}
-	void AniEnd_Death_Intro()
-	{
-		AniEnd_Death_Intro_ = true;
-	}
-	void AniEnd_Attack()
-	{
-		AniEnd_Attack_ = true;
-	}
-#endif // _DEBUG
-
-
-
 };
 

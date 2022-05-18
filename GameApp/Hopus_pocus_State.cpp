@@ -20,7 +20,7 @@ void Hopus_pocus::Intro_Update( float _DeltaTime)
 		return;
 	}
 }
-void Hopus_pocus::Intro_End_()
+void Hopus_pocus::Intro_End()
 {
 	AniEnd_Intro_ = false;
 }
@@ -41,18 +41,18 @@ void Hopus_pocus::Idle_Update(float _DeltaTime)
 
 	if (TimeCheck_ > 2.5f)
 	{
-		if (FireCount_ == 3)
-		{
-			FireCount_ = 0;
-			State_.ChangeState("Telleport");
-			return;
-		}
+		//if (FireCount_ == 3)
+		//{
+		//	FireCount_ = 0;
+		//	State_.ChangeState("Telleport");
+		//	return;
+		//}
 
 		State_.ChangeState("Attack");
 		return;
 	}
 }
-void Hopus_pocus::Idle_End_()
+void Hopus_pocus::Idle_End()
 {
 	TimeCheck_ = 0.f;
 }
@@ -69,13 +69,13 @@ void Hopus_pocus::Attack_Update( float _DeltaTime)
 		return;
 	}
 
-	if (true == AniEnd_Attack_)
-	{
-		Firefire();
-		FireCount_++;
+	//if (true == AniEnd_Attack_)
+	//{
+	//	Firefire();
+	//	FireCount_++;
 
-		AniEnd_Attack_ = false;
-	}
+	//	AniEnd_Attack_ = false;
+	//}
 
 	if (true == AniEnd_Attack_End_)
 	{
@@ -90,7 +90,7 @@ void Hopus_pocus::Attack_Update( float _DeltaTime)
 #endif // !_DEBUG
 	 
 }
-void Hopus_pocus::Attack_End_()
+void Hopus_pocus::Attack_End()
 {
 	AniEnd_Attack_ = false;
 	AniEnd_Attack_End_ = false;
@@ -112,11 +112,11 @@ void Hopus_pocus::Defeat_Start()
 }
 void Hopus_pocus::Defeat_Update(float _DeltaTime)
 {
-	if (true == AniEnd_Death_Intro_)
-	{
-		Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Death-Idle");
-		AniEnd_Death_Intro_ = false;
-	}
+	//if (true == AniEnd_Death_Intro_)
+	//{
+	//	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Death-Idle");
+	//	AniEnd_Death_Intro_ = false;
+	//}
 
 	TimeCheck_ += _DeltaTime;
 
@@ -146,9 +146,9 @@ void Hopus_pocus::Defeat_Update(float _DeltaTime)
 		Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,-400.f * _DeltaTime });
 	}
 }
-void Hopus_pocus::Defeat_End_()
+void Hopus_pocus::Defeat_End()
 {
-	AniEnd_Death_Intro_ = false;
+	//AniEnd_Death_Intro_ = false;
 	Defeat_ = false;
 	TimeCheck_ = 0.f;
 }

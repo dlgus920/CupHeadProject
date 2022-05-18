@@ -277,6 +277,12 @@
     <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet">
       <UniqueIdentifier>{c10b0abc-0b9f-404b-9ab9-b3bfe809a16e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet">
+      <UniqueIdentifier>{da8f80c2-491f-4b8f-907e-61aacef2a1ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\floarcard">
+      <UniqueIdentifier>{863a03ca-2352-4720-97b2-fd2232076d7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
