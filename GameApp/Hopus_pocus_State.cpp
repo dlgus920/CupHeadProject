@@ -10,7 +10,7 @@
 
 void Hopus_pocus::Intro_Start()
 {
-	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Intro");
+	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Intro");
 }
 void Hopus_pocus::Intro_Update( float _DeltaTime)
 {
@@ -27,7 +27,7 @@ void Hopus_pocus::Intro_End()
 
 void Hopus_pocus::Idle_Start()
 {
-	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Idle");
+	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Idle");
 }
 void Hopus_pocus::Idle_Update(float _DeltaTime)
 {
@@ -59,7 +59,7 @@ void Hopus_pocus::Idle_End()
 
 void Hopus_pocus::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
-	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Attack");
+	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Attack");
 }
 void Hopus_pocus::Attack_Update( float _DeltaTime)
 {
@@ -104,7 +104,7 @@ void Hopus_pocus::Defeat_Start()
 	MonsterHitBox->Off();
 	MonsterBox->Off();
 
-	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_pocus-Death-Intro");
+	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Death");
 
 	Defeat_ = true;
 

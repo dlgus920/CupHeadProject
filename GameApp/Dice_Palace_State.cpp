@@ -93,9 +93,22 @@ void DicePaclace::ResourcesLoad_Start()
 
 				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("ParryObjectDice.png");
 				Texture->Cut(10, 8);
-				Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
+			}
+
+			TextureDir.MoveChild("CommonEffect");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+
+				GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
 				Texture->Cut(10, 1);
 			}
+
+
 			UserGame::LoadingFolder--;
 		}
 	);

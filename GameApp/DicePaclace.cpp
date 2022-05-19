@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "DicePaclace.h"
 #include "Stage_Mr_Wheezy.h"
+#include "Stage_Hopus_pocus.h"
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
@@ -146,9 +147,26 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
-			GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+			if (false == UserGame::StageInfo_.Dice_ClearStage_[2])
+			{
+				GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");
 
-			GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+				GameEngineCore::LevelChange("Stage_Hopus_pocus");
+
+				//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+
+				//GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+			}
+			else if (false == UserGame::StageInfo_.Dice_ClearStage_[4])
+			{
+				GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");
+
+				GameEngineCore::LevelChange("Stage_Hopus_pocus");
+			}
+			else
+			{
+
+			}
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}

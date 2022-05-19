@@ -74,6 +74,34 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
+			TextureDir.MoveChild("CommonEffect");
+
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
+			Texture->Cut(10, 1);
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("MiniBoss");
 			TextureDir.MoveChild("Mr_Wheezy");
 
@@ -101,8 +129,6 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			Texture->Cut(10, 2);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire.png");
 			Texture->Cut(3, 1);
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
-			Texture->Cut(10, 1);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Wheezy_Fire_Cloud.png");
 			Texture->Cut(16, 1);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Cigar_dust.png");

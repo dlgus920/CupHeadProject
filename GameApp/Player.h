@@ -83,7 +83,8 @@ private: //Member
 
 	float4 PrevAniSize_;
 
-	GameEngineImageRenderer* ParryRenderer[2];
+	GameEngineActor* ParryEffect;
+	//GameEngineImageRenderer* ParryRenderer[2];
 
 	bool blit_;
 

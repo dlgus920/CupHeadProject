@@ -149,6 +149,9 @@
     <ClCompile Include="Mr_Wheezy.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy</Filter>
     </ClCompile>
+    <ClCompile Include="Hopus_Bullet.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -393,6 +396,9 @@
     </ClInclude>
     <ClInclude Include="Mr_Wheezy.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy</Filter>
+    </ClInclude>
+    <ClInclude Include="Hopus_Bullet.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

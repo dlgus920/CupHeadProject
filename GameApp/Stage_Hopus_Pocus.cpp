@@ -76,6 +76,34 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
+			TextureDir.MoveChild("CommonEffect");
+
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("BossExplosion.png");
+			Texture->Cut(10, 1);
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("MiniBoss");
 			TextureDir.MoveChild("Hopus_Pocus");
 
@@ -96,6 +124,18 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Death"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Idle"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Intro"));
+
+
+			TextureDir.MoveChild("BackGround");
+
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
 
 			UserGame::LoadingFolder--;
 		}
@@ -172,13 +212,13 @@ void Stage_Hopus_pocus::LevelLoop_Start()
 		BackRightImageRenderer_[1]->SetResultColor(float4{1.f,1.f,1.f,1.f});
 		BackRightImageRenderer_[1]->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back12)));
 
-		Hopus_pocus_ = CreateActor<Hopus_pocus>();
-		Hopus_pocus_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back11)));
-
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
 		BackRenderer->SetLevelImage("Hopus_Back_2.png");
-		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back10)));
+		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back11)));
+
+		Hopus_pocus_ = CreateActor<Hopus_pocus>();
+		Hopus_pocus_->GetTransform()->SetWorldPosition(float4(1040.f, -360.f, static_cast<float>(ZOrder::Z02Back10)));
 
 		BackRenderer = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });

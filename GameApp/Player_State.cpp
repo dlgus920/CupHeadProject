@@ -232,15 +232,19 @@ void Player::Jump_Update(float _DeltaTime)
 
 				ChangeAnimation("Cup-Jump-Parry");
 
-				ParryRenderer[0] = CreateTransformComponent<GameEngineImageRenderer>();
-				ParryRenderer[0]->GetTransform()->SetLocalScaling(float4{712.f,712.f} );
-				ParryRenderer[0]->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
-				ParryRenderer[0]->SetLevelImage("ParryEffect_A.png");
+				ParryEffect = GetLevel()->CreateActor<GameEngineActor>();
 
-				ParryRenderer[1] = CreateTransformComponent<GameEngineImageRenderer>();
-				ParryRenderer[1]->GetTransform()->SetLocalScaling(float4{ 712.f,712.f });
-				ParryRenderer[1]->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
-				ParryRenderer[1]->SetLevelImage("ParryEffect_B.png");
+				GameEngineImageRenderer* ParryRenderer;
+
+				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
+				ParryRenderer->GetTransform()->SetLocalScaling(float4{712.f,712.f} );
+				ParryRenderer->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer->SetLevelImage("ParryEffect_A.png");
+
+				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
+				ParryRenderer->GetTransform()->SetLocalScaling(float4{ 712.f,712.f });
+				ParryRenderer->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer->SetLevelImage("ParryEffect_B.png");
 
 				EffectParry();
 
@@ -264,6 +268,12 @@ void Player::Jump_Update(float _DeltaTime)
 		}
 		else
 		{
+			if (nullptr != ParryEffect)
+			{
+				ParryEffect->Death();
+				ParryEffect = nullptr;
+			}
+
 			GameEngineCore::SetTimeRate(1.f);
 		}
 

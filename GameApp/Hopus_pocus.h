@@ -22,6 +22,8 @@ private:
 
 	GameEngineImageRenderer* Hopus_pocusImageRenderer_;
 
+	class Hopus_Bullet* Hopus_Bullet_;
+
 	bool Defeat_;
 
 	float TimeCheck_;
@@ -30,9 +32,6 @@ private:
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_;
 	bool AniEnd_Attack_End_;
-
-#ifdef _DEBUG
-#endif // _DEBUG
 
 private:	// member Var
 	void Start() override;
@@ -59,7 +58,7 @@ private:
 
 	void SpawnSmokeFx();
 
-	void Firefire();
+	void Fire();
 
 
 private:

@@ -51,7 +51,7 @@ Player::Player()
 	, PlayerImageRenderer(nullptr)
 	, Bottom_Card_(nullptr)
 	, Bottom_HP_(nullptr)
-	, ParryRenderer{nullptr}
+	, ParryEffect(nullptr)
 	, BulletType_(BulletType::Default)
 	, ShootingDir_()
 	, Dir_(AnimationDirection::Right)
