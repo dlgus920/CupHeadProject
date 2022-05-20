@@ -152,6 +152,9 @@
     <ClCompile Include="Hopus_Bullet.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="FloarCard.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -283,7 +286,7 @@
     <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet">
       <UniqueIdentifier>{da8f80c2-491f-4b8f-907e-61aacef2a1ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\floarcard">
+    <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard">
       <UniqueIdentifier>{863a03ca-2352-4720-97b2-fd2232076d7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -399,6 +402,9 @@
     </ClInclude>
     <ClInclude Include="Hopus_Bullet.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FloarCard.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

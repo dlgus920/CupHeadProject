@@ -117,8 +117,12 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			}
 
 			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Rabit_Skull.png");
-
 			Texture->Cut(11, 2);
+
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("FloarCard.png");
+			Texture->Cut(1, 3);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Rabit_Bomb.png");
+			Texture->Cut(8, 2);
 
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Attack"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Death"));
@@ -237,7 +241,7 @@ void Stage_Hopus_pocus::LevelLoop_Start()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z00PlayerFront00)));
+		Player_->GetTransform()->SetWorldPosition(float4(300.f, -360.f, static_cast<float>(ZOrder::Z00PlayerFront00)));
 	}
 
 	PhaseState_.ChangeState("Intro");

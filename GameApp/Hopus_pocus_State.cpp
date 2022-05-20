@@ -39,7 +39,7 @@ void Hopus_pocus::Idle_Update(float _DeltaTime)
 
 	TimeCheck_ += _DeltaTime;
 
-	if (TimeCheck_ > 2.5f)
+	if (TimeCheck_ > 5.5f)
 	{
 		//if (FireCount_ == 3)
 		//{
@@ -69,13 +69,12 @@ void Hopus_pocus::Attack_Update( float _DeltaTime)
 		return;
 	}
 
-	//if (true == AniEnd_Attack_)
-	//{
-	//	Firefire();
-	//	FireCount_++;
+	if (true == AniEnd_Attack_)
+	{
+		Fire();
 
-	//	AniEnd_Attack_ = false;
-	//}
+		AniEnd_Attack_ = false;
+	}
 
 	if (true == AniEnd_Attack_End_)
 	{

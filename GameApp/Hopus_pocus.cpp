@@ -3,6 +3,7 @@
 #include "Effect.h"
 
 #include "Hopus_Bullet.h"
+#include "Player.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -52,14 +53,14 @@ void Hopus_pocus::Start()
 		MonsterHitBox = CreateTransformComponent<GameEngineCollision>();
 		MonsterHitBox->SetCollisionType(CollisionType::Rect);
 		MonsterHitBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterHitBox);
-		MonsterHitBox->GetTransform()->SetLocalScaling(float4{ 340.f,540.f });
-		MonsterHitBox->GetTransform()->SetLocalPosition(float4{ -50.f,0.f });
+		MonsterHitBox->GetTransform()->SetLocalScaling(float4{ 240.f,590.f });
+		MonsterHitBox->GetTransform()->SetLocalPosition(float4{ -50.f,-50.f });
 
 		MonsterBox = CreateTransformComponent<GameEngineCollision>();
 		MonsterBox->SetCollisionType(CollisionType::Rect);
 		MonsterBox->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
-		MonsterBox->GetTransform()->SetLocalScaling(float4{ 340.f,540.f });
-		MonsterBox->GetTransform()->SetLocalPosition(float4{ -50.f,0.f });
+		MonsterBox->GetTransform()->SetLocalScaling(float4{ 240.f,590.f });
+		MonsterBox->GetTransform()->SetLocalPosition(float4{ -50.f,-50.f });
 	}
 
 	{
@@ -72,6 +73,7 @@ void Hopus_pocus::Start()
 	}
 
 	Hopus_Bullet_ = GetLevel()->CreateActor<Hopus_Bullet>(); // 미리 만들어두고 필요할때마다 리셋함
+	Hopus_Bullet_->GetTransform()->SetWorldPosition(float4{640.f,-320.f,static_cast<float>(ZOrder::Z01Actor01Bullet01)});
 
 	//////////////스텟
 	{
@@ -93,7 +95,7 @@ void Hopus_pocus::SpawnSmokeFx()
 
 void Hopus_pocus::Fire()
 {
-	Hopus_Bullet_->Reset();
+	Hopus_Bullet_->Reset(Player::MainPlayer->GetTransform()->GetWorldPosition());
 }
 
 

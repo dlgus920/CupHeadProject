@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 class GameEngineCollision;
 class GameEngineImageRenderer;
@@ -19,14 +20,19 @@ private:	// member Var
 	void Update(float _DeltaTime) override;
 
 private:
+	GameEngineRandom Rand_;
+
 	GameEngineImageRenderer* FireImageRenderer[8];
 	GameEngineCollision* FireCollision[8];
+
+	GameEngineActor* Dummy_;
 
 	float Dist_;
 	bool Roll_;
 	float TimeCheck_;
 
 public:
-	void Reset();
+	void Reset(float4 _PlayerPos);
+
 };
 

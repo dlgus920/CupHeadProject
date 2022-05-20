@@ -193,6 +193,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Dice_Palace_State.cpp" />
+    <ClCompile Include="FloarCard.cpp" />
     <ClCompile Include="Flying_Cigar.cpp">
       <SubType>
       </SubType>
@@ -337,6 +338,7 @@
     </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CustomVertex.h" />
+    <ClInclude Include="FloarCard.h" />
     <ClInclude Include="Flying_Cigar.h">
       <SubType>
       </SubType>

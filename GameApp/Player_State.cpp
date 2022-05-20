@@ -238,12 +238,12 @@ void Player::Jump_Update(float _DeltaTime)
 
 				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
 				ParryRenderer->GetTransform()->SetLocalScaling(float4{712.f,712.f} );
-				ParryRenderer->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer->GetTransform()->SetWorldPosition(PlayerParryCollision->GetTransform()->GetWorldPosition());
 				ParryRenderer->SetLevelImage("ParryEffect_A.png");
 
 				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
 				ParryRenderer->GetTransform()->SetLocalScaling(float4{ 712.f,712.f });
-				ParryRenderer->GetTransform()->SetWorldPosition(PerryObject->GetTransform()->GetWorldPosition());
+				ParryRenderer->GetTransform()->SetWorldPosition(PlayerParryCollision->GetTransform()->GetWorldPosition());
 				ParryRenderer->SetLevelImage("ParryEffect_B.png");
 
 				EffectParry();
@@ -262,7 +262,7 @@ void Player::Jump_Update(float _DeltaTime)
 	{
 		Parrytimecheck_ += GameEngineTime::GetInst().GetDeltaTime();
 
-		if (Parrytimecheck_ < 0.3f)
+		if (Parrytimecheck_ < 0.2f)
 		{
 			GameEngineCore::SetTimeRate(0.0f);
 		}
@@ -443,6 +443,8 @@ void Player::Fall_Start()
 	ChangeAnimation("Cup-Jump");
 
 	TimeCheck_ = 0.f;
+
+	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
 }
 void Player::Fall_Update(float _DeltaTime)
 {
