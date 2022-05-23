@@ -201,6 +201,7 @@
     <ClCompile Include="Hopus_Bullet.cpp" />
     <ClCompile Include="Hopus_pocus.cpp" />
     <ClCompile Include="Hopus_pocus_State.cpp" />
+    <ClCompile Include="Hopus_Trumps.cpp" />
     <ClCompile Include="KingDice_Marker.cpp" />
     <ClCompile Include="Dice_Card.cpp">
       <SubType>
@@ -345,6 +346,7 @@
     </ClInclude>
     <ClInclude Include="Hopus_Bullet.h" />
     <ClInclude Include="Hopus_pocus.h" />
+    <ClInclude Include="Hopus_Trumps.h" />
     <ClInclude Include="KingDice_Marker.h" />
     <ClInclude Include="Dice_Card.h">
       <SubType>

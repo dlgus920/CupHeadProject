@@ -144,6 +144,8 @@ private: //Member
 	bool ColState_Ground_Middle_;
 	bool ColState_Ground_Bot_;
 
+	bool ColState_Ground_Floar_;
+
 
 	bool PlayerGround_Stuck_;
 

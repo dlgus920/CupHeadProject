@@ -15,6 +15,7 @@
 #include "Image.h"
 #include "Effect.h"
 #include "Player.h"
+#include "FloarCard.h"
 
 Stage_Hopus_pocus::Stage_Hopus_pocus()
 	: PhaseState_(this)
@@ -123,6 +124,8 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			Texture->Cut(1, 3);
 			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Rabit_Bomb.png");
 			Texture->Cut(8, 2);
+			Texture = GameEngineTextureManager::GetInst().FindLevelRes("Rabit_Trumps.png");
+			Texture->Cut(17, 4);
 
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Attack"));
 			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("Hopus_Pocus_Death"));
@@ -228,6 +231,9 @@ void Stage_Hopus_pocus::LevelLoop_Start()
 		BackRenderer->GetTransform()->SetLocalScaling(float4{ 1540.f,842.f });
 		BackRenderer->SetLevelImage("Hopus_Back_1.png");
 		BackRenderer->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z02Back09)));
+
+		FloarCard* FloarCard_ = CreateActor<FloarCard>();
+		FloarCard_ ->GetTransform()->SetWorldPosition(float4(440.f, -460.f, static_cast<float>(ZOrder::Z02Back10)));
 	}
 
 	{

@@ -155,6 +155,9 @@
     <ClCompile Include="FloarCard.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard</Filter>
     </ClCompile>
+    <ClCompile Include="Hopus_Trumps.cpp">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -405,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="FloarCard.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard</Filter>
+    </ClInclude>
+    <ClInclude Include="Hopus_Trumps.h">
+      <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

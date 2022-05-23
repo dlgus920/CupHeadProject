@@ -98,6 +98,8 @@ const bool Player::GroundCollisonUpdate()
 	ColState_Ground_Middle_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Middle, 5);
 	ColState_Ground_Bot_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Bot, 5);
 
+	ColState_Ground_Floar_ = PlayerMovingCollision_Bot->Collision(static_cast<int>(CollisionGruop::FloarCard));
+
 	if (ColState_Ground_Bot_ && ColState_Ground_Middle_)
 	{
 		PlayerGround_Stuck_ = true;

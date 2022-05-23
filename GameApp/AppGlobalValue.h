@@ -8,6 +8,7 @@ enum class CollisionGruop
 	PlayerParry,
 	PlayerHitBox,
 	PlayerMoving,
+	FloarCard,
 	Bullet,
 	Parry,
 	MonsterHitBox,

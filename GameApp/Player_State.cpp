@@ -29,8 +29,11 @@ void Player::Idle_Update(float _DeltaTime)
 
 	if (false == ColState_Ground_Bot_)
 	{
-		State_.ChangeState("Fall");
-		return;
+		if (false == ColState_Ground_Floar_)
+		{
+			State_.ChangeState("Fall");
+			return;
+		}
 	}
 
 	if (KeyState_Shoot_)
@@ -95,10 +98,22 @@ void Player::Walk_Update(float _DeltaTime)
 {
 	TimeCheck_ -= _DeltaTime;
 
+	if (true == ColState_Ground_Floar_)
+	{
+		if (true == KeyState_Down_ && KeyState_Jump_)
+		{
+			State_.ChangeState("Fall");
+			return;
+		}
+	}
+
 	if (false == ColState_Ground_Bot_)
 	{
-		State_.ChangeState("Fall");
-		return;
+		if (false == ColState_Ground_Floar_)
+		{
+			State_.ChangeState("Fall");
+			return;
+		}
 	}
 
 	if (TimeCheck_ <= 0.f)
@@ -337,6 +352,12 @@ void Player::Jump_Update(float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
+					if (true == ColState_Ground_Floar_)
+					{
+						State_.ChangeState("Idle");
+						return;
+					}
+
 					if (true == ColState_Ground_Bot_)
 					{
 						State_.ChangeState("Idle");
@@ -516,7 +537,6 @@ void Player::Fall_Update(float _DeltaTime)
 		}
 	}
 
-
 	JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 	Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
@@ -586,6 +606,18 @@ void Player::Duck_Start()
 }
 void Player::Duck_Update(float _DeltaTime)
 {
+	if (true == ColState_Ground_Floar_)
+	{
+		if (true == KeyState_Down_)
+		{
+			if (true == KeyState_Jump_)
+			{
+				State_.ChangeState("Fall");
+				return;
+			}
+		}
+	}
+
 	if (CheckState() != "Duck")
 	{
 		State_.ChangeState(CheckState());
