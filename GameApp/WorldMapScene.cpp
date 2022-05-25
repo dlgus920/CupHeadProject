@@ -122,7 +122,6 @@ void WorldMapScene::ResourcesLoad_Start()
 
 	ResourcesLoadFadeInit();
 }
-
 void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 {
 	if (0 >= UserGame::LoadingFolder)
@@ -155,7 +154,6 @@ void WorldMapScene::ResourcesLoad_Update(float _DeltaTime)
 
 	}
 }
-
 void WorldMapScene::ResourcesLoad_End()
 {
 }

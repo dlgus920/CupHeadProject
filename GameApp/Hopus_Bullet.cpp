@@ -14,6 +14,7 @@ Hopus_Bullet::Hopus_Bullet()
 	, FireImageRenderer{nullptr}
 	, FireCollision{nullptr}
 	, Dummy_(nullptr)
+	, AttackStart_(false)
 {
 }
 
@@ -78,7 +79,7 @@ void Hopus_Bullet::Update(float _DeltaTime)
 			FireImageRenderer[i]->GetTransform()->SetWorldPosition(FireCollision[i]->GetTransform()->GetWorldPosition());
 		}
 
-		if (TimeCheck_ >= 3.f)
+		if (true == AttackStart_)
 		{
 			GetTransform()->SetLocalRotationDegree(float4{ 0.f,0.f, 0.f }); // -> 회전 결과 3초뒤 다시 원위치로 돌아와야함
 
@@ -121,6 +122,7 @@ void Hopus_Bullet::Reset(float4 _PlayerPos)
 	Hopus_Bullet::On();
 	TimeCheck_ = 0.f;
 	Roll_ = true;
+	AttackStart_ = false;
 	Dist_ = 250.f;
 
 	GetTransform()->SetWorldPosition(_PlayerPos);

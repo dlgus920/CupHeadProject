@@ -24,17 +24,29 @@ private:
 
 	GameEngineImageRenderer* FireImageRenderer_[9];
 	GameEngineCollision* FireCollision_[9];
-	GameEngineCollision* ParryCollision_[2];
+
+	class ParryObject* ParryObject_[2];
+
+	float4 Blendlate_;
 
 	int Trumpsorder_[9];
 
-	int ParryNum_;
+	int ParryNum_[2];
 
-	bool Roll_;
+	bool BlendStart_;
+	bool Pos_Up_;
+
+	bool AttackStart_;
+
 	float TimeCheck_;
 
 public:
-	void Reset(float4 _PlayerPos);
+	void Reset();
+
+	void AttackStart()
+	{
+		AttackStart_ = true;
+	}
 
 };
 

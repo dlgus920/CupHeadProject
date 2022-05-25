@@ -33,6 +33,8 @@ private:
 	int CardCount_;
 	float TimeCheck_;
 
+	bool FirstAttack_;
+
 	bool IsDiceTime_;
 
 	bool Ani_Idle_Ready_;

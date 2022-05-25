@@ -3,6 +3,7 @@
 #include "Effect.h"
 
 #include "Hopus_Bullet.h"
+#include "Hopus_Trumps.h"
 #include "Player.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
@@ -20,6 +21,7 @@ Hopus_pocus::Hopus_pocus()
 	, AniEnd_Intro_(false)
 	, AniEnd_Attack_(false)
 	, AniEnd_Attack_End_(false)
+	, Houpus_AIPattern_(false)
 
 
 #ifdef _DEBUG
@@ -75,6 +77,9 @@ void Hopus_pocus::Start()
 	Hopus_Bullet_ = GetLevel()->CreateActor<Hopus_Bullet>(); // 미리 만들어두고 필요할때마다 리셋함
 	Hopus_Bullet_->GetTransform()->SetWorldPosition(float4{640.f,-320.f,static_cast<float>(ZOrder::Z01Actor01Bullet01)});
 
+	Hopus_Trumps_ = GetLevel()->CreateActor<Hopus_Trumps>(); // 미리 만들어두고 필요할때마다 리셋함
+	Hopus_Trumps_->GetTransform()->SetWorldPosition(float4{ 640.f,-320.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+
 	//////////////스텟
 	{
 		Hp_ = 100;
@@ -95,9 +100,27 @@ void Hopus_pocus::SpawnSmokeFx()
 
 void Hopus_pocus::Fire()
 {
-	Hopus_Bullet_->Reset(Player::MainPlayer->GetTransform()->GetWorldPosition());
+	if (true == Houpus_AIPattern_)
+	{
+		Hopus_Bullet_->AttackStart();
+	}
+	else
+	{
+		Hopus_Trumps_->AttackStart();
+	}
 }
 
+void Hopus_pocus::FireReady()
+{
+	if (true == Houpus_AIPattern_)
+	{
+		Hopus_Bullet_->Reset(Player::MainPlayer->GetTransform()->GetWorldPosition());
+	}
+	else
+	{
+		Hopus_Trumps_->Reset();
+	}
+}
 
 void Hopus_pocus::AniEnd_Intro()
 {

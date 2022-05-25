@@ -59,6 +59,7 @@ protected:
 public:
 	void Knockout();
 	void ReadyWALLOP();
+	void ReadyWALLOP_DICE();
 	void KnockoutEnd();
 
 protected:

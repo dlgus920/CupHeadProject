@@ -29,10 +29,17 @@ private:
 
 	float Dist_;
 	bool Roll_;
+
+	bool AttackStart_;
+
 	float TimeCheck_;
 
 public:
 	void Reset(float4 _PlayerPos);
 
+	void AttackStart()
+	{
+		AttackStart_ = true;
+	}
 };
 

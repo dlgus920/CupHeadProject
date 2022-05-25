@@ -2,19 +2,20 @@
 #include "Hopus_Trumps.h"
 #include "Effect.h"
 #include "Player.h"
+#include "ParryObject.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
 Hopus_Trumps::Hopus_Trumps()
-	: Roll_(false)
+	: BlendStart_(false)
+	, Pos_Up_(false)
 	, TimeCheck_(0.f)
-	, Dist_(0.f)
 	, FireImageRenderer_{nullptr}
 	, FireCollision_{nullptr}
-	, ParryCollision_{ nullptr }
-	, ParryNum_(0)
+	, ParryNum_{0}
+	, AttackStart_(false)
 {
 }
 
@@ -27,10 +28,10 @@ void Hopus_Trumps::Start()
 	for (int i = 0; i < 9; ++i)
 	{
 		FireImageRenderer_[i] = CreateTransformComponent<GameEngineImageRenderer>();
-		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Clover", 0, 17, 0.04f, true);		
-		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Heart", 18, 35, 0.04f, true);		
-		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Dia", 36, 52, 0.04f, true);		
-		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Spade", 53, 69, 0.04f, true);
+		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Clover", 0, 16, 0.04f, true);		
+		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Heart", 17, 33, 0.04f, true);		
+		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Dia", 34, 50, 0.04f, true);		
+		FireImageRenderer_[i]->CreateLevelAnimation("Rabit_Trumps.png", "Trumps_Spade", 51, 67, 0.04f, true);
 		FireImageRenderer_[i]->GetTransform()->SetLocalScaling(float4{ 90.f, 90.f,1.f });
 
 		FireCollision_[i] = CreateTransformComponent<GameEngineCollision>();
@@ -44,95 +45,132 @@ void Hopus_Trumps::Start()
 		Trumpsorder_[i] = i;
 	}
 
-	ParryCollision_[0] = CreateTransformComponent<GameEngineCollision>();
-	ParryCollision_[0]->SetCollisionType(CollisionType::Rect);
-	ParryCollision_[0]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
-	ParryCollision_[0]->GetTransform()->SetLocalScaling(float4{ 90.f, 100.f,1.f });
+	ParryObject_[0] = GetLevel()->CreateActor<ParryObject>();
+	ParryObject_[0]->ParryCollision = CreateTransformComponent<GameEngineCollision>();
+	ParryObject_[0]->ParryObjectSetColOption(CollisionType::Rect, CollisionGruop::Parry);
+	ParryObject_[0]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
 
-	ParryCollision_[1] = CreateTransformComponent<GameEngineCollision>();
-	ParryCollision_[1]->SetCollisionType(CollisionType::Rect);
-	ParryCollision_[1]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
-	ParryCollision_[1]->GetTransform()->SetLocalScaling(float4{ 90.f, 100.f,1.f });
+	ParryObject_[1] = GetLevel()->CreateActor<ParryObject>();
+	ParryObject_[1]->ParryCollision = CreateTransformComponent<GameEngineCollision>();
+	ParryObject_[1]->ParryObjectSetColOption(CollisionType::Rect, CollisionGruop::Parry);
+	ParryObject_[1]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+
+	Blendlate_ = { 1.f,1.f,1.f,0.f };
+
+	ParryObject_[0]->Off();
+	ParryObject_[1]->Off();
 
 	Hopus_Trumps::Off();
 }
 
 void Hopus_Trumps::Update(float _DeltaTime)
 {
-	if (true == Roll_)
+	if (false == BlendStart_)
 	{
-		GetTransform()->SetWorldMove(float4{0.f,100.f,0.f}*_DeltaTime);
+		Blendlate_.a += _DeltaTime;
 
-		if (TimeCheck_ >= 3.f)
+		if (Blendlate_.a > 1.f)
 		{
-			GetTransform()->SetLocalRotationDegree(float4{ 0.f,0.f, 0.f }); // -> 회전 결과 3초뒤 다시 원위치로 돌아와야함
+			Blendlate_.a = 1.f;
 
-			Roll_ = false; 
+			BlendStart_ = false;
+		}
+
+		for (int i = 0; i < 9; ++i)
+		{
+			FireImageRenderer_[i]->SetResultColor(Blendlate_);
 		}
 	}
 
-	else
+	if (true == AttackStart_)
 	{
-		if (Dist_ <= 25.f)
-		{
-			Off(); 
+		TimeCheck_ += _DeltaTime;
 
-			Effect* Boom = GetLevel()->CreateActor<Effect>();
-			Boom->EffectAddAnimationActor("Rabit_Bomb.png", "Rabit_Bomb", float4{398.f,592.f,1.f}, 0, 15, 0.04f, false);
-			Boom->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
+		if (true == Pos_Up_)
+		{
+			GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
+			ParryObject_[0]->GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
+			ParryObject_[1]->GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
+		}
+		else
+		{
+			GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);			
+			ParryObject_[0]->GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);
+			ParryObject_[1]->GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);
 		}
 
-		for (int i = 0; i < 8; ++i)
+		if (TimeCheck_ > 3.f)
 		{
+			Off();
+		}
+
+		if (true == ParryObject_[0]->Parry_)
+		{
+			FireImageRenderer_[ParryNum_[0]]->Off();
+			FireCollision_[ParryNum_[0]]->Off();
+		}
+
+		if (true == ParryObject_[1]->Parry_)
+		{
+			FireImageRenderer_[ParryNum_[1]]->Off();
+			FireCollision_[ParryNum_[1]]->Off();
 		}
 	}
 }
 
-void Hopus_Trumps::Reset(float4 _Pos)
+void Hopus_Trumps::Reset()
 {
-	Hopus_Trumps::On();
-	TimeCheck_ = 0.f;
-	Roll_ = true;
-
-	GetTransform()->SetWorldPosition(_Pos);
-
-	int temp = 0;
 	{
-		//int rand = Rand_.RandomInt(0, 8);
-		//int rand2 = Rand_.RandomInt(0, 8);
+		Hopus_Trumps::On();
+		TimeCheck_ = 0.f;
+		BlendStart_ = false;
+		AttackStart_ = false;
+		Blendlate_.a = 0.f;
 
+		for (int i = 0; i < 9; ++i)
+		{
+			FireImageRenderer_[i]->On();
+			FireCollision_[i]->On();
+		}
 
-		//for (int i = 0; i < 50; ++i)
-		//{
-		//	temp = Trumpsorder_[rand];
-		//	Trumpsorder_[rand] = Trumpsorder_[rand2];
-		//	Trumpsorder_[rand2] = temp;
-		//}
+		ParryObject_[0]->On();
+		ParryObject_[1]->On();
+
+		ParryObject_[0]->Parry_ = false;
+		ParryObject_[1]->Parry_ = false;
 	}
 
-
-	//TODO : ParryObject 시스템과 무관하다는것이 문제, 해결해야함
-	// Parry 컬리젼을 만들지 말고 더미의 ParryObject를 만들고, 그새끼가 parry 한거 인식해서 렌더러 꺼주면 될듯
-
+	if (true == Pos_Up_)
+	{
+		GetTransform()->SetWorldPosition(float4{45.f,-45.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+		Pos_Up_ = false;
+	}
+	else
+	{
+		GetTransform()->SetWorldPosition(float4{45.f,-675.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+		Pos_Up_ = true;
+	}
 
 	{
-		ParryNum_ = Rand_.RandomInt(0, 4);
+		ParryNum_[0] = Rand_.RandomInt(0, 4);
+		ParryNum_[1] = ParryNum_[0] + Rand_.RandomInt(3, 4);
 
-		temp = ParryNum_ + Rand_.RandomInt(3, 4);
+		FireImageRenderer_[ParryNum_[0]]->SetChangeAnimation("Trumps_Heart");
+		FireImageRenderer_[ParryNum_[1]]->SetChangeAnimation("Trumps_Heart");
 
-		FireImageRenderer_[ParryNum_]->SetChangeAnimation("Trumps_Heart");
-		FireImageRenderer_[temp]->SetChangeAnimation("Trumps_Heart");
-
-		ParryCollision_[ParryNum_]->GetTransform()->SetLocalPosition(FireImageRenderer_[ParryNum_]->GetTransform()->GetLocalPosition());
-		ParryCollision_[temp]->GetTransform()->SetLocalPosition(FireImageRenderer_[temp]->GetTransform()->GetLocalPosition());
+		FireCollision_[ParryNum_[0]]->Off();
+		FireCollision_[ParryNum_[1]]->Off();
 
 		int aniorder = Rand_.RandomInt(0, 2);
 
 		for (int i = 0; i < 9; ++i)
 		{
-			if (i == ParryNum_)
+			FireImageRenderer_[i]->GetTransform()->SetLocalPosition(float4{ 90.f * i,0.f,0.f });
+			FireCollision_[i]->GetTransform()->SetLocalPosition(float4{ 90.f * i,0.f,0.f });
+
+			if (i == ParryNum_[0])
 				continue;
-			if (i == temp)
+			if (i == ParryNum_[1])
 				continue;
 
 			switch (aniorder)
@@ -157,4 +195,6 @@ void Hopus_Trumps::Reset(float4 _Pos)
 		}
 	}
 
+	ParryObject_[0]->GetTransform()->SetWorldPosition(FireImageRenderer_[ParryNum_[0]]->GetTransform()->GetWorldPosition());
+	ParryObject_[1]->GetTransform()->SetWorldPosition(FireImageRenderer_[ParryNum_[1]]->GetTransform()->GetWorldPosition());
 }

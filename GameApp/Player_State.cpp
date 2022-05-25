@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "Map.h"
 
-#include "PerryObjectDice.h"
+#include "ParryObject.h"
 
 #include <GameEngine/GameEngineCore.h>
 
@@ -240,10 +240,8 @@ void Player::Jump_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				PerryObjectDice* PerryObject = dynamic_cast<PerryObjectDice*>(PlayerParryCollision->
-					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor());
-
-				PerryObject ->Parry();
+				dynamic_cast<ParryObject*>(PlayerParryCollision->
+					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor()) ->Parry_ = true;
 
 				ChangeAnimation("Cup-Jump-Parry");
 
@@ -251,19 +249,22 @@ void Player::Jump_Update(float _DeltaTime)
 
 				GameEngineImageRenderer* ParryRenderer;
 
+				float4 pos = PlayerParryCollision->GetTransform()->GetWorldPosition();
+				pos.z += 1.f;
+
 				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
 				ParryRenderer->GetTransform()->SetLocalScaling(float4{712.f,712.f} );
-				ParryRenderer->GetTransform()->SetWorldPosition(PlayerParryCollision->GetTransform()->GetWorldPosition());
+				ParryRenderer->GetTransform()->SetWorldPosition(pos);
 				ParryRenderer->SetLevelImage("ParryEffect_A.png");
 
 				ParryRenderer = ParryEffect->CreateTransformComponent<GameEngineImageRenderer>();
 				ParryRenderer->GetTransform()->SetLocalScaling(float4{ 712.f,712.f });
-				ParryRenderer->GetTransform()->SetWorldPosition(PlayerParryCollision->GetTransform()->GetWorldPosition());
+				ParryRenderer->GetTransform()->SetWorldPosition(pos);
 				ParryRenderer->SetLevelImage("ParryEffect_B.png");
 
 				EffectParry();
 
-				Bottom_Card_->Increase();
+				UIBase::UIBase_->GetBottom_Card()->Increase();
 				
 				Jumpend_ = false;
 				LongJump_ = false;
@@ -290,6 +291,8 @@ void Player::Jump_Update(float _DeltaTime)
 			}
 
 			GameEngineCore::SetTimeRate(1.f);
+			Parrytimecheck_ = 0.f;
+			Parry_ = false;
 		}
 
 		if (TimeCheck_ < 0.35f)
@@ -384,6 +387,12 @@ void Player::Jump_Update(float _DeltaTime)
 
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
+
+					if (true == ColState_Ground_Floar_)
+					{
+						State_.ChangeState("Idle");
+						return;
+					}
 
 					if (true == ColState_Ground_Bot_)
 					{
@@ -498,13 +507,14 @@ void Player::Fall_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				dynamic_cast<PerryObjectDice*>(PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry();
+				dynamic_cast<ParryObject*>(PlayerParryCollision->
+					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry_ = true;
 
 				ChangeAnimation("Cup-Jump-Parry");
 
 				EffectParry();
 
-				Bottom_Card_->Increase();
+				UIBase::UIBase_->GetBottom_Card()->Increase();
 
 				Jumpend_ = false;
 				LongJump_ = false;
@@ -860,7 +870,7 @@ void Player::Hit_Start()
 
 	HitInvince_ = true;
 
-	Bottom_HP_->HPDecrease();
+	UIBase::UIBase_->GetBottom_HP()->HPDecrease();
 	TimeCheck_ = 0.f;
 
 	JumpAcc_ = C_JumpSpeed0_ / 0.35f;

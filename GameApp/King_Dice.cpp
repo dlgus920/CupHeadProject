@@ -26,6 +26,7 @@ King_Dice::King_Dice()
 	, AniEnd_Clap_(false)
 	, Ani_Idle_Ready_(false)
 	, Defeat_(false)
+	, FirstAttack_(true)
 {
 }
 
@@ -197,10 +198,10 @@ void King_Dice::SpawnCard()
 {
 	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
-	_Dice_Card->ImageRenderer->CreateAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
+	_Dice_Card->ImageRenderer->CreateLevelAnimation("Card_Club.png", "Card_Club", 0, 20, 0.04f);
 	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Club");
 
-	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
+	_Dice_Card->ParryCollision->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
 
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
@@ -216,7 +217,7 @@ void King_Dice::SpawnCard()
 		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
 	}
 
-	_Dice_Card->Collision->GetTransform()->SetLocalScaling(float4{ 80,210, 1.f });
+	_Dice_Card->ParryCollision->GetTransform()->SetLocalScaling(float4{ 80,210, 1.f });
 
 	Cardvector_.push_back(_Dice_Card);
 }
@@ -225,10 +226,10 @@ void King_Dice::SpawnParryCard()
 {
 	Dice_Card* _Dice_Card = GetLevel()->CreateActor<Dice_Card>();
 
-	_Dice_Card->ImageRenderer->CreateAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
+	_Dice_Card->ImageRenderer->CreateLevelAnimation("Card_Hraet.png", "Card_Hraet", 0, 20, 0.04f);
 	_Dice_Card->ImageRenderer->SetChangeAnimation("Card_Hraet");
 
-	_Dice_Card->Collision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+	_Dice_Card->ParryCollision->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
 
 	if (Hand_.Hand_Dir_ == Hand_Dir::Left)
 	{		
@@ -245,7 +246,7 @@ void King_Dice::SpawnParryCard()
 		_Dice_Card->SetCardMove(float4{ -400.f,0.f });
 	}
 
-	_Dice_Card-> Collision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
+	_Dice_Card->ParryCollision->GetTransform()->SetLocalScaling(float4{ 150.f,230.f, 1.f });
 
 	Cardvector_.push_back(_Dice_Card);
 }

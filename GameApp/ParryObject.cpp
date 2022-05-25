@@ -1,8 +1,11 @@
 #include "PreCompile.h"
 #include "ParryObject.h"
 
+#include <GameEngine/GameEngineCollision.h>
+
 ParryObject::ParryObject() 
 	: Parry_(false)
+	, ParryCollision(nullptr)
 {
 }
 
@@ -18,7 +21,8 @@ void ParryObject::Update(float _DeltaTime)
 {
 }
 
-void ParryObject::Parry()
+void ParryObject::ParryObjectSetColOption(CollisionType _CollisionType, CollisionGruop _CollisionGruop)
 {
-	Parry_ = true;
+	ParryCollision->SetCollisionType(_CollisionType);
+	ParryCollision->SetCollisionGroup<CollisionGruop>(_CollisionGruop);
 }

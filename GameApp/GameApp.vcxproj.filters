@@ -158,6 +158,9 @@
     <ClCompile Include="Hopus_Trumps.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="OldFilrm.cpp">
+      <Filter>00. Base\01. Actor\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Precom">
@@ -411,6 +414,9 @@
     </ClInclude>
     <ClInclude Include="Hopus_Trumps.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="OldFilrm.h">
+      <Filter>00. Base\01. Actor\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

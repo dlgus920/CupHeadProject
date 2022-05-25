@@ -1,14 +1,9 @@
 #pragma once
-#include <GameEngine/GameEngineImageRenderer.h>
-#include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineActor.h>
 
-// 분류 : 
-// 용도 : 
-// 설명 : 
 class ParryObject : public GameEngineActor
 {
-protected:
+public:
 	ParryObject(); 
 	~ParryObject(); 
 
@@ -22,10 +17,11 @@ protected:
 	virtual void Start();
 	virtual void Update(float _DeltaTime);
 
-protected:
+public:
+	class GameEngineCollision* ParryCollision;
 	bool Parry_;
 
 public:
-	void Parry();
+	void ParryObjectSetColOption(CollisionType _CollisionType, CollisionGruop _CollisionGruop);
 };
 

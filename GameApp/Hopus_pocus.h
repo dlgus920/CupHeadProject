@@ -23,10 +23,13 @@ private:
 	GameEngineImageRenderer* Hopus_pocusImageRenderer_;
 
 	class Hopus_Bullet* Hopus_Bullet_;
+	class Hopus_Trumps* Hopus_Trumps_;
 
 	bool Defeat_;
 
 	float TimeCheck_;
+
+	bool Houpus_AIPattern_;
 
 	bool AniEnd_Idle_;
 	bool AniEnd_Intro_;
@@ -59,6 +62,7 @@ private:
 	void SpawnSmokeFx();
 
 	void Fire();
+	void FireReady();
 
 
 private:

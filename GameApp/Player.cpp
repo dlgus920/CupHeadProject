@@ -50,8 +50,6 @@ Player::Player()
 	, PlayerMovingCollision_Bot(nullptr)
 	, PlayerParryCollision(nullptr)
 	, PlayerImageRenderer(nullptr)
-	, Bottom_Card_(nullptr)
-	, Bottom_HP_(nullptr)
 	, ParryEffect(nullptr)
 	, BulletType_(BulletType::Default)
 	, ShootingDir_()
@@ -100,7 +98,7 @@ const std::string Player::CheckState()
 	}
 	if (true == KeyState_Bomb)
 	{
-		if (Bottom_Card_->GetCardCount() != 0)
+		if (UIBase::UIBase_->GetBottom_Card()->GetCardCount() != 0)
 		{
 			return "Bomb";
 		}

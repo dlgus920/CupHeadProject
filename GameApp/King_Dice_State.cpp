@@ -2,6 +2,7 @@
 #include "King_Dice.h"
 #include "DicePaclace.h"
 #include "PerryObjectDice.h"
+#include "UserGame.h"
 
 void King_Dice::Intro_Start()
 {
@@ -47,6 +48,7 @@ void King_Dice::Idle_Update(float _DeltaTime)
 			}
 		}
 	}
+
 	else if (true == BattleState_.IsCurStateName("BattleState_Dice"))
 	{
 		TimeCheck_ += _DeltaTime;
@@ -70,6 +72,12 @@ void King_Dice::Idle_End_()
 
 void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
+	if (true == FirstAttack_)
+	{
+		GetLevel<SceneBase>()->ReadyWALLOP_DICE();
+		FirstAttack_ = false;
+	}
+
 	CardClear();
 
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
@@ -283,7 +291,6 @@ void King_Dice::BattleState_Battle_End()
 
 void King_Dice::BattleState_Dice_Start()
 {
-
 	MonsterHitBox->Off();
 }
 void King_Dice::BattleState_Dice_Update( float _DeltaTime)
@@ -291,6 +298,12 @@ void King_Dice::BattleState_Dice_Update( float _DeltaTime)
 	//IdleNextState_ = "Attack";
 	//BattleState_.ChangeState("BattleState_Battle");
 	//return;
+
+	if (true == UserGame::StageInfo_.Dice_ClearStage_[4])
+	{
+		BattleState_.ChangeState("BattleState_Battle");
+		return;
+	}
 
 	if (false == IsDiceTime_) 
 	{

@@ -1,7 +1,5 @@
 #pragma once
 #include "ParryObject.h"
-#include <GameEngine/GameEngineImageRenderer.h>
-#include <GameEngine/GameEngineCollision.h>
 
 class Dice_Card : public ParryObject
 {
@@ -16,8 +14,7 @@ public:
 	Dice_Card& operator=(const Dice_Card&& _other) = delete;
 
 private:
-	GameEngineImageRenderer* ImageRenderer;
-	GameEngineCollision* Collision;
+	class GameEngineImageRenderer* ImageRenderer;
 	float4 CardMove_;
 
 private:

@@ -1,9 +1,11 @@
 #include "PreCompile.h"
 #include "PerryObjectDice.h"
 
+#include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineImageRenderer.h>
+
 PerryObjectDice::PerryObjectDice()
 	: DiceNumber_(DiceNumber::None)
-	, ObjectCollision_(nullptr)
 	, ObjectRenderer_(nullptr)
 	, King_Dice_(nullptr)
 	, Rolled_(false)
@@ -18,12 +20,11 @@ PerryObjectDice::~PerryObjectDice() // default destructer 디폴트 소멸자
 
 void PerryObjectDice::Start()
 {
-	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
-	ObjectCollision_ = CreateTransformComponent<GameEngineCollision>();
+	ParryCollision = CreateTransformComponent<GameEngineCollision>();
+	ParryCollision->GetTransform()->SetLocalScaling(float4{100.f,100.f,1.f });
+	ParryObjectSetColOption(CollisionType::Rect, CollisionGruop::Parry);
 
-	ObjectCollision_->GetTransform()->SetLocalScaling(float4{100.f,100.f,1.f });
-	ObjectCollision_->SetCollisionType(CollisionType::Rect);
-	ObjectCollision_->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+	ObjectRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 
 	ObjectRenderer_->CreateLevelAnimation("ParryObjectDice.png","Idle",50,73,0.05,true);
 
@@ -60,7 +61,7 @@ void PerryObjectDice::Start()
 
 void PerryObjectDice::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(ObjectCollision_->GetTransform(), CollisionType::Rect);
+	GetLevel()->PushDebugRender(ParryCollision->GetTransform(), CollisionType::Rect);
 
 	if (true == Parry_)
 	{

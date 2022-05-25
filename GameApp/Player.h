@@ -65,8 +65,8 @@ private: //Member
 
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-	Bottom_Card* Bottom_Card_;
-	Bottom_HP* Bottom_HP_;
+	//Bottom_Card* Bottom_Card_;
+	//Bottom_HP* Bottom_HP_;
 
 	GameEngineFSM<Player> State_;
 	GameEngineFSM<Player> GameState_;

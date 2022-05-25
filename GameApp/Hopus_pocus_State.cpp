@@ -3,6 +3,7 @@
 #include "Effect.h"
 
 #include "Stage_Hopus_pocus.h"
+#include "UserGame.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -60,9 +61,21 @@ void Hopus_pocus::Idle_End()
 void Hopus_pocus::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
 	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Attack");
+
+	if (true == Houpus_AIPattern_)
+	{
+		Houpus_AIPattern_ = false;
+	}
+	else
+	{
+		Houpus_AIPattern_ = true;
+	}
+
+	FireReady();
 }
 void Hopus_pocus::Attack_Update( float _DeltaTime)
 {
+
 	if (Hp_ < 0)
 	{
 		State_.ChangeState("Defeat");
@@ -119,8 +132,6 @@ void Hopus_pocus::Defeat_Update(float _DeltaTime)
 
 	TimeCheck_ += _DeltaTime;
 
-	static bool updown = true;
-
 	if (TimeCheck_ >= 0.2f)
 	{
 		TimeCheck_ = 0.f;
@@ -129,21 +140,9 @@ void Hopus_pocus::Defeat_Update(float _DeltaTime)
 		pos.y - 250.f;
 
 		EffectDefeatRandom(250.f, pos);
-
-		if (updown)
-			updown = false;
-		else
-			updown = true;
 	} 
 
-	if (updown)
-	{
-		Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,400.f * _DeltaTime });
-	}
-	else
-	{
-		Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,-400.f * _DeltaTime });
-	}
+
 }
 void Hopus_pocus::Defeat_End()
 {

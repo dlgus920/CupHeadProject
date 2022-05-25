@@ -21,8 +21,7 @@ public:
 	PerryObjectDice& operator=(const PerryObjectDice&& _other) = delete;
 
 private:	// member Var
-	GameEngineCollision* ObjectCollision_;
-	GameEngineImageRenderer* ObjectRenderer_;
+	class GameEngineImageRenderer* ObjectRenderer_;
 
 	DiceNumber DiceNumber_;
 	bool Rolled_;
