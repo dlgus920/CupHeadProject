@@ -72,6 +72,8 @@ Player::~Player()
 
 void Player::Start()
 {
+	UIBase::UIBase_->UIStart();
+
 	ComponentSetting();
 	AnimationSetting();
 	KeySetting();

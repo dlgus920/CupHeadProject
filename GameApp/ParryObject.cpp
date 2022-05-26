@@ -6,6 +6,7 @@
 ParryObject::ParryObject() 
 	: Parry_(false)
 	, ParryCollision(nullptr)
+	, TimeCheck_(0.f)
 {
 }
 
@@ -19,6 +20,23 @@ void ParryObject::Start()
 
 void ParryObject::Update(float _DeltaTime)
 {
+	if (Parry_ = true)
+	{
+		TimeCheck_ += _DeltaTime;
+
+		if (TimeCheck_ > 0.5f)
+		{
+			Parry_ = false;
+			TimeCheck_ = 0.f;
+		}
+	}
+}
+
+void ParryObject::Parry(GameEngineCollision* ParriedCollision)
+{
+	Parry_ = true;
+
+	ParryCollision = ParriedCollision;
 }
 
 void ParryObject::ParryObjectSetColOption(CollisionType _CollisionType, CollisionGruop _CollisionGruop)

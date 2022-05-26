@@ -240,8 +240,8 @@ void Player::Jump_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				dynamic_cast<ParryObject*>(PlayerParryCollision->
-					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor()) ->Parry_ = true;
+				GameEngineCollision* parrycol = PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry));
+				dynamic_cast<ParryObject*>(parrycol->GetActor())->Parry(parrycol);
 
 				ChangeAnimation("Cup-Jump-Parry");
 
@@ -507,8 +507,10 @@ void Player::Fall_Update(float _DeltaTime)
 			{
 				Parry_ = true; // 페리중이다.
 
-				dynamic_cast<ParryObject*>(PlayerParryCollision->
-					CollisionPtr(static_cast<int>(CollisionGruop::Parry))->GetActor())->Parry_ = true;
+				GameEngineCollision* parrycol = PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry));
+				dynamic_cast<ParryObject*>(parrycol->GetActor())->Parry(parrycol);
+
+
 
 				ChangeAnimation("Cup-Jump-Parry");
 

@@ -85,36 +85,6 @@ void SceneBase::PlayerResourceLoad()
 			TextureDir.MoveParent(GV_GAMEFILENAME);
 			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("UI");
-
-			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
-
-			for (size_t i = 0; i < AllFile.size(); i++)
-			{
-				GameEngineTextureManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
-			}
-			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().FindLevelRes("Bottom_HP.png");
-			Texture->Cut(6, 2);
-
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BottomCard_Dia.png");
-			Texture->Cut(6, 1);
-
-			Texture = GameEngineTextureManager::GetInst().FindLevelRes("BottomCard_Spade.png");
-			Texture->Cut(6, 1);
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("CharactorSprite");
 			{
 				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -223,6 +193,7 @@ void SceneBase::ResourcesLoadFadeInit()
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.f, 0.f, static_cast<float>(ZOrder::Z00Camera00)));
 
+	CreateActor<UIBase>()->OldFilrmStart();
 }
 
 void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)

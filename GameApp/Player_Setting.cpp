@@ -38,10 +38,6 @@ void Player::DefalutSetting()
 	ShootingPos_[static_cast<int>(ShootingDir::Down_Right)] = float4{ 25.f,-130.f,static_cast<int>(ZOrder::Z01Actor01Bullet01) };
 
 	{
-		UIBase::UIBase_ = GetLevel()->CreateActor<UIBase>();
-
-		UIBase::UIBase_->TurnOnBotUI();
-
 		//Bottom_Card_ = GetLevel()->CreateActor<Bottom_Card>();
 		//Bottom_Card_->GetTransform()->SetWorldPosition(float4{ 110.f,-700.f,static_cast<float>(ZOrder::Z00UI) });
 

@@ -16,8 +16,8 @@ Bottom_HP::~Bottom_HP() // default destructer 디폴트 소멸자
 void Bottom_HP::Start()
 {
 	HPBarRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
-	HPBarRenderer_->CreateLevelAnimation("Bottom_HP.png","Idle", 0, 10, 999999.f, false);
-	HPBarRenderer_->CreateLevelAnimation("Bottom_HP.png","HP1", 1, 3, 0.05f, true);
+	HPBarRenderer_->CreateAnimation("Bottom_HP.png","Idle", 0, 10, 999999.f, false);
+	HPBarRenderer_->CreateAnimation("Bottom_HP.png","HP1", 1, 3, 0.05f, true);
 
 	HPBarRenderer_->SetChangeAnimation("Idle");
 

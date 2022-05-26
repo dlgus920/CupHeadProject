@@ -5,6 +5,7 @@
 #include "UserGame.h"
 
 #include "Image.h"
+#include "UIBase.h"
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
 
@@ -29,6 +30,8 @@ void TitleScene::LevelStart()
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
+
+	//CreateActor<UIBase>()->OldFilrmStart();
 }
 
 void TitleScene::Init_Update(float _DeltaTime)

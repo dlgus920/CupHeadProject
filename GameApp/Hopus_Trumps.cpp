@@ -45,20 +45,12 @@ void Hopus_Trumps::Start()
 		Trumpsorder_[i] = i;
 	}
 
-	ParryObject_[0] = GetLevel()->CreateActor<ParryObject>();
-	ParryObject_[0]->ParryCollision = CreateTransformComponent<GameEngineCollision>();
-	ParryObject_[0]->ParryObjectSetColOption(CollisionType::Rect, CollisionGruop::Parry);
-	ParryObject_[0]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
-
-	ParryObject_[1] = GetLevel()->CreateActor<ParryObject>();
-	ParryObject_[1]->ParryCollision = CreateTransformComponent<GameEngineCollision>();
-	ParryObject_[1]->ParryObjectSetColOption(CollisionType::Rect, CollisionGruop::Parry);
-	ParryObject_[1]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
-
 	Blendlate_ = { 1.f,1.f,1.f,0.f };
 
-	ParryObject_[0]->Off();
-	ParryObject_[1]->Off();
+	for (int i = 0; i < 9; ++i)
+	{
+		FireImageRenderer_[i]->SetResultColor(Blendlate_);
+	}
 
 	Hopus_Trumps::Off();
 }
@@ -89,14 +81,10 @@ void Hopus_Trumps::Update(float _DeltaTime)
 		if (true == Pos_Up_)
 		{
 			GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
-			ParryObject_[0]->GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
-			ParryObject_[1]->GetTransform()->SetWorldMove(float4{ 0.f,300.f,0.f }*_DeltaTime);
 		}
 		else
 		{
-			GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);			
-			ParryObject_[0]->GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);
-			ParryObject_[1]->GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);
+			GetTransform()->SetWorldMove(float4{ 0.f,-300.f,0.f }*_DeltaTime);
 		}
 
 		if (TimeCheck_ > 3.f)
@@ -104,18 +92,28 @@ void Hopus_Trumps::Update(float _DeltaTime)
 			Off();
 		}
 
-		if (true == ParryObject_[0]->Parry_)
+		if (true == Parry_)
 		{
-			FireImageRenderer_[ParryNum_[0]]->Off();
-			FireCollision_[ParryNum_[0]]->Off();
-		}
+			for (int i = 0; i < 9; ++i)
+			{
+				if (ParryCollision == FireCollision_[i])
+				{
+					FireImageRenderer_[i]->Off();
+					FireCollision_[i]->Off();
 
-		if (true == ParryObject_[1]->Parry_)
-		{
-			FireImageRenderer_[ParryNum_[1]]->Off();
-			FireCollision_[ParryNum_[1]]->Off();
+					ParryCollision = nullptr;
+					break;
+				}
+			}
 		}
 	}
+}
+
+void Hopus_Trumps::Parry(GameEngineCollision* ParriedCollision)
+{
+	Parry_ = true;
+
+	ParryCollision = ParriedCollision;
 }
 
 void Hopus_Trumps::Reset()
@@ -131,13 +129,8 @@ void Hopus_Trumps::Reset()
 		{
 			FireImageRenderer_[i]->On();
 			FireCollision_[i]->On();
+			FireImageRenderer_[i]->SetResultColor(Blendlate_);
 		}
-
-		ParryObject_[0]->On();
-		ParryObject_[1]->On();
-
-		ParryObject_[0]->Parry_ = false;
-		ParryObject_[1]->Parry_ = false;
 	}
 
 	if (true == Pos_Up_)
@@ -158,6 +151,14 @@ void Hopus_Trumps::Reset()
 		FireImageRenderer_[ParryNum_[0]]->SetChangeAnimation("Trumps_Heart");
 		FireImageRenderer_[ParryNum_[1]]->SetChangeAnimation("Trumps_Heart");
 
+		FireCollision_[ParryNum_[0]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		FireCollision_[ParryNum_[0]]->SetCollisionType(CollisionType::Rect);
+		FireCollision_[ParryNum_[0]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+
+		FireCollision_[ParryNum_[1]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		FireCollision_[ParryNum_[1]]->SetCollisionType(CollisionType::Rect);
+		FireCollision_[ParryNum_[1]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+
 		FireCollision_[ParryNum_[0]]->Off();
 		FireCollision_[ParryNum_[1]]->Off();
 
@@ -172,6 +173,10 @@ void Hopus_Trumps::Reset()
 				continue;
 			if (i == ParryNum_[1])
 				continue;
+
+			FireCollision_[i]->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
+			FireCollision_[i]->SetCollisionType(CollisionType::Rect);
+			FireCollision_[i]->GetTransform()->SetLocalScaling(float4{ 70.f, 70.f,1.f });
 
 			switch (aniorder)
 			{
@@ -194,7 +199,4 @@ void Hopus_Trumps::Reset()
 			}
 		}
 	}
-
-	ParryObject_[0]->GetTransform()->SetWorldPosition(FireImageRenderer_[ParryNum_[0]]->GetTransform()->GetWorldPosition());
-	ParryObject_[1]->GetTransform()->SetWorldPosition(FireImageRenderer_[ParryNum_[1]]->GetTransform()->GetWorldPosition());
 }

@@ -25,15 +25,17 @@ private:
 	class OldFilrm* OldFilrm_;
 	class Bottom_Card* Bottom_Card_;
 	class Bottom_HP* Bottom_HP_;
-	
-	class CameraActor* Camera_;
 
-protected:
+	class CameraComponent* CameraComponent;
+
 	class Player* Player_;
 
 public:
 	void TurnOffBotUI();
 	void TurnOnBotUI();
+
+	void OldFilrmStart();
+	void UIStart();
 
 	Bottom_Card* GetBottom_Card();
 	Bottom_HP* GetBottom_HP();
@@ -47,6 +49,5 @@ protected:
 	{
 		Player_ = _Player;
 	}
-
 };
 

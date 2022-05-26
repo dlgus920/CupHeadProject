@@ -57,13 +57,44 @@ void UserGame::ResourcesLoad()
 	//		GameEngineSoundManager::GetInst().Load(AllFile[i].GetFullPath());
 	//	}
 	//}
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Image");
+			TextureDir.MoveChild("CommonImage");
+			TextureDir.MoveChild("UI");
+
+			std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+			for (size_t i = 0; i < AllFile.size(); i++)
+			{
+				GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+			}
+			GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("Bottom_HP.png");
+			Texture->Cut(6, 2);
+
+			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Dia.png");
+			Texture->Cut(6, 1);
+
+			Texture = GameEngineTextureManager::GetInst().Find("BottomCard_Spade.png");
+			Texture->Cut(6, 1);
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
 
 	{
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent(GV_GAMEFILENAME);
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
-		TextureDir.MoveChild("Effect");
+		TextureDir.MoveChild("CommonImage");
 
 		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
 
@@ -80,6 +111,7 @@ void UserGame::ResourcesLoad()
 		TextureDir.MoveParent(GV_GAMEFILENAME);
 		TextureDir.MoveChild("Resources");
 		TextureDir.MoveChild("Image");
+		TextureDir.MoveChild("CommonImage");
 		TextureDir.MoveChild("Loading");
 
 		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
@@ -90,6 +122,8 @@ void UserGame::ResourcesLoad()
 		}
 		GameEngineTexture* Texture = GameEngineTextureManager::GetInst().Find("HourGlass.png");
 		Texture->Cut(16, 3);
+
+		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
 	}
 	//AppShaderLoad(); 
 }

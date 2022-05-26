@@ -12,6 +12,7 @@ UIBase::UIBase()
 	, Bottom_HP_(nullptr)
 	, OldFilrm_(nullptr)
 	, Player_(nullptr)
+	, CameraComponent(nullptr)
 {
 
 }
@@ -33,6 +34,27 @@ void UIBase::TurnOnBotUI()
 	Bottom_HP_->On();
 }
 
+void UIBase::OldFilrmStart()
+{	
+	OldFilrm_ = GetLevel()->CreateActor<OldFilrm>();
+
+	OldFilrm_->GetTransform()->AttachTransform(GetTransform());
+}
+
+void UIBase::UIStart()
+{	
+	Bottom_Card_ = GetLevel()->CreateActor<Bottom_Card>();
+	Bottom_HP_=	GetLevel()->CreateActor<Bottom_HP>();
+
+	Bottom_Card_->GetTransform()->AttachTransform(GetTransform());
+	Bottom_HP_->GetTransform()->AttachTransform(GetTransform());
+
+	//Bottom_Card_->GetTransform()->SetLocalPosition(float4{ 110.f,-700.f,0.f });
+	Bottom_Card_->GetTransform()->SetLocalPosition(float4{ -530.f,-330.f,0.f });
+	//Bottom_HP_->GetTransform()->SetLocalPosition(float4{ 50.f,-700.f,0.f });
+	Bottom_HP_->GetTransform()->SetLocalPosition(float4{ -590.f,-330.f,0.f });
+}
+
 Bottom_Card* UIBase::GetBottom_Card()
 {
 	return Bottom_Card_;
@@ -45,19 +67,18 @@ Bottom_HP* UIBase::GetBottom_HP()
 
 void UIBase::Start()
 {
-	GetTransform()->SetWorldPosition(float4{ 0.f,0.f,static_cast<float>(ZOrder::Z00Camera00) });
+	UIBase_ = this;
 
-	OldFilrm_ = GetLevel()->CreateActor<OldFilrm>();
-	Bottom_Card_ = GetLevel()->CreateActor<Bottom_Card>();
-	Bottom_HP_=	GetLevel()->CreateActor<Bottom_HP>();
+	GetTransform()->SetWorldPosition(float4{ 0.f,0.f,-100.f });
 
-	Bottom_Card_->GetTransform()->SetWorldPosition(float4{ 110.f,-700.f,static_cast<float>(ZOrder::Z00UI) });
-	Bottom_HP_->GetTransform()->SetWorldPosition(float4{ 50.f,-700.f,static_cast<float>(ZOrder::Z00UI) });
-
-	Camera_ = GetLevel()->GetMainCameraActor();
+	CameraComponent = GetLevel()->GetMainCamera();
 }
 
 void UIBase::Update(float _DeltaTime)
 {
+	float4 Pos = CameraComponent->GetTransform()->GetWorldPosition();
+	Pos.z = static_cast<float>(ZOrder::Z00UI);
 
+	GetTransform()->SetWorldPosition(Pos);
+	OldFilrm_->GetTransform()->SetWorldMove(float4{ 0.f,0.f,-10.f });
 }

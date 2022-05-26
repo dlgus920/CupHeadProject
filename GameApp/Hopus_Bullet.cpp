@@ -72,7 +72,7 @@ void Hopus_Bullet::Update(float _DeltaTime)
 		GetTransform()->SetWorldPosition(Pos);
 		TimeCheck_ += _DeltaTime;
 
-		GetTransform()->SetLocalRotationDegree(float4{0.f,0.f,TimeCheck_ *180.f}); // -> 회전 결과 3초뒤 다시 원위치로 돌아와야함
+		GetTransform()->SetLocalRotationDegree(float4{0.f,0.f,-TimeCheck_ *180.f}); // -> 회전 결과 3초뒤 다시 원위치로 돌아와야함
 
 		for (int i = 0; i < 8; ++i)
 		{

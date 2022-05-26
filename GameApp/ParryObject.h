@@ -18,10 +18,17 @@ protected:
 	virtual void Update(float _DeltaTime);
 
 public:
+
+private:
+	float TimeCheck_;
+
+protected:
 	class GameEngineCollision* ParryCollision;
 	bool Parry_;
 
 public:
+	virtual void Parry(GameEngineCollision* ParriedCollision);
+
 	void ParryObjectSetColOption(CollisionType _CollisionType, CollisionGruop _CollisionGruop);
 };
 

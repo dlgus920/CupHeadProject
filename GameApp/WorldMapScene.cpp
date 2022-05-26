@@ -73,24 +73,6 @@ void WorldMapScene::ResourcesLoad_Start()
 		}
 	);
 
-
-	UserGame::LoadingFolder++;
-	GameEngineCore::ThreadQueue.JobPost
-	(
-		[]()
-		{
-			GameEngineDirectory TextureDir;
-			TextureDir.MoveParent(GV_GAMEFILENAME);
-			TextureDir.MoveChild("Resources");
-			TextureDir.MoveChild("Image");
-			TextureDir.MoveChild("Loading");
-
-			GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("ScreenIris"));
-
-			UserGame::LoadingFolder--;
-		}
-	);
-
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(
@@ -194,8 +176,8 @@ void WorldMapScene::LevelLoop_Start()
 
 	{
 		IrisImage_ = CreateActor<Image>();
-		IrisImage_->ImageRenderer_->CreateLevelAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
-		IrisImage_->ImageRenderer_->CreateLevelAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_In", 0.055f, false);
+		IrisImage_->ImageRenderer_->CreateAnimationFolder("ScreenIris", "ScreenIris_Out", 0.055f, false);
 		IrisImage_->ImageRenderer_->SetAnimationReverse("ScreenIris_Out");
 
 		IrisImage_->ImageRenderer_->SetEndCallBack
