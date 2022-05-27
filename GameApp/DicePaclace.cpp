@@ -150,13 +150,13 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 		{
 			if (false == UserGame::StageInfo_.Dice_ClearStage_[2])
 			{
-				GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");
+				//GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");
 
-				GameEngineCore::LevelChange("Stage_Hopus_pocus");
+				//GameEngineCore::LevelChange("Stage_Hopus_pocus");
 
-				//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+				GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
-				//GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+				GameEngineCore::LevelChange("Stage_Mr_Wheezy");
 			}
 			else if (false == UserGame::StageInfo_.Dice_ClearStage_[4])
 			{
