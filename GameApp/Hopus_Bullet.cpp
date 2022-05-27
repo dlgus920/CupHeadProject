@@ -2,6 +2,7 @@
 #include "Hopus_Bullet.h"
 #include "Effect.h"
 #include "Player.h"
+#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -64,6 +65,17 @@ void Hopus_Bullet::Start()
 
 void Hopus_Bullet::Update(float _DeltaTime)
 {
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		for (int i = 0; i < 9; ++i)
+		{
+			if (true == FireCollision[i]->IsUpdate())
+			{
+				GetLevel()->PushDebugRender(FireCollision[i]->GetTransform(), CollisionType::CirCle);
+			}
+		}
+	}
+
 	if (true == Roll_)
 	{
 		float4 Pos = Player::MainPlayer->GetTransform()->GetWorldPosition();

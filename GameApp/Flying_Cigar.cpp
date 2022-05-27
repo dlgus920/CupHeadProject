@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 
 #include "Flying_Cigar.h"
+#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -38,7 +39,10 @@ void Flying_Cigar::Start()
 
 void Flying_Cigar::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(Flying_CigarHitBox_->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		GetLevel()->PushDebugRender(Flying_CigarHitBox_->GetTransform(), CollisionType::Rect);
+	}
 
 	TimeCheck_ += _DeltaTime;
 

@@ -1007,7 +1007,10 @@ void Player::Playing_Start()
 }
 void Player::Playing_Update(float _DeltaTime)
 {
-	KeyUpdate();
+	if (true == Update_State_)
+	{
+		KeyUpdate();
+	}
 	GroundCollisonUpdate();
 	SideCollisonUpdate();
 	ParryCollisonUpdate();

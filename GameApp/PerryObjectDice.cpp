@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "PerryObjectDice.h"
+#include "UserGame.h"
 
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -61,7 +62,10 @@ void PerryObjectDice::Start()
 
 void PerryObjectDice::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(ParryCollision->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		GetLevel()->PushDebugRender(ParryCollision->GetTransform(), CollisionType::Rect);
+	}
 
 	if (true == Parry_)
 	{

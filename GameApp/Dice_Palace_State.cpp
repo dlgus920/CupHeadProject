@@ -233,14 +233,23 @@ void DicePaclace::LevelLoop_Start()
 		BackImage->ImageRenderer_->SetAdjustImzgeSize();
 		BackImage->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back09) });
 
-		for (int i = 0; i < 9; ++i)
+		for (int i = 0; i < 11; ++i)
 		{
 			NumRenderer_[i] = BackImage->CreateTransformComponent<GameEngineImageRenderer>();
 			NumRenderer_[i]->GetTransform()->SetLocalScaling(float4{870.4,400.f});
 
 			if (false == UserGame::StageInfo_.Dice_ClearStage_[i])
 			{
-				std::string str = "Num_00";
+				std::string str;
+
+				if (i < 9)
+				{
+					str = "Num_00";
+				}
+				else
+				{
+					str = "Num_0";
+				}
 
 				std::string numstr = std::to_string(i+1);
 
@@ -252,7 +261,15 @@ void DicePaclace::LevelLoop_Start()
 			}
 			else
 			{
-				std::string str = "Clear_00";
+				std::string str;
+				if (i < 9)
+				{
+					str = "Clear_00";
+				}
+				else
+				{
+					str = "Clear_0";
+				}
 
 				std::string numstr = std::to_string(i+1);
 

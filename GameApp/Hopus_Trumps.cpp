@@ -3,6 +3,7 @@
 #include "Effect.h"
 #include "Player.h"
 #include "ParryObject.h"
+#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -57,6 +58,17 @@ void Hopus_Trumps::Start()
 
 void Hopus_Trumps::Update(float _DeltaTime)
 {
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		for (int i = 0; i < 9; ++i)
+		{
+			if (true == FireCollision_[i]->IsUpdate())
+			{
+				GetLevel()->PushDebugRender(FireCollision_[i]->GetTransform(), CollisionType::CirCle);
+			}
+		}
+	}
+
 	if (false == BlendStart_)
 	{
 		Blendlate_.a += _DeltaTime;

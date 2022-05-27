@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Image.h"
+#include "UserGame.h"
 #include "GameEngine/GameEngineCollision.h"
 
 #ifdef _DEBUG
@@ -45,9 +46,22 @@ void Player::Update(float _DeltaTime)
 
 		//State_Update_는 State_.Update중에 설정함
 
-#ifdef _DEBUG
-	Update_DEBUG();
-#endif // _DEBUG
+	if (true == GameEngineInput::GetInst().Down("Debug"))
+	{
+		if (true == UserGame::StageInfo_.Debug_)
+		{
+			UserGame::StageInfo_.Debug_ = false;
+		}
+		else
+		{
+			UserGame::StageInfo_.Debug_ = true;
+		}
+	}
+
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		Update_DEBUG();
+	}
 }
 
 void Player::StateUpdate(float _DeltaTime)

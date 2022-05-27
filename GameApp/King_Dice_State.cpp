@@ -75,6 +75,7 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 	if (true == FirstAttack_)
 	{
 		GetLevel<SceneBase>()->ReadyWALLOP_DICE();
+		MonsterHitBox->On();
 		FirstAttack_ = false;
 	}
 
@@ -277,7 +278,7 @@ void King_Dice::Clap_End_()
 
 void King_Dice::BattleState_Battle_Start()
 {
-	MonsterHitBox->On();
+	//MonsterHitBox->On();
 }
 void King_Dice::BattleState_Battle_Update( float _DeltaTime)
 {

@@ -120,31 +120,15 @@ void Mr_Wheezy::Defeat_Update(float _DeltaTime)
 
 	TimeCheck_ += _DeltaTime;
 
-	static bool updown = true;
-
 	if (TimeCheck_ >= 0.2f)
 	{
 		TimeCheck_ = 0.f;
 
 		float4 pos = Cur_WheezyImageRenderer_->GetTransform()->GetWorldPosition();
-		pos.y - 250.f;
+		pos.y - 450.f;
 
 		EffectDefeatRandom(250.f, pos);
-
-		if (updown)
-			updown = false;
-		else
-			updown = true;
 	} 
-
-	if (updown)
-	{
-		Cur_WheezyImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,400.f * _DeltaTime });
-	}
-	else
-	{
-		Cur_WheezyImageRenderer_->GetTransform()->SetWorldMove(float4{ 0.f,-400.f * _DeltaTime });
-	}
 }
 void Mr_Wheezy::Defeat_End_()
 {

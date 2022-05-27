@@ -6,6 +6,8 @@
 
 #include "PerryObjectDice.h"
 
+#include "UserGame.h"
+
 #include "Dice_Card.h"
 
 King_Dice::King_Dice()
@@ -124,8 +126,18 @@ void King_Dice::Start()
 
 void King_Dice::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
-	GetLevel()->PushDebugRender(Hand_.Collision->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		if (true == MonsterHitBox->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
+		}
+
+		if (true == Hand_.Collision->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(Hand_.Collision->GetTransform(), CollisionType::Rect);
+		}
+	}
 
 	BattleState_.Update(_DeltaTime);
 	State_.Update(_DeltaTime);

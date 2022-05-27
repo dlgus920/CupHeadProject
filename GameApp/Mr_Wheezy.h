@@ -126,6 +126,8 @@ private:
 	{
 		AniEnd_Attack_End_ = true;
 	}
+
+	void AniEnd_Death_4();
 #endif // _DEBUG
 
 	void AniStateClear()

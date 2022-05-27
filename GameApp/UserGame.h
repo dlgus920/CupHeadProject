@@ -32,12 +32,19 @@ public:
 	{
 		StageInfo()
 			: Dice_ClearStage_{false}
+			, Debug_(false)
+			, PlayerHP_(0)
+			, BombCOunt_(0)
 		{}
 		~StageInfo()
 		{}
 
-		bool Dice_ClearStage_[9];
+		bool Dice_ClearStage_[11];
 		float4 WorldMapPlayer_Pos_;
+		bool Debug_;
+
+		int PlayerHP_;
+		int BombCOunt_;
 	};
 
 	static StageInfo StageInfo_;

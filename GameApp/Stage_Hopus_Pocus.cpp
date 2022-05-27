@@ -339,7 +339,10 @@ void Stage_Hopus_pocus::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
-			UserGame::StageInfo_.Dice_ClearStage_[4] = true;
+			for (int i = 0; i < 11; ++i)
+			{
+				UserGame::StageInfo_.Dice_ClearStage_[i] = true;
+			}
 
 			GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");
 

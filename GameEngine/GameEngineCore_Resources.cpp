@@ -411,6 +411,7 @@ void GameEngineCore::EngineResourcesCreate()
 		Pipe->SetInputAssembler2IndexBufferSetting("DebugRect");
 		Pipe->SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		Pipe->SetPixelShader("Color_PS");
+		Pipe->SetOutputMergerDepthStencil("MergeDepth");
 	}
 
 	{

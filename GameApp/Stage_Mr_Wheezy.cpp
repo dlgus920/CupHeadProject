@@ -401,6 +401,8 @@ void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ = 1.f;
 
+			UserGame::StageInfo_.Dice_ClearStage_[0] = true;
+			UserGame::StageInfo_.Dice_ClearStage_[1] = true;
 			UserGame::StageInfo_.Dice_ClearStage_[2] = true;
 
 			GameEngineCore::LevelCreate<DicePaclace>("DicePaclace");

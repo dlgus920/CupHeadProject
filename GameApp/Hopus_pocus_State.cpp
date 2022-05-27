@@ -136,10 +136,7 @@ void Hopus_pocus::Defeat_Update(float _DeltaTime)
 	{
 		TimeCheck_ = 0.f;
 
-		float4 pos = Hopus_pocusImageRenderer_->GetTransform()->GetWorldPosition();
-		pos.y - 250.f;
-
-		EffectDefeatRandom(250.f, pos);
+		EffectDefeatRandom(250.f, MonsterBox->GetTransform()->GetWorldPosition());
 	} 
 
 

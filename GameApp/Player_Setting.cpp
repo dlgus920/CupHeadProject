@@ -56,8 +56,8 @@ void Player::KeySetting()
 	GameEngineInput::GetInst().CreateKey("Fire", 'X');
 	GameEngineInput::GetInst().CreateKey("RockOn", 'C');
 	GameEngineInput::GetInst().CreateKey("Dash", VK_LSHIFT);
-	//GameEngineInput::GetInst().CreateKey("Bomb", 'V');
-	//GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
+
+	GameEngineInput::GetInst().CreateKey("Debug", 'P');
 }
 
 void Player::StateSetting()

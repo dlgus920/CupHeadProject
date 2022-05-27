@@ -2,6 +2,7 @@
 #include "Mr_Wheezy.h"
 #include "Effect.h"
 #include "Wheezy_Fire.h"
+#include "UserGame.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -85,6 +86,7 @@ void Mr_Wheezy::Start()
 		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-Death-Intro", std::bind(&Mr_Wheezy::AniEnd_Death_Intro, this));
 		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-Attack", std::bind(&Mr_Wheezy::AniEnd_Attack_End, this));
 		WheezyImageRenderer_Right_->SetFrameCallBack("Mr_Wheezy-Attack", 49, std::bind(&Mr_Wheezy::AniEnd_Attack, this));
+		WheezyImageRenderer_Right_->SetFrameCallBack("Mr_Wheezy-Death-Intro", 106, std::bind(&Mr_Wheezy::AniEnd_Death_4, this));
 		WheezyImageRenderer_Right_->SetFrameCallBack("Mr_Wheezy-TellePort-In", 83, std::bind(&Mr_Wheezy::AniEnd_TellePort_HB_On, this));
 		WheezyImageRenderer_Right_->SetFrameCallBack("Mr_Wheezy-TellePort-Out", 83, std::bind(&Mr_Wheezy::AniEnd_TellePort_HB_On, this));
 		WheezyImageRenderer_Right_->SetChangeAnimation("Mr_Wheezy-Idle");
@@ -147,7 +149,13 @@ void Mr_Wheezy::Start()
 
 void Mr_Wheezy::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		if (true == MonsterHitBox->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
+		}
+	}
 
 	State_.Update(_DeltaTime);
 }
@@ -248,5 +256,19 @@ void Mr_Wheezy::Firefire()
 		Wheezy_Fire* Fire = GetLevel()->CreateActor<Wheezy_Fire>();
 		Fire->GetTransform()->SetWorldPosition(float4{ 430.f, -180.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
 		Fire->SetDir(true);
+	}
+}
+
+void Mr_Wheezy::AniEnd_Death_4()
+{
+	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+	{		
+		WheezyImageRenderer_Left_->	GetTransform()
+			->SetWorldPosition(float4(340.f, -190.f, static_cast<float>(ZOrder::Z02Back02_5)));
+	}
+	else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+	{
+		WheezyImageRenderer_Right_->GetTransform()
+			->SetWorldPosition(float4(940.f, -190.f, static_cast<float>(ZOrder::Z02Back02_5)));
 	}
 }

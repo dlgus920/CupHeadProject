@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Dice_Card.h"
+#include "UserGame.h"
 
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -28,7 +29,10 @@ void Dice_Card::Update(float _DeltaTime)
 	ImageRenderer->GetTransform()->SetWorldMove(CardMove_* _DeltaTime);
 	ParryCollision->GetTransform()->SetWorldMove(CardMove_ * _DeltaTime);
 
-	GetLevel()->PushDebugRender(ParryCollision->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		GetLevel()->PushDebugRender(ParryCollision->GetTransform(), CollisionType::Rect);
+	}
 }
 
 

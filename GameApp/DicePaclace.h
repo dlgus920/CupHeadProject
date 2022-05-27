@@ -23,7 +23,7 @@ private:
 	//class Player* Player_;
 	class KingDice_Marker* KingDice_Marker_;
 
-	class GameEngineImageRenderer* NumRenderer_[9];
+	class GameEngineImageRenderer* NumRenderer_[11];
 
 	class Image* ScreenFx;
 

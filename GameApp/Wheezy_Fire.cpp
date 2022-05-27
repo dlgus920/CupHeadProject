@@ -1,6 +1,7 @@
 #include "Precompile.h"
 #include "Wheezy_Fire.h"
 #include "Effect.h"
+#include "UserGame.h"
 
 Wheezy_Fire::Wheezy_Fire()
 	: FireHitBox_(nullptr)
@@ -40,7 +41,14 @@ void Wheezy_Fire::Start()
 
 void Wheezy_Fire::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(FireHitBox_->GetTransform(), CollisionType::CirCle);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		if (true == FireHitBox_->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(FireHitBox_->GetTransform(), CollisionType::CirCle);
+		}
+	}
+
 
 	TimeCheck_ += _DeltaTime;
 	DeathTimeCheck_ += _DeltaTime;

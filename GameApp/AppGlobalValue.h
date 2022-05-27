@@ -40,6 +40,7 @@ enum class ZOrder
 	Z01Actor10,
 	Z02Back01,
 	Z02Back02,
+	Z02Back02_5,
 	Z02Back03,
 	Z02Back04,
 	Z02Back05,

@@ -121,23 +121,17 @@ private: //Member
 		WalkState_Changed_ = false;
 	}
 
-	//bool KeyState_Update_;
-	//bool ColState_Update_;
 	bool Update_State_;
 
 	bool KeyState_Up_;
 	bool KeyState_Down_;
 	bool KeyState_Left_;
 	bool KeyState_Right_;
-
 	bool KeyState_Shoot_;
-
 	bool KeyState_RockOn_;
 	bool KeyState_Bomb;
 	bool KeyState_Jump_;
 	bool KeyState_Jump_Press;
-
-	//bool KeyState_Hit_;
 	bool KeyState_Dash_;
 
 	bool ColState_Ground_Top_;
@@ -307,7 +301,18 @@ public: //Inline
 	void SetVictory()
 	{
 		Update_State_ = false;
-		GameState_.ChangeState("End");
+		PlayerHitBox->Off();
+
+		KeyState_Up_ = false;
+		KeyState_Down_ = false;
+		KeyState_Left_ = false;
+		KeyState_Right_ = false;
+		KeyState_Shoot_ = false;
+		KeyState_RockOn_ = false;
+		KeyState_Bomb = false;
+		KeyState_Jump_ = false;
+		KeyState_Jump_Press = false;
+		KeyState_Dash_ = false;
 	}
 
 	void SetStart()
