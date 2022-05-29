@@ -149,6 +149,8 @@ void SceneBase::PlayerResourceLoad()
 
 void SceneBase::SceneResourceLoad()
 {
+	
+
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(

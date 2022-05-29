@@ -19,6 +19,9 @@ public:
 	float BlendRate_;
 
 protected:
+
+	class GameEngineSoundPlayer* SceneBGM_;
+
 	class Player* Player_;
 	class Image* HourGlass_;
 	bool Victory_;

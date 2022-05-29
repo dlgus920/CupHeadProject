@@ -8,6 +8,8 @@
 GameEngineSoundManager* GameEngineSoundManager::Inst = new GameEngineSoundManager();
 std::mutex GameEngineSoundManager::ManagerLock;
 
+float GameEngineSoundManager::globalVolume_ = 1.0f;
+
 GameEngineSoundManager::GameEngineSoundManager()
 {
 }
@@ -204,6 +206,41 @@ void GameEngineSoundManager::LoadLevelRes(const std::string& _name, const std::s
 	return;
 }
 
+void GameEngineSoundManager::SetGlobalVolume(float _volume)
+{
+	if (_volume <= 1.0f)
+	{
+		globalVolume_ = _volume;
+	}
+	else
+	{
+		globalVolume_ = 1.0f;
+	}
+
+	//int channels = 0;
+	//int realChannels = 0;
+	//system_->getChannelsPlaying(&channels, &realChannels);
+
+	FMOD::ChannelGroup* cg;
+	soundSystem_->getMasterChannelGroup(&cg);
+
+	int numChannels;
+	cg->getNumChannels(&numChannels);
+
+	for (int i = 0; i < numChannels; i++)
+	{
+		FMOD::Channel* channel = nullptr;
+		cg->getChannel(i, &channel);
+		if (nullptr != channel)
+		{
+			channel->setVolume(globalVolume_);
+		}
+	}
+
+	cg->release();
+}
+
+
 void GameEngineSoundManager::PlaySoundOneShot(const std::string& _name) 
 {
 	GameEngineSound* SoundPtr = FindSound(_name);
@@ -216,6 +253,43 @@ void GameEngineSoundManager::PlaySoundOneShot(const std::string& _name)
 #endif // _DEBUG
 
 	soundSystem_->playSound(SoundPtr->sound_, nullptr, false, nullptr);
+}
+
+//allSoundChannel_
+
+GameEngineSoundPlayer* GameEngineSoundManager::CreateSoundChannel(std::string ChannelName)
+{
+	GameEngineSoundPlayer* NewSoundplayer = new GameEngineSoundPlayer();
+
+	allSoundChannel_.insert(std::make_pair(ChannelName, NewSoundplayer));
+
+	return  NewSoundplayer;
+}
+
+GameEngineSoundPlayer* GameEngineSoundManager::FindSoundChannel(std::string ChannelName)
+{
+	GameEngineSoundPlayer* find = allSoundChannel_.find(ChannelName)->second;
+
+	if (find == nullptr)
+	{
+		GameEngineDebug::MsgBoxError("사운드 채널이 없음");
+		return nullptr;
+	}
+
+	return find;
+}
+
+void GameEngineSoundManager::PlaySoundChannel(std::string ChannelName)
+{
+	GameEngineSoundPlayer* find = allSoundChannel_.find(ChannelName)->second;
+
+	if (find == nullptr)
+	{
+		GameEngineDebug::MsgBoxError("사운드 채널이 없음");
+		return;
+	}
+
+	find->PlayLevelOverLap(ChannelName);
 }
 
 void GameEngineSoundManager::Initialize()

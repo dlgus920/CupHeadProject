@@ -8,6 +8,8 @@
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/MouseActor.h>
 
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 #include "UserGame.h"
 
 #include "Image.h"
@@ -49,6 +51,29 @@ void WorldMapScene::Init_Update(float _DeltaTime)
 
 void WorldMapScene::ResourcesLoad_Start()
 {
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("World");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(
@@ -144,6 +169,11 @@ void WorldMapScene::LevelLoop_Start()
 {
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+
+	GameEngineSoundPlayer* SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+
+	SceneBGM_ -> PlayLevelOverLap("MUS_InkwellIsleOne.wav");
+	SceneBGM_->SetVolume(0.7f);
 
 	{
 		// 1280 720

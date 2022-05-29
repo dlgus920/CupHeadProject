@@ -24,6 +24,7 @@ protected:
 private:
 	GameEngineFSM<TitleScene> LoadState_;
 
+
 	void Init_Update(float _DeltaTime);
 
 	void ResourcesLoad_Start();

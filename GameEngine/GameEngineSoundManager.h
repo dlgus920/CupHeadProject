@@ -28,9 +28,59 @@ class GameEngineSound;
 class GameEngineSoundPlayer;
 class GameEngineSoundManager
 {
+	friend GameEngineSound;
+	friend GameEngineSoundPlayer;
+
+private:
+	GameEngineSoundManager(); // default constructer 디폴트 생성자
+	~GameEngineSoundManager(); // default destructer 디폴트 소멸자
+
+	GameEngineSoundManager(const GameEngineSoundManager& _other) = delete;
+	GameEngineSoundManager(GameEngineSoundManager&& _other) = delete;
+	GameEngineSoundManager& operator=(const GameEngineSoundManager& _other) = delete;
+	GameEngineSoundManager& operator=(const GameEngineSoundManager&& _other) = delete;
+
 private:
 	static GameEngineSoundManager* Inst;
 	static std::mutex ManagerLock;
+
+	static float globalVolume_;
+
+	FMOD::System* soundSystem_; // Fmod가 제공해주는 인터페이스
+	// 사운드파일하나하나가 아니라
+	// fmod를 사용할수 있는지 확인해주고 사운드를 로드할수 있게 해주는 기본 인터페이스입니다.
+	// 이녀석이 먼저 제대로 만들어질수 있는 환경이어야 사운드를 사용할수 있습니다.
+	std::map<std::string, GameEngineSound*> allLoadSound_;
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineSound*>> GlobalResourcesMap; 
+
+	std::list<GameEngineSoundPlayer*> allSoundPlayer_;
+
+	std::map<std::string,GameEngineSoundPlayer*> allSoundChannel_;
+
+private:
+	GameEngineSound* FindSound(const std::string& _name);
+	GameEngineSound* FindSoundLevelRes(const std::string& _name);
+
+public:
+	void Initialize();
+
+	void Load(const std::string& _path);
+	void Load(const std::string& _name, const std::string& _path);
+
+	void LoadLevelRes(const std::string& _path);
+	void LoadLevelRes(const std::string& _name, const std::string& _path);
+
+	void SetGlobalVolume(float _volume);
+
+	void PlaySoundOneShot(const std::string& _name);
+
+	GameEngineSoundPlayer* CreateSoundPlayer();
+
+	GameEngineSoundPlayer* CreateSoundChannel(std::string ChannelName);
+	GameEngineSoundPlayer* FindSoundChannel(std::string ChannelName);
+	void PlaySoundChannel(std::string ChannelName);
+
+	void SoundUpdate();
 
 public:
 	static GameEngineSoundManager& GetInst()
@@ -46,51 +96,5 @@ public:
 			Inst = nullptr;
 		}
 	}
-
-public:
-	friend GameEngineSound;
-	friend GameEngineSoundPlayer;
-
-private:	// member Var
-	FMOD::System* soundSystem_; // Fmod가 제공해주는 인터페이스
-	// 사운드파일하나하나가 아니라
-	// fmod를 사용할수 있는지 확인해주고 사운드를 로드할수 있게 해주는 기본 인터페이스입니다.
-	// 이녀석이 먼저 제대로 만들어질수 있는 환경이어야 사운드를 사용할수 있습니다.
-	std::map<std::string, GameEngineSound*> allLoadSound_;
-
-	std::map<GameEngineLevel*, std::map<std::string, GameEngineSound*>> GlobalResourcesMap; //(Level, (Name, Texture))
-
-	std::list<GameEngineSoundPlayer*> allSoundPlayer_;
-
-private:
-	GameEngineSound* FindSound(const std::string& _name);
-	GameEngineSound* FindSoundLevelRes(const std::string& _name);
-
-public:
-	void Initialize();
-
-	void Load(const std::string& _path);
-	void Load(const std::string& _name, const std::string& _path);
-
-	void LoadLevelRes(const std::string& _path);
-	void LoadLevelRes(const std::string& _name, const std::string& _path);
-
-	void PlaySoundOneShot(const std::string& _name);
-	GameEngineSoundPlayer* CreateSoundPlayer();
-
-public:
-	void SoundUpdate();
-
-private:		
-	GameEngineSoundManager(); // default constructer 디폴트 생성자
-	~GameEngineSoundManager(); // default destructer 디폴트 소멸자
-
-public:		// delete constructer
-	GameEngineSoundManager(const GameEngineSoundManager& _other) = delete; 
-	GameEngineSoundManager(GameEngineSoundManager&& _other) = delete; 
-	GameEngineSoundManager& operator=(const GameEngineSoundManager& _other) = delete; 
-	GameEngineSoundManager& operator=(const GameEngineSoundManager&& _other) = delete; 
-
-public:		//member Func
 };
 

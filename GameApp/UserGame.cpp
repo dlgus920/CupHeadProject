@@ -26,6 +26,10 @@ UserGame::UserGame(UserGame&& _other) noexcept
 
 void UserGame::Initialize()
 {	
+	GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Effect");
+	//GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
+
 
 	StageInfo_.WorldMapPlayer_Pos_ = float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01));
 

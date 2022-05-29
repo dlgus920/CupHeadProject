@@ -100,6 +100,34 @@ void GameEngineSoundPlayer::PlayAlone(const std::string& _name, int _LoopCount /
 	playChannel_->setLoopCount(_LoopCount);
 }
 
+void GameEngineSoundPlayer::PlayLevelOverLap(const std::string& _name, int _LoopCount)
+{
+	GameEngineSound* SoundPtr = GameEngineSoundManager::GetInst().FindSoundLevelRes(_name);
+#ifdef _DEBUG
+	if (nullptr == SoundPtr)
+	{
+		GameEngineDebug::MsgBoxError("PlaySound Error");
+		return;
+	}
+#endif // _DEBUG
+
+	if (0 == PlayCount)
+	{
+		return;
+	}
+
+	GameEngineSoundManager::GetInst().soundSystem_->playSound(
+		SoundPtr->sound_
+		, nullptr
+		, false
+		, &playChannel_);
+
+	--PlayCount;
+
+	playChannel_->setLoopCount(_LoopCount);
+
+}
+
 void GameEngineSoundPlayer::Stop()
 {
 	if (nullptr == playChannel_)
@@ -109,4 +137,12 @@ void GameEngineSoundPlayer::Stop()
 
 	playChannel_->stop();
 	playChannel_ = nullptr;
+}
+
+void GameEngineSoundPlayer::SetVolume(float _volume)
+{
+	if (playChannel_ != nullptr)
+	{
+		FMOD_RESULT result = playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * _volume);
+	}
 }

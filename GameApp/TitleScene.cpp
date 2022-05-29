@@ -11,6 +11,7 @@
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCore.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
 
 TitleScene::TitleScene()
 	: TobeNext_(false)
@@ -41,6 +42,8 @@ void TitleScene::Init_Update(float _DeltaTime)
 
 void TitleScene::ResourcesLoad_Start()
 {
+	SceneBGM_ = GameEngineSoundManager::GetInst().CreateSoundPlayer();
+
 	{
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent(GV_GAMEFILENAME);
@@ -60,6 +63,22 @@ void TitleScene::ResourcesLoad_Start()
 		//GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("TitleScreen"));
 
 		GameEngineFolderTextureManager::GetInst().LoadLevelRes(TextureDir.PathToPlusFileName("TitleScreen"));
+	}
+
+	{
+		GameEngineDirectory TextureDir;
+		TextureDir.MoveParent(GV_GAMEFILENAME);
+		TextureDir.MoveChild("Resources");
+		TextureDir.MoveChild("Sound");
+
+		std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+		for (size_t i = 0; i < AllFile.size(); i++)
+		{
+			//GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
+
+			GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+		}
 	}
 
 	ResourcesLoadFadeInit();
@@ -133,11 +152,16 @@ void TitleScene::LevelLoop_Start()
 		Image_->ImageRenderer_->SetAdjustImzgeSize();
 		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
 	}
+
+	{
+		SceneBGM_->PlayLevelOverLap("bgm_title_screen.wav");  
+	}
+
+	TimeCheck_ = 1.f;
 }
 
 void TitleScene::LevelLoop_Update(float _DeltaTime)
 {
-
 	if (false == TobeNext_)
 	{
 		LevelLoadFadeUpdate(_DeltaTime);
@@ -150,9 +174,13 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 	else
 	{
 		BlendRate_ += _DeltaTime * 2.f;
+		TimeCheck_ -= _DeltaTime * 2.f;
+
+		SceneBGM_->SetVolume(TimeCheck_);
 
 		if (BlendRate_ >= 1.f)
 		{
+			SceneBGM_->Stop();
 			GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
 			GameEngineCore::LevelChange("WorldMap");
 		}
