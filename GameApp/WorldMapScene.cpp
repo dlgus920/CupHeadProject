@@ -8,8 +8,6 @@
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/MouseActor.h>
 
-#include <GameEngine/GameEngineSoundPlayer.h>
-
 #include "UserGame.h"
 
 #include "Image.h"
@@ -170,7 +168,7 @@ void WorldMapScene::LevelLoop_Start()
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
-	GameEngineSoundPlayer* SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
 
 	SceneBGM_ -> PlayLevelOverLap("MUS_InkwellIsleOne.wav");
 	SceneBGM_->SetVolume(0.7f);
@@ -280,6 +278,13 @@ void WorldMapScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 
 void WorldMapScene::ChangeScene(std::string _Scene)
 {
+	SceneBGM_->Stop();
+
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+
+	SceneBGM_->PlayLevelOverLap("sfx_WorldMap_LevelSelect_StartLevel.wav",0);
+	SceneBGM_->SetVolume(0.7f);
+
 	NextScene_ = _Scene;
 	SetScreenIris(true);
 }

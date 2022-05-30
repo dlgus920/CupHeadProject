@@ -148,6 +148,7 @@ void WorldMapPlayer::Walk_End()
 
 void WorldMapPlayer::Chose_Start()
 {
+
 	//float4 pos = GetTransform()->GetWorldPosition();
 
 	//Image* IrisImage = GetLevel()->CreateActor<Image>();

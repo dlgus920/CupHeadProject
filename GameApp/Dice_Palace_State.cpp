@@ -37,6 +37,29 @@ void DicePaclace::ResourcesLoad_Start()
 			GameEngineDirectory TextureDir;
 			TextureDir.MoveParent(GV_GAMEFILENAME);
 			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("Dice");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("KingDice(Boss)");
@@ -206,6 +229,13 @@ void DicePaclace::ResourcesLoad_Update(float _DeltaTime)
 
 void DicePaclace::LevelLoop_Start() 
 {
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+
+	SceneBGM_->PlayLevelOverLap("sfx_dice_palace_main_king_dice_intro_01.wav");
+	SceneBGM_->PlayLevelOverLap("kingdice_intro.wav");
+	SceneBGM_->PlayLevelOverLap("MUS_KingDice.wav");
+	SceneBGM_->SetVolume(0.7f);
+
 	PhaseState_.ChangeState("Intro");
 
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');

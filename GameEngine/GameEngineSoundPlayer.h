@@ -25,10 +25,10 @@ private:
 public:		
 	bool IsPlay();
 	void PlayCountReset(int _Count = -1);
-	void PlayOverLap(const std::string& _name, int _LoopCount = 1);
-	void PlayAlone(const std::string& _name, int _LoopCount = 1);
+	void PlayOverLap(const std::string& _name, int _LoopCount = 0);
+	void PlayAlone(const std::string& _name, int _LoopCount = 0);
 
-	void PlayLevelOverLap(const std::string& _name, int _LoopCount = 1);
+	void PlayLevelOverLap(const std::string& _name, int _LoopCount = 0);
 
 	void SetVolume(float _volume);
 

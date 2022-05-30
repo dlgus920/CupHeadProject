@@ -148,6 +148,8 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 
 		if (BlendRate_ >= 1.f)
 		{
+			SceneBGM_->Stop();
+
 			if (false == UserGame::StageInfo_.Dice_ClearStage_[2])
 			{
 				//GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");

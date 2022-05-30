@@ -9,6 +9,7 @@
 
 #include <GameEngineBase/GameEngineFSM.h>
 #include <GameEngineBase/GameEngineDirectory.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 SceneBase::SceneBase() 
 	: FadeImage_(nullptr)
@@ -18,6 +19,8 @@ SceneBase::SceneBase()
 	, LoadingComplete_(false)
 	, LoadingFadeComplete_(false)
 	, Player_(nullptr)
+	, IntroBGM_(nullptr)
+	, SceneBGM_(nullptr)
 {
 
 }
@@ -45,6 +48,8 @@ void SceneBase::LevelChangeStartEvent()
 
 void SceneBase::ReadyWALLOP()
 {
+	ReadyWALLOPAnounce01();
+
 	Image* Back = CreateActor<Image>();
 	Back->ImageRenderer_->SetImage("Loading_background.png");
 	Back->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
@@ -52,9 +57,10 @@ void SceneBase::ReadyWALLOP()
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
 
 	Effect* Effect_ = CreateActor<Effect>();
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.04f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.1f, false);
 
 	_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
+	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 21,std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
@@ -62,7 +68,9 @@ void SceneBase::ReadyWALLOP()
 void SceneBase::ReadyWALLOP_DICE()
 {
 	Effect* Effect_ = CreateActor<Effect>();
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.04f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->
+		EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.1f, false);
+	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 21, std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
@@ -149,7 +157,28 @@ void SceneBase::PlayerResourceLoad()
 
 void SceneBase::SceneResourceLoad()
 {
-	
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("Boss_announcer");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			UserGame::LoadingFolder--;
+		}
+	);
 
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
@@ -214,8 +243,58 @@ void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)
 	}
 }
 
+void SceneBase::ReadyWALLOPAnounce01()
+{
+	if (IntroBGM_ == nullptr)
+	{
+		IntroBGM_ = GameEngineSoundManager::GetInst().CreateSoundChannel("IntroBGM");
+	}
+
+	GameEngineRandom rand;
+
+	int randint = rand.RandomInt(0, 4);
+
+	std::string bgm = "sfx_level_announcer_0001_";
+
+	std::string numstr = std::to_string(randint);
+
+	bgm += numstr;
+	bgm += ".wav";
+
+	IntroBGM_->PlayLevelOverLap(bgm);
+}
+
+void SceneBase::ReadyWALLOPAnounce02()
+{
+	if (IntroBGM_ == nullptr)
+	{
+		IntroBGM_ = GameEngineSoundManager::GetInst().CreateSoundChannel("IntroBGM");
+	}
+
+	GameEngineRandom rand;
+
+	int randint = rand.RandomInt(0, 4);
+
+	std::string bgm = "sfx_level_announcer_0002_";
+
+	std::string numstr = std::to_string(randint);
+
+	bgm += numstr;
+	bgm += ".wav";
+
+	IntroBGM_->PlayLevelOverLap(bgm);
+}
+
 void SceneBase::Knockout()
 {
+	if (IntroBGM_ == nullptr)
+	{
+		IntroBGM_ = GameEngineSoundManager::GetInst().CreateSoundChannel("IntroBGM");
+	}
+
+	IntroBGM_->PlayLevelOverLap("sfx_level_announcer_knockout_0004.wav");
+	IntroBGM_->PlayLevelOverLap("sfx_level_knockout_bell.wav");
+
 	Player_->SetVictory();
 
 	Effect* Effect_ = CreateActor<Effect>();
@@ -223,7 +302,7 @@ void SceneBase::Knockout()
 	GameEngineCore::SetTimeRate(0.0001f);
 	Effect_->SetPlayRate(10000.f);
 
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.04f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.1f, false);
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&Image::Death, Effect_));
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&SceneBase::KnockoutEnd, this));
 

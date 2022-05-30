@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
 
 class SceneBase : public GameEngineLevel
 {
@@ -21,6 +22,7 @@ public:
 protected:
 
 	class GameEngineSoundPlayer* SceneBGM_;
+	class GameEngineSoundPlayer* IntroBGM_;
 
 	class Player* Player_;
 	class Image* HourGlass_;
@@ -59,6 +61,13 @@ protected:
 	void LevelLoadFadeUpdate(float _DeltaTime);
 	//void ResourcesLoadFadeUpdate(float _DeltaTime);
 	//void SceneResourceClear();
+
+	void ReadyWALLOPAnounce01();
+	void ReadyWALLOPAnounce02();
+
+
+
+
 public:
 	void Knockout();
 	void ReadyWALLOP();
