@@ -86,6 +86,9 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 	MonsterHitBox->On();
 
 	HandSwitching();
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "SFX_level_dice_palace_main_king_dice_attack_vox_01.wav",1);
+	GameEngineSoundManager::GetInst().PlaySoundChannel("DiceCardLoop", "SFX_level_dice_palace_main_card_march_loop_01.wav", 1);
 }
 void King_Dice::Attack_Update( float _DeltaTime)
 {
@@ -205,6 +208,7 @@ void King_Dice::Defeat_End_()
 
 void King_Dice::Chop_Start()
 {
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect","sfx_dice_palace_main_king_dice_eat_screen_01.wav");
 	MonsterImageRenderer->SetChangeAnimation("KDice-Chomp");
 	MonsterImageRenderer->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx02) });
 }
@@ -237,6 +241,8 @@ void King_Dice::Clap_Update(float _DeltaTime)
 		//TODO : 담베, 토끼, 팽이발레
 		//spawn dice
 		//dice idle
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_main_king_dice_reveal_2_02.wav");
+
 		SpawnDice();
 
 		AniEnd_Clap_Dice_ = false;

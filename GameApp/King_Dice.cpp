@@ -3,6 +3,8 @@
 #include "Effect.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
 
 #include "PerryObjectDice.h"
 
@@ -265,6 +267,8 @@ void King_Dice::SpawnParryCard()
 
 void King_Dice::CardClear()
 {
+	GameEngineSoundManager::GetInst().FindSoundChannel("DiceCardLoop")->Stop();
+
 	for (int i = 0; i < Cardvector_.size(); ++i)
 	{
 		Cardvector_[i]->Death();

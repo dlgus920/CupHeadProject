@@ -233,7 +233,16 @@ void DicePaclace::LevelLoop_Start()
 
 	SceneBGM_->PlayLevelOverLap("sfx_dice_palace_main_king_dice_intro_01.wav");
 	SceneBGM_->PlayLevelOverLap("kingdice_intro.wav");
-	SceneBGM_->PlayLevelOverLap("MUS_KingDice.wav");
+
+	if (false == UserGame::StageInfo_.Dice_ClearStage_[9])
+	{
+		SceneBGM_->PlayLevelOverLap("MUS_TheKingsCourt.wav");
+	}
+	else
+	{
+		SceneBGM_->PlayLevelOverLap("MUS_TheKingsCourt_start.wav");
+	}
+
 	SceneBGM_->SetVolume(0.7f);
 
 	PhaseState_.ChangeState("Intro");

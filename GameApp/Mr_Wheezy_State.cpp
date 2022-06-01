@@ -8,20 +8,29 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 void Mr_Wheezy::Intro_Start()
 {
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect","sfx_dice_palace_cigar_intro_start_loop_01.wav");
+
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Intro");
 }
 void Mr_Wheezy::Intro_Update( float _DeltaTime)
 {
 	if (true == AniEnd_Intro_)
 	{
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_cigar_intro_end_01.wav");
+
 		State_.ChangeState("Idle");
 		return;
 	}
 }
 void Mr_Wheezy::Intro_End_()
 {
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "cigar_vox_intro.wav");
+
 	AniEnd_Intro_ = false;
 }
 
@@ -60,6 +69,8 @@ void Mr_Wheezy::Idle_End_()
 void Mr_Wheezy::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Attack");
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_cigar_attack_01.wav");
 }
 void Mr_Wheezy::Attack_Update( float _DeltaTime)
 {
@@ -109,6 +120,8 @@ void Mr_Wheezy::Defeat_Start()
 	Defeat_ = true;
 
 	GetLevel<Stage_Mr_Wheezy>()->Knockout();
+
+
 }
 void Mr_Wheezy::Defeat_Update(float _DeltaTime)
 {
@@ -139,6 +152,8 @@ void Mr_Wheezy::Defeat_End_()
 
 void Mr_Wheezy::Telleport_Start()
 {
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_cigar_teleport_01.wav");
+
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-TellePort-In");
 }
 void Mr_Wheezy::Telleport_Update(float _DeltaTime)
@@ -202,6 +217,9 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 		{
 			MonsterHitBox->On();
 			MonsterBox->On();
+
+			GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_cigar_teleport_end_01.wav");
+
 			if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 			{
 				MonsterHitBox->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
@@ -214,6 +232,8 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 				MonsterBox->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back05)));
 				Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
 			}
+
+			GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "cigar_vox_warning_01.wav");
 
 			AniEnd_TellePort_Out_ = false;
 			State_.ChangeState("Idle");

@@ -1,12 +1,16 @@
 #include "PreCompile.h"
 #include <GameEngine/GameEngineImageRenderer.h>
 
+#include <GameEngine/GameEngineSoundPlayer.h>
+
+#include <GameEngine/GameEngineSoundManager.h>
+
 #include "Bullet.h"
 #include "Image.h"
 #include "Effect.h"
 #include "Monster.h"
 
-Bullet_Defalut::Bullet_Defalut()
+Bullet_Defalut::Bullet_Defalut() 
 {
 }
 
@@ -58,5 +62,23 @@ void Bullet_Defalut::BulletDeath()
 	Birth->EffectAnimationActor("Bullet_Default_Death.png", "Death", float4{ 280.f,280.f }, 0, 5, 0.04f, false);
 	Birth->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
 
+	GameEngineRandom rand;
+
+	int randint = rand.RandomInt(1, 16);
+
+	std::string str = "sfx_player_shoot_hit_";
+
+	std::string numstr = std::to_string(randint);
+
+	if (randint < 10)
+	{
+		str = str + "0" + numstr + ".wav";
+	}
+	else
+	{
+		str = str + numstr + ".wav";
+	}
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", str);
 	Death();
 }

@@ -57,7 +57,7 @@ void SceneBase::ReadyWALLOP()
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
 
 	Effect* Effect_ = CreateActor<Effect>();
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.1f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.06f, false);
 
 	_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
 	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 21,std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
@@ -82,8 +82,56 @@ void SceneBase::KnockoutEnd()
 	Victory_ = true;
 }
 
+//void SceneBase::JobPostres(GameEngineDirectory Dir)
+//{
+//	UserGame::LoadingFolder++;
+//	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
+//	for (size_t i = 0; i < AllFile.size(); i++)
+//	{
+//		GameEngineCore::ThreadQueue.JobPost(std::bind(&SceneBase::JobPostresinst, this, &AllFile,i));
+//	}
+//	UserGame::LoadingFolder--;
+//}
+//void SceneBase::JobPostresinst(std::vector<GameEngineFile>* AllFile, int arraycount)
+//{
+//	UserGame::LoadingFolder++;
+//	GameEngineSoundManager::GetInst().LoadLevelRes((*AllFile)[arraycount].GetFullPath());
+//	UserGame::LoadingFolder--;
+//}
+
 void SceneBase::PlayerResourceLoad()
 {
+	//{
+	//	GameEngineDirectory TextureDir;
+	//	TextureDir.MoveParent(GV_GAMEFILENAME);
+	//	TextureDir.MoveChild("Resources");
+	//	TextureDir.MoveChild("Sound");
+	//	TextureDir.MoveChild("Player");
+	//	JobPostres(TextureDir);
+	//}
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("Player");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+			UserGame::LoadingFolder--;
+		}
+	);
+
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(
@@ -302,7 +350,7 @@ void SceneBase::Knockout()
 	GameEngineCore::SetTimeRate(0.0001f);
 	Effect_->SetPlayRate(10000.f);
 
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.1f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.06f, false);
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&Image::Death, Effect_));
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&SceneBase::KnockoutEnd, this));
 

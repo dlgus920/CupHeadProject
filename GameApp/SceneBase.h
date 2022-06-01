@@ -65,7 +65,8 @@ protected:
 	void ReadyWALLOPAnounce01();
 	void ReadyWALLOPAnounce02();
 
-
+	//void JobPostres(GameEngineDirectory Dir);
+	//void JobPostresinst(std::vector<GameEngineFile>* AllFile, int arraycount);
 
 
 public:

@@ -30,6 +30,22 @@ GameEngineSoundManager::~GameEngineSoundManager()
 		allSoundPlayer_.clear();
 	}
 
+
+	{
+		std::map<std::string, GameEngineSoundPlayer*>::iterator StartIter = allSoundChannel_.begin();
+		std::map<std::string, GameEngineSoundPlayer*>::iterator EndIter = allSoundChannel_.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			if (nullptr != StartIter->second)
+			{
+				delete StartIter->second;
+				StartIter->second = nullptr;
+			}
+		}
+		allSoundChannel_.clear();
+	}
+
 	{
 		std::map<std::string, GameEngineSound*>::iterator StartIter = allLoadSound_.begin();
 		std::map<std::string, GameEngineSound*>::iterator EndIter = allLoadSound_.end();
@@ -256,9 +272,16 @@ void GameEngineSoundManager::PlaySoundOneShot(const std::string& _name)
 }
 
 //allSoundChannel_
-
-GameEngineSoundPlayer* GameEngineSoundManager::CreateSoundChannel(std::string ChannelName)
+//중복생성 안됨
+GameEngineSoundPlayer* GameEngineSoundManager::CreateSoundChannel(std::string ChannelName) 
 {
+	GameEngineSoundPlayer* findres = GameEngineSoundManager::FindSoundChannel(ChannelName);
+
+	if (findres != nullptr)
+	{
+		return findres;
+	}
+
 	GameEngineSoundPlayer* NewSoundplayer = new GameEngineSoundPlayer();
 
 	allSoundChannel_.insert(std::make_pair(ChannelName, NewSoundplayer));
@@ -268,18 +291,17 @@ GameEngineSoundPlayer* GameEngineSoundManager::CreateSoundChannel(std::string Ch
 
 GameEngineSoundPlayer* GameEngineSoundManager::FindSoundChannel(std::string ChannelName)
 {
-	GameEngineSoundPlayer* find = allSoundChannel_.find(ChannelName)->second;
-
-	if (find == nullptr)
+	std::map<std::string, GameEngineSoundPlayer*>::iterator find = allSoundChannel_.find(ChannelName);;
+	
+	if (find == allSoundChannel_.end())
 	{
-		GameEngineDebug::MsgBoxError("사운드 채널이 없음");
 		return nullptr;
 	}
 
-	return find;
+	return find->second;
 }
 
-void GameEngineSoundManager::PlaySoundChannel(std::string ChannelName)
+void GameEngineSoundManager::PlaySoundChannel(std::string ChannelName, std::string SoundName, int loopcount)
 {
 	GameEngineSoundPlayer* find = allSoundChannel_.find(ChannelName)->second;
 
@@ -289,7 +311,7 @@ void GameEngineSoundManager::PlaySoundChannel(std::string ChannelName)
 		return;
 	}
 
-	find->PlayLevelOverLap(ChannelName);
+	find->PlayLevelOverLap(SoundName, loopcount);
 }
 
 void GameEngineSoundManager::Initialize()

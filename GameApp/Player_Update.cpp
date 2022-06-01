@@ -10,6 +10,15 @@ void Player::Update_DEBUG()
 {
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
 
+	if (PlayerMovingCollision_Middle->Collision(static_cast<int>(CollisionGruop::MonsterAttack)))
+	{
+		GetLevel()->PushDebugRender(PlayerMovingCollision_Middle->GetTransform(), CollisionType::Rect, float4::PINK);
+	}
+	else
+	{
+		GetLevel()->PushDebugRender(PlayerMovingCollision_Middle->GetTransform(), CollisionType::Rect, float4::BLUE);
+	}
+
 	if (PlayerParryCollision->Collision(static_cast<int>(CollisionGruop::MonsterAttack)))
 	{
 		GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect, float4::PINK);
@@ -33,18 +42,6 @@ void Player::Update_DEBUG()
 void Player::Update(float _DeltaTime)
 {
 	GameState_.Update(_DeltaTime);
-
-	//KeyUpdate();
-		//GroundCollisonUpdate();
-		//ParryCollisonUpdate();
-		//HitCollisonUpdate();
-		//StateUpdate(_DeltaTime);
-
-		//ImageScaleUpdate();
-
-		//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
-
-		//State_Update_는 State_.Update중에 설정함
 
 	if (true == GameEngineInput::GetInst().Down("Debug"))
 	{
@@ -106,13 +103,36 @@ void Player::KeyUpdate()
 
 }
 
-const bool Player::GroundCollisonUpdate()
+void Player::SoundUpdate(float _DeltaTime)
 {
-	//ColState_Ground_Top_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Top, 5);
+	if (true == IsShooting_)
+	{
+		if (false == Shoot_Channel_->IsPlay())
+		{
+			Shoot_Channel_->PlayLevelOverLap("sfx_player_default_fire_loop_01.wav");
+		}
+	}
+	else
+	{
+		Shoot_Channel_->Stop();
+	}
+
+
+
+}
+
+void Player::CollisionUpdate()
+{
+	ColUpdate_Left();
+	ColUpdate_Right();
+	ColUpdate_Up();
+	ColUpdate_Ground();
+}
+
+const bool Player::ColUpdate_Ground()
+{
 	ColState_Ground_Middle_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Middle, 5);
 	ColState_Ground_Bot_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Bot, 5);
-
-	ColState_Ground_Floar_ = PlayerMovingCollision_Bot->Collision(static_cast<int>(CollisionGruop::FloarCard));
 
 	if (ColState_Ground_Bot_ && ColState_Ground_Middle_)
 	{
@@ -127,9 +147,22 @@ const bool Player::GroundCollisonUpdate()
 	return PlayerGround_Stuck_;
 }
 
-const bool4 Player::SideCollisonUpdate()
+const bool Player::ColUpdate_Left()
 {
-	return ColState_Pixel_ = Map::PixelSideCollisionTransform(PlayerMovingCollision_Middle, 10);
+	ColState_Left_ = Map::PixelLeftCollisionTransform(PlayerMovingCollision_Middle, 5);
+	return ColState_Left_;
+}
+
+const bool Player::ColUpdate_Right()
+{
+	ColState_Right_ = Map::PixelRightCollisionTransform(PlayerMovingCollision_Middle, 5);
+	return ColState_Right_;
+}
+
+const bool Player::ColUpdate_Up()
+{
+	ColState_Up_ = Map::PixelUpCollisionTransform(PlayerMovingCollision_Middle, 5);
+	return ColState_Right_;
 }
 
 const bool Player::ParryCollisonUpdate()

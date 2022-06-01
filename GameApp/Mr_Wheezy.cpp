@@ -8,6 +8,9 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 Mr_Wheezy::Mr_Wheezy()
 	: State_(this)
 	, WheezyImageRenderer_Left_(nullptr)

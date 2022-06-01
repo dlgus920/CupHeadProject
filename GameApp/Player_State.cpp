@@ -14,7 +14,7 @@ void Player::Idle_Start()
 {
 	ChangeAnimation("Cup-Idle");
 
-	while (GroundCollisonUpdate())
+	while (ColUpdate_Ground())
 	{
 		Move(float4(0.f, 1.f, 0.f), 1.f);
 	}
@@ -38,6 +38,8 @@ void Player::Idle_Update(float _DeltaTime)
 
 	if (KeyState_Shoot_)
 	{
+		IsShooting_ = true;
+
 		ShootingInterTime_ += _DeltaTime;
 		
 		if (true == KeyState_Up_)
@@ -78,6 +80,7 @@ void Player::Idle_Update(float _DeltaTime)
 	}
 	else
 	{
+		IsShooting_ = false;
 		ShootingInterTime_ = 0.f;
 
 		ChangeAnimation("Cup-Idle");
@@ -135,9 +138,10 @@ void Player::Walk_Update(float _DeltaTime)
 
 	if (false == WalkState_Changed_)
 	{
-
 		if (KeyState_Shoot_)
 		{
+			IsShooting_ = true;
+
 			ShootingInterTime_ += _DeltaTime;
 
 			ChangeAnimation("Cup-Walk-Shoot-Str");
@@ -161,6 +165,8 @@ void Player::Walk_Update(float _DeltaTime)
 		}
 		else
 		{
+			IsShooting_ = false;
+
 			ShootingInterTime_ = 0.f;
 
 			ChangeAnimation("Cup-Walk");
@@ -168,14 +174,14 @@ void Player::Walk_Update(float _DeltaTime)
 
 		if (KeyState_Right_)
 		{
-			if (ColState_Pixel_.b_Right == 0.f)
+			if (ColState_Right_ == false)
 			{
 				Move(400.f, 0.f, _DeltaTime);
 			}
 		}
 		else
 		{
-			if (ColState_Pixel_.b_Left == 0.f)
+			if (ColState_Left_ == false)
 			{
 				Move(-400.f, 0.f, _DeltaTime);
 			}
@@ -202,6 +208,8 @@ void Player::Jump_Start()
 	ShootingInterTime_ = 0.f;
 
 	JumpAcc_ = C_JumpSpeed0_ / 0.35f;
+
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_jump_01.wav");
 
 	EffectDust();
 }
@@ -242,6 +250,8 @@ void Player::Jump_Update(float _DeltaTime)
 
 				GameEngineCollision* parrycol = PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry));
 				dynamic_cast<ParryObject*>(parrycol->GetActor())->Parry(parrycol);
+
+				Player_FX_Channel_->PlayLevelOverLap("sfx_player_parry_slap_01.wav");
 
 				ChangeAnimation("Cup-Jump-Parry");
 
@@ -406,7 +416,7 @@ void Player::Jump_Update(float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		if (ColState_Pixel_.b_Right == 0.f)
+		if (ColState_Right_ == 0.f)
 		{
 			Move(C_MoveSpeed_, 0.f, _DeltaTime); 
 			
@@ -418,7 +428,7 @@ void Player::Jump_Update(float _DeltaTime)
 	}
 	else if (KeyState_Left_)
 	{
-		if (ColState_Pixel_.b_Left == 0.f)
+		if (ColState_Left_ == 0.f)
 		{
 			Move(-C_MoveSpeed_, 0.f, _DeltaTime);
 
@@ -431,6 +441,8 @@ void Player::Jump_Update(float _DeltaTime)
 
 	if (KeyState_Shoot_)
 	{
+		IsShooting_ = true;
+
 		ShootingInterTime_ += _DeltaTime;
 
 		if (Dir_ == AnimationDirection::Left)
@@ -452,6 +464,7 @@ void Player::Jump_Update(float _DeltaTime)
 	}
 	else
 	{
+		IsShooting_ = false;
 		ShootingInterTime_ = 0.f;
 	}
 }
@@ -560,14 +573,14 @@ void Player::Fall_Update(float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		if (ColState_Pixel_.b_Right == false)
+		if (ColState_Right_ == false)
 		{
 			Move(C_MoveSpeed_, 0.f, _DeltaTime);
 		}
 	}
 	else if (KeyState_Left_)
 	{
-		if (ColState_Pixel_.b_Left == false)
+		if (ColState_Left_ == false)
 		{
 			Move(-C_MoveSpeed_, 0.f, _DeltaTime);
 		}
@@ -575,6 +588,8 @@ void Player::Fall_Update(float _DeltaTime)
 
 	if (KeyState_Shoot_)
 	{
+		IsShooting_ = true;
+
 		ShootingInterTime_ += _DeltaTime;
 
 		if (Dir_ == AnimationDirection::Left)
@@ -596,6 +611,8 @@ void Player::Fall_Update(float _DeltaTime)
 	}
 	else
 	{
+		IsShooting_ = false;
+
 		ShootingInterTime_ = 0.f;
 	}
 }
@@ -638,6 +655,8 @@ void Player::Duck_Update(float _DeltaTime)
 
 	if (KeyState_Shoot_)
 	{
+		IsShooting_ = true;
+
 		ShootingInterTime_ += _DeltaTime;
 
 		ChangeAnimation("Cup-Duck-Shoot");
@@ -660,6 +679,8 @@ void Player::Duck_Update(float _DeltaTime)
 	}
 	else
 	{
+		IsShooting_ = false;
+
 		ChangeAnimation("Cup-Duck-Idle");
 		ShootingInterTime_ = 0.f;
 	}
@@ -682,6 +703,8 @@ void Player::RockOn_Update(float _DeltaTime)
 
 	if (true == KeyState_Shoot_)
 	{
+		IsShooting_ = true;
+
 		ShootingInterTime_ += _DeltaTime;
 
 		if (KeyState_Down_ && !KeyState_Up_)
@@ -777,6 +800,8 @@ void Player::RockOn_Update(float _DeltaTime)
 
 	else if(false == KeyState_Shoot_)
 	{
+		IsShooting_ = false;
+
 		ShootingInterTime_ = 0.f;
 
 		if (true == KeyState_Up_)
@@ -815,6 +840,8 @@ void Player::RockOn_Update(float _DeltaTime)
 }
 void Player::RockOn_End()
 {
+	IsShooting_ = false;
+
 	ShootingInterTime_ = 0.f;
 }
 
@@ -857,7 +884,11 @@ void Player::Death_End()
 
 void Player::Hit_Start()
 {
+	IsShooting_ = false;
+
 	//GameEngineCore::SetTimeRate(0.5f);
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_hit_01.wav");
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_damage_crack_level1.wav");
 
 	EffectHit();
 
@@ -890,15 +921,12 @@ void Player::Hit_Update(float _DeltaTime)
 	{
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 
-		if (ColState_Pixel_.b_Up == 0.f)
+		if (ColState_Up_ == false)
 		{
-			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
-
-			if (Map::PixelCollisionTransform(PlayerMovingCollision_Middle, 10).b_Up)
+			if(GetTransform()->GetWorldPosition().y < 80.f)
 			{
-				Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), -_DeltaTime);
+				Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 			}
-
 		}
 	}
 
@@ -912,15 +940,11 @@ void Player::Hit_Update(float _DeltaTime)
 			State_.ChangeState("Idle");
 			return;
 		}
-		//if (true == ColState_Ground)
-		//{
-		//	return CheckState();
-		//}
 	}
 
 	if (HitDir_.x > 0.f)
 	{
-		if (ColState_Pixel_.b_Left == 0.f)
+		if (ColState_Left_ == 0.f)
 		{
 			Move(-400.f, 0.f, _DeltaTime);
 
@@ -932,7 +956,7 @@ void Player::Hit_Update(float _DeltaTime)
 	}
 	else if (HitDir_.x < 0.f)
 	{
-		if (ColState_Pixel_.b_Right == 0.f)
+		if (ColState_Right_ == 0.f)
 		{
 			Move(400.f, 0.f, _DeltaTime);
 
@@ -953,6 +977,8 @@ void Player::Hit_End()
 void Player::Dash_Start()
 {
 	PlayerHitBox->Off();
+
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_dash_01.wav");
 	EffectDashDust();
 	ChangeAnimation("Cup-Dash");
 	AniState_DashEnd_ = false;
@@ -986,6 +1012,8 @@ void Player::Dash_End()
 
 void Player::Intro_Start()
 {
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_intro_cuphead.wav");
+
 	PlayerImageRenderer->SetChangeAnimation("Cup-Intro");
 }
 void Player::Intro_Update(float _DeltaTime)
@@ -1011,11 +1039,11 @@ void Player::Playing_Update(float _DeltaTime)
 	{
 		KeyUpdate();
 	}
-	GroundCollisonUpdate();
-	SideCollisonUpdate();
+	CollisionUpdate();
 	ParryCollisonUpdate();
 	HitCollisonUpdate();
 	StateUpdate(_DeltaTime);
+	SoundUpdate(_DeltaTime);
 
 	if (true == HitInvince_)
 	{

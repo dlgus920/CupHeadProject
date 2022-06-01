@@ -28,6 +28,7 @@ void UserGame::Initialize()
 {	
 	GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("Effect");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("DiceCardLoop");
 	//GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
 
 

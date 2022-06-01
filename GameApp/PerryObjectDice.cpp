@@ -2,6 +2,7 @@
 #include "PerryObjectDice.h"
 #include "UserGame.h"
 
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageRenderer.h>
 
@@ -139,6 +140,18 @@ void PerryObjectDice::RollingEnd()
 {
 	Rolled_ = true;
 	ObjectRenderer_->SetChangeAnimation("Death");
+
+	GameEngineRandom rand;
+
+	int randint = rand.RandomInt(1, 4);
+
+	std::string str = "kingdice_laugh_00";
+
+	std::string numstr = std::to_string(randint);
+
+	str = str + numstr + ".wav";
+	
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", str);
 }
 
 

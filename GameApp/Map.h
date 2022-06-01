@@ -35,8 +35,12 @@ public:
 	static bool4 PixelCollisionTransform(GameEngineTransform* _Transform, int Precission_coefficient = 10);
 	static bool4 PixelCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
 
-	static bool PixelGroundCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
 	static bool4 PixelSideCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
+
+	static bool PixelGroundCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
+	static bool PixelUpCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
+	static bool PixelLeftCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
+	static bool PixelRightCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient = 10);
 
 protected:
 	void Start() override;

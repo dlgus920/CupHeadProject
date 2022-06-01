@@ -5,6 +5,7 @@
 
 #include "Bullet.h"
 #include "PositionComponent.h"
+#include <GameEngine/GameEngineSoundPlayer.h>
 
 #include "Bottom_Card.h"
 #include "Bottom_HP.h"
@@ -63,6 +64,9 @@ private: //Legacy
 
 private: //Member
 
+	GameEngineSoundPlayer* Shoot_Channel_;
+	GameEngineSoundPlayer* Player_FX_Channel_;
+
 	GameEngineImageRenderer* PlayerImageRenderer;
 
 	//Bottom_Card* Bottom_Card_;
@@ -103,6 +107,7 @@ private: //Member
 	bool Jumpend_;
 	bool LongJump_;
 	bool Parry_;
+	bool IsShooting_;
 
 	const float C_GravityAcc_ = 3.81f;
 	float GravitySpeed_;
@@ -140,15 +145,13 @@ private: //Member
 
 	bool ColState_Ground_Floar_;
 
+	bool ColState_Left_;
+	bool ColState_Right_;
+	bool ColState_Up_;
 
 	bool PlayerGround_Stuck_;
 
-
-
-	bool4 ColState_Pixel_;
-
 	bool ColState_Hit_;
-	//bool ColState_Parry_;
 	bool ColState_Parry_;
 	
 	bool AniState_DashEnd_;
@@ -159,20 +162,14 @@ private: //Member
 	int HP;
 	int ParryCount;
 
-	//무적시간 판별 여부
-
-
 	// 현재 보고 있는 방향
 	BulletType BulletType_;
 	BulletInfo BulletInfo_;
 
-	//float4 ShootingDir_;
 
 	float4 ShootingPos_[10];
 	ShootingDir				ShootingDir_; // 현재 누르고 있는 키 방향 (대각선포함)
 	AnimationDirection		Dir_; // 보고있는 왼쪽, 오른쪽 방향
-
-	//float4 MoveDir_;
 
 	std::string CurState_;
 
@@ -186,14 +183,10 @@ private: //Func
 	void Move(float4 MoveDir, float _DeltaTime); // Cold 하게 무브만 함
 	void Move(float DirX, float DirY, float _DeltaTime);
 	
-	//const bool MapCollisionMove(float4 _MoveDist, float _DeltaTime);
-	//const bool MapCollisionMove(float DirX, float DirY, float _DeltaTime); 
-	// 10픽셀 차이로 맵의 곡선을 넘을 수 있나 체크하고 이동함(못하면 안함), 근데 이거 필요한가? 컵헤드 곡선맵 있나?, 월드맵에서?
-
 	void ChangeShootFunc(void(Player::* _FrameFunc)());
 
-	void ShootGuidedBullet();
-	void ShootSpreadBullet();
+	//void ShootGuidedBullet();
+	//void ShootSpreadBullet();
 	void ShootDefalutBullet();
 
 	void GravityUpdate(float _DeltaTime);
@@ -216,12 +209,19 @@ private: //Setting
 	void ComponentSetting();
 	void AnimationSetting();
 
+
 private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate();
+	void SoundUpdate(float _DeltaTime);
+	void CollisionUpdate();
+	//const bool GroundCollisonUpdate();
+	//const bool4 SideCollisonUpdate();
+	const bool ColUpdate_Left();
+	const bool ColUpdate_Right();
+	const bool ColUpdate_Up();
+	const bool ColUpdate_Ground();
 
-	const bool GroundCollisonUpdate();
-	const bool4 SideCollisonUpdate();
 	const bool ParryCollisonUpdate();
 	const bool HitCollisonUpdate();
 
@@ -290,14 +290,6 @@ private: //State
 #pragma endregion
 
 public: //Inline
-	//inline void SetStateUpdateOn()
-	//{
-	//	State_Update_ = true;
-	//}
-	//inline void SetStateUpdateOff()
-	//{
-	//	State_Update_ = false;
-	//}
 	void SetVictory()
 	{
 		Update_State_ = false;

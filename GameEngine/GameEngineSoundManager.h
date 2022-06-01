@@ -78,7 +78,7 @@ public:
 
 	GameEngineSoundPlayer* CreateSoundChannel(std::string ChannelName);
 	GameEngineSoundPlayer* FindSoundChannel(std::string ChannelName);
-	void PlaySoundChannel(std::string ChannelName);
+	void PlaySoundChannel(std::string ChannelName, std::string SoundNamem, int loopcount = 0);
 
 	void SoundUpdate();
 

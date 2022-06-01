@@ -32,6 +32,7 @@ Player::Player()
 	, KeyState_Bomb(false)
 	, KeyState_Jump_(false)
 	, KeyState_Dash_(false)
+	, IsShooting_(false)
 	, ColState_Ground_Top_(false)
 	, ColState_Ground_Middle_(false)
 	, ColState_Ground_Bot_(false)
@@ -43,6 +44,9 @@ Player::Player()
 	, AniState_DashEnd_(false)
 	, AniState_IntroEnd_(false)
 	, Update_State_(true)
+	, ColState_Left_(false)
+	, ColState_Right_(false)
+	, ColState_Up_(false)
 	, Camera_(nullptr)
 	, PlayerHitBox(nullptr)
 	, PlayerMovingCollision_Top(nullptr)
@@ -51,6 +55,8 @@ Player::Player()
 	, PlayerParryCollision(nullptr)
 	, PlayerImageRenderer(nullptr)
 	, ParryEffect(nullptr)
+	, Shoot_Channel_(nullptr)
+	, Player_FX_Channel_(nullptr)
 	, BulletType_(BulletType::Default)
 	, ShootingDir_()
 	, Dir_(AnimationDirection::Right)
@@ -72,6 +78,9 @@ Player::~Player()
 
 void Player::Start()
 {
+	Shoot_Channel_ = GameEngineSoundManager::GetInst().CreateSoundChannel("Player_Shoot");
+	Player_FX_Channel_ = GameEngineSoundManager::GetInst().CreateSoundChannel("Player_FX");
+
 	UIBase::UIBase_->UIStart();
 
 	ComponentSetting();

@@ -72,6 +72,29 @@ void Stage_Mr_Wheezy::ResourcesLoad_Start()
 			GameEngineDirectory TextureDir;
 			TextureDir.MoveParent(GV_GAMEFILENAME);
 			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("Cigar");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("CommonEffect");
@@ -210,6 +233,10 @@ void Stage_Mr_Wheezy::ResourcesLoad_Update(float _DeltaTime)
 void Stage_Mr_Wheezy::LevelLoop_Start()
 {
 	PhaseState_.ChangeState("Intro");
+
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+
+	SceneBGM_->PlayLevelOverLap("MUS_CasinoCriminals_01.wav");
 
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
