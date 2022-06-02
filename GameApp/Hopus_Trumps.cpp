@@ -9,6 +9,10 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
+
 Hopus_Trumps::Hopus_Trumps()
 	: BlendStart_(false)
 	, Pos_Up_(false)

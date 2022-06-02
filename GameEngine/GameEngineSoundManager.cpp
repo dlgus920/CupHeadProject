@@ -30,6 +30,21 @@ GameEngineSoundManager::~GameEngineSoundManager()
 		allSoundPlayer_.clear();
 	}
 
+	{
+		auto iter0 = allInstanceSoundPlayer_.begin();
+		auto iter1 = allInstanceSoundPlayer_.end();
+
+		for (; iter0 != iter1;)
+		{
+			if (false == (*iter0)->IsPlay())
+			{
+				iter0 = allInstanceSoundPlayer_.erase(iter0);
+
+				continue;
+			}
+			++iter0;
+		}
+	}
 
 	{
 		std::map<std::string, GameEngineSoundPlayer*>::iterator StartIter = allSoundChannel_.begin();
@@ -108,6 +123,53 @@ void GameEngineSoundManager::SoundUpdate()
 #endif // _DEBUG
 
 	soundSystem_->update();
+
+	auto iter0 = allInstanceSoundPlayer_.begin();
+	auto iter1 = allInstanceSoundPlayer_.end();
+
+	for (; iter0 != iter1;)
+	{
+		if (nullptr != (*iter0)->flag_)
+		{
+			if (true == *((*iter0)->flag_))
+			{
+				iter0 = allInstanceSoundPlayer_.erase(iter0);
+
+				continue;
+			}
+		}
+
+		if (false == (*iter0)->IsPlay())
+		{
+			iter0 = allInstanceSoundPlayer_.erase(iter0);
+
+			continue;
+		}
+		++iter0;	
+	}
+}
+
+void GameEngineSoundManager::IntanceSoundChannel(std::string SoundName, float Volume, int loopcount)
+{
+
+	GameEngineSoundPlayer* SoundPlayer = new GameEngineSoundPlayer;
+
+	allInstanceSoundPlayer_.push_back(SoundPlayer);
+
+	SoundPlayer->SetVolume(Volume);
+	SoundPlayer->PlayLevelOverLap(SoundName);
+
+}
+
+void GameEngineSoundManager::IntanceSoundChannel(std::string SoundName, float Volume, bool* flag, int loopcount)
+{
+	GameEngineSoundPlayer* SoundPlayer = new GameEngineSoundPlayer;
+
+	allInstanceSoundPlayer_.push_back(SoundPlayer);
+
+	SoundPlayer->SetVolume(Volume);
+	SoundPlayer->PlayLevelOverLap(SoundName);
+	SoundPlayer->flag_ = flag;
 }
 
 GameEngineSoundPlayer* GameEngineSoundManager::CreateSoundPlayer()
@@ -333,4 +395,34 @@ void GameEngineSoundManager::Initialize()
 		GameEngineDebug::MsgBoxError("sound system init Error");
 		return;
 	}
+}
+
+void GameEngineSoundManager::DestroyLevelRes(GameEngineLevel* _Level)
+{
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineSound*>>::iterator FindIterglobal = GlobalResourcesMap.find(_Level);
+
+#ifdef _DEBUG
+	//if (GlobalResourcesMap.end() == FindIterglobal)
+	//{
+	//	GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
+	//	return;
+	//}
+
+#endif // _DEBUG
+	if (FindIterglobal == GlobalResourcesMap.end())
+	{
+		return;
+	}
+
+	for (const std::pair<std::string, GameEngineSound*>& Res : FindIterglobal->second)
+	{
+		if (nullptr != Res.second)
+		{
+			delete Res.second;
+		}
+	}
+
+	FindIterglobal->second.clear();
+
+	GlobalResourcesMap.erase(FindIterglobal);
 }

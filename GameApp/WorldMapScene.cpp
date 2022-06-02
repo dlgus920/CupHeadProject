@@ -168,10 +168,10 @@ void WorldMapScene::LevelLoop_Start()
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
 
-	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("WorldBGM");
 
-	SceneBGM_ -> PlayLevelOverLap("MUS_InkwellIsleOne.wav");
 	SceneBGM_->SetVolume(0.7f);
+	SceneBGM_->PlayLevelOverLap("MUS_InkwellIsleOne.wav");
 
 	{
 		// 1280 720
@@ -330,6 +330,7 @@ void WorldMapScene::ScreenFadeEnd()
 
 	UserGame::StageInfo_.WorldMapPlayer_Pos_ = WorldMapPlayer_->GetTransform()->GetWorldPosition();
 
+	SceneBGM_->SetVolume(1.f);
 
 	GameEngineCore::LevelChange(NextScene_);
 }

@@ -422,6 +422,10 @@ void Stage_Mr_Wheezy::Playing_Update(float _DeltaTime)
 		{
 			BlendRate_ += _DeltaTime;
 			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+
+
+
+			SceneBGM_->SetVolume(1.f- BlendRate_);
 		}
 
 		if (BlendRate_ >= 1.f)

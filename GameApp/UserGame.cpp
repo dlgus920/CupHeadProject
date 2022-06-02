@@ -27,8 +27,17 @@ UserGame::UserGame(UserGame&& _other) noexcept
 void UserGame::Initialize()
 {	
 	GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("TitleBGM")->SetVolume(2.f);
+	GameEngineSoundManager::GetInst().CreateSoundChannel("WorldBGM");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Diceintro");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("Effect");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("DiceCardLoop");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("DiceChop")->SetVolume(2.f);
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Intro");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Hopus_idle");// ->SetVolume(0.3f);
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Hopus_Attack");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Hopus_Deffeat");
+	GameEngineSoundManager::GetInst().SetGlobalVolume(0.25f);
 	//GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
 
 

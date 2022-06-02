@@ -42,8 +42,6 @@ void TitleScene::Init_Update(float _DeltaTime)
 
 void TitleScene::ResourcesLoad_Start()
 {
-	SceneBGM_ = GameEngineSoundManager::GetInst().CreateSoundPlayer();
-
 	{
 		GameEngineDirectory TextureDir;
 		TextureDir.MoveParent(GV_GAMEFILENAME);
@@ -126,6 +124,8 @@ void TitleScene::ResourcesLoad_End()
 
 void TitleScene::LevelLoop_Start()
 {
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("TitleBGM");
+
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
 
 	{
@@ -154,7 +154,7 @@ void TitleScene::LevelLoop_Start()
 	}
 
 	{
-		SceneBGM_->PlayLevelOverLap("bgm_title_screen.wav");  
+		SceneBGM_->PlayLevelOverLap("bgm_title_screen.wav"); 
 	}
 
 	TimeCheck_ = 1.f;
@@ -176,7 +176,7 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 		BlendRate_ += _DeltaTime * 2.f;
 		TimeCheck_ -= _DeltaTime * 2.f;
 
-		SceneBGM_->SetVolume(TimeCheck_);
+		SceneBGM_->AdjustVolume(-_DeltaTime);
 
 		if (BlendRate_ >= 1.f)
 		{

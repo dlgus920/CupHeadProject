@@ -57,6 +57,8 @@ private:
 
 	std::map<std::string,GameEngineSoundPlayer*> allSoundChannel_;
 
+	std::list<GameEngineSoundPlayer*> allInstanceSoundPlayer_;
+
 private:
 	GameEngineSound* FindSound(const std::string& _name);
 	GameEngineSound* FindSoundLevelRes(const std::string& _name);
@@ -81,6 +83,11 @@ public:
 	void PlaySoundChannel(std::string ChannelName, std::string SoundNamem, int loopcount = 0);
 
 	void SoundUpdate();
+
+	void IntanceSoundChannel(std::string SoundName, float Volume, int loopcount = 0);
+	void IntanceSoundChannel(std::string SoundName, float Volume, bool* flag,int loopcount = 0);
+
+	void DestroyLevelRes(GameEngineLevel* _Level);
 
 public:
 	static GameEngineSoundManager& GetInst()

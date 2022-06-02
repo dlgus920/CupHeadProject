@@ -10,6 +10,9 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 Hopus_pocus::Hopus_pocus()
 	: State_(this)
 	, Hopus_pocusImageRenderer_(nullptr)

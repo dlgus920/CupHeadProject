@@ -156,18 +156,6 @@ void Player::ChangeShootFunc(void(Player::* _FrameFunc)())
 	BulletShootFunc_ = std::bind(_FrameFunc, this);
 }
 
-void Player::ShootGuidedBullet()
-{
-	// 소환된 방향으로 나가되, 자체적으로 주변 적을 찾아 알아서 이동하게 해줌
-
-	Bullet_Guided* Bullet = GetLevel()->CreateActor<Bullet_Guided>();
-	Bullet->SetBulletInfo(BulletInfo_);
-}
-void Player::ShootSpreadBullet()
-{
-	Bullet_Spread* Bullet = GetLevel()->CreateActor<Bullet_Spread>();
-	Bullet->SetBulletInfo(BulletInfo_);
-}
 void Player::ShootDefalutBullet()
 {
 	Bullet_Defalut* Bullet = GetLevel()->CreateActor<Bullet_Defalut>();

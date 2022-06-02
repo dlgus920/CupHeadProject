@@ -257,6 +257,8 @@ void Player::Jump_Update(float _DeltaTime)
 
 				ParryEffect = GetLevel()->CreateActor<GameEngineActor>();
 
+				ParryEffect->DeathTime_ = 1.f;
+
 				GameEngineImageRenderer* ParryRenderer;
 
 				float4 pos = PlayerParryCollision->GetTransform()->GetWorldPosition();
@@ -335,7 +337,9 @@ void Player::Jump_Update(float _DeltaTime)
 			{
 				LongJump_ = false;
 			}
+
 			JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+
 			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 		}
 
@@ -365,16 +369,20 @@ void Player::Jump_Update(float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (true == ColState_Ground_Floar_)
-					{
-						State_.ChangeState("Idle");
-						return;
-					}
 
-					if (true == ColState_Ground_Bot_)
+					if (PlayerMovingCollision_Bot->GetTransform()->GetWorldPosition().y < 150.f)
 					{
-						State_.ChangeState("Idle");
-						return;
+						if (true == ColState_Ground_Floar_)
+						{
+							State_.ChangeState("Idle");
+							return;
+						}
+
+						if (true == ColState_Ground_Bot_)
+						{
+							State_.ChangeState("Idle");
+							return;
+						}
 					}
 				}
 			}
@@ -398,16 +406,19 @@ void Player::Jump_Update(float _DeltaTime)
 					JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 					Move(float4(0.f, JumpSpeed_, 0.f), _DeltaTime);
 
-					if (true == ColState_Ground_Floar_)
+					if (PlayerMovingCollision_Bot->GetTransform()->GetWorldPosition().y < 150.f)
 					{
-						State_.ChangeState("Idle");
-						return;
-					}
+						if (true == ColState_Ground_Floar_)
+						{
+							State_.ChangeState("Idle");
+							return;
+						}
 
-					if (true == ColState_Ground_Bot_)
-					{
-						State_.ChangeState("Idle");
-						return;
+						if (true == ColState_Ground_Bot_)
+						{
+							State_.ChangeState("Idle");
+							return;
+						}
 					}
 				}
 			}
@@ -416,7 +427,7 @@ void Player::Jump_Update(float _DeltaTime)
 
 	if (KeyState_Right_)
 	{
-		if (ColState_Right_ == 0.f)
+		if (ColState_Right_ == false)
 		{
 			Move(C_MoveSpeed_, 0.f, _DeltaTime); 
 			
@@ -523,8 +534,6 @@ void Player::Fall_Update(float _DeltaTime)
 				GameEngineCollision* parrycol = PlayerParryCollision->CollisionPtr(static_cast<int>(CollisionGruop::Parry));
 				dynamic_cast<ParryObject*>(parrycol->GetActor())->Parry(parrycol);
 
-
-
 				ChangeAnimation("Cup-Jump-Parry");
 
 				EffectParry();
@@ -567,8 +576,8 @@ void Player::Fall_Update(float _DeltaTime)
 
 	if (true == ColState_Ground_Bot_)
 	{
-		State_.ChangeState("Idle");
-		return;
+			State_.ChangeState("Idle");
+			return;
 	}
 
 	if (KeyState_Right_)
@@ -888,7 +897,7 @@ void Player::Hit_Start()
 
 	//GameEngineCore::SetTimeRate(0.5f);
 	Player_FX_Channel_->PlayLevelOverLap("sfx_player_hit_01.wav");
-	Player_FX_Channel_->PlayLevelOverLap("sfx_player_damage_crack_level1.wav");
+	Player_FX_Channel_->PlayLevelOverLap("sfx_player_damage_crack_level4.wav");
 
 	EffectHit();
 
@@ -921,13 +930,10 @@ void Player::Hit_Update(float _DeltaTime)
 	{
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 
-		if (ColState_Up_ == false)
+		if (GetTransform()->GetWorldPosition().y < 80.f)
 		{
-			if(GetTransform()->GetWorldPosition().y < 80.f)
-			{
-				Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
-			}
-		}
+			Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
+		}	
 	}
 
 	else if (TimeCheck_ >= 0.35f)
@@ -935,10 +941,13 @@ void Player::Hit_Update(float _DeltaTime)
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
 		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 
-		if (true == ColState_Ground_Bot_)
+		if (PlayerMovingCollision_Bot->GetTransform()->GetWorldPosition().y < 150.f)
 		{
-			State_.ChangeState("Idle");
-			return;
+			if (true == ColState_Ground_Bot_)
+			{
+				State_.ChangeState("Idle");
+				return;
+			}
 		}
 	}
 
@@ -956,7 +965,7 @@ void Player::Hit_Update(float _DeltaTime)
 	}
 	else if (HitDir_.x < 0.f)
 	{
-		if (ColState_Right_ == 0.f)
+		if (ColState_Right_ == false)
 		{
 			Move(400.f, 0.f, _DeltaTime);
 

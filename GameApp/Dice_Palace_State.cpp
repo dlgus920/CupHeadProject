@@ -229,7 +229,9 @@ void DicePaclace::ResourcesLoad_Update(float _DeltaTime)
 
 void DicePaclace::LevelLoop_Start() 
 {
-	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("BGM");
+	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("Diceintro");
+
+	SceneBGM_->SetVolume(0.25f);
 
 	SceneBGM_->PlayLevelOverLap("sfx_dice_palace_main_king_dice_intro_01.wav");
 	SceneBGM_->PlayLevelOverLap("kingdice_intro.wav");
@@ -243,7 +245,6 @@ void DicePaclace::LevelLoop_Start()
 		SceneBGM_->PlayLevelOverLap("MUS_TheKingsCourt_start.wav");
 	}
 
-	SceneBGM_->SetVolume(0.7f);
 
 	PhaseState_.ChangeState("Intro");
 

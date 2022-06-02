@@ -75,6 +75,29 @@ void Stage_Hopus_pocus::ResourcesLoad_Start()
 			GameEngineDirectory TextureDir;
 			TextureDir.MoveParent(GV_GAMEFILENAME);
 			TextureDir.MoveChild("Resources");
+			TextureDir.MoveChild("Sound");
+			TextureDir.MoveChild("Hopus");
+			{
+				std::vector<GameEngineFile> AllFile = TextureDir.GetAllFile();
+
+				for (size_t i = 0; i < AllFile.size(); i++)
+				{
+					GameEngineSoundManager::GetInst().LoadLevelRes(AllFile[i].GetFullPath());
+				}
+			}
+
+			UserGame::LoadingFolder--;
+		}
+	);
+
+	UserGame::LoadingFolder++;
+	GameEngineCore::ThreadQueue.JobPost
+	(
+		[]()
+		{
+			GameEngineDirectory TextureDir;
+			TextureDir.MoveParent(GV_GAMEFILENAME);
+			TextureDir.MoveChild("Resources");
 			TextureDir.MoveChild("Image");
 			TextureDir.MoveChild("DicePalace");
 			TextureDir.MoveChild("CommonEffect");

@@ -10,7 +10,9 @@
 GameEngineSoundPlayer::GameEngineSoundPlayer()
 	: playSoundFile_(nullptr)
 	, playChannel_(nullptr)
+	, flag_(nullptr)
 	, PlayCount(-1)
+	, Volume_(1.f)
 {
 }
 
@@ -126,6 +128,7 @@ void GameEngineSoundPlayer::PlayLevelOverLap(const std::string& _name, int _Loop
 
 	playChannel_->setLoopCount(_LoopCount);
 
+	playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * Volume_);
 }
 
 void GameEngineSoundPlayer::Stop()
@@ -141,8 +144,18 @@ void GameEngineSoundPlayer::Stop()
 
 void GameEngineSoundPlayer::SetVolume(float _volume)
 {
-	if (playChannel_ != nullptr)
-	{
-		FMOD_RESULT result = playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * _volume);
-	}
+	Volume_ = _volume;
+
+	//if (playChannel_ != nullptr)
+	//{
+	//	FMOD_RESULT result = playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * _volume);
+	//}
+	playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * Volume_);
+}
+
+void GameEngineSoundPlayer::AdjustVolume(float _volume)
+{
+	Volume_ += _volume;
+
+	playChannel_->setVolume(GameEngineSoundManager::globalVolume_ * Volume_);
 }

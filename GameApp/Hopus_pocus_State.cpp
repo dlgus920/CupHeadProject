@@ -9,9 +9,19 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 void Hopus_pocus::Intro_Start()
 {
+	GameEngineSoundManager::GetInst().FindSoundChannel("Effect")->SetVolume(1.f);
+
 	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Intro");
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("BGM", "MUS_CasinoCriminals_02.wav");
+	GameEngineSoundManager::GetInst().FindSoundChannel("Intro")->PlayLevelOverLap("sfx_dice_palace_rabbit_intro_continue_02.wav");
+	GameEngineSoundManager::GetInst().FindSoundChannel("Intro")->SetVolume(0.7f);
+
 }
 void Hopus_pocus::Intro_Update( float _DeltaTime)
 {
@@ -29,6 +39,28 @@ void Hopus_pocus::Intro_End()
 void Hopus_pocus::Idle_Start()
 {
 	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Idle");
+
+	GameEngineRandom rand;
+
+	int randcount = rand.RandomInt(0, 2);
+
+	if(randcount ==0)
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_01.wav");
+	else if(randcount ==1)
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_02.wav");
+	else
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_03.wav");
+
+	GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_idle")->SetVolume(0.3f);
+
+	int randint = rand.RandomInt(1, 7);
+
+	std::string str = "sfx_level_dice_palace_rabbit_idle_vox_0";
+	std::string strnum = std::to_string(randint);
+
+	str = str + strnum + ".wav";
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", str);
+	
 }
 void Hopus_pocus::Idle_Update(float _DeltaTime)
 {
@@ -38,10 +70,26 @@ void Hopus_pocus::Idle_Update(float _DeltaTime)
 		return;
 	}
 
+	if (false == GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_idle")->IsPlay())
+	{
+		GameEngineRandom rand;
+
+		int randcount = rand.RandomInt(0, 2);
+
+		if (randcount == 0)
+			GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_01.wav");
+		else if (randcount == 1)
+			GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_02.wav");
+		else
+			GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_idle", "sfx_level_dice_palace_rabbit_idle_twirl_loop_03.wav");
+		GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_idle")->SetVolume(0.3f);
+	}
+
 	TimeCheck_ += _DeltaTime;
 
-	if (TimeCheck_ > 5.5f)
+	if (TimeCheck_ > 3.f)
 	{
+		GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_idle")->Stop();
 		//if (FireCount_ == 3)
 		//{
 		//	FireCount_ = 0;
@@ -50,6 +98,8 @@ void Hopus_pocus::Idle_Update(float _DeltaTime)
 		//}
 
 		State_.ChangeState("Attack");
+
+
 		return;
 	}
 }
@@ -62,6 +112,9 @@ void Hopus_pocus::Attack_Start() // 외부에서 특정 조건 만족시 실행
 {
 	Hopus_pocusImageRenderer_->SetChangeAnimation("Hopus_Pocus-Attack");
 
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_rabbit_attack_start_01.wav");
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_Attack", "sfx_level_dice_palace_rabit_attack_loop_01.wav");
+
 	if (true == Houpus_AIPattern_)
 	{
 		Houpus_AIPattern_ = false;
@@ -70,7 +123,6 @@ void Hopus_pocus::Attack_Start() // 외부에서 특정 조건 만족시 실행
 	{
 		Houpus_AIPattern_ = true;
 	}
-
 	FireReady();
 }
 void Hopus_pocus::Attack_Update( float _DeltaTime)
@@ -84,6 +136,9 @@ void Hopus_pocus::Attack_Update( float _DeltaTime)
 
 	if (true == AniEnd_Attack_)
 	{
+		GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_Attack")->Stop();
+
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_rabbit_attack_end_04.wav");
 		Fire();
 
 		AniEnd_Attack_ = false;
@@ -131,6 +186,19 @@ void Hopus_pocus::Defeat_Update(float _DeltaTime)
 	//}
 
 	TimeCheck_ += _DeltaTime;
+
+	if (false == GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_Deffeat")->IsPlay())
+	{
+		GameEngineRandom rand;
+		int randint = rand.RandomInt(1, 4);
+
+		std::string str = "sfx_dice_palace_rabbit_death_0";
+		std::string strnum = std::to_string(randint);
+
+		str = str + strnum + ".wav";
+		GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_Deffeat", str);
+	}
+
 
 	if (TimeCheck_ >= 0.2f)
 	{

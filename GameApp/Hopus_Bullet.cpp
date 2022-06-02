@@ -8,6 +8,9 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineRandom.h>
 
+#include <GameEngine/GameEngineSoundManager.h>
+#include <GameEngine/GameEngineSoundPlayer.h>
+
 Hopus_Bullet::Hopus_Bullet() 
 	: Roll_(false)
 	, TimeCheck_(0.f)
@@ -108,6 +111,9 @@ void Hopus_Bullet::Update(float _DeltaTime)
 			Dummy_->Off();
 			Off(); 
 
+			GameEngineSoundManager::GetInst().FindSoundChannel("Effect")->PlayLevelOverLap("sfx_level_mouse_cannon_bomb_explode_01.wav");
+
+			
 			Effect* Boom = GetLevel()->CreateActor<Effect>();
 			Boom->EffectAddAnimationActor("Rabit_Bomb.png", "Rabit_Bomb", float4{398.f,592.f,1.f}, 0, 15, 0.04f, false);
 			Boom->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());

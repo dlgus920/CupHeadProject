@@ -49,7 +49,6 @@ void Wheezy_Fire::Update(float _DeltaTime)
 		}
 	}
 
-
 	TimeCheck_ += _DeltaTime;
 	DeathTimeCheck_ += _DeltaTime;
 

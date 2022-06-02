@@ -57,10 +57,10 @@ void SceneBase::ReadyWALLOP()
 	Back->ImageRenderer_->SetResultColor(float4{ 1.f,1.f,1.f,0.3f });
 
 	Effect* Effect_ = CreateActor<Effect>();
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.06f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f },0.05f, false);
 
 	_GameEngineImageRenderer->SetEndCallBack("ReadyWALLOP!", std::bind(&Image::Death, Back));
-	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 21,std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
+	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 26,std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
@@ -70,7 +70,7 @@ void SceneBase::ReadyWALLOP_DICE()
 	Effect* Effect_ = CreateActor<Effect>();
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->
 		EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.1f, false);
-	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 21, std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
+	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 26, std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });
 }
@@ -80,6 +80,8 @@ void SceneBase::KnockoutEnd()
 	GameEngineCore::SetTimeRate(1.f);
 
 	Victory_ = true;
+
+	GameEngineSoundManager::GetInst().FindSoundChannel("BGM")->PlayLevelOverLap("sfx_level_knockout_boom_01.wav");
 }
 
 //void SceneBase::JobPostres(GameEngineDirectory Dir)
@@ -350,7 +352,7 @@ void SceneBase::Knockout()
 	GameEngineCore::SetTimeRate(0.0001f);
 	Effect_->SetPlayRate(10000.f);
 
-	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.06f, false);
+	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->EffectAnimationFolderActor("Knockout", "Knockout", float4{ 1280.f,720.f,1.f },0.04f, false);
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&Image::Death, Effect_));
 	_GameEngineImageRenderer->SetEndCallBack("Knockout", std::bind(&SceneBase::KnockoutEnd, this));
 

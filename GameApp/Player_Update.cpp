@@ -116,9 +116,6 @@ void Player::SoundUpdate(float _DeltaTime)
 	{
 		Shoot_Channel_->Stop();
 	}
-
-
-
 }
 
 void Player::CollisionUpdate()
@@ -144,6 +141,10 @@ const bool Player::ColUpdate_Ground()
 		PlayerGround_Stuck_ = false;
 	}
 
+
+	ColState_Ground_Floar_ = PlayerMovingCollision_Bot->Collision(static_cast<int>(CollisionGruop::FloarCard));
+	
+
 	return PlayerGround_Stuck_;
 }
 
@@ -162,7 +163,7 @@ const bool Player::ColUpdate_Right()
 const bool Player::ColUpdate_Up()
 {
 	ColState_Up_ = Map::PixelUpCollisionTransform(PlayerMovingCollision_Middle, 5);
-	return ColState_Right_;
+	return ColState_Up_;
 }
 
 const bool Player::ParryCollisonUpdate()

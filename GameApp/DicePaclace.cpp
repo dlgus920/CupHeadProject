@@ -119,12 +119,14 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 		if (TimeCheck_ > 3.f)
 		{
 			BlendRate_ += _DeltaTime;
+			SceneBGM_->SetVolume(1.f - BlendRate_);
 			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 		}
 
 		if (BlendRate_ >= 1.f)
 		{
 			BlendRate_ = 1.f;
+			SceneBGM_->Stop();
 
 			GameEngineCore::LevelChange("WorldMap");
 		}
@@ -145,6 +147,8 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 	if (TimeCheck_ > 2.f)
 	{
 		BlendRate_ += _DeltaTime * 2;
+
+		SceneBGM_->SetVolume(1.f - BlendRate_);
 
 		if (BlendRate_ >= 1.f)
 		{

@@ -202,12 +202,11 @@ bool Map::PixelUpCollisionTransform(GameEngineCollision* _Collision, int Preciss
 	{
 		if (GetColor(i, Rect.top) == float4::BLACK)
 		{
-			Retern.b_Up = true;
-			break;
+			return true;
 		}
 	}
 
-	return Retern.b_Up;
+	return false;
 }
 
 bool Map::PixelGroundCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient)
@@ -267,6 +266,7 @@ bool Map::PixelLeftCollisionTransform(GameEngineCollision* _Collision, int Preci
 			return true;
 		}
 	}
+	return false;
 }
 
 bool Map::PixelRightCollisionTransform(GameEngineCollision* _Collision, int Precission_coefficient)
@@ -295,4 +295,5 @@ bool Map::PixelRightCollisionTransform(GameEngineCollision* _Collision, int Prec
 			return true;
 		}
 	}
+	return false;
 }

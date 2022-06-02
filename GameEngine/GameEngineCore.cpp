@@ -157,6 +157,7 @@ void GameEngineCore::LevelDestroy(const std::string& _Level)
 
 	GameEngineTextureManager::GetInst().DestroyLevelRes(Level);
 	GameEngineFolderTextureManager::GetInst().DestroyLevelRes(Level);
+	GameEngineSoundManager::GetInst().DestroyLevelRes(Level);
 
 	AllLevel_.erase(AllLevel_.find(_Level));
 	delete Level;

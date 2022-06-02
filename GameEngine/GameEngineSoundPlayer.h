@@ -12,6 +12,8 @@ private:	// member Var
 	GameEngineSoundManager* playSoundFile_;
 	FMOD::Channel* playChannel_; // 
 	int PlayCount;
+	float Volume_;
+	bool* flag_;
 
 private:		
 	GameEngineSoundPlayer(); // default constructer 디폴트 생성자
@@ -31,7 +33,19 @@ public:
 	void PlayLevelOverLap(const std::string& _name, int _LoopCount = 0);
 
 	void SetVolume(float _volume);
+	void AdjustVolume(float _volume);
 
 	void Stop();
+
+	const float Getvolume()
+	{
+		float vol = 0;
+		playChannel_->getVolume(&vol);
+
+		return vol;
+	}
+
+public:
+	
 };
 

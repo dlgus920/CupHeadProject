@@ -15,8 +15,6 @@ void King_Dice::Intro_Update( float _DeltaTime)
 		State_.ChangeState("Idle");
 		return;
 	}
-
-	 
 }
 void King_Dice::Intro_End_()
 {
@@ -38,6 +36,14 @@ void King_Dice::Idle_Update(float _DeltaTime)
 		}
 
 		TimeCheck_ += _DeltaTime;
+
+		if (GameEngineSoundManager::GetInst().FindSoundChannel("DiceCardLoop")->IsPlay())
+		{
+			if (TimeCheck_ > 1.f)
+			{
+				GameEngineSoundManager::GetInst().FindSoundChannel("DiceCardLoop")->Stop();
+			}
+		}
 
 		if (TimeCheck_ > 2.f)
 		{
@@ -80,6 +86,8 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 	}
 
 	CardClear();
+
+	GameEngineSoundManager::GetInst().FindSoundChannel("DiceCardLoop")->Stop();
 
 	MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Birth");
 
@@ -208,7 +216,7 @@ void King_Dice::Defeat_End_()
 
 void King_Dice::Chop_Start()
 {
-	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect","sfx_dice_palace_main_king_dice_eat_screen_01.wav");
+	GameEngineSoundManager::GetInst().PlaySoundChannel("DiceChop","sfx_dice_palace_main_king_dice_eat_screen_01.wav");
 	MonsterImageRenderer->SetChangeAnimation("KDice-Chomp");
 	MonsterImageRenderer->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx02) });
 }

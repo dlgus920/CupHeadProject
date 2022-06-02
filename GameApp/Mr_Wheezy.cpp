@@ -145,9 +145,8 @@ void Mr_Wheezy::Start()
 
 	//////////////½ºÅÝ
 	{
-		Hp_ = 100;
+		Hp_ = 10;
 	}
-
 }
 
 void Mr_Wheezy::Update(float _DeltaTime)
@@ -267,11 +266,11 @@ void Mr_Wheezy::AniEnd_Death_4()
 	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 	{		
 		WheezyImageRenderer_Left_->	GetTransform()
-			->SetWorldPosition(float4(340.f, -190.f, static_cast<float>(ZOrder::Z02Back02_5)));
+			->SetWorldPosition(float4(340.f, -180.f, static_cast<float>(ZOrder::Z02Back02_5)));
 	}
-	else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+	else if(Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 	{
 		WheezyImageRenderer_Right_->GetTransform()
-			->SetWorldPosition(float4(940.f, -190.f, static_cast<float>(ZOrder::Z02Back02_5)));
+			->SetWorldPosition(float4(940.f, -180.f, static_cast<float>(ZOrder::Z02Back02_5)));
 	}
 }

@@ -13,7 +13,10 @@
 
 void Mr_Wheezy::Intro_Start()
 {
-	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect","sfx_dice_palace_cigar_intro_start_loop_01.wav");
+	//GameEngineSoundManager::GetInst().PlaySoundChannel("Effect","sfx_dice_palace_cigar_intro_start_loop_01.wav");
+	GameEngineSoundPlayer* intro = GameEngineSoundManager::GetInst().FindSoundChannel("Intro");
+	intro->PlayLevelOverLap("sfx_dice_palace_cigar_intro_start_loop_01.wav");
+	intro->SetVolume(0.5f);
 
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Intro");
 }
@@ -118,6 +121,8 @@ void Mr_Wheezy::Defeat_Start()
 	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Death-Intro");
 
 	Defeat_ = true;
+
+	GameEngineSoundManager::GetInst().FindSoundChannel("BGM")->Stop();
 
 	GetLevel<Stage_Mr_Wheezy>()->Knockout();
 
@@ -233,7 +238,18 @@ void Mr_Wheezy::Telleport_Update(float _DeltaTime)
 				Cur_WheezyImageRenderer_ = WheezyImageRenderer_Right_;
 			}
 
-			GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "cigar_vox_warning_01.wav");
+			GameEngineRandom rand;
+
+			int randint =  rand.RandomInt(0, 1);
+
+			if (randint == 0)
+			{
+				GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "cigar_vox_warning_01.wav");
+			}
+			else
+			{
+				GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "cigar_vox_warning_03.wav");
+			}
 
 			AniEnd_TellePort_Out_ = false;
 			State_.ChangeState("Idle");
