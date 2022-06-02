@@ -4,7 +4,15 @@
 void WorldMapPlayer::Update(float _DeltaTime)
 {
 	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-	GetLevel()->GetMainCameraActor()->GetTransform()->SetWorldPosition(GetTransform()->GetWorldPosition());
+
+	float4 pos = GetTransform()->GetWorldPosition();
+
+	if (pos.x < 640.f)
+	{
+		pos.x = 640.f;
+	}
+
+	GetLevel()->GetMainCameraActor()->GetTransform()->SetWorldPosition(pos);
 
 	if (true == KeyState_Update_)
 	{

@@ -1,4 +1,5 @@
 #include "PreCompile.h"
+
 #include "Hopus_pocus.h"
 #include "Effect.h"
 
@@ -50,6 +51,7 @@ void Hopus_pocus::Start()
 
 		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Intro", std::bind(&Hopus_pocus::AniEnd_Intro, this));
 		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Attack", std::bind(&Hopus_pocus::AniEnd_Attack_End, this));
+		Hopus_pocusImageRenderer_->SetFrameCallBack("Hopus_Pocus-Attack", 13,std::bind(&Hopus_pocus::AniEnd_Attack_Sound, this));
 		Hopus_pocusImageRenderer_->SetFrameCallBack("Hopus_Pocus-Attack", 24,std::bind(&Hopus_pocus::AniEnd_Attack, this));
 		Hopus_pocusImageRenderer_->SetEndCallBack("Hopus_Pocus-Idle", std::bind(&Hopus_pocus::AniEnd_Idle, this));
 	}
@@ -92,7 +94,13 @@ void Hopus_pocus::Start()
 
 void Hopus_pocus::Update(float _DeltaTime)
 {
-	GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::Rect);
+	if (true == UserGame::StageInfo_.Debug_)
+	{
+		if (true == MonsterHitBox->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(MonsterHitBox->GetTransform(), CollisionType::CirCle);
+		}
+	}
 
 	State_.Update(_DeltaTime);
 }
@@ -130,4 +138,11 @@ void Hopus_pocus::AniEnd_Intro()
 	AniEnd_Intro_ = true;
 	Hopus_pocusImageRenderer_->GetTransform()->SetLocalScaling(float4{ 640.f,740.f });
 	Hopus_pocusImageRenderer_->GetTransform()->SetWorldMove(float4{ -90.f,0.f });
+}
+
+void Hopus_pocus::AniEnd_Attack_Sound()
+{
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Hopus_Attack", "sfx_level_dice_palace_rabit_attack_loop_01.wav");
+
 }

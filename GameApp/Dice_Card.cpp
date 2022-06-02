@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "Dice_Card.h"
-#include "UserGame.h"
 
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageRenderer.h>

@@ -2,7 +2,10 @@
 #include "TitleScene.h"
 #include "WorldMapScene.h"
 
-#include "UserGame.h"
+
+
+#include "Stage_Hopus_pocus.h"
+#include "Stage_Mr_Wheezy.h"
 
 #include "Image.h"
 #include "UIBase.h"
@@ -124,6 +127,9 @@ void TitleScene::ResourcesLoad_End()
 
 void TitleScene::LevelLoop_Start()
 {
+	GameEngineSoundManager::GetInst().FindSoundChannel("Noise")->PlayLevelOverLap("sfx_OpticalLoop.wav",-1);
+	
+
 	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("TitleBGM");
 
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
@@ -162,6 +168,19 @@ void TitleScene::LevelLoop_Start()
 
 void TitleScene::LevelLoop_Update(float _DeltaTime)
 {
+	static float soundTimeCheck_ = 0;
+	static bool piano = false;
+
+	soundTimeCheck_ += _DeltaTime;
+
+	if (piano == false)
+	{
+		if (soundTimeCheck_ >= 40.f)
+		{
+			SceneBGM_->PlayLevelOverLap("bgm_title_screen_piano.wav");
+			piano = true;
+		}
+	}
 	if (false == TobeNext_)
 	{
 		LevelLoadFadeUpdate(_DeltaTime);
@@ -181,8 +200,12 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 		if (BlendRate_ >= 1.f)
 		{
 			SceneBGM_->Stop();
-			GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
-			GameEngineCore::LevelChange("WorldMap");
+			//GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+			//GameEngineCore::LevelChange("WorldMap");
+
+			GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+
+			GameEngineCore::LevelChange("Stage_Mr_Wheezy");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}

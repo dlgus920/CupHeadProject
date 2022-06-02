@@ -18,6 +18,16 @@ void Player::Idle_Start()
 	{
 		Move(float4(0.f, 1.f, 0.f), 1.f);
 	}
+
+	if (true == ColState_Ground_Floar_)
+	{
+		float a = -320.f;
+
+		while (GetTransform()->GetWorldPosition().y < a)
+		{
+			Move(float4(0.f, 1.f, 0.f), 1.f);
+		}
+	}
 }
 void Player::Idle_Update(float _DeltaTime)
 {
@@ -72,7 +82,7 @@ void Player::Idle_Update(float _DeltaTime)
 			ShootingDir_ = ShootingDir::Right;
 		}
 
-		if (ShootingInterTime_ >= 0.2f)
+		if (ShootingInterTime_ >= ShootingTime_)
 		{
 			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
@@ -157,7 +167,7 @@ void Player::Walk_Update(float _DeltaTime)
 				ShootingDir_ = ShootingDir::Right;
 			}
 
-			if (ShootingInterTime_ >= 0.2f)
+			if (ShootingInterTime_ >= ShootingTime_)
 			{
 				BulletShootFunc_();
 				ShootingInterTime_ = 0.f;
@@ -467,7 +477,7 @@ void Player::Jump_Update(float _DeltaTime)
 			ShootingDir_ = ShootingDir::Right;
 		}
 
-		if (ShootingInterTime_ >= 0.2f)
+		if (ShootingInterTime_ >= ShootingTime_)
 		{
 			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
@@ -612,7 +622,7 @@ void Player::Fall_Update(float _DeltaTime)
 			ShootingDir_ = ShootingDir::Right;
 		}
 
-		if (ShootingInterTime_ >= 0.2f)
+		if (ShootingInterTime_ >= ShootingTime_)
 		{
 			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
@@ -680,7 +690,7 @@ void Player::Duck_Update(float _DeltaTime)
 			ShootingDir_ = ShootingDir::Left_Down;
 		}
 
-		if (ShootingInterTime_ >= 0.2f)
+		if (ShootingInterTime_ >= ShootingTime_)
 		{
 			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
@@ -800,7 +810,7 @@ void Player::RockOn_Update(float _DeltaTime)
 			ShootingDir_ = ShootingDir::Right;
 		}
 
-		if (ShootingInterTime_ >= 0.2f)
+		if (ShootingInterTime_ >= ShootingTime_)
 		{
 			BulletShootFunc_();
 			ShootingInterTime_ = 0.f;
@@ -810,7 +820,7 @@ void Player::RockOn_Update(float _DeltaTime)
 	else if(false == KeyState_Shoot_)
 	{
 		IsShooting_ = false;
-
+		
 		ShootingInterTime_ = 0.f;
 
 		if (true == KeyState_Up_)
@@ -939,12 +949,14 @@ void Player::Hit_Update(float _DeltaTime)
 	else if (TimeCheck_ >= 0.35f)
 	{
 		JumpSpeed_ -= (JumpAcc_ * _DeltaTime);
+
 		Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), _DeltaTime);
 
 		if (PlayerMovingCollision_Bot->GetTransform()->GetWorldPosition().y < 150.f)
 		{
-			if (true == ColState_Ground_Bot_)
+			if (Map::PixelGroundCollisionTransform(PlayerMovingCollision_Bot, 5))
 			{
+				Move(float4(0.f, C_JumpSpeed0_ + JumpSpeed_, 0.f), -_DeltaTime);
 				State_.ChangeState("Idle");
 				return;
 			}

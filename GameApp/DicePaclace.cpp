@@ -10,7 +10,6 @@
 #include <GameEngine/GameEngineCore.h>
 //#include <GameEngineBase/GameEngineRandom.h>
 
-#include "UserGame.h"
 
 #include "Map.h"
 #include "Image.h"
@@ -148,7 +147,7 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 	{
 		BlendRate_ += _DeltaTime * 2;
 
-		SceneBGM_->SetVolume(1.f - BlendRate_);
+		SceneBGM_->AdjustVolume(-_DeltaTime);
 
 		if (BlendRate_ >= 1.f)
 		{

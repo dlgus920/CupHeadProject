@@ -8,8 +8,6 @@
 #include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 
-#include "UserGame.h"
-
 #include "Map.h"
 #include "Image.h"
 #include "Effect.h"
@@ -327,7 +325,7 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(300.f, -487.0f, static_cast<float>(ZOrder::Z02Back05)));
+		Player_->GetTransform()->SetWorldPosition(float4(300.f, -317.0f, static_cast<float>(ZOrder::Z02Back05)));
 	}
 
 	{
@@ -337,17 +335,17 @@ void Stage_Mr_Wheezy::LevelLoop_Start()
 		Flying_Cigar_->GetTransform()->SetWorldPosition(float4(640.f, -460.f, static_cast<float>(ZOrder::Z02Back06)));
 	}
 
-	{
-		Effect* IntroEffect = CreateActor<Effect>();
-		IntroEffect->EffectAnimationActor("Intro_Hand.png", "Intro_Hand", float4{498.f,506.f}, 0, 13, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back06)));
-	} 
+	//{
+	//	Effect* IntroEffect = CreateActor<Effect>();
+	//	IntroEffect->EffectAnimationActor("Intro_Hand.png", "Intro_Hand", float4{498.f,506.f}, 0, 13, 0.07142f, false);
+	//	IntroEffect->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back06)));
+	//} 
 
-	{
-		Effect* IntroEffect = CreateActor<Effect>();
-		IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
-		IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back06)));
-	}
+	//{
+	//	Effect* IntroEffect = CreateActor<Effect>();
+	//	IntroEffect->EffectAnimationActor("Intro_Flame.png", "Intro_Flame", float4{ 186.f,288.f }, 0, 9, 0.07142f, false);
+	//	IntroEffect->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back06)));
+	//}
 	PhaseState_.ChangeState("Intro");
 
 }

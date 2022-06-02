@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 
 #include "Flying_Cigar.h"
-#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -22,7 +21,7 @@ void Flying_Cigar::Start()
 	Flying_CigarHitBox_ = CreateTransformComponent<GameEngineCollision>();
 	Flying_CigarHitBox_->SetCollisionType(CollisionType::Rect);
 	Flying_CigarHitBox_->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
-	Flying_CigarHitBox_->GetTransform()->SetLocalScaling(float4{ 160.f,200.f });
+	Flying_CigarHitBox_->GetTransform()->SetLocalScaling(float4{ 100.f,200.f });
 
 	Flying_CigarImageRenderer_ = CreateTransformComponent<GameEngineImageRenderer>();
 	Flying_CigarImageRenderer_->CreateLevelAnimation("Fly_cigar.png","Fly_cigar",0,19,0.04f);

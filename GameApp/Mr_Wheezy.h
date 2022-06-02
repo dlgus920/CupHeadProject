@@ -31,6 +31,9 @@ private:
 	GameEngineImageRenderer* AshImageRenderer_Left_Back;
 	GameEngineImageRenderer* AshImageRenderer_Right_Back;
 
+	GameEngineImageRenderer* Lighter_;
+	GameEngineImageRenderer* Fire_;
+
 	bool PossitionLeft_;
 	bool Defeat_;
 	float TimeCheck_;
@@ -96,6 +99,8 @@ private:
 	}
 
 	void Firefire();
+
+	void TellePort_Effect_Dust();
 
 #ifdef _DEBUG
 	void AniEnd_TellePort_HB_On()

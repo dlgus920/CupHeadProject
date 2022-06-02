@@ -1,5 +1,4 @@
 #include "PreCompile.h"
-#include "UserGame.h"
 #include <GameEngine\EngineVertex.h>
 #include "UserGame_Resources_Shader.h"
 #include <GameEngine\GameEngineFontManager.h>

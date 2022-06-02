@@ -47,6 +47,7 @@ Player::Player()
 	, ColState_Left_(false)
 	, ColState_Right_(false)
 	, ColState_Up_(false)
+	, PlayerGround_Stuck_(false)
 	, Camera_(nullptr)
 	, PlayerHitBox(nullptr)
 	, PlayerMovingCollision_Top(nullptr)
@@ -68,6 +69,7 @@ Player::Player()
 	, PrevAniSize_{}
 	, HP(0)
 	, ParryCount(0)
+	, Parrytimecheck_(0)
 {
 	MainPlayer = this;
 }

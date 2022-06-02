@@ -16,6 +16,7 @@ public:
 private:
 	class GameEngineImageRenderer* ImageRenderer;
 	class GameEngineCollision* Collision;
+	class GameEngineCollision* Collisiondummy;
 
 private:	
 	void Start() override;

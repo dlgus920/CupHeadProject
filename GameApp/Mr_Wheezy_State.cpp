@@ -18,10 +18,22 @@ void Mr_Wheezy::Intro_Start()
 	intro->PlayLevelOverLap("sfx_dice_palace_cigar_intro_start_loop_01.wav");
 	intro->SetVolume(0.5f);
 
-	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Intro");
+	Cur_WheezyImageRenderer_->SetChangeAnimation("Mr_Wheezy-Intro_Idle");
 }
 void Mr_Wheezy::Intro_Update( float _DeltaTime)
 {
+	TimeCheck_ += _DeltaTime;
+	if (TimeCheck_ >= 1.f)
+	{
+		Lighter_->SetChangeAnimation("Intro_Hand_end");
+		Fire_->SetChangeAnimation("Intro_Flame_end");
+		Lighter_->Off();
+		Fire_->Off();
+
+		WheezyImageRenderer_Right_->SetChangeAnimation("Mr_Wheezy-Intro_End");
+	}
+
+
 	if (true == AniEnd_Intro_)
 	{
 		GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "sfx_dice_palace_cigar_intro_end_01.wav");

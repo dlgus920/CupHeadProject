@@ -8,7 +8,6 @@
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/MouseActor.h>
 
-#include "UserGame.h"
 
 #include "Image.h"
 #include "Map.h"
@@ -170,7 +169,7 @@ void WorldMapScene::LevelLoop_Start()
 
 	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("WorldBGM");
 
-	SceneBGM_->SetVolume(0.7f);
+	SceneBGM_->SetVolume(1.f);
 	SceneBGM_->PlayLevelOverLap("MUS_InkwellIsleOne.wav");
 
 	{
@@ -185,12 +184,27 @@ void WorldMapScene::LevelLoop_Start()
 		Image* MapImage = CreateActor<Image>();
 		MapImage->ImageRenderer_->SetLevelImage("WorldMap_Background.png");
 		MapImage->ImageRenderer_->SetAdjustImzgeSize();
-		MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back10) });
+		MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back09) });
+
+		MapImage = CreateActor<Image>();
+		MapImage->ImageRenderer_->SetLevelImage("WorldMap_BackgroundTrees_01.png");
+		MapImage->ImageRenderer_->SetAdjustImzgeSize();
+		MapImage->GetTransform()->SetWorldPosition(float4{ 503.f, -901.f, static_cast<int>(ZOrder::Z00PlayerFront03) });
+
+		MapImage = CreateActor<Image>();
+		MapImage->ImageRenderer_->SetLevelImage("WorldMap_BackgroundTrees_02.png");
+		MapImage->ImageRenderer_->SetAdjustImzgeSize();
+		MapImage->GetTransform()->SetWorldPosition(float4{ 1553, -634.f, static_cast<int>(ZOrder::Z00PlayerFront03) });
+
+		MapImage = CreateActor<Image>();
+		MapImage->ImageRenderer_->SetLevelImage("WorldMap_BackgroundTrees_03.png");
+		MapImage->ImageRenderer_->SetAdjustImzgeSize();
+		MapImage->GetTransform()->SetWorldPosition(float4{ 1393, -1319.5f, static_cast<int>(ZOrder::Z00PlayerFront03) });
 	}
 
 	{
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
-		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 500.f, -1000.f, static_cast<int>(ZOrder::Z01Actor02) });
+		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 1005.f, -950.f, static_cast<int>(ZOrder::Z01Actor02) });
 		//WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
 		WorldMapPoint->SetNextScene("DicePaclace");
 	}
@@ -212,8 +226,10 @@ void WorldMapScene::LevelLoop_Start()
 		("ScreenIris_Out", std::bind(&WorldMapScene::ScreenFadeEnd, this));
 
 		IrisImage_->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-		IrisImage_->GetTransform()->SetWorldPosition(float4{ 0.f,0.f,0.f,100.f });
-
+		float4 pos = GetMainCameraActor()->GetTransform()->GetWorldPosition();
+		pos.z -= 100.f;
+		IrisImage_->GetTransform()->SetWorldPosition(pos);
+		
 		IrisImage_->ImageRenderer_->Off();
 	}
 
@@ -228,6 +244,10 @@ void WorldMapScene::LevelLoop_Start()
 void WorldMapScene::LevelLoop_Update(float _DeltaTime)
 {
 	LevelLoadFadeUpdate(_DeltaTime);
+
+	float4 pos = GetMainCameraActor()->GetTransform()->GetWorldPosition();
+	pos.z -= 100.f;
+	IrisImage_->GetTransform()->SetWorldPosition(pos);
 }
 
 void WorldMapScene::LevelLoop_End()

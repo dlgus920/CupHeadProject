@@ -122,19 +122,19 @@ void WorldMapPlayer::Walk_Update( float _DeltaTime)
 
 	if (ColState_.b_Up != 0 && MoveDir_.y > 0)
 	{
-		return;
+		MoveDir_.y = 0.f;
 	}
 	if (ColState_.b_Down != 0 && MoveDir_.y < 0)
 	{
-		return;
+		MoveDir_.y = 0.f;
 	}
 	if (ColState_.b_Left != 0 && MoveDir_.x < 0)
 	{
-		return;
+		MoveDir_.x = 0.f;
 	}
 	if (ColState_.b_Right != 0 && MoveDir_.x > 0)
 	{
-		return;
+		MoveDir_.x = 0.f;
 	}
 
 	Move(MoveDir_ * 300.f, _DeltaTime);

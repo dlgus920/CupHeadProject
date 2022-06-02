@@ -5,7 +5,6 @@
 #include "Effect.h"
 #include "Player.h"
 
-#include "UserGame.h"
 
 #include <GameEngineBase/GameEngineFSM.h>
 #include <GameEngineBase/GameEngineDirectory.h>

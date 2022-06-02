@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Map.h"
 #include "Image.h"
-#include "UserGame.h"
 #include "GameEngine/GameEngineCollision.h"
 
 #ifdef _DEBUG
@@ -58,6 +57,13 @@ void Player::Update(float _DeltaTime)
 	if (true == UserGame::StageInfo_.Debug_)
 	{
 		Update_DEBUG();
+	}
+
+
+
+	if (GetTransform()->GetWorldPosition().y < -560.f)
+	{
+		int a = 0;
 	}
 }
 
@@ -131,6 +137,8 @@ const bool Player::ColUpdate_Ground()
 	ColState_Ground_Middle_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Middle, 5);
 	ColState_Ground_Bot_ = Map::PixelGroundCollisionTransform(PlayerMovingCollision_Bot, 5);
 
+	PlayerGround_Stuck_ = false;
+
 	if (ColState_Ground_Bot_ && ColState_Ground_Middle_)
 	{
 		PlayerGround_Stuck_ = true;
@@ -141,9 +149,7 @@ const bool Player::ColUpdate_Ground()
 		PlayerGround_Stuck_ = false;
 	}
 
-
 	ColState_Ground_Floar_ = PlayerMovingCollision_Bot->Collision(static_cast<int>(CollisionGruop::FloarCard));
-	
 
 	return PlayerGround_Stuck_;
 }

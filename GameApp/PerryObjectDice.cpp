@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "PerryObjectDice.h"
-#include "UserGame.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineCollision.h>

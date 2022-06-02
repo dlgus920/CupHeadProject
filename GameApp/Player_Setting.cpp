@@ -15,7 +15,7 @@ void Player::DefalutSetting()
 
 	Dir_ = AnimationDirection::Right;
 
-	BulletInfo_.BulletSpeed_ = 1500.f;
+	BulletInfo_.BulletSpeed_ = 1600.f;
 	BulletInfo_.BulletDamage_ = 2;
 
 	ChangeShootFunc(&Player::ShootDefalutBullet);

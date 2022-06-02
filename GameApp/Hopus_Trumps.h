@@ -21,14 +21,14 @@ private:	// member Var
 	void Update(float _DeltaTime) override;
 
 private:
-	struct TrumpBullet
-	{
-		TrumpBullet() {};
-		~TrumpBullet() {};
+	//struct TrumpBullet
+	//{
+	//	TrumpBullet() {};
+	//	~TrumpBullet() {};
 
-		GameEngineImageRenderer* TrumpImageRenderer_;
-		GameEngineCollision* TrumpCollision_;
-	};
+	//	GameEngineImageRenderer* TrumpImageRenderer_;
+	//	GameEngineCollision* TrumpCollision_;
+	//};
 
 
 	GameEngineRandom Rand_;
@@ -36,13 +36,13 @@ private:
 	GameEngineImageRenderer* FireImageRenderer_[9];
 	GameEngineCollision* FireCollision_[9];
 
-	//class ParryObject* ParryObject_[2];
+	GameEngineCollision* ParryCollision_[2];
+	int ParryNum_[2];
 
 	float4 Blendlate_;
 
 	int Trumpsorder_[9];
 
-	int ParryNum_[2];
 
 	bool BlendStart_;
 	bool Pos_Up_;

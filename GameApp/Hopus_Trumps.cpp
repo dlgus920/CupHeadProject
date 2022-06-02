@@ -3,7 +3,6 @@
 #include "Effect.h"
 #include "Player.h"
 #include "ParryObject.h"
-#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -19,6 +18,7 @@ Hopus_Trumps::Hopus_Trumps()
 	, TimeCheck_(0.f)
 	, FireImageRenderer_{nullptr}
 	, FireCollision_{nullptr}
+	, ParryCollision_{nullptr}
 	, ParryNum_{0}
 	, AttackStart_(false)
 {
@@ -48,6 +48,15 @@ void Hopus_Trumps::Start()
 		FireCollision_[i]->GetTransform()->SetLocalPosition(float4{ 90.f * i,0.f,0.f });
 
 		Trumpsorder_[i] = i;
+
+		ParryCollision_[0] = CreateTransformComponent<GameEngineCollision>();
+		ParryCollision_[0]->SetCollisionType(CollisionType::Rect);
+		ParryCollision_[0]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		ParryCollision_[0]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+		ParryCollision_[1] = CreateTransformComponent<GameEngineCollision>();
+		ParryCollision_[1]->SetCollisionType(CollisionType::Rect);
+		ParryCollision_[1]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		ParryCollision_[1]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
 	}
 
 	Blendlate_ = { 1.f,1.f,1.f,0.f };
@@ -70,6 +79,15 @@ void Hopus_Trumps::Update(float _DeltaTime)
 			{
 				GetLevel()->PushDebugRender(FireCollision_[i]->GetTransform(), CollisionType::CirCle);
 			}
+		}
+
+		if (true == ParryCollision_[0]->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(ParryCollision_[0]->GetTransform(), CollisionType::CirCle, float4::PINK);
+		}
+		if (true == ParryCollision_[1]->IsUpdate())
+		{
+			GetLevel()->PushDebugRender(ParryCollision_[1]->GetTransform(), CollisionType::CirCle, float4::PINK);
 		}
 	}
 
@@ -130,6 +148,19 @@ void Hopus_Trumps::Parry(GameEngineCollision* ParriedCollision)
 	Parry_ = true;
 
 	ParryCollision = ParriedCollision;
+
+	if (ParriedCollision == ParryCollision_[0])
+	{
+		FireImageRenderer_[ParryNum_[0]]->Off();
+		FireCollision_[ParryNum_[0]]->Off();
+		ParryCollision_[0]->Off();
+	}
+	else if (ParriedCollision == ParryCollision_[1])
+	{
+		FireImageRenderer_[ParryNum_[1]]->Off();
+		FireCollision_[ParryNum_[1]]->Off();
+		ParryCollision_[1]->Off();
+	}
 }
 
 void Hopus_Trumps::Reset()
@@ -147,6 +178,9 @@ void Hopus_Trumps::Reset()
 			FireCollision_[i]->On();
 			FireImageRenderer_[i]->SetResultColor(Blendlate_);
 		}
+
+		ParryCollision_[0]->On();
+		ParryCollision_[1]->On();
 	}
 
 	if (true == Pos_Up_)
@@ -156,7 +190,7 @@ void Hopus_Trumps::Reset()
 	}
 	else
 	{
-		GetTransform()->SetWorldPosition(float4{45.f,-675.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
+		GetTransform()->SetWorldPosition(float4{45.f,-700.f,static_cast<float>(ZOrder::Z01Actor01Bullet01) });
 		Pos_Up_ = true;
 	}
 
@@ -167,16 +201,18 @@ void Hopus_Trumps::Reset()
 		FireImageRenderer_[ParryNum_[0]]->SetChangeAnimation("Trumps_Heart");
 		FireImageRenderer_[ParryNum_[1]]->SetChangeAnimation("Trumps_Heart");
 
-		FireCollision_[ParryNum_[0]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
-		FireCollision_[ParryNum_[0]]->SetCollisionType(CollisionType::Rect);
-		FireCollision_[ParryNum_[0]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+		//FireCollision_[ParryNum_[0]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		//FireCollision_[ParryNum_[0]]->SetCollisionType(CollisionType::Rect);
+		//FireCollision_[ParryNum_[0]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
 
-		FireCollision_[ParryNum_[1]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
-		FireCollision_[ParryNum_[1]]->SetCollisionType(CollisionType::Rect);
-		FireCollision_[ParryNum_[1]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
+		//FireCollision_[ParryNum_[1]]->SetCollisionGroup<CollisionGruop>(CollisionGruop::Parry);
+		//FireCollision_[ParryNum_[1]]->SetCollisionType(CollisionType::Rect);
+		//FireCollision_[ParryNum_[1]]->GetTransform()->SetLocalScaling(float4{ 90.f, 200.f,1.f });
 
-		FireCollision_[ParryNum_[0]]->Off();
-		FireCollision_[ParryNum_[1]]->Off();
+		ParryCollision_[0]->GetTransform()->SetWorldPosition(FireCollision_[ParryNum_[0]]->GetTransform()->GetWorldPosition());;
+		ParryCollision_[1]->GetTransform()->SetWorldPosition(FireCollision_[ParryNum_[1]]->GetTransform()->GetWorldPosition());;
+		//FireCollision_[ParryNum_[0]]->Off();
+		//FireCollision_[ParryNum_[1]]->Off();
 
 		int aniorder = Rand_.RandomInt(0, 2);
 
@@ -185,14 +221,15 @@ void Hopus_Trumps::Reset()
 			FireImageRenderer_[i]->GetTransform()->SetLocalPosition(float4{ 90.f * i,0.f,0.f });
 			FireCollision_[i]->GetTransform()->SetLocalPosition(float4{ 90.f * i,0.f,0.f });
 
-			if (i == ParryNum_[0])
-				continue;
-			if (i == ParryNum_[1])
-				continue;
 
 			FireCollision_[i]->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
 			FireCollision_[i]->SetCollisionType(CollisionType::Rect);
 			FireCollision_[i]->GetTransform()->SetLocalScaling(float4{ 70.f, 70.f,1.f });
+
+			if (i == ParryNum_[0])
+				continue;
+			if (i == ParryNum_[1])
+				continue;
 
 			switch (aniorder)
 			{

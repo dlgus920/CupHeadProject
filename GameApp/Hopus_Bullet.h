@@ -32,6 +32,9 @@ private:
 
 	bool AttackStart_;
 
+	bool Fade_;
+	float4 BlendRate_;
+
 	float TimeCheck_;
 
 public:

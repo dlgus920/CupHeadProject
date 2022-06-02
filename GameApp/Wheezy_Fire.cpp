@@ -1,7 +1,6 @@
 #include "Precompile.h"
 #include "Wheezy_Fire.h"
 #include "Effect.h"
-#include "UserGame.h"
 
 Wheezy_Fire::Wheezy_Fire()
 	: FireHitBox_(nullptr)
@@ -29,7 +28,7 @@ void Wheezy_Fire::Start()
 	FireImageRenderer_->SetChangeAnimation("Wheezy_Fire");
 
 	FireHitBox_ = CreateTransformComponent<GameEngineCollision>();
-	FireHitBox_->GetTransform()->SetLocalScaling(float4{ 100.f,100.f,1.f });
+	FireHitBox_->GetTransform()->SetLocalScaling(float4{ 80.f,80.f,1.f });
 	FireHitBox_->SetCollisionType(CollisionType::Rect);
 	FireHitBox_->SetCollisionGroup<CollisionGruop>(CollisionGruop::MonsterAttack);
 
@@ -53,7 +52,7 @@ void Wheezy_Fire::Update(float _DeltaTime)
 	DeathTimeCheck_ += _DeltaTime;
 
 	Component_->GetTransform()->SetMoveLocalRotationDegree(float4{ 0.f,0.f,fDirValue_*0.02f * _DeltaTime });
-	Component_->GetTransform()->SetWorldMove(float4{ fDirValue_ * _DeltaTime,0.f });
+	Component_->GetTransform()->SetWorldMove(float4{ fDirValue_* 1.2f * _DeltaTime,0.f });
 
 	float4 temppos = ComponentChild_->GetTransform()->GetWorldPosition();
 

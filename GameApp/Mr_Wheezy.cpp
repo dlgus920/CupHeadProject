@@ -2,7 +2,6 @@
 #include "Mr_Wheezy.h"
 #include "Effect.h"
 #include "Wheezy_Fire.h"
-#include "UserGame.h"
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngine/GameEngineImageRenderer.h>
@@ -22,6 +21,8 @@ Mr_Wheezy::Mr_Wheezy()
 	, Cur_WheezyImageRenderer_(nullptr)
 	, MonsterHitBox(nullptr)
 	, MonsterBox(nullptr)
+	, Lighter_(nullptr)
+	, Fire_(nullptr)
 	, TimeCheck_(0.f)
 	, Defeat_(false)
 	, AniEnd_Intro_(false)
@@ -51,7 +52,6 @@ void Mr_Wheezy::Start()
 		WheezyImageRenderer_Left_->GetTransform()->SetLocalScaling({- 550.f, 825.f, 1.0f });
 		WheezyImageRenderer_Left_->GetTransform()->SetWorldPosition(float4(240.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 
-		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.04f, false);
 		//TODO: 일정 프레임을 반복시키다가, IntroENd시 쭉 재생
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Idle", 20, 36, 0.04f);
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Attack", 40, 56, 0.04f);
@@ -59,31 +59,56 @@ void Mr_Wheezy::Start()
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-TellePort-Out", 101, 60, 0.04f, false);
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Death-Intro", 103, 107, 0.04f);
 		WheezyImageRenderer_Left_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Death-Idle", 109, 117, 0.04f);
-		WheezyImageRenderer_Left_->SetEndCallBack("Mr_Wheezy-Intro", std::bind(&Mr_Wheezy::AniEnd_Intro, this));
 		WheezyImageRenderer_Left_->SetEndCallBack("Mr_Wheezy-TellePort-In", std::bind(&Mr_Wheezy::AniEnd_TellePort_In, this));
 		WheezyImageRenderer_Left_->SetEndCallBack("Mr_Wheezy-TellePort-Out", std::bind(&Mr_Wheezy::AniEnd_TellePort_Out, this));
 		WheezyImageRenderer_Left_->SetEndCallBack("Mr_Wheezy-Death-Intro", std::bind(&Mr_Wheezy::AniEnd_Death_Intro, this));
 		WheezyImageRenderer_Left_->SetEndCallBack("Mr_Wheezy-Attack", std::bind(&Mr_Wheezy::AniEnd_Attack_End, this));
 		WheezyImageRenderer_Left_->SetFrameCallBack("Mr_Wheezy-Attack", 49, std::bind(&Mr_Wheezy::AniEnd_Attack, this));
+		WheezyImageRenderer_Left_->SetFrameCallBack("Mr_Wheezy-Death-Intro", 106, std::bind(&Mr_Wheezy::AniEnd_Death_4, this));
 		WheezyImageRenderer_Left_->SetFrameCallBack("Mr_Wheezy-TellePort-In", 83, std::bind(&Mr_Wheezy::AniEnd_TellePort_HB_On, this));
-		WheezyImageRenderer_Left_->SetFrameCallBack("Mr_Wheezy-TellePort-Out", 83, std::bind(&Mr_Wheezy::AniEnd_TellePort_HB_On, this));
+		WheezyImageRenderer_Left_->SetFrameCallBack("Mr_Wheezy-TellePort-Out", 83, std::bind(&Mr_Wheezy::TellePort_Effect_Dust, this));
 		WheezyImageRenderer_Left_->SetChangeAnimation("Mr_Wheezy-TellePort-Out");
 		WheezyImageRenderer_Left_->AnimationStop();
 	}
+
+	{
+		Lighter_ = CreateTransformComponent<GameEngineImageRenderer>();
+		Fire_ = CreateTransformComponent<GameEngineImageRenderer>();
+
+		Lighter_->CreateLevelAnimation("Intro_Hand.png", "Intro_Hand_start", 0, 5, 0.04f);
+		Lighter_->CreateLevelAnimation("Intro_Hand.png", "Intro_Hand_end", 6, 13, 0.04f, false);
+		Fire_->CreateLevelAnimation("Intro_Flame.png", "Intro_Flame_start", 0, 5, 0.04f);
+		Fire_->CreateLevelAnimation("Intro_Flame.png", "Intro_Flame_end", 6, 9, 0.04f, false);
+
+		Lighter_->GetTransform()->SetWorldPosition(float4(625.f, -87.f, static_cast<float>(ZOrder::Z02Back05)));
+		Fire_->GetTransform()->SetWorldPosition(float4(917.f, 21.5, static_cast<float>(ZOrder::Z02Back05)));
+
+		Lighter_->GetTransform()->SetLocalScaling(float4{ 498.f,506.f });
+		Fire_->GetTransform()->SetLocalScaling(float4{ 186.f,288.f });
+
+		Lighter_->SetChangeAnimation("Intro_Hand_start");
+		Fire_->SetChangeAnimation("Intro_Flame_start");
+	}
+
+
+
+
 
 	{
 		WheezyImageRenderer_Right_ = CreateTransformComponent<GameEngineImageRenderer>();
 		WheezyImageRenderer_Right_->GetTransform()->SetLocalScaling({ 550.f, 825.f, 1.0f });
 		WheezyImageRenderer_Right_->GetTransform()->SetWorldPosition(float4(1040.f, -140.f, static_cast<float>(ZOrder::Z02Back06)));
 
-		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro", 0, 17, 0.05555f, false);
+		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro_Idle", 0, 3, 0.04f, false);
+		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Intro_End", 4, 17, 0.04f, false);
+
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Idle", 20, 36, 0.04f);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Attack", 40, 56, 0.04f);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-TellePort-In", 60, 101, 0.04f, false);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-TellePort-Out", 101, 60, 0.04f, false);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Death-Intro", 103, 107, 0.04f);
 		WheezyImageRenderer_Right_->CreateLevelAnimation("Mr_Wheezy.png", "Mr_Wheezy-Death-Idle", 109, 117, 0.04f);
-		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-Intro", std::bind(&Mr_Wheezy::AniEnd_Intro, this));
+		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-Intro_End", std::bind(&Mr_Wheezy::AniEnd_Intro, this));
 		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-TellePort-In", std::bind(&Mr_Wheezy::AniEnd_TellePort_In, this));
 		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-TellePort-Out", std::bind(&Mr_Wheezy::AniEnd_TellePort_Out, this));
 		WheezyImageRenderer_Right_->SetEndCallBack("Mr_Wheezy-Death-Intro", std::bind(&Mr_Wheezy::AniEnd_Death_Intro, this));
@@ -233,13 +258,13 @@ void Mr_Wheezy::SpawnSmokeFx()
 	case 0:
 	{
 		Effect_->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX_Front1", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
-		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back1", float4{ 552.f,228.f }, 40, 50, 0.04f, false);
+		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back1", float4{ 552.f,228.f }, 40, 50, 0.04f, false);
 		break;
 	}
 	case 1:
 	{
 		Effect_->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX_Front2", float4{ 552.f,228.f }, 20, 36, 0.04f, false);
-		//Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back2", float4{ 552.f,228.f }, 60, 70, 0.04f, false);
+		Effect_->EffectAnimationActor("Smoke_FX.png", "Smoke_FX_Back2", float4{ 552.f,228.f }, 60, 70, 0.04f, false);
 		break;
 	}
 	}
@@ -261,16 +286,33 @@ void Mr_Wheezy::Firefire()
 	}
 }
 
+void Mr_Wheezy::TellePort_Effect_Dust()
+{
+	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
+	{
+		Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+		Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
+		Effectfx->GetTransform()->SetWorldPosition(float4{ 1040.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
+		
+	}
+	else if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
+	{
+		Effect* Effectfx = GetLevel()->CreateActor<Effect>();
+		Effectfx->EffectAnimationActor("Smoke_FX_Front.png", "Smoke_FX", float4{ 552.f,228.f }, 0, 11, 0.04f, false);
+		Effectfx->GetTransform()->SetWorldPosition(float4{ 240.f, -300.f, static_cast<float>(ZOrder::Z00Fx02) });
+	}
+}
+
 void Mr_Wheezy::AniEnd_Death_4()
 {
 	if (Cur_WheezyImageRenderer_ == WheezyImageRenderer_Left_)
 	{		
 		WheezyImageRenderer_Left_->	GetTransform()
-			->SetWorldPosition(float4(340.f, -180.f, static_cast<float>(ZOrder::Z02Back02_5)));
+			->SetWorldPosition(float4(320.f, -160.f, static_cast<float>(ZOrder::Z02Back02_5)));
 	}
 	else if(Cur_WheezyImageRenderer_ == WheezyImageRenderer_Right_)
 	{
 		WheezyImageRenderer_Right_->GetTransform()
-			->SetWorldPosition(float4(940.f, -180.f, static_cast<float>(ZOrder::Z02Back02_5)));
+			->SetWorldPosition(float4(940.f, -160.f, static_cast<float>(ZOrder::Z02Back02_5)));
 	}
 }

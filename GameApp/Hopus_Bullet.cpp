@@ -2,7 +2,6 @@
 #include "Hopus_Bullet.h"
 #include "Effect.h"
 #include "Player.h"
-#include "UserGame.h"
 
 #include <GameEngine/GameEngineImageRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
@@ -19,6 +18,8 @@ Hopus_Bullet::Hopus_Bullet()
 	, FireCollision{nullptr}
 	, Dummy_(nullptr)
 	, AttackStart_(false)
+	, Fade_(false)
+	, BlendRate_{ 1.f,1.f,1.f,0.f }
 {
 }
 
@@ -62,12 +63,29 @@ void Hopus_Bullet::Start()
 
 	}
 
+
+
 	Dummy_->GameEngineActor::Off();
 	Hopus_Bullet::Off();
 }
 
 void Hopus_Bullet::Update(float _DeltaTime)
 {
+	if (false == Fade_)
+	{
+		BlendRate_.a += _DeltaTime;
+		if (BlendRate_.a >= 1.f)
+		{
+			BlendRate_.a = 1.f;
+			Fade_ = true;
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			FireImageRenderer[i]->SetResultColor(BlendRate_);
+		}
+	}
+
 	if (true == UserGame::StageInfo_.Debug_)
 	{
 		for (int i = 0; i < 9; ++i)
@@ -136,6 +154,8 @@ void Hopus_Bullet::Update(float _DeltaTime)
 
 void Hopus_Bullet::Reset(float4 _PlayerPos)
 {
+	BlendRate_ = { 1.f,1.f,1.f,0.f };
+	Fade_ = false;
 	Dummy_->On();
 	Hopus_Bullet::On();
 	TimeCheck_ = 0.f;
@@ -148,6 +168,7 @@ void Hopus_Bullet::Reset(float4 _PlayerPos)
 
 	for (int i = 0; i < 8; ++i)
 	{
+		FireImageRenderer[i]->SetResultColor(BlendRate_);
 		FireImageRenderer[i]->On();
 		FireCollision[i]->On();
 

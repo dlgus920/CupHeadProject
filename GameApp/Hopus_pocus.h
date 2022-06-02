@@ -69,6 +69,8 @@ private:
 
 	void AniEnd_Intro();
 
+	void AniEnd_Attack_Sound();
+
 	void AniEnd_Attack()
 	{
 		AniEnd_Attack_ = true;

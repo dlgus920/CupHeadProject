@@ -9,8 +9,6 @@
 #include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 
-#include "UserGame.h"
-
 #include "Map.h"
 #include "Image.h"
 #include "Effect.h"
@@ -262,15 +260,15 @@ void Stage_Hopus_pocus::LevelLoop_Start()
 	{
 		// 1280 720
 		Map::CurrentMap = CreateActor<Map>();
-		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
-		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1356.f, 720.f });
+		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -410.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
+		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1356.f, 820.f });
 		Map::CurrentMap->GetCollisionMap()->SetLevelImage("Rabbit_Background_col.png");
 	}
 
 	{
 		Player_ = CreateActor<Player>();
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(Player_->GetTransform()->GetLocalPosition());
-		Player_->GetTransform()->SetWorldPosition(float4(300.f, -360.f, static_cast<float>(ZOrder::Z00PlayerFront00)));
+		Player_->GetTransform()->SetWorldPosition(float4(360.f, -320.f, static_cast<float>(ZOrder::Z00PlayerFront00)));
 	}
 
 	PhaseState_.ChangeState("Intro");

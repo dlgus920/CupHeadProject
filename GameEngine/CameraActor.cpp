@@ -9,6 +9,8 @@ CameraActor::CameraActor()
 	, IsFreeCameraMode_(false)
 	, FreeCameraSpeed_(200.0f)
 	, RotSpeed_(360.0f)
+	, IsFixed_(true)
+	, CamSpeed_(100.f)
 {
 }
 
@@ -56,6 +58,54 @@ void CameraActor::Update(float _DeltaTime)
 {
 	if (false == IsFreeCameraMode_)
 	{
+		/*if (false == IsFixed_)
+		{
+			float4 movepos;
+			float4 TargetPos;
+
+			TargetPos = GetTransform()->GetWorldPosition() - CamTargetPos_->GetWorldPosition();
+
+			float a = -50.f;
+
+			{
+				if (a <= TargetPos.x && TargetPos.x <= 50.f)
+				{
+					movepos.x = 0.f;
+				}
+				else
+				{
+					if (TargetPos.x > 0.f)
+					{
+						movepos.x = -CamSpeed_;
+					}
+					else
+					{
+						movepos.x = CamSpeed_;
+					}
+				}
+
+				if (a <= TargetPos.y && TargetPos.y <= 50.f)
+				{
+					movepos.y = 0.f;
+				}
+				else
+				{
+					if (TargetPos.y > 0.f)
+					{
+						movepos.y = -CamSpeed_;
+					}
+					else
+					{
+						movepos.y = CamSpeed_;
+					}
+				}
+			}
+
+			GetTransform()->SetWorldMove(movepos * _DeltaTime);
+		}
+
+		ResetUpdate();*/
+
 		return;
 	}
 

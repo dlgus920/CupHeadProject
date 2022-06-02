@@ -8,7 +8,6 @@
 
 #include "PerryObjectDice.h"
 
-#include "UserGame.h"
 
 #include "Dice_Card.h"
 

@@ -44,7 +44,38 @@ private:
 	ProjectionMode PrevCamMode_;
 	CameraComponent* Camera_;
 
+	bool IsFixed_;
+	float CamSpeed_;
+	GameEngineTransform* CamTargetPos_;
 
+	GameEngineLevel* curlevel;
+
+public:
+	void SetFixed(bool _IsFixed_)
+	{
+		IsFixed_ = _IsFixed_;
+	}
+
+	void SetCamTargetPos(GameEngineTransform* _CamTargetPos)
+	{
+		CamTargetPos_ = _CamTargetPos;
+	}
+
+	void ResetUpdate()
+	{
+		if (curlevel == GetLevel())
+		{
+			CamTargetPos_ = {};
+			IsFixed_ = true;
+			CamSpeed_ = 100.f;
+			curlevel = GetLevel();
+		}
+	}
+
+	void SetCamSpeed(float _CamSpeed)
+	{
+		CamSpeed_ = _CamSpeed;
+	}
 
 };
 

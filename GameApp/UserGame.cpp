@@ -1,5 +1,4 @@
 #include "PreCompile.h"
-#include "UserGame.h"
 #include <conio.h>
 
 #include <GameEngineBase/GameEngineTime.h>
@@ -26,6 +25,7 @@ UserGame::UserGame(UserGame&& _other) noexcept
 
 void UserGame::Initialize()
 {	
+	GameEngineSoundManager::GetInst().CreateSoundChannel("Noise")->SetVolume(2.f);
 	GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("TitleBGM")->SetVolume(2.f);
 	GameEngineSoundManager::GetInst().CreateSoundChannel("WorldBGM");

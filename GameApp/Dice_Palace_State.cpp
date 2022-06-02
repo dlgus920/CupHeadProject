@@ -9,7 +9,6 @@
 #include <GameEngine/GameEngineImageRenderer.h>
 //#include <GameEngineBase/GameEngineRandom.h>
 
-#include "UserGame.h"
 
 #include "Map.h"
 #include "Image.h"

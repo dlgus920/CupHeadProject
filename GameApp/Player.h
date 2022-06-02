@@ -69,36 +69,30 @@ private: //Member
 
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-	//Bottom_Card* Bottom_Card_;
-	//Bottom_HP* Bottom_HP_;
-
-	GameEngineFSM<Player> State_;
+GameEngineFSM<Player> State_;
 	GameEngineFSM<Player> GameState_;
 
 	GameEngineTransform* Camera_;
 
 	GameEngineCollision* PlayerHitBox;
-
 	GameEngineCollision* PlayerMovingCollision_Top;
 	GameEngineCollision* PlayerMovingCollision_Middle;
 	GameEngineCollision* PlayerMovingCollision_Bot;
-
 	GameEngineCollision* PlayerParryCollision;
 
 	float4 PrevAniSize_;
 
 	GameEngineActor* ParryEffect;
-	//GameEngineImageRenderer* ParryRenderer[2];
 
 	bool blit_;
 
 	bool  HitInvince_;
 	float HitInvinceTimeCheck_;
-	const float HitInvinceTime_ = 1.5f;
 
+	const float HitInvinceTime_ = 1.5f;
 	const float C_AnimationInterTime_ = 0.05f;
-	const float C_MoveSpeed_ = 500.f;
-	const float C_DashSpeed_ = 600.f;
+	const float C_MoveSpeed_ = 600.f;
+	const float C_DashSpeed_ = 700.f;
 	const float C_JumpSpeed0_ = 1600.f;
 	float JumpAcc_;
 
@@ -116,6 +110,7 @@ private: //Member
 	float DistTimeCheck_;
 
 	float ShootingInterTime_;
+	const float ShootingTime_ = 0.1f;
 
 	float Parrytimecheck_;
 		// state
@@ -143,6 +138,7 @@ private: //Member
 	bool ColState_Ground_Middle_;
 	bool ColState_Ground_Bot_;
 
+	bool ColState_Ground_Floar_Up_;
 	bool ColState_Ground_Floar_;
 
 	bool ColState_Left_;
@@ -201,7 +197,6 @@ private: //Effect
 	void EffectHit();
 	void EffectJumpLanding();
 
-
 private: //Setting
 	void DefalutSetting();
 	void KeySetting();
@@ -209,14 +204,15 @@ private: //Setting
 	void ComponentSetting();
 	void AnimationSetting();
 
-
 private: //Update
 	void StateUpdate(float _DeltaTime);
 	void KeyUpdate();
 	void SoundUpdate(float _DeltaTime);
 	void CollisionUpdate();
+
 	//const bool GroundCollisonUpdate();
 	//const bool4 SideCollisonUpdate();
+
 	const bool ColUpdate_Left();
 	const bool ColUpdate_Right();
 	const bool ColUpdate_Up();
