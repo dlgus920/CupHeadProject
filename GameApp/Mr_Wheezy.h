@@ -102,7 +102,6 @@ private:
 
 	void TellePort_Effect_Dust();
 
-#ifdef _DEBUG
 	void AniEnd_TellePort_HB_On()
 	{
 		AniEnd_TellePort_HB_ = true;
@@ -133,7 +132,6 @@ private:
 	}
 
 	void AniEnd_Death_4();
-#endif // _DEBUG
 
 	void AniStateClear()
 	{
@@ -145,28 +143,6 @@ private:
 		AniEnd_Attack_End_ = false;
 	}
 
-#ifndef _DEBUG
-	void AniEnd_Intro()
-	{
-		AniEnd_Intro_ = true;
-	}
-	void AniEnd_TellePort_In()
-	{
-		AniEnd_TellePort_In_ = true;
-	}
-	void AniEnd_TellePort_Out()
-	{
-		AniEnd_TellePort_Out_ = true;
-	}
-	void AniEnd_Death_Intro()
-	{
-		AniEnd_Death_Intro_ = true;
-	}
-	void AniEnd_Attack()
-	{
-		AniEnd_Attack_ = true;
-	}
-#endif // _DEBUG
 
 
 

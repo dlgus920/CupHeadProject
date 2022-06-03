@@ -24,6 +24,7 @@ protected:
 private:
 	GameEngineFSM<TitleScene> LoadState_;
 
+	class GameEngineImageRenderer* FontImageRenderer;
 
 	void Init_Update(float _DeltaTime);
 
@@ -37,5 +38,7 @@ private:
 
 private:
 	bool TobeNext_;
+	bool end_;
+	float timecheck_;
 };
 

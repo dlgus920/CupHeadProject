@@ -4,7 +4,6 @@
 #include "Image.h"
 #include "GameEngine/GameEngineCollision.h"
 
-#ifdef _DEBUG
 void Player::Update_DEBUG()
 {
 	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
@@ -36,7 +35,6 @@ void Player::Update_DEBUG()
 		GetLevel()->PushDebugRender(PlayerParryCollision->GetTransform(), CollisionType::Rect, float4::BLUE);
 	}
 }
-#endif // _DEBUG
 
 void Player::Update(float _DeltaTime)
 {

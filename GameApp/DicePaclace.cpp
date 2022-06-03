@@ -11,6 +11,7 @@
 //#include <GameEngineBase/GameEngineRandom.h>
 
 
+#include "TitleScene.h"
 #include "Map.h"
 #include "Image.h"
 #include "KingDice_Marker.h"
@@ -113,7 +114,7 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 
 		GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f + ranint, static_cast<float>(ZOrder::Z00Camera00)));
 
-		TimeCheck_ += _DeltaTime;
+		TimeCheck_ += (_DeltaTime * 0.25f);
 
 		if (TimeCheck_ > 3.f)
 		{
@@ -127,7 +128,8 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 			BlendRate_ = 1.f;
 			SceneBGM_->Stop();
 
-			GameEngineCore::LevelChange("WorldMap");
+			GameEngineCore::LevelCreate<TitleScene>("TitleScene");
+			GameEngineCore::LevelChange("TitleScene");
 		}
 	}
 }

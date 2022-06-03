@@ -29,6 +29,7 @@ King_Dice::King_Dice()
 	, AniEnd_Clap_(false)
 	, Ani_Idle_Ready_(false)
 	, Defeat_(false)
+	, Attack_bgm_on_(false)
 	, FirstAttack_(true)
 {
 }

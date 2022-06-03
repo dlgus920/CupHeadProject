@@ -45,6 +45,12 @@ void UserGame::Initialize()
 
 	GameEngineCore::LevelCreate<TitleScene>("Title");
 	GameEngineCore::LevelChange("Title");
+
+	//for (int i = 0; i < 11; ++i)
+	//{
+
+	//	UserGame::StageInfo_.Dice_ClearStage_[i] = true;
+	//}
 }
 
 void UserGame::Release()

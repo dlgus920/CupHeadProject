@@ -223,9 +223,7 @@ private: //Update
 
 	void ImageScaleUpdate();
 
-#ifdef _DEBUG
 	void Update_DEBUG();
-#endif // _DEBUG
 
 
 private: //State

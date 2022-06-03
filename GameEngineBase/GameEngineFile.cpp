@@ -26,8 +26,8 @@ GameEngineFile::GameEngineFile(const std::string& _Path)
 	if (false == IsExist())
 	{
 		GameEngineDebug::AssertFalse();
-#endif // _DEBUG
 	}
+#endif // _DEBUG
 }
 
 GameEngineFile::GameEngineFile(const std::string& _Path, const std::string& _Mode)

@@ -39,14 +39,14 @@ private:
 
 	bool Ani_Idle_Ready_;
 
-#ifdef _DEBUG
+	bool Attack_bgm_on_;
+
 	bool AniEnd_Intro_;
 	bool AniEnd_Attack_Body_Birth_;
 	bool AniEnd_Attack_Body_End_;
 
 	bool AniEnd_Attack_Hand_Birth_;
 
-#endif // _DEBUG
 	bool AniEnd_Clap_Dice_;
 	bool AniEnd_Clap_;
 
@@ -150,7 +150,6 @@ private:
 		Ani_Idle_Ready_ = true;
 	}
 
-#ifdef _DEBUG
 	void AniEnd_Intro()
 	{
 		AniEnd_Intro_ = true;
@@ -179,39 +178,5 @@ private:
 		AniEnd_Attack_Body_End_ = false;
 		AniEnd_Attack_Hand_Birth_ = false;
 	}
-
-#endif // _DEBUG
-
-#ifndef _DEBUG
-	void AniEnd_Intro()
-	{
-		State_.ChangeState("Idle");
-	}
-	void AniEnd_Attack_Body_Birth()
-	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
-
-		Hand_.HandOn();
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Birth");
-
-		Hand_.IsAttacking_ = true;
-	}
-	void AniEnd_Attack_Body_End()
-	{
-		State_.ChangeState("Idle");
-	}
-	void AniEnd_Attack_Hand_Birth()
-	{
-		Hand_.ImageRenderer->SetChangeAnimation("KDice-Attack-Hand-Idle");
-	}
-	void AniEnd_Clap()
-	{
-		MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
-		AniEnd_Clap_ = true;
-	}
-#endif // _DEBUG
-
-
-
 };
 

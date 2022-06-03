@@ -94,8 +94,9 @@ void King_Dice::Attack_Start() // 외부에서 특정 조건 만족시 실행
 
 	HandSwitching();
 
-	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "SFX_level_dice_palace_main_king_dice_attack_vox_01.wav",1);
-	GameEngineSoundManager::GetInst().PlaySoundChannel("DiceCardLoop", "SFX_level_dice_palace_main_card_march_loop_01.wav", 1);
+	Attack_bgm_on_ = false;
+
+	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", "SFX_level_dice_palace_main_king_dice_attack_vox_01.wav",2);
 }
 void King_Dice::Attack_Update( float _DeltaTime)
 {
@@ -115,7 +116,6 @@ void King_Dice::Attack_Update( float _DeltaTime)
 
 	else
 	{
-#ifdef _DEBUG
 		if (true == AniEnd_Attack_Body_Birth_)
 		{
 			MonsterImageRenderer->SetChangeAnimation("KDice-Attack-Body-Idle");
@@ -134,10 +134,15 @@ void King_Dice::Attack_Update( float _DeltaTime)
 
 			AniEnd_Attack_Hand_Birth_ = false;
 		}
-#endif // !_DEBUG
 
 		if (true == Hand_.IsAttacking_)
 		{
+			if (false == Attack_bgm_on_)
+			{
+				Attack_bgm_on_ = true;
+				GameEngineSoundManager::GetInst().PlaySoundChannel("DiceCardLoop", "SFX_level_dice_palace_main_card_march_loop_01.wav", 1);
+			}
+
 			TimeCheck_ += _DeltaTime;
 
 			if (TimeCheck_ > 0.3f)
@@ -183,6 +188,8 @@ void King_Dice::Attack_End_()
 
 void King_Dice::Defeat_Start()
 {
+	GameEngineSoundManager::GetInst().FindSoundChannel("DiceCardLoop")->Stop();
+	GameEngineSoundManager::GetInst().FindSoundChannel("Effect")->Stop();
 	CardClear();
 
 	TimeCheck_ = 0.f;
@@ -233,7 +240,6 @@ void King_Dice::Clap_Start()
 }
 void King_Dice::Clap_Update(float _DeltaTime)
 {
-#ifdef _DEBUG
 	if (true == AniEnd_Clap_)
 	{
 		AniEnd_Clap_ = false;
@@ -241,7 +247,6 @@ void King_Dice::Clap_Update(float _DeltaTime)
 		MonsterImageRenderer->SetChangeAnimation("KDice-Idle");
 		return;
 	}
-#endif // !_DEBUG
 
 	if (true == AniEnd_Clap_Dice_)
 	{

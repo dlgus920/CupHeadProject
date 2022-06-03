@@ -18,7 +18,10 @@
 
 TitleScene::TitleScene()
 	: TobeNext_(false)
+	, end_(false)
 	, LoadState_(this)
+	, timecheck_(0.f)
+	, FontImageRenderer(nullptr)
 {
 }
 
@@ -153,10 +156,24 @@ void TitleScene::LevelLoop_Start()
 
 	{
 		Image* Image_ = CreateActor<Image>();
-		Image_->ImageRenderer_->SetLevelImage("Title_font.png");
-		//Image_->ImageRenderer_->SetImage("Title_font.png");
-		Image_->ImageRenderer_->SetAdjustImzgeSize();
-		Image_->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
+
+		FontImageRenderer = Image_->CreateTransformComponent<GameEngineImageRenderer>();
+		if (true == UserGame::StageInfo_.Dice_ClearStage_[10])
+		{
+			FontImageRenderer->SetLevelImage("Title_font_end.png");
+			FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -200.0f, static_cast<int>(ZOrder::Z02Back01)));
+			end_ = true;
+		}
+		else
+		{
+			FontImageRenderer->SetLevelImage("Title_font.png");
+			FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
+		}
+		FontImageRenderer->SetAdjustImzgeSize();
+	}
+
+	{
+
 	}
 
 	{
@@ -168,6 +185,20 @@ void TitleScene::LevelLoop_Start()
 
 void TitleScene::LevelLoop_Update(float _DeltaTime)
 {
+	if (false == end_)
+	{
+		timecheck_ += _DeltaTime;
+
+		if (timecheck_ > 0.75f)
+		{
+			FontImageRenderer->Off();
+		}
+		if (timecheck_ > 1.5f)
+		{
+			FontImageRenderer->On();
+			timecheck_ = 0.f;
+		}
+	}
 	static float soundTimeCheck_ = 0;
 	static bool piano = false;
 
@@ -200,12 +231,12 @@ void TitleScene::LevelLoop_Update(float _DeltaTime)
 		if (BlendRate_ >= 1.f)
 		{
 			SceneBGM_->Stop();
-			//GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
-			//GameEngineCore::LevelChange("WorldMap");
+			GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+			GameEngineCore::LevelChange("WorldMap");
 
-			GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+			//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
-			GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+			//GameEngineCore::LevelChange("Stage_Mr_Wheezy");
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}

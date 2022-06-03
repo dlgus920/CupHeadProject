@@ -106,24 +106,20 @@ void GameEngineImageRenderer::SetImage(const std::string& _ImageName, const std:
 }
 void GameEngineImageRenderer::CreateAnimation(const std::string& _TextureName, const std::string& _Name, int _StartFrame, int _EndFrame, float _InterTime, bool _Loop /*= true*/)
 {
-#ifdef _DEBUG
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 
 	if (AllAnimations_.end() != FindIter)
 	{
 		GameEngineDebug::MsgBoxError("이미 존재하는 애니메이션을 또 만들었습니다.");
 	}
-#endif // _DEBUG
 
 	Animation2D* NewAnimation = new Animation2D();
 
 	NewAnimation->AnimationTexture_ = GameEngineTextureManager::GetInst().Find(_TextureName);
-#ifdef _DEBUG
 	if (nullptr == NewAnimation->AnimationTexture_)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 텍스처로 애니메이션을 만들려고 했습니다.");
 	}
-#endif // _DEBUG
 
 	NewAnimation->SetName(_Name);
 	NewAnimation->IsEnd = false;
@@ -143,7 +139,6 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 {
 	GameEngineFolderTexture* FolderTexture = GameEngineFolderTextureManager::GetInst().Find(_FolderTexName);
 
-#ifdef _DEBUG
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
 
 	if (AllAnimations_.end() != FindIter)
@@ -155,7 +150,6 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 폴더 텍스처를 세팅하려고 했습니다..");
 	}
-#endif // _DEBUG
 
 	Animation2D* NewAnimation = new Animation2D();
 
@@ -176,7 +170,6 @@ void GameEngineImageRenderer::CreateAnimationFolder(const std::string& _FolderTe
 void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool _IsForce /*= false*/)
 {
 	std::map<std::string, Animation2D*>::iterator FindIter = AllAnimations_.find(_Name);
-#ifdef _DEBUG
 	if (AllAnimations_.end() == FindIter)
 	{
 		GameEngineDebug::MsgBoxError("존재하지 않는 애니메이션을 세팅하려고 했습니다");
@@ -186,7 +179,6 @@ void GameEngineImageRenderer::SetChangeAnimation(const std::string& _Name, bool 
 	{
 		GameEngineDebug::MsgBoxError("애니메이션의 애니메이션 nullptr 입니다");
 	}
-#endif // _DEBUG
 
 	if (false == _IsForce && CurAnimation_ == FindIter->second)
 	{

@@ -182,6 +182,10 @@ void Hopus_pocus::Defeat_Start()
 
 	Defeat_ = true;
 
+	GameEngineSoundManager::GetInst().FindSoundChannel("Hopus_Attack")->Stop();
+	GameEngineSoundManager::GetInst().FindSoundChannel("Effect")->Stop();
+
+	
 	GetLevel<Stage_Hopus_pocus>()->Knockout();
 }
 void Hopus_pocus::Defeat_Update(float _DeltaTime)

@@ -68,7 +68,7 @@ void SceneBase::ReadyWALLOP_DICE()
 {
 	Effect* Effect_ = CreateActor<Effect>();
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->
-		EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.1f, false);
+		EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.05f, false);
 	_GameEngineImageRenderer->SetFrameCallBack("ReadyWALLOP!", 26, std::bind(&SceneBase::ReadyWALLOPAnounce02, this));
 
 	Effect_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z00Fx00) });

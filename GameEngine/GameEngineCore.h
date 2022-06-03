@@ -75,9 +75,7 @@ public:
 	{
 		GameEngineDebug::LeakCheckOn();
 
-#ifdef _DEBUG
 		new int();
-#endif
 
 		UserGameType NewUserGame;
 
