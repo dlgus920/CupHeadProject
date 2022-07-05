@@ -19,6 +19,7 @@
 TitleScene::TitleScene()
 	: TobeNext_(false)
 	, end_(false)
+	, SceneStart_(false)
 	, LoadState_(this)
 	, timecheck_(0.f)
 	, FontImageRenderer(nullptr)
@@ -130,115 +131,122 @@ void TitleScene::ResourcesLoad_End()
 
 void TitleScene::LevelLoop_Start()
 {
-	GameEngineSoundManager::GetInst().FindSoundChannel("Noise")->PlayLevelOverLap("sfx_OpticalLoop.wav",-1);
-	
-
-	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("TitleBGM");
-
 	GameEngineInput::GetInst().CreateKey("Next", VK_SPACE);
-
-	{
-		Image* Actor = CreateActor<Image>();
-		Actor->ImageRenderer_->SetLevelImage("title_screen_background.png");
-		//Actor->ImageRenderer_->SetImage("title_screen_background.png");
-		Actor->ImageRenderer_->SetAdjustImzgeSize();
-		Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
-	}
-
-	{
-		Image* Actor = CreateActor<Image>();
-		Actor->ImageRenderer_->CreateLevelAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
-		//Actor->ImageRenderer_->CreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
-		Actor->ImageRenderer_->SetChangeAnimation("TitleScreen");
-		Actor->ImageRenderer_->SetAdjustImzgeSize();
-		Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
-	}
-
-	{
-		Image* Image_ = CreateActor<Image>();
-
-		FontImageRenderer = Image_->CreateTransformComponent<GameEngineImageRenderer>();
-		if (true == UserGame::StageInfo_.Dice_ClearStage_[10])
-		{
-			FontImageRenderer->SetLevelImage("Title_font_end.png");
-			FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -200.0f, static_cast<int>(ZOrder::Z02Back01)));
-			end_ = true;
-		}
-		else
-		{
-			FontImageRenderer->SetLevelImage("Title_font.png");
-			FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
-		}
-		FontImageRenderer->SetAdjustImzgeSize();
-	}
-
-	{
-
-	}
-
-	{
-		SceneBGM_->PlayLevelOverLap("bgm_title_screen.wav"); 
-	}
+	GameEngineInput::GetInst().CreateKey("Start", VK_LSHIFT);
 
 	TimeCheck_ = 1.f;
 }
 
 void TitleScene::LevelLoop_Update(float _DeltaTime)
 {
-	if (false == end_)
+	if (SceneStart_ == false)
 	{
-		timecheck_ += _DeltaTime;
+		if (GameEngineInput::GetInst().Down("Start"))
+		{
+			GameEngineSoundManager::GetInst().FindSoundChannel("Noise")->PlayLevelOverLap("sfx_OpticalLoop.wav", -1);
 
-		if (timecheck_ > 0.75f)
-		{
-			FontImageRenderer->Off();
-		}
-		if (timecheck_ > 1.5f)
-		{
-			FontImageRenderer->On();
-			timecheck_ = 0.f;
+			SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("TitleBGM");
+
+			{
+				Image* Actor = CreateActor<Image>();
+				Actor->ImageRenderer_->SetLevelImage("title_screen_background.png");
+				//Actor->ImageRenderer_->SetImage("title_screen_background.png");
+				Actor->ImageRenderer_->SetAdjustImzgeSize();
+				Actor->GetTransform()->SetWorldPosition(float4(0.f, 0.0f, static_cast<int>(ZOrder::Z02Back03)));
+			}
+
+			{
+				Image* Actor = CreateActor<Image>();
+				Actor->ImageRenderer_->CreateLevelAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+				//Actor->ImageRenderer_->CreateAnimationFolder("TitleScreen", "TitleScreen", 0.04f, true);
+				Actor->ImageRenderer_->SetChangeAnimation("TitleScreen");
+				Actor->ImageRenderer_->SetAdjustImzgeSize();
+				Actor->GetTransform()->SetWorldPosition(float4(0.f, -50.0f, static_cast<int>(ZOrder::Z02Back02)));
+			}
+
+			{
+				Image* Image_ = CreateActor<Image>();
+
+				FontImageRenderer = Image_->CreateTransformComponent<GameEngineImageRenderer>();
+				if (true == UserGame::StageInfo_.Dice_ClearStage_[10])
+				{
+					FontImageRenderer->SetLevelImage("Title_font_end.png");
+					FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -200.0f, static_cast<int>(ZOrder::Z02Back01)));
+					end_ = true;
+				}
+				else
+				{
+					FontImageRenderer->SetLevelImage("Title_font.png");
+					FontImageRenderer->GetTransform()->SetWorldPosition(float4(0.f, -300.0f, static_cast<int>(ZOrder::Z02Back01)));
+				}
+				FontImageRenderer->SetAdjustImzgeSize();
+			}
+
+			{
+				SceneBGM_->PlayLevelOverLap("bgm_title_screen.wav");
+			}
+
+			SceneStart_ = true;
 		}
 	}
-	static float soundTimeCheck_ = 0;
-	static bool piano = false;
 
-	soundTimeCheck_ += _DeltaTime;
-
-	if (piano == false)
-	{
-		if (soundTimeCheck_ >= 40.f)
-		{
-			SceneBGM_->PlayLevelOverLap("bgm_title_screen_piano.wav");
-			piano = true;
-		}
-	}
-	if (false == TobeNext_)
-	{
-		LevelLoadFadeUpdate(_DeltaTime);
-
-		if (GameEngineInput::GetInst().Down("Next"))
-		{
-			TobeNext_ = true;
-		}
-	}
 	else
 	{
-		BlendRate_ += _DeltaTime * 2.f;
-		TimeCheck_ -= _DeltaTime * 2.f;
-
-		SceneBGM_->AdjustVolume(-_DeltaTime);
-
-		if (BlendRate_ >= 1.f)
+		if (false == end_)
 		{
-			SceneBGM_->Stop();
-			GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
-			GameEngineCore::LevelChange("WorldMap");
+			timecheck_ += _DeltaTime;
 
-			//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
-
-			//GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+			if (timecheck_ > 0.75f)
+			{
+				FontImageRenderer->Off();
+			}
+			if (timecheck_ > 1.5f)
+			{
+				FontImageRenderer->On();
+				timecheck_ = 0.f;
+			}
 		}
-		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		static float soundTimeCheck_ = 0;
+		static bool piano = false;
+
+		soundTimeCheck_ += _DeltaTime;
+
+		if (piano == false)
+		{
+			if (soundTimeCheck_ >= 40.f)
+			{
+				SceneBGM_->PlayLevelOverLap("bgm_title_screen_piano.wav");
+				piano = true;
+			}
+		}
+		if (false == TobeNext_)
+		{
+			LevelLoadFadeUpdate(_DeltaTime);
+
+			if (GameEngineInput::GetInst().Down("Next"))
+			{
+				TobeNext_ = true;
+			}
+		}
+		else
+		{
+			BlendRate_ += _DeltaTime * 2.f;
+			TimeCheck_ -= _DeltaTime * 2.f;
+
+			SceneBGM_->AdjustVolume(-_DeltaTime);
+
+			if (BlendRate_ >= 1.f)
+			{
+				SceneBGM_->Stop();
+				GameEngineCore::LevelCreate<WorldMapScene>("WorldMap");
+				GameEngineCore::LevelChange("WorldMap");
+
+				//GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
+
+				//GameEngineCore::LevelChange("Stage_Mr_Wheezy");
+			}
+			FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
+		}
 	}
 }
 

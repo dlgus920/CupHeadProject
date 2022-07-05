@@ -66,6 +66,8 @@ void SceneBase::ReadyWALLOP()
 
 void SceneBase::ReadyWALLOP_DICE()
 {
+	ReadyWALLOPAnounce01();
+
 	Effect* Effect_ = CreateActor<Effect>();
 	GameEngineImageRenderer* _GameEngineImageRenderer = Effect_->
 		EffectAnimationFolderActor("ReadyWALLOP!", "ReadyWALLOP!", float4{ 1280.f,720.f,1.f }, 0.05f, false);

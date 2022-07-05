@@ -137,16 +137,16 @@ void King_Dice::Attack_Update( float _DeltaTime)
 
 		if (true == Hand_.IsAttacking_)
 		{
-			if (false == Attack_bgm_on_)
-			{
-				Attack_bgm_on_ = true;
-				GameEngineSoundManager::GetInst().PlaySoundChannel("DiceCardLoop", "SFX_level_dice_palace_main_card_march_loop_01.wav", 1);
-			}
-
 			TimeCheck_ += _DeltaTime;
 
 			if (TimeCheck_ > 0.3f)
 			{
+				if (false == Attack_bgm_on_)
+				{
+					Attack_bgm_on_ = true;
+					GameEngineSoundManager::GetInst().PlaySoundChannel("DiceCardLoop", "SFX_level_dice_palace_main_card_march_loop_01.wav", 1);
+				}
+
 				CardCount_++;
 
 				if ((CardCount_ % 3) == 0)

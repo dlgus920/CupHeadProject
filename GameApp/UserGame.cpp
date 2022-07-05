@@ -30,6 +30,7 @@ void UserGame::Initialize()
 	GameEngineSoundManager::GetInst().CreateSoundChannel("TitleBGM")->SetVolume(2.f);
 	GameEngineSoundManager::GetInst().CreateSoundChannel("WorldBGM");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("Diceintro");
+	GameEngineSoundManager::GetInst().CreateSoundChannel("BulletEffect")->SetVolume(0.5f);
 	GameEngineSoundManager::GetInst().CreateSoundChannel("Effect");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("DiceCardLoop");
 	GameEngineSoundManager::GetInst().CreateSoundChannel("DiceChop")->SetVolume(2.f);
@@ -40,7 +41,6 @@ void UserGame::Initialize()
 	GameEngineSoundManager::GetInst().SetGlobalVolume(0.25f);
 	//GameEngineSoundManager::GetInst().CreateSoundChannel("BGM");
 
-
 	StageInfo_.WorldMapPlayer_Pos_ = float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01));
 
 	GameEngineCore::LevelCreate<TitleScene>("Title");
@@ -48,7 +48,6 @@ void UserGame::Initialize()
 
 	//for (int i = 0; i < 11; ++i)
 	//{
-
 	//	UserGame::StageInfo_.Dice_ClearStage_[i] = true;
 	//}
 }

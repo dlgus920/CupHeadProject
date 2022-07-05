@@ -39,6 +39,8 @@ private:
 private:
 	bool TobeNext_;
 	bool end_;
+
+	bool SceneStart_;
 	float timecheck_;
 };
 

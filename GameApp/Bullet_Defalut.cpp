@@ -79,6 +79,6 @@ void Bullet_Defalut::BulletDeath()
 		str = str + numstr + ".wav";
 	}
 
-	GameEngineSoundManager::GetInst().PlaySoundChannel("Effect", str);
+	GameEngineSoundManager::GetInst().PlaySoundChannel("BulletEffect", str);
 	Death();
 }
