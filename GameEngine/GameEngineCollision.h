@@ -14,35 +14,30 @@ class GameEngineCollision : public GameEngineTransformComponent
 	friend GameEngineCore;
 	friend GameEngineLevel;
 
-	static std::function<bool(GameEngineTransform*, GameEngineTransform*)> 
-		CollisionCheckFunction[static_cast<int>(CollisionType::MAX)][static_cast<int>(CollisionType::MAX)];
-
-	static void Init();
-
 public:
-	static bool CirCleToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
-	static bool Sphere3DToSphere3D(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-	static bool RectToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-	static bool RectToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
-	static bool CirCleToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-	static bool AABBToAABB(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-	static bool OBBToOBB(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-public:
-	// constrcuter destructer
 	GameEngineCollision();
 	~GameEngineCollision();
 
-	// delete Function
 	GameEngineCollision(const GameEngineCollision& _Other) = delete;
-	GameEngineCollision(GameEngineCollision&& _Other) noexcept = delete;
+	GameEngineCollision(GameEngineCollision&& _Other) = delete;
 	GameEngineCollision& operator=(const GameEngineCollision& _Other) = delete;
-	GameEngineCollision& operator=(GameEngineCollision&& _Other) noexcept = delete;
+	GameEngineCollision& operator=(GameEngineCollision&& _Other) = delete;
 
+public:
+	CollisionType CollisionType_;
+
+private:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+
+public:
+	GameEngineCollision* CollisionPtr(int _OtherGroup);
+	bool Collision(int _OtherGroup);
+	//void Collision(	CollisionType _ThisType, CollisionType _OtherType, int _OtherGroup, 
+	//	std::function<void(GameEngineCollision*)> _CallBack);
+
+public:
+	void SetCollisionGroup(int _Type);
 
 	template<typename UserType>
 	void SetCollisionGroup(UserType _Type)
@@ -50,38 +45,27 @@ public:
 		SetCollisionGroup(static_cast<int>(_Type));
 	}
 
-	void SetCollisionGroup(int _Type);
-
-
-	void Collision(
-		CollisionType _ThisType, 
-		CollisionType _OtherType, 
-		int _OtherGroup, 
-		std::function<void(GameEngineCollision*)> _CallBack
-	);
-
-	//Custom Func
-	bool Collision(int _OtherGroup);
-	GameEngineCollision* CollisionPtr(int _OtherGroup);
-
-	//custom
-
 	void SetCollisionType(CollisionType _CollisionType)
 	{
 		CollisionType_ = _CollisionType;
 	}
 
-	//Custom Member
-	CollisionType CollisionType_;
-
-	void SphereToSphereCollision(int _OtherGroup, std::function<void(GameEngineCollision*)> _CallBack);
-
-
-protected:
-	
+private:
+	static std::function<bool(GameEngineTransform*, GameEngineTransform*)>
+		CollisionCheckFunction[static_cast<int>(CollisionType::MAX)][static_cast<int>(CollisionType::MAX)];
 
 private:
-	void Start() override;
-	void Update(float _DeltaTime) override;
+	static void Init();
+
+public:
+	//충돌함수
+	static bool CirCleToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
+	static bool RectToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
+
+	static bool RectToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
+	static bool CirCleToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
+
+	//static bool OBBToOBB(GameEngineTransform* _Left, GameEngineTransform* _Right);
+	//static bool AABBToAABB(GameEngineTransform* _Left, GameEngineTransform* _Right);
 };
 

@@ -25,8 +25,6 @@ private:
 
 	class GameEngineImageRenderer* NumRenderer_[11];
 
-	class Image* ScreenFx;
-
 	std::string NextScene_;
 
 	//bool Victory_;

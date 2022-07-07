@@ -3,17 +3,7 @@
 #include <map>
 #include <GameEngine\Enums.h>
 #include <GameEngineBase\GameEngineObjectNameBase.h>
-//#include <GameEngine\GameEngineRenderingPipeLine.h>
-//
-//// 설명 : 
-//
-//class DebugRenderData
-//{
-//	TransformData Data;
-//	GameEngineRenderingPipeLine Data;
-//	// 파이프라인
-//	// 쉐이더 헬퍼가 한쌍이어야 한다.
-//};
+
 class CameraActor;
 class CameraComponent;
 class GameEngineActor;
@@ -55,12 +45,16 @@ private:
 
 private:
 
+	std::vector<NextLevelActor> NextLevelActorsData_;
 	CameraActor* MainCameraActor_;
 	CameraActor* UICameraActor_;
+
 	std::map<int, std::list<GameEngineActor*>> ActorList_;	
+
 	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
-	std::vector<NextLevelActor> NextLevelActorsData_;
 	bool IsDebug_;
+
+	std::map<std::string, std::vector<GameEnginePostProcessRender*>> PostRender;
 
 public:
 
@@ -68,7 +62,10 @@ public:
 	void Render(float _DeltaTime);
 	void Release(float _DeltaTime);
 
+	void AllClear(); 
+
 	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type, float4 _Color = float4::RED);
+
 	void PushCollision(GameEngineCollision* _Collision, int _Group);
 	
 	virtual void LevelStart() = 0;
@@ -78,13 +75,11 @@ public:
 
 	void SetLevelActorMove(GameEngineLevel* _NextLevel, GameEngineActor* _Actor);
 
-////////////////////////////////////////////////////// Renderer
 
 private:
 	void Init();
 
 	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
-//	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
 	void LevelChangeEndActorEvent(GameEngineLevel* _NextLevel);
 	void LevelChangeStartActorEvent(GameEngineLevel* _PrevLevel);
 
@@ -101,6 +96,8 @@ public:
 	{
 		IsDebug_ = _Debug;
 	}
+
+public:
 
 	template<typename ActorType>
 	ActorType* CreateActor(int _UpdateOrder = 0)
@@ -122,18 +119,6 @@ public:
 	{
 		PushCollision(_Collision, static_cast<int>(_Group));
 	}
-
-	void AllClear(); 
-
-private:
-		std::map<std::string, std::vector<GameEnginePostProcessRender*>> PostRender;
-
-public:
-	// FadeIn : public GameEnginePostProcessRender
-	// FadeIn(float Speed)
-
-	// ColorLerp : public GameEnginePostProcessRender
-	// ColorLerp(Color _Start, Color _End)
 
 	template<typename PostProcess, typename ... Parameter>
 	PostProcess* AddPostProcessCameraMergePrev(Parameter ... _Arg)

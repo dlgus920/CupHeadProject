@@ -254,10 +254,10 @@ void CameraComponent::PushDebugRender(GameEngineTransform* _Trans, CollisionType
 		break;
 	}
 
-	case CollisionType::Point3D:
-	case CollisionType::Sphere3D:
-	case CollisionType::AABBBox3D:
-	case CollisionType::OBBBox3D:
+	//case CollisionType::Point3D:
+	//case CollisionType::Sphere3D:
+	//case CollisionType::AABBBox3D:
+	//case CollisionType::OBBBox3D:
 	case CollisionType::MAX:
 	{
 		GameEngineDebug::MsgBoxError("처리할수 없는 디버그 타입입니다.");

@@ -7,11 +7,6 @@ enum class CollisionType
 	CirCle,
 	Rect,
 	OrientedRect,
-
-	Point3D,
-	Sphere3D,
-	AABBBox3D,
-	OBBBox3D,
 	MAX,
 };
 
