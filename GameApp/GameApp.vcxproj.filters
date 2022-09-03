@@ -14,9 +14,6 @@
     <ClCompile Include="UserGame_Resources_Shader.cpp">
       <Filter>UserCore\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="TopUI.cpp">
-      <Filter>00. Base\01. Actor\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Player_State.cpp">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClCompile>
@@ -29,41 +26,26 @@
     <ClCompile Include="WorldMapScene.cpp">
       <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClCompile>
-    <ClCompile Include="StoryScene.cpp">
-      <Filter>01. App\02. Scene\03. StoryScene</Filter>
-    </ClCompile>
     <ClCompile Include="UIBase.cpp">
-      <Filter>00. Base\01. Actor\UI\Base</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>00. Base\01. Actor\MOB\Base</Filter>
+      <Filter>01. App\01. Actor\00. Base\MOB\Base</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>00. Base\01. Actor\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="MainLoading.cpp">
-      <Filter>01. App\02. Scene\00. MainLoad</Filter>
+      <Filter>01. App\01. Actor\00. Base\Image</Filter>
     </ClCompile>
     <ClCompile Include="Player_Update.cpp">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>00. Base\01. Actor</Filter>
+      <Filter>01. App\01. Actor\00. Base</Filter>
     </ClCompile>
     <ClCompile Include="Bullet_Defalut.cpp">
       <Filter>01. App\01. Actor\Object\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet_Spread.cpp">
-      <Filter>01. App\01. Actor\Object\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>01. App\01. Actor\Object\Bullet\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet_Guided.cpp">
-      <Filter>01. App\01. Actor\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Store.cpp">
-      <Filter>01. App\02. Scene\02. WolrdMap\Stage</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapPlayer.cpp">
       <Filter>01. App\01. Actor\Player\WorldMap</Filter>
@@ -75,7 +57,7 @@
       <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="PositionComponent.cpp">
-      <Filter>GameComponent</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object\GameComponent</Filter>
     </ClCompile>
     <ClCompile Include="PerryObjectDice.cpp">
       <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
@@ -84,13 +66,13 @@
       <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="Bottom_Card.cpp">
-      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Bottom</Filter>
     </ClCompile>
     <ClCompile Include="Bottom_HP.cpp">
-      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Bottom</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>00. Base\01. Actor\Effect</Filter>
+      <Filter>01. App\01. Actor\00. Base\Effect</Filter>
     </ClCompile>
     <ClCompile Include="King_Dice_State.cpp">
       <Filter>01. App\01. Actor\King_Dice</Filter>
@@ -102,28 +84,28 @@
       <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
     </ClCompile>
     <ClCompile Include="ParryObject.cpp">
-      <Filter>00. Base\01. Actor\Object</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object</Filter>
     </ClCompile>
     <ClCompile Include="StagePoint.cpp">
       <Filter>01. App\01. Actor\Object</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>00. Base\01. Actor\Object</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object</Filter>
     </ClCompile>
     <ClCompile Include="SceneBase.cpp">
-      <Filter>00. Base\02. Scene\00. Base</Filter>
+      <Filter>01. App\02. Scene\00. Base\00. Base</Filter>
     </ClCompile>
     <ClCompile Include="DicePaclace.cpp">
-      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="KingDice_Marker.cpp">
       <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClCompile>
     <ClCompile Include="Stage_Mr_Wheezy.cpp">
-      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel\MIniStage</Filter>
     </ClCompile>
     <ClCompile Include="Dice_Palace_State.cpp">
-      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>01. App\02. Scene\01. TitleScene</Filter>
@@ -135,7 +117,7 @@
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Stage_Hopus_Pocus.cpp">
-      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel\MIniStage</Filter>
     </ClCompile>
     <ClCompile Include="Hopus_pocus.cpp">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus</Filter>
@@ -159,7 +141,7 @@
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="OldFilrm.cpp">
-      <Filter>00. Base\01. Actor\UI</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,9 +156,6 @@
     </Filter>
     <Filter Include="UserCore\Resources">
       <UniqueIdentifier>{097aabc9-6df0-4d53-a9ed-77681a8002e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameComponent">
-      <UniqueIdentifier>{bf49a85c-e35e-450e-8ada-b49c5ab368fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. App">
       <UniqueIdentifier>{e231d113-cd3a-4a6a-8477-b4af2f1bb0c9}</UniqueIdentifier>
@@ -211,65 +190,11 @@
     <Filter Include="01. App\01. Actor\Object\Bullet\Base">
       <UniqueIdentifier>{a6644d60-0ac6-416f-8883-75e107677fd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Base">
-      <UniqueIdentifier>{fb61ee93-b0a7-4471-8008-5979f9e57858}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. App\02. Scene">
       <UniqueIdentifier>{2a056ca7-83b7-4517-b1a6-868ec6e5d8fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. App\02. Scene\00. MainLoad">
-      <UniqueIdentifier>{2eea9bad-f280-49e1-b974-8b60367e37da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. App\02. Scene\02. WolrdMap">
       <UniqueIdentifier>{57d0f3d0-bb31-47a7-8172-62de4a3a35c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. App\02. Scene\02. WolrdMap\Stage">
-      <UniqueIdentifier>{f7c0f664-23f9-49ee-ab5f-7a6a8c233519}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. App\02. Scene\03. StoryScene">
-      <UniqueIdentifier>{c8488634-b3e9-4e12-94b8-1f4ce5175d1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. App\02. Scene\04. PlayLevel">
-      <UniqueIdentifier>{87927065-6845-4564-9509-402c5a97d61c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\02. Scene">
-      <UniqueIdentifier>{e6998438-49d5-445a-83ae-2e78e52a45df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\02. Scene\00. Base">
-      <UniqueIdentifier>{6bb348f2-0448-419c-af4a-0637ae528e5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor">
-      <UniqueIdentifier>{5b1798ae-0845-4fbe-8a16-76e0e38dd1a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\UI">
-      <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\UI\Base">
-      <UniqueIdentifier>{2edcbc75-7d06-4c55-ba88-65c65d0f4b9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\UI\Bottom">
-      <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\MOB">
-      <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\MOB\Base">
-      <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\Image">
-      <UniqueIdentifier>{8877c995-7c38-4347-b50d-545d55bd3789}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\Object">
-      <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Base\01. Actor\Effect">
-      <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. App\02. Scene\04. PlayLevel\MIniStage">
-      <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. App\01. Actor\ScreenFX">
-      <UniqueIdentifier>{cc05350c-6be2-40a8-a0b5-bf7217051242}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. App\01. Actor\King_Dice\MiniBoss">
       <UniqueIdentifier>{5f12dbad-5e9b-460e-893e-9664e5483607}</UniqueIdentifier>
@@ -295,6 +220,48 @@
     <Filter Include="01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\FloarCard">
       <UniqueIdentifier>{863a03ca-2352-4720-97b2-fd2232076d7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. App\02. Scene\03. PlayLevel">
+      <UniqueIdentifier>{87927065-6845-4564-9509-402c5a97d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\03. PlayLevel\MIniStage">
+      <UniqueIdentifier>{f57558f4-e5b6-447a-83b2-66962c5e25eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base">
+      <UniqueIdentifier>{5b1798ae-0845-4fbe-8a16-76e0e38dd1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\UI">
+      <UniqueIdentifier>{3f5d1b24-bba3-4f05-82e4-07ba54e40589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\UI\Base">
+      <UniqueIdentifier>{2edcbc75-7d06-4c55-ba88-65c65d0f4b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\UI\Bottom">
+      <UniqueIdentifier>{81533fa8-605b-4931-9869-bce1aa29d2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\MOB">
+      <UniqueIdentifier>{d743dcfe-af2a-402f-a262-f42efd7ca496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\MOB\Base">
+      <UniqueIdentifier>{5bd38083-52b9-4c7c-868e-191f8eea5a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\Image">
+      <UniqueIdentifier>{8877c995-7c38-4347-b50d-545d55bd3789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\Object">
+      <UniqueIdentifier>{61647a88-27ff-466d-a977-c27df9a0868f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\Effect">
+      <UniqueIdentifier>{e5e1369f-55dd-459e-ba14-3d76f1c6ae0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\00. Base">
+      <UniqueIdentifier>{e6998438-49d5-445a-83ae-2e78e52a45df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\02. Scene\00. Base\00. Base">
+      <UniqueIdentifier>{6bb348f2-0448-419c-af4a-0637ae528e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. App\01. Actor\00. Base\Object\GameComponent">
+      <UniqueIdentifier>{bf49a85c-e35e-450e-8ada-b49c5ab368fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -309,57 +276,45 @@
     <ClInclude Include="UserGame_Resources_Shader.h">
       <Filter>UserCore\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="TopUI.h">
-      <Filter>00. Base\01. Actor\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>01. App\01. Actor\Player\PlayMap</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapScene.h">
       <Filter>01. App\02. Scene\02. WolrdMap</Filter>
     </ClInclude>
-    <ClInclude Include="StoryScene.h">
-      <Filter>01. App\02. Scene\03. StoryScene</Filter>
-    </ClInclude>
     <ClInclude Include="UIBase.h">
-      <Filter>00. Base\01. Actor\UI\Base</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Base</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>01. App\01. Actor\Object\Bullet\Base</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>00. Base\01. Actor\MOB\Base</Filter>
+      <Filter>01. App\01. Actor\00. Base\MOB\Base</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>00. Base\01. Actor\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="MainLoading.h">
-      <Filter>01. App\02. Scene\00. MainLoad</Filter>
+      <Filter>01. App\01. Actor\00. Base\Image</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>00. Base\01. Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Store.h">
-      <Filter>01. App\02. Scene\02. WolrdMap\Stage</Filter>
+      <Filter>01. App\01. Actor\00. Base</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapPlayer.h">
       <Filter>01. App\01. Actor\Player\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="AppGlobalValue.h" />
     <ClInclude Include="PositionComponent.h">
-      <Filter>GameComponent</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object\GameComponent</Filter>
     </ClInclude>
     <ClInclude Include="PerryObjectDice.h">
       <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
     </ClInclude>
     <ClInclude Include="Bottom_HP.h">
-      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Bottom</Filter>
     </ClInclude>
     <ClInclude Include="Bottom_Card.h">
-      <Filter>00. Base\01. Actor\UI\Bottom</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI\Bottom</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>00. Base\01. Actor\Effect</Filter>
+      <Filter>01. App\01. Actor\00. Base\Effect</Filter>
     </ClInclude>
     <ClInclude Include="King_Dice.h">
       <Filter>01. App\01. Actor\King_Dice</Filter>
@@ -368,25 +323,25 @@
       <Filter>01. App\01. Actor\Object\ParryObject\Dice</Filter>
     </ClInclude>
     <ClInclude Include="ParryObject.h">
-      <Filter>00. Base\01. Actor\Object</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object</Filter>
     </ClInclude>
     <ClInclude Include="StagePoint.h">
       <Filter>01. App\01. Actor\Object</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>00. Base\01. Actor\Object</Filter>
+      <Filter>01. App\01. Actor\00. Base\Object</Filter>
     </ClInclude>
     <ClInclude Include="SceneBase.h">
-      <Filter>00. Base\02. Scene\00. Base</Filter>
+      <Filter>01. App\02. Scene\00. Base\00. Base</Filter>
     </ClInclude>
     <ClInclude Include="DicePaclace.h">
-      <Filter>01. App\02. Scene\04. PlayLevel</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="KingDice_Marker.h">
       <Filter>01. App\01. Actor\King_Dice</Filter>
     </ClInclude>
     <ClInclude Include="Stage_Mr_Wheezy.h">
-      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel\MIniStage</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>01. App\02. Scene\01. TitleScene</Filter>
@@ -398,7 +353,7 @@
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Mr_Wheezy\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Stage_Hopus_Pocus.h">
-      <Filter>01. App\02. Scene\04. PlayLevel\MIniStage</Filter>
+      <Filter>01. App\02. Scene\03. PlayLevel\MIniStage</Filter>
     </ClInclude>
     <ClInclude Include="Hopus_pocus.h">
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus</Filter>
@@ -416,7 +371,7 @@
       <Filter>01. App\01. Actor\King_Dice\MiniBoss\Hopus_pocus\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="OldFilrm.h">
-      <Filter>00. Base\01. Actor\UI</Filter>
+      <Filter>01. App\01. Actor\00. Base\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

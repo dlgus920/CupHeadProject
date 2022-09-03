@@ -18,11 +18,10 @@ public:
 	King_Dice& operator=(const King_Dice&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 private:
-	GameEngineFSM<King_Dice> State_;
-	GameEngineFSM<King_Dice> BattleState_;
+	GameEngineFSM State_;
+	GameEngineFSM BattleState_;
 
 	GameEngineCollision* MonsterHitBox;
-	//GameEngineCollision* MonsterHitBoxHand;
 
 	GameEngineImageRenderer* MonsterImageRenderer;
 
@@ -120,7 +119,6 @@ public:
 	void Idle();
 	void Attack();
 
-
 private:	
 	void HandSwitching();
 	void HandRight();
@@ -134,9 +132,6 @@ private:
 	void CardClear();
 
 	void SpawnDice();
-
-	//void EffectDefeat(float4 _Pos);
-	//void EffectDefeatRandom(float _Radius);
 
 private:
 

@@ -6,7 +6,6 @@
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
 #include <GameEngine/CameraActor.h>
-#include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 //#include <GameEngineBase/GameEngineRandom.h>
 
@@ -22,8 +21,6 @@
 
 DicePaclace::DicePaclace() 
 	: King_Dice_(nullptr)
-	, PhaseState_(this)
-	, LoadState_(this)
 	, KingDice_Marker_(nullptr)
 	, IsStageMove_(false)
 	, MoveEnd_(false)
@@ -38,15 +35,15 @@ DicePaclace::~DicePaclace() // default destructer 디폴트 소멸자
 }
 void DicePaclace::LevelStart()
 {
-	PhaseState_.CreateState("Intro", &DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
-	PhaseState_.CreateState("Playing", &DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
-	PhaseState_.CreateState("PlayingEnd", &DicePaclace::PlayingEnd_Start, &DicePaclace::PlayingEnd_Update, nullptr);
+	PhaseState_.CreateState<DicePaclace>("Intro",this, &DicePaclace::Intro_Start, &DicePaclace::Intro_Update, &DicePaclace::Intro_End);
+	PhaseState_.CreateState<DicePaclace>("Playing", this, &DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
+	PhaseState_.CreateState<DicePaclace>("PlayingEnd", this, &DicePaclace::PlayingEnd_Start, &DicePaclace::PlayingEnd_Update, nullptr);
 
 	//PhaseState_.ChangeState("Intro");
 
-	LoadState_.CreateState("ResourcesLoad", &DicePaclace::ResourcesLoad_Start, &DicePaclace::ResourcesLoad_Update, nullptr);
-	LoadState_.CreateState("LevelLoop", &DicePaclace::LevelLoop_Start, &DicePaclace::LevelLoop_Update, nullptr);
-	LoadState_.CreateState("Init", nullptr, &DicePaclace::Init_Update, nullptr);
+	LoadState_.CreateState<DicePaclace>("ResourcesLoad", this, &DicePaclace::ResourcesLoad_Start, &DicePaclace::ResourcesLoad_Update, nullptr);
+	LoadState_.CreateState<DicePaclace>("LevelLoop", this, &DicePaclace::LevelLoop_Start, &DicePaclace::LevelLoop_Update, nullptr);
+	//LoadState_.CreateState<DicePaclace>("Init", this, nullptr, &DicePaclace::Init_Update, nullptr);
 }
 void DicePaclace::LevelUpdate(float _DeltaTime)
 {
@@ -63,7 +60,7 @@ void DicePaclace::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 }
 void DicePaclace::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-	LoadState_.ChangeState("Init");
+	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void DicePaclace::Intro_Start()
@@ -89,14 +86,6 @@ void DicePaclace::Intro_End()
 
 void DicePaclace::Playing_Start()
 {
-	//NextScene_ = "WorldMap";
-	//if (true == UserGame::StageInfo_.Dice_First_)
-	//{
-	//	//ReadyWALLOP();
-	//	//ReadyWALLOP_DICE();
-
-	//	UserGame::StageInfo_.Dice_First_ = false;
-	//}
 }
 void DicePaclace::Playing_Update(float _DeltaTime)
 {
@@ -156,10 +145,6 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 
 			if (false == UserGame::StageInfo_.Dice_ClearStage_[2])
 			{
-				//GameEngineCore::LevelCreate<Stage_Hopus_pocus>("Stage_Hopus_pocus");
-
-				//GameEngineCore::LevelChange("Stage_Hopus_pocus");
-
 				GameEngineCore::LevelCreate<Stage_Mr_Wheezy>("Stage_Mr_Wheezy");
 
 				GameEngineCore::LevelChange("Stage_Mr_Wheezy");

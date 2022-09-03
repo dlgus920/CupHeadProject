@@ -15,8 +15,7 @@
 #include <GameEngine/GameEngineSoundPlayer.h>
 
 Hopus_pocus::Hopus_pocus()
-	: State_(this)
-	, Hopus_pocusImageRenderer_(nullptr)
+	: Hopus_pocusImageRenderer_(nullptr)
 	, MonsterHitBox(nullptr)
 	, MonsterBox(nullptr)
 	, TimeCheck_(0.f)
@@ -71,10 +70,10 @@ void Hopus_pocus::Start()
 	}
 
 	{
-		State_.CreateState("Intro", &Hopus_pocus::Intro_Start, &Hopus_pocus::Intro_Update, &Hopus_pocus::Intro_End);
-		State_.CreateState("Idle", &Hopus_pocus::Idle_Start, &Hopus_pocus::Idle_Update, &Hopus_pocus::Idle_End);
-		State_.CreateState("Attack", &Hopus_pocus::Attack_Start, &Hopus_pocus::Attack_Update, &Hopus_pocus::Attack_End);
-		State_.CreateState("Defeat", &Hopus_pocus::Defeat_Start, &Hopus_pocus::Defeat_Update, &Hopus_pocus::Defeat_End);
+		State_.CreateState<Hopus_pocus>("Intro", this, &Hopus_pocus::Intro_Start, &Hopus_pocus::Intro_Update, &Hopus_pocus::Intro_End);
+		State_.CreateState<Hopus_pocus>("Idle", this, &Hopus_pocus::Idle_Start, &Hopus_pocus::Idle_Update, &Hopus_pocus::Idle_End);
+		State_.CreateState<Hopus_pocus>("Attack", this, &Hopus_pocus::Attack_Start, &Hopus_pocus::Attack_Update, &Hopus_pocus::Attack_End);
+		State_.CreateState<Hopus_pocus>("Defeat", this, &Hopus_pocus::Defeat_Start, &Hopus_pocus::Defeat_Update, &Hopus_pocus::Defeat_End);
 
 		State_.ChangeState("Intro");
 	}

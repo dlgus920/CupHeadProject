@@ -6,7 +6,6 @@
 #include "GameEngineLevel.h"
 #include "GameEngineInput.h"
 #include "GameEngineCollision.h"
-#include "GameEngineGUI.h"
 #include "GameEngineBase/GameEngineDirectory.h"
 #include "GameEngineBase/GameEngineFile.h"
 
@@ -26,16 +25,6 @@ GameEngineCore::~GameEngineCore() // default destructer 디폴트 소멸자
 
 }
 
-GameEngineCore::GameEngineCore(GameEngineCore&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-{
-
-
-}
-
-/// <summary>
-/// /////////////////////////// member
-/// </summary>
-
 void GameEngineCore::EngineInitialize()
 {
 
@@ -44,10 +33,6 @@ void GameEngineCore::EngineInitialize()
 	EngineResourcesCreate();
 	GameEngineDevice::GetInst().CreateSwapChain();
 	// 엔진용 파이프라인
-
-
-	GameEngineGUI::GetInst()->Initialize();
-	// 기본 엔진 수준 리소스를 로드할 겁니다.
 
 	GameEngineCollision::Init();
 
@@ -72,14 +57,10 @@ void GameEngineCore::EngineDestroy()
 	GameEngineManagerHelper::ManagerRelease();
 	GameEngineInput::Destroy();
 	GameEngineTime::Destroy();
-	GameEngineGUI::Destroy();
 	GameEngineDevice::Destroy();
 	GameEngineWindow::Destroy();
 }
 
-/// <summary>
-/// /////////////////////////// static
-/// </summary>
 
 void GameEngineCore::MainLoop()
 {
@@ -99,11 +80,9 @@ void GameEngineCore::MainLoop()
 		{
 			CurrentLevel_->LevelChangeEndActorEvent(NextLevel_);
 			CurrentLevel_->LevelChangeEndEvent(NextLevel_);
-			CurrentLevel_->SetLevelActorMoveProcess();
 
 			NextLevel_->LevelChangeStartActorEvent(CurrentLevel_);
 			NextLevel_->LevelChangeStartEvent(CurrentLevel_);
-			NextLevel_->SetLevelActorMoveProcess();
 
 			LevelDestroy(CurrentLevel_->GetName());
 
@@ -128,10 +107,6 @@ void GameEngineCore::MainLoop()
 	CurrentLevel_->Render(Time);
 	CurrentLevel_->Release(Time);
 
-
-	// 오브젝트 루프
-
-	//MainCore_->GameLoop();
 }
 
 
@@ -139,9 +114,6 @@ void GameEngineCore::MainLoop()
 void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
 {
 	GameEngineWindow::GetInst().CreateMainWindow("MainWindow", _RuntimeCore.StartWindowSize(), _RuntimeCore.StartWindowPos());
-
-	// 디바이스가 만들어져야 합니다.
-	// HWND 윈도우에서 제공하는 3D 라이브러리니까 WINDOW API를 기반으로 처리되어 있습니다.
 }
 
 void GameEngineCore::LevelDestroy(const std::string& _Level)

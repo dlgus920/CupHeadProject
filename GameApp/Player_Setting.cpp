@@ -62,35 +62,27 @@ void Player::KeySetting()
 
 void Player::StateSetting()
 {
-	State_.CreateState("Idle", &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);
-	State_.CreateState("Walk", &Player::Walk_Start, &Player::Walk_Update, &Player::Walk_End);
-	State_.CreateState("Jump", &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
-	State_.CreateState("Fall", &Player::Fall_Start, &Player::Fall_Update, &Player::Fall_End);
-	State_.CreateState("RockOn", &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
-	State_.CreateState("Duck", &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
+	State_.CreateState<Player>("Idle",this, &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);
+	State_.CreateState<Player>("Walk", this, &Player::Walk_Start, &Player::Walk_Update, &Player::Walk_End);
+	State_.CreateState<Player>("Jump", this, &Player::Jump_Start, &Player::Jump_Update, &Player::Jump_End);
+	State_.CreateState<Player>("Fall", this, &Player::Fall_Start, &Player::Fall_Update, &Player::Fall_End);
+	State_.CreateState<Player>("RockOn", this, &Player::RockOn_Start, &Player::RockOn_Update, &Player::RockOn_End);
+	State_.CreateState<Player>("Duck", this, &Player::Duck_Start, &Player::Duck_Update, &Player::Duck_End);
 
-	State_.CreateState("Bomb", &Player::Bomb_Start, &Player::Bomb_Update, &Player::Bomb_End);
-	State_.CreateState("Death", &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
-	State_.CreateState("Hit", &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
-	State_.CreateState("Dash", &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
+	State_.CreateState<Player>("Bomb", this, &Player::Bomb_Start, &Player::Bomb_Update, &Player::Bomb_End);
+	State_.CreateState<Player>("Death", this, &Player::Death_Start, &Player::Death_Update, &Player::Death_End);
+	State_.CreateState<Player>("Hit", this, &Player::Hit_Start, &Player::Hit_Update, &Player::Hit_End);
+	State_.CreateState<Player>("Dash", this, &Player::Dash_Start, &Player::Dash_Update, &Player::Dash_End);
 
-	GameState_.CreateState("Intro", &Player::Intro_Start, &Player::Intro_Update, &Player::Intro_End);
-	GameState_.CreateState("Playing", &Player::Playing_Start, &Player::Playing_Update, &Player::Playing_End);
-	GameState_.CreateState("End", &Player::End_Start, &Player::End_Update, &Player::End_End);
+	GameState_.CreateState<Player>("Intro", this, &Player::Intro_Start, &Player::Intro_Update, &Player::Intro_End);
+	GameState_.CreateState<Player>("Playing", this, &Player::Playing_Start, &Player::Playing_Update, &Player::Playing_End);
+	GameState_.CreateState<Player>("End", this, &Player::End_Start, &Player::End_Update, &Player::End_End);
 }
 
 void Player::ComponentSetting()
 {
 	{
-		//GameEngineRenderer* Renderer = CreateTransformComponent<GameEngineRenderer>(GetTransform());
-		//Renderer->SetRenderingPipeLine("Color");
-		//Renderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f));
-	}
-
-	{
 		PlayerImageRenderer = CreateTransformComponent<GameEngineImageRenderer>();	
-		//PlayerImageRenderer->ShaderHelper.SettingConstantBufferSet("ResultColor", float4(1.0f, 0.0f, 1.0f)); //색상 오버레이
-		//PlayerImageRenderer->SetAlpha(0.5f); //알파
 	}
 
 	{

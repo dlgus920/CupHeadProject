@@ -15,7 +15,7 @@ public:
 	Hopus_pocus& operator=(const Hopus_pocus& _other) = delete; 
 	Hopus_pocus& operator=(const Hopus_pocus&& _other) = delete; 
 private:
-	GameEngineFSM<Hopus_pocus> State_;
+	GameEngineFSM State_;
 
 	GameEngineCollision* MonsterHitBox;
 	GameEngineCollision* MonsterBox;

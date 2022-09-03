@@ -6,7 +6,6 @@
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
 #include <GameEngine/CameraActor.h>
-#include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 
 #include "Map.h"
@@ -16,9 +15,7 @@
 #include "FloarCard.h"
 
 Stage_Hopus_pocus::Stage_Hopus_pocus()
-	: PhaseState_(this)
-	, LoadState_(this)
-	, Hopus_pocus_(nullptr)
+	: Hopus_pocus_(nullptr)
 	, Floating_Card_(nullptr)
 	, BackRightImageRenderer_{nullptr}
 	, LightBlendRate_{ { 1.f,1.f,1.f,1.f } }
@@ -34,16 +31,15 @@ void Stage_Hopus_pocus::LevelStart()
 {
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
-	PhaseState_.CreateState("Intro", &Stage_Hopus_pocus::Intro_Start, &Stage_Hopus_pocus::Intro_Update, &Stage_Hopus_pocus::Intro_End);
-	PhaseState_.CreateState("Playing", &Stage_Hopus_pocus::Playing_Start, &Stage_Hopus_pocus::Playing_Update, &Stage_Hopus_pocus::Playing_End);
+	PhaseState_.CreateState<Stage_Hopus_pocus>("Intro",this, &Stage_Hopus_pocus::Intro_Start, &Stage_Hopus_pocus::Intro_Update, &Stage_Hopus_pocus::Intro_End);
+	PhaseState_.CreateState<Stage_Hopus_pocus>("Playing", this, &Stage_Hopus_pocus::Playing_Start, &Stage_Hopus_pocus::Playing_Update, &Stage_Hopus_pocus::Playing_End);
 
-	LoadState_.CreateState("ResourcesLoad", &Stage_Hopus_pocus::ResourcesLoad_Start, &Stage_Hopus_pocus::ResourcesLoad_Update, nullptr);
-	LoadState_.CreateState("Init", nullptr, &Stage_Hopus_pocus::Init_Update, nullptr);
-	LoadState_.CreateState("LevelLoop", &Stage_Hopus_pocus::LevelLoop_Start, &Stage_Hopus_pocus::LevelLoop_Update, nullptr);
+	LoadState_.CreateState<Stage_Hopus_pocus>("ResourcesLoad", this, &Stage_Hopus_pocus::ResourcesLoad_Start, &Stage_Hopus_pocus::ResourcesLoad_Update, nullptr);
+	LoadState_.CreateState<Stage_Hopus_pocus>("LevelLoop", this, &Stage_Hopus_pocus::LevelLoop_Start, &Stage_Hopus_pocus::LevelLoop_Update, nullptr);
 }
 void Stage_Hopus_pocus::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-	LoadState_.ChangeState("Init");
+	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void Stage_Hopus_pocus::LevelUpdate(float _DeltaTime)
@@ -53,11 +49,6 @@ void Stage_Hopus_pocus::LevelUpdate(float _DeltaTime)
 
 void Stage_Hopus_pocus::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-}
-
-void Stage_Hopus_pocus::Init_Update(float _DeltaTime)
-{
-	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void Stage_Hopus_pocus::ResourcesLoad_Start()
@@ -373,7 +364,6 @@ void Stage_Hopus_pocus::Playing_Update(float _DeltaTime)
 }
 void Stage_Hopus_pocus::Playing_End()
 {	
-
 }
 
 

@@ -96,51 +96,6 @@ void GameEngineCore::EngineResourcesLoad()
 	GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().Find("PointSmp");
 	NewRes->Info_.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	NewRes->ReCreate();
-	//{
-	//	GameEngineDirectory EngineTextureDir;
-	//	EngineTextureDir.MoveParent(GV_GAMEFILENAME);
-	//	EngineTextureDir.MoveChild("EngineResources");
-	//	EngineTextureDir.MoveChild("Texture");
-
-	//	std::vector<GameEngineFile> AllFile = EngineTextureDir.GetAllFile();
-
-	//	for (size_t i = 0; i < AllFile.size(); i++)
-	//	{
-	//		GameEngineTextureManager::GetInst().Load(AllFile[i].GetFullPath());
-	//	}
-	//}
-
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParent(GV_GAMEFILENAME);
-	//	Dir.MoveChild("EngineResources");
-	//	Dir.MoveChild("Shader");
-
-	//	std::vector<GameEngineFile> AllShader = Dir.GetAllFile("fx");
-
-	//	for (auto& ShaderFile : AllShader)
-	//	{
-	//		ShaderFile.Open("rt");
-
-	//		std::string FileName = ShaderFile.GetFileNameWithOutExtension();
-	//		std::string AllCode = ShaderFile.GetString();
-
-	//		if (std::string::npos != AllCode.find(FileName + "_VS"))
-	//		{
-	//			GameEngineVertexShader* Ptr = GameEngineVertexShaderManager::GetInst().Load(FileName + "_VS", ShaderFile.GetFullPath(), FileName + "_VS");
-	//		}
-
-	//		if (std::string::npos != AllCode.find(FileName + "_PS"))
-	//		{
-	//			GameEnginePixelShader* Ptr = GameEnginePixelShaderManager::GetInst().Load(FileName + "_PS", ShaderFile.GetFullPath(), FileName + "_PS");
-	//		}
-
-	//	}
-	//}
-
-	//GameEngineSampler* NewRes = GameEngineSamplerManager::GetInst().Find("PointSmp");
-	//NewRes->Info_.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-	//NewRes->ReCreate();
 }
 void GameEngineCore::EngineResourcesCreate()
 {

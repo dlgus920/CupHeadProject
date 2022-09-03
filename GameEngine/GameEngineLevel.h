@@ -20,11 +20,9 @@ class GameEngineLevel : public GameEngineObjectNameBase
 	friend class GameEngineLevelControlWindow;
 
 public:
-	// constrcuter destructer
 	GameEngineLevel();
 	~GameEngineLevel();
 
-	// delete Function
 	GameEngineLevel(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel(GameEngineLevel&& _Other) noexcept = delete;
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
@@ -35,46 +33,30 @@ public:
 
 	CameraActor* GetUICameraActor();
 	CameraComponent* GetUICamera();
-private:
-	class NextLevelActor
-	{
-	public:
-		GameEngineActor* Actor;
-		GameEngineLevel* Level;
-	};
 
 private:
-
-	std::vector<NextLevelActor> NextLevelActorsData_;
 	CameraActor* MainCameraActor_;
 	CameraActor* UICameraActor_;
 
 	std::map<int, std::list<GameEngineActor*>> ActorList_;	
-
 	std::map<int, std::list<GameEngineCollision*>> CollisionList_;
-	bool IsDebug_;
-
 	std::map<std::string, std::vector<GameEnginePostProcessRender*>> PostRender;
 
+	bool IsDebug_;
+
 public:
-
-	void ActorUpdate(float _DeltaTime);
-	void Render(float _DeltaTime);
-	void Release(float _DeltaTime);
-
-	void AllClear(); 
-
-	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type, float4 _Color = float4::RED);
-
-	void PushCollision(GameEngineCollision* _Collision, int _Group);
-	
 	virtual void LevelStart() = 0;
 	virtual void LevelUpdate(float _DeltaTime) = 0;
 	virtual void LevelChangeEndEvent(GameEngineLevel* _NextLevel) = 0;
 	virtual void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) = 0;
 
-	void SetLevelActorMove(GameEngineLevel* _NextLevel, GameEngineActor* _Actor);
-
+public:
+	void ActorUpdate(float _DeltaTime);
+	void Render(float _DeltaTime);
+	void Release(float _DeltaTime);
+	void AllClear(); 
+	void PushDebugRender(GameEngineTransform* _Transform, CollisionType _Type, float4 _Color = float4::RED);
+	void PushCollision(GameEngineCollision* _Collision, int _Group);
 
 private:
 	void Init();
@@ -82,8 +64,6 @@ private:
 	void ChangeCollisionGroup(int _Group, GameEngineCollision* _Collision);
 	void LevelChangeEndActorEvent(GameEngineLevel* _NextLevel);
 	void LevelChangeStartActorEvent(GameEngineLevel* _PrevLevel);
-
-	void SetLevelActorMoveProcess();
 
 	inline std::list<GameEngineCollision*>& GetCollisionGroup(int _Group)
 	{
@@ -107,7 +87,6 @@ public:
 		NewActor->Start();
 		NewActor->SetOrder(_UpdateOrder);
 
-		// Insert + Find
 		std::list<GameEngineActor*>& List = ActorList_[_UpdateOrder];
 		List.push_back(NewActor);
 

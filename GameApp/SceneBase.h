@@ -31,27 +31,6 @@ protected:
 	bool LoadingComplete_;
 	bool LoadingFadeComplete_;
 
-
-//public:
-//
-//	struct StageInfo
-//	{
-//		bool Dice_ClearStage_[9];
-//		float4 WorldMapPlayer_Pos_;
-//	};
-//
-//	static StageInfo StageInfo_;
-//
-//	//StageInfo GetStageInfo()
-//	//{
-//	//	return StageInfo_;
-//	//}
-//
-//public:
-//	void SetStageInfo(StageInfo _StageInfo)
-//	{
-//		StageInfo_ = _StageInfo;
-//	}
 protected:
 
 	void PlayerResourceLoad();
@@ -59,14 +38,9 @@ protected:
 
 	void ResourcesLoadFadeInit();
 	void LevelLoadFadeUpdate(float _DeltaTime);
-	//void ResourcesLoadFadeUpdate(float _DeltaTime);
-	//void SceneResourceClear();
 
 	void ReadyWALLOPAnounce01();
 	void ReadyWALLOPAnounce02();
-
-	//void JobPostres(GameEngineDirectory Dir);
-	//void JobPostresinst(std::vector<GameEngineFile>* AllFile, int arraycount);
 
 
 public:
@@ -81,8 +55,5 @@ protected:
 
 	virtual void LevelChangeEndEvent();
 	virtual void LevelChangeStartEvent();
-
-protected:
-
 };
 

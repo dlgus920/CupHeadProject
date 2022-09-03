@@ -161,8 +161,12 @@ bool GameEngineCollision::Collision(int _OtherGroup)
 
 GameEngineCollision* GameEngineCollision::CollisionPtr(int _OtherGroup)
 {
-	if (GetIsUpdateRef())
+	if (true == IsUpdate())
 	{
+		GameEngineCollision* RetCollision = nullptr;
+		float retdist = 0.f;
+		float comparedist = 0.f;
+
 		std::list<GameEngineCollision*>& Group = GetLevel()->GetCollisionGroup(_OtherGroup);
 
 		for (GameEngineCollision* OtherCollision : Group)
@@ -172,23 +176,47 @@ GameEngineCollision* GameEngineCollision::CollisionPtr(int _OtherGroup)
 				continue;
 			}
 
-			auto& CheckFunction = CollisionCheckFunction[static_cast<int>(CollisionType_)]
-				[static_cast<int>(OtherCollision->CollisionType_)];
 #ifdef _DEBUG
-			if (nullptr == CheckFunction)
+			//auto& CheckFunction = CollisionCheckFunction[static_cast<int>(CollisionType_)]
+				//[static_cast<int>(OtherCollision->CollisionType_)];
+				// 
+			//if (nullptr == CheckFunction)
+			if (nullptr == CollisionCheckFunction[static_cast<int>(CollisionType_)]
+				[static_cast<int>(OtherCollision->CollisionType_)])
 			{
 				GameEngineDebug::MsgBoxError("아직 구현하지 않는 타입간에 충돌을 하려고 했습니다.");
 			}
 #endif // _DEBUG
 
-			if (false == CheckFunction(GetTransform(), OtherCollision->GetTransform()))
+			if (false == CollisionCheckFunction[static_cast<int>(CollisionType_)]
+				[static_cast<int>(OtherCollision->CollisionType_)](GetTransform(), OtherCollision->GetTransform()))
 			{
 				continue;
 			}
 
-			return OtherCollision;
+			float4 cal = GetTransform()->GetWorldPosition() - OtherCollision->GetTransform()->GetWorldPosition();
+
+			comparedist = cal.Len3D();
+
+			if (retdist == 0.f)
+			{
+				retdist = comparedist;
+				RetCollision = OtherCollision;
+			}
+
+			else if (comparedist > retdist)
+			{
+				continue;
+			}
+			else
+			{
+				retdist = comparedist;
+				RetCollision = OtherCollision;
+			}
+
    		}
-		return nullptr;
+		return RetCollision;
 	}
+
 	return nullptr;
 }

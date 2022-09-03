@@ -20,7 +20,6 @@ TitleScene::TitleScene()
 	: TobeNext_(false)
 	, end_(false)
 	, SceneStart_(false)
-	, LoadState_(this)
 	, timecheck_(0.f)
 	, FontImageRenderer(nullptr)
 {
@@ -32,19 +31,12 @@ TitleScene::~TitleScene()
 
 void TitleScene::LevelStart()
 {
-	LoadState_.CreateState("ResourcesLoad", &TitleScene::ResourcesLoad_Start, &TitleScene::ResourcesLoad_Update, &TitleScene::ResourcesLoad_End);
-	LoadState_.CreateState("LevelLoop", &TitleScene::LevelLoop_Start, &TitleScene::LevelLoop_Update, &TitleScene::LevelLoop_End);
-	LoadState_.CreateState("Init", nullptr, &TitleScene::Init_Update, nullptr);
+	//LoadState_.CreateState<TitleScene>("Init", this, nullptr, &TitleScene::Init_Update, nullptr);
+	LoadState_.CreateState<TitleScene>("ResourcesLoad", this,&TitleScene::ResourcesLoad_Start, &TitleScene::ResourcesLoad_Update, &TitleScene::ResourcesLoad_End);
+	LoadState_.CreateState<TitleScene>("LevelLoop", this, &TitleScene::LevelLoop_Start, &TitleScene::LevelLoop_Update, &TitleScene::LevelLoop_End);
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -100.0f));
-
-	//CreateActor<UIBase>()->OldFilrmStart();
-}
-
-void TitleScene::Init_Update(float _DeltaTime)
-{
-	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void TitleScene::ResourcesLoad_Start()
@@ -265,7 +257,7 @@ void TitleScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 
 void TitleScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-	LoadState_.ChangeState("Init");
+	LoadState_.ChangeState("ResourcesLoad");
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, -static_cast<int>(ZOrder::Z00Camera00)));

@@ -85,34 +85,8 @@ void SceneBase::KnockoutEnd()
 	GameEngineSoundManager::GetInst().FindSoundChannel("BGM")->PlayLevelOverLap("sfx_level_knockout_boom_01.wav");
 }
 
-//void SceneBase::JobPostres(GameEngineDirectory Dir)
-//{
-//	UserGame::LoadingFolder++;
-//	std::vector<GameEngineFile> AllFile = Dir.GetAllFile();
-//	for (size_t i = 0; i < AllFile.size(); i++)
-//	{
-//		GameEngineCore::ThreadQueue.JobPost(std::bind(&SceneBase::JobPostresinst, this, &AllFile,i));
-//	}
-//	UserGame::LoadingFolder--;
-//}
-//void SceneBase::JobPostresinst(std::vector<GameEngineFile>* AllFile, int arraycount)
-//{
-//	UserGame::LoadingFolder++;
-//	GameEngineSoundManager::GetInst().LoadLevelRes((*AllFile)[arraycount].GetFullPath());
-//	UserGame::LoadingFolder--;
-//}
-
 void SceneBase::PlayerResourceLoad()
 {
-	//{
-	//	GameEngineDirectory TextureDir;
-	//	TextureDir.MoveParent(GV_GAMEFILENAME);
-	//	TextureDir.MoveChild("Resources");
-	//	TextureDir.MoveChild("Sound");
-	//	TextureDir.MoveChild("Player");
-	//	JobPostres(TextureDir);
-	//}
-
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(
@@ -287,8 +261,7 @@ void SceneBase::LevelLoadFadeUpdate(float _DeltaTime)
 		if (BlendRate_ <= 0.f)
 		{
 			BlendRate_ = 0.f;
-			LoadingFadeComplete_ = true;
-			//FadeImage_->Death();
+			LoadingFadeComplete_ = true;	
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}

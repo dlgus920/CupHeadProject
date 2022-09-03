@@ -22,12 +22,6 @@ protected:
 	void LevelChangeEndEvent(GameEngineLevel* _NextLevel) override;
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 private:
-	GameEngineFSM<TitleScene> LoadState_;
-
-	class GameEngineImageRenderer* FontImageRenderer;
-
-	void Init_Update(float _DeltaTime);
-
 	void ResourcesLoad_Start();
 	void ResourcesLoad_Update(float _DeltaTime);
 	void ResourcesLoad_End();
@@ -36,7 +30,9 @@ private:
 	void LevelLoop_Update(float _DeltaTime);
 	void LevelLoop_End();
 
-private:
+private:	
+	GameEngineFSM LoadState_;
+	class GameEngineImageRenderer* FontImageRenderer;
 	bool TobeNext_;
 	bool end_;
 

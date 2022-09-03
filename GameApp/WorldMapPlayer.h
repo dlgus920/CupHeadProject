@@ -33,7 +33,7 @@ private:
 private:	// member Var
 	GameEngineImageRenderer* PlayerImageRenderer;
 	GameEngineCollision* PlayerCollision;
-	GameEngineFSM<WorldMapPlayer> State_;
+	GameEngineFSM State_;
 
 	float TimeCheck_;
 

@@ -5,7 +5,6 @@
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/GameEngineTransform.h>
 #include <GameEngine/CameraActor.h>
-#include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 
 #include "Map.h"
@@ -16,9 +15,7 @@
 #include "Flying_Cigar.h"
 
 Stage_Mr_Wheezy::Stage_Mr_Wheezy()
-	: PhaseState_(this)
-	, LoadState_(this)
-	, Mr_Wheezy_(nullptr)
+	: Mr_Wheezy_(nullptr)
 	, BackImageRenderer_{nullptr}
 {
 }
@@ -31,16 +28,16 @@ void Stage_Mr_Wheezy::LevelStart()
 {
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
-	PhaseState_.CreateState("Intro", &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
-	PhaseState_.CreateState("Playing", &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
+	PhaseState_.CreateState<Stage_Mr_Wheezy>("Intro", this, &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
+	PhaseState_.CreateState<Stage_Mr_Wheezy>("Playing", this, &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
 
-	LoadState_.CreateState("ResourcesLoad", &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
-	LoadState_.CreateState("Init", nullptr, &Stage_Mr_Wheezy::Init_Update, nullptr);
-	LoadState_.CreateState("LevelLoop", &Stage_Mr_Wheezy::LevelLoop_Start, &Stage_Mr_Wheezy::LevelLoop_Update, nullptr);
+	LoadState_.CreateState<Stage_Mr_Wheezy>("ResourcesLoad", this, &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
+	//LoadState_.CreateState<Stage_Mr_Wheezy>("Init", this, nullptr, &Stage_Mr_Wheezy::Init_Update, nullptr);
+	LoadState_.CreateState<Stage_Mr_Wheezy>("LevelLoop", this, &Stage_Mr_Wheezy::LevelLoop_Start, &Stage_Mr_Wheezy::LevelLoop_Update, nullptr);
 }
 void Stage_Mr_Wheezy::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {
-	LoadState_.ChangeState("Init");
+	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void Stage_Mr_Wheezy::LevelUpdate(float _DeltaTime)
@@ -50,11 +47,6 @@ void Stage_Mr_Wheezy::LevelUpdate(float _DeltaTime)
 
 void Stage_Mr_Wheezy::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-}
-
-void Stage_Mr_Wheezy::Init_Update(float _DeltaTime) 
-{
-	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void Stage_Mr_Wheezy::ResourcesLoad_Start()

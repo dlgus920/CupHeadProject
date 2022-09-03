@@ -40,9 +40,7 @@ private:
 //	void ReadyWALLOP();
 //	void KnockoutEnd();
 private:
-	GameEngineFSM<Stage_Mr_Wheezy> LoadState_;
-
-	void Init_Update(float _DeltaTime);
+	GameEngineFSM LoadState_;
 
 	void ResourcesLoad_Start();
 	void ResourcesLoad_Update(float _DeltaTime);
@@ -51,7 +49,7 @@ private:
 	void LevelLoop_Update(float _DeltaTime);
 
 private:
-	GameEngineFSM<Stage_Mr_Wheezy> PhaseState_;
+	GameEngineFSM PhaseState_;
 
 	void Intro_Start();
 	void Intro_Update(float _DeltaTime);

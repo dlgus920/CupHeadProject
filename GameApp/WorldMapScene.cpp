@@ -6,7 +6,6 @@
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
 #include <GameEngine/GameEngineCore.h>
-#include <GameEngine/MouseActor.h>
 
 
 #include "Image.h"
@@ -17,8 +16,7 @@
 
 
 WorldMapScene::WorldMapScene() 
-	: LoadState_(this)
-	, IrisImage_(nullptr)
+	: IrisImage_(nullptr)
 	, WorldMapPlayer_(nullptr)
 	, ScreenFadeEnd_(false)
 {
@@ -31,19 +29,13 @@ WorldMapScene::~WorldMapScene() // default destructer µðÆúÆ® ¼Ò¸êÀÚ
 
 void WorldMapScene::LevelStart()
 {
-	LoadState_.CreateState("ResourcesLoad", &WorldMapScene::ResourcesLoad_Start, &WorldMapScene::ResourcesLoad_Update, &WorldMapScene::ResourcesLoad_End);
-	LoadState_.CreateState("LevelLoop", &WorldMapScene::LevelLoop_Start, &WorldMapScene::LevelLoop_Update, &WorldMapScene::LevelLoop_End);
-	LoadState_.CreateState("Init", nullptr, &WorldMapScene::Init_Update, nullptr);
+	LoadState_.CreateState<WorldMapScene>("ResourcesLoad", this, &WorldMapScene::ResourcesLoad_Start, &WorldMapScene::ResourcesLoad_Update, &WorldMapScene::ResourcesLoad_End);
+	LoadState_.CreateState<WorldMapScene>("LevelLoop", this, &WorldMapScene::LevelLoop_Start, &WorldMapScene::LevelLoop_Update, &WorldMapScene::LevelLoop_End);
 }
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
 {
 	LoadState_.Update(_DeltaTime);
-}
-
-void WorldMapScene::Init_Update(float _DeltaTime)
-{
-	LoadState_.ChangeState("ResourcesLoad");
 }
 
 void WorldMapScene::ResourcesLoad_Start()
@@ -280,20 +272,14 @@ void WorldMapScene::LevelEnd_End()
 
 void WorldMapScene::LevelChangeEndEvent(GameEngineLevel* _NextLevel)
 {
-	//¸±¸®Áî ¸Ê
 }
 
 void WorldMapScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {	
-	LoadState_.ChangeState("Init");
+	LoadState_.ChangeState("ResourcesLoad");
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
-
-	//SetScreenIris(false);
-
-	//WorldMapPlayer_->Entry();
-
 }
 
 void WorldMapScene::ChangeScene(std::string _Scene)

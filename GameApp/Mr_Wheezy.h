@@ -15,7 +15,7 @@ public:
 	Mr_Wheezy& operator=(const Mr_Wheezy& _other) = delete; 
 	Mr_Wheezy& operator=(const Mr_Wheezy&& _other) = delete; 
 private:
-	GameEngineFSM<Mr_Wheezy> State_;
+	GameEngineFSM State_;
 
 	GameEngineCollision* MonsterHitBox;
 	GameEngineCollision* MonsterBox;

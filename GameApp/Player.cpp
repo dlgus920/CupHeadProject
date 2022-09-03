@@ -14,10 +14,8 @@
 Player* Player::MainPlayer;
 
 Player::Player() 
-	: State_(this)
-	, JumpAcc_(0.f)
+	: JumpAcc_(0.f)
 	, JumpSpeed_(0.f)
-	, GameState_(this)
 	, blit_(true)
 	, Jumpend_(false)
 	, LongJump_(false)

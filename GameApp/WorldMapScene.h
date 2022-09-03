@@ -26,9 +26,7 @@ public:
 	std::string NextScene_;
 
 private:	
-	GameEngineFSM<WorldMapScene> LoadState_;
-
-	void Init_Update(float _DeltaTime);
+	GameEngineFSM LoadState_;
 
 	void ResourcesLoad_Start();
 	void ResourcesLoad_Update(float _DeltaTime);
@@ -54,7 +52,6 @@ private:
 	friend void WorldMapPlayer::ChangeScene(std::string _Scene);
 
 	void SetScreenIris(bool _In);
-
 
 	void ScreenFadeEnd();
 	bool ScreenFadeEnd_;

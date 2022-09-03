@@ -186,8 +186,6 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Bullet_Defalut.cpp" />
-    <ClCompile Include="Bullet_Guided.cpp" />
-    <ClCompile Include="Bullet_Spread.cpp" />
     <ClCompile Include="DicePaclace.cpp">
       <SubType>
       </SubType>
@@ -221,10 +219,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="King_Dice_State.cpp" />
-    <ClCompile Include="MainLoading.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Mr_Wheezy.cpp" />
@@ -286,19 +280,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Store.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="StoryScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TopUI.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -367,10 +349,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MainLoading.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Mr_Wheezy.h" />
@@ -402,19 +380,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Store.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="StoryScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TopUI.h">
       <SubType>
       </SubType>
     </ClInclude>

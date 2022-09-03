@@ -6,8 +6,7 @@
 #include "WorldMapScene.h"
 
 WorldMapPlayer::WorldMapPlayer()
-	: State_(this)
-	, PlayerImageRenderer(nullptr)
+	: PlayerImageRenderer(nullptr)
 	, PlayerCollision(nullptr)
 	, KeyState_Update_(true)
 	, ColState_Update_(true)

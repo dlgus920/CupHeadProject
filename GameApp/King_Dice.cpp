@@ -12,9 +12,7 @@
 #include "Dice_Card.h"
 
 King_Dice::King_Dice()
-	: State_(this)
-	, BattleState_(this)
-	, MonsterImageRenderer(nullptr)
+	: MonsterImageRenderer(nullptr)
 	, MonsterHitBox(nullptr)
 	, IsDiceTime_(true)
 	, TimeCheck_(0.f)
@@ -104,16 +102,16 @@ void King_Dice::Start()
 	}
 
 	{
-		State_.CreateState("Intro", &King_Dice::Intro_Start, &King_Dice::Intro_Update, &King_Dice::Intro_End_);
-		State_.CreateState("Idle", &King_Dice::Idle_Start, &King_Dice::Idle_Update, &King_Dice::Idle_End_);
-		State_.CreateState("Attack", &King_Dice::Attack_Start, &King_Dice::Attack_Update, &King_Dice::Attack_End_);
-		State_.CreateState("Defeat", &King_Dice::Defeat_Start, &King_Dice::Defeat_Update, &King_Dice::Defeat_End_);
+		State_.CreateState<King_Dice>("Intro",this, &King_Dice::Intro_Start, &King_Dice::Intro_Update, &King_Dice::Intro_End_);
+		State_.CreateState<King_Dice>("Idle", this, &King_Dice::Idle_Start, &King_Dice::Idle_Update, &King_Dice::Idle_End_);
+		State_.CreateState<King_Dice>("Attack", this, &King_Dice::Attack_Start, &King_Dice::Attack_Update, &King_Dice::Attack_End_);
+		State_.CreateState<King_Dice>("Defeat", this, &King_Dice::Defeat_Start, &King_Dice::Defeat_Update, &King_Dice::Defeat_End_);
 		
-		State_.CreateState("Chop", &King_Dice::Chop_Start, &King_Dice::Chop_Update, &King_Dice::Chop_End_);
-		State_.CreateState("Clap", &King_Dice::Clap_Start, &King_Dice::Clap_Update, &King_Dice::Clap_End_);
+		State_.CreateState<King_Dice>("Chop", this, &King_Dice::Chop_Start, &King_Dice::Chop_Update, &King_Dice::Chop_End_);
+		State_.CreateState<King_Dice>("Clap", this, &King_Dice::Clap_Start, &King_Dice::Clap_Update, &King_Dice::Clap_End_);
 
-		BattleState_.CreateState("BattleState_Battle",&King_Dice::BattleState_Battle_Start,&King_Dice::BattleState_Battle_Update,&King_Dice::BattleState_Battle_End);
-		BattleState_.CreateState("BattleState_Dice",&King_Dice::BattleState_Dice_Start,&King_Dice::BattleState_Dice_Update,&King_Dice::BattleState_Dice_End);
+		BattleState_.CreateState<King_Dice>("BattleState_Battle", this, &King_Dice::BattleState_Battle_Start,&King_Dice::BattleState_Battle_Update,&King_Dice::BattleState_Battle_End);
+		BattleState_.CreateState<King_Dice>("BattleState_Dice", this, &King_Dice::BattleState_Dice_Start,&King_Dice::BattleState_Dice_Update,&King_Dice::BattleState_Dice_End);
 	}
 
 	BattleState_.ChangeState("BattleState_Dice");

@@ -4,7 +4,6 @@
 
 #include <GameEngine/CameraComponent.h>
 #include <GameEngine/CameraActor.h>
-#include <GameEngine/MouseActor.h>
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/GameEngineImageRenderer.h>
 //#include <GameEngineBase/GameEngineRandom.h>
@@ -17,11 +16,6 @@
 #include "PerryObjectDice.h"
 #include "King_Dice.h"
 #include "Player.h"
-
-void DicePaclace::Init_Update(float _DeltaTime) 
-{
-	LoadState_.ChangeState("ResourcesLoad");
-}
 
 void DicePaclace::ResourcesLoad_Start()
 {

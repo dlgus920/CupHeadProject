@@ -5,183 +5,90 @@
 #include "GameEngineTime.h"
 #include <map>
 
-template<typename FSMType>
+
 class GameEngineFSM
 {
-	class State : public GameEngineObjectNameBase
+private:
+	class State
 	{
-		friend class GameEngineFSM;
-
 	public:
-		GameEngineFSM* parent_;
+		std::string Name_;
+		std::function<void()> Start_;
+		std::function<void(float)> Update_;
+		std::function<void()> End_;
 
-		void(FSMType::* StateStart)();
-		void(FSMType::* StateUpdate)(float DeltaTime);
-		void(FSMType::* StateEnd)();
-
-		//std::function<void(void)> UpdateFunc_;
-		//std::function<void> StartFunc_;
-		//std::function<void> EndFunc_;
-
-	public:
-
-		void CallStart()
-		{
-			if (nullptr == StateStart)
-			{
-				return;
-			}
-#ifdef _DEBUG
-			if (nullptr == parent_->ObjectPtr_)
-			{
-				GameEngineDebug::AssertFalse();
-				return;
-			}
-#endif // _DEBUG
-			(parent_->ObjectPtr_->*StateStart)();
-		}
-
-		void CallUpdate(float _DeltaTime)
-		{
-			if (nullptr == StateUpdate)
-			{
-				return;
-			}
-
-#ifdef _DEBUG
-			if (nullptr == parent_->ObjectPtr_)
-			{
-				GameEngineDebug::AssertFalse();
-				return;
-			}
-#endif // _DEBUG
-
-			(parent_->ObjectPtr_->*StateUpdate)(_DeltaTime);
-		}
-
-		void CallEnd()
-		{
-			if (nullptr == StateEnd)
-			{
-				return;
-			}
-
-#ifdef _DEBUG
-			if (nullptr == parent_->ObjectPtr_)
-			{
-				GameEngineDebug::AssertFalse();
-				return;
-			}
-#endif // _DEBUG
-			(parent_->ObjectPtr_->*StateEnd)();
-		}
-
-	public:
-		void Update() {}
-
-	public:
-		State(GameEngineFSM* _parent)
-			: parent_(_parent)
-			, StateStart(nullptr)
-			, StateUpdate(nullptr)
-			, StateEnd(nullptr)
+		State(
+			std::string _Name,
+			std::function<void()> _Start,
+			std::function<void(float)> _Update,
+			std::function<void()> _End
+		)
+			: Name_(_Name)
+			, Start_(_Start)
+			, Update_(_Update)
+			, End_(_End)
 		{
 
 		}
 	};
-
 private:
-	std::map<std::string, State*> allState_;
-	FSMType* ObjectPtr_;
-	State* curState_;
-	std::string nextState_;
-
-private:	// member Var
+	std::map<std::string, State*> AllState_;
+	State* Current_;
+	State* Next_;
 
 public:
-	friend State;
+	GameEngineFSM();
+	~GameEngineFSM();
 
-public:
-	GameEngineFSM(FSMType* _StateObject)
-		: curState_(nullptr)
-		, ObjectPtr_(_StateObject)
+	void ChangeState(const std::string& _Name, bool _bForceChange = false);
+
+	void Update(float _Time);
+
+	inline bool IsCurrentState(const std::string& _Name) const
 	{
-	}// default constructer 디폴트 생성자
-
-	~GameEngineFSM()
-	{
-		typename std::map<std::string, State*>::iterator Start = allState_.begin();
-		typename std::map<std::string, State*>::iterator End = allState_.end();
-
-		for (; Start != End; ++Start)
-		{
-			delete Start->second;
-		}
-		allState_.clear();
-	}// default destructer 디폴트 소멸자
-
-public:		// delete constructer
-	GameEngineFSM(const GameEngineFSM& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	GameEngineFSM(GameEngineFSM&& _other) noexcept
-	{
-	}// default RValue Copy constructer 디폴트 RValue 복사생성자
-
-public:		//delete operator
-	GameEngineFSM& operator=(const GameEngineFSM& _other) = delete; // default Copy operator 디폴트 대입 연산자
-	GameEngineFSM& operator=(const GameEngineFSM&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
-
-
-
-public:
-	void CreateState(const std::string& _name, void(FSMType::* _StartFunc)(), void(FSMType::* _UpdateFunc)(float), void(FSMType::* _EndFunc)())
-	{
-#ifdef _DEBUG
-		if (nullptr != FindState(_name))
-		{
-			GameEngineDebug::AssertFalse();
-		}
-#endif // _DEBUG
-		State* NewState = new State(this);
-		NewState->SetName(_name);
-
-		NewState->StateUpdate = _UpdateFunc;
-		NewState->StateStart = _StartFunc;
-		NewState->StateEnd = _EndFunc;
-		allState_.insert(std::map<std::string, State*>::value_type(_name, NewState));
-		return;
+		return Current_->Name_ == _Name;
 	}
 
-	void ChangeState(const std::string& _Name)
+	State* GetCurrentState()
 	{
-		if (nullptr != curState_)
-		{
-			curState_->CallEnd();
-		}
+		return Current_;
+	}
 
-		curState_ = FindState(_Name);
-#ifdef _DEBUG
-		if (nullptr == curState_)
+public:
+	template <typename T>
+	void CreateState(
+		const std::string& _Name,
+		T* objptr,
+		void (T::* _Start)(),
+		void (T::* _Update)(float),
+		void (T::* _End)()
+	)
+	{
+		if (AllState_.end() != AllState_.find(_Name))
 		{
-			GameEngineDebug::AssertFalse();
+			GameEngineDebug::MsgBoxError("이미 존재하는 스테이트를 또 만들려고 했습니다.");
 			return;
 		}
-#endif // _DEBUG
 
-		curState_->CallStart();
+		std::function<void()> Start = nullptr;
+		std::function<void(float)> Update = nullptr;
+		std::function<void()> End = nullptr;
+
+		if (_Start != nullptr)
+			Start = std::bind(_Start, objptr);
+
+		if (_Update != nullptr)
+			Update = std::bind(_Update, objptr, std::placeholders::_1);
+
+		if (_End != nullptr)
+			End = std::bind(_End, objptr);
+
+		AllState_.insert(std::map<std::string, State*>::value_type(_Name, new State{ _Name,Start,Update,End }));	
 	}
 
 	bool IsCurStateName(const std::string& _Name)
 	{
-
-#ifdef _DEBUG
-		if (nullptr == curState_)
-		{
-			GameEngineDebug::AssertFalse();
-			return false;
-		}
-#endif // _DEBUG
-
-		if (curState_->GetName() == _Name)
+		if (Current_->Name_ == _Name)
 		{
 			return true;
 		}
@@ -189,36 +96,14 @@ public:
 		return false;
 	}
 
-	std::string GetName()
+	const std::string GetName()
 	{
-		return curState_->GetName();
+		return Current_->Name_;
 	}
 
 private:
-	State* FindState(const std::string& _name)
-	{
-		typename std::map<std::string, State*>::iterator FindAniIter = allState_.find(_name);
-
-		if (FindAniIter == allState_.end())
-		{
-			return nullptr;
-		}
-
-		return FindAniIter->second;
-	}
-
-
-public:
-	void Update(float _DeltaTime)
-	{
-#ifdef _DEBUG
-		if (nullptr == curState_)
-		{
-			GameEngineDebug::AssertFalse();
-			return;
-		}
-#endif // _DEBUG
-
-		curState_->CallUpdate(_DeltaTime);
-	}
+	GameEngineFSM(const GameEngineFSM& _Other) = delete;
+	GameEngineFSM(GameEngineFSM&& _Other) = delete;
+	GameEngineFSM& operator=(const GameEngineFSM& _Other) = delete;
+	GameEngineFSM& operator=(GameEngineFSM&& _Other) = delete;
 };

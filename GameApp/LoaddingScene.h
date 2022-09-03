@@ -23,7 +23,7 @@ private:	// member Var
 
 	class Image* HourGlass_;
 
-	GameEngineFSM<LoaddingScene> PhaseState_;
+	GameEngineFSM PhaseState_;
 
 	bool LoadEnd_;
 	bool CutIn_;

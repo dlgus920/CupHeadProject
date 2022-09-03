@@ -11,8 +11,7 @@
 #include <GameEngine/GameEngineSoundPlayer.h>
 
 Mr_Wheezy::Mr_Wheezy()
-	: State_(this)
-	, WheezyImageRenderer_Left_(nullptr)
+	: WheezyImageRenderer_Left_(nullptr)
 	, WheezyImageRenderer_Right_(nullptr)
 	, AshImageRenderer_Left_Front(nullptr)
 	, AshImageRenderer_Right_Front(nullptr)
@@ -159,11 +158,11 @@ void Mr_Wheezy::Start()
 	}
 
 	{
-		State_.CreateState("Intro", &Mr_Wheezy::Intro_Start, &Mr_Wheezy::Intro_Update, &Mr_Wheezy::Intro_End_);
-		State_.CreateState("Idle", &Mr_Wheezy::Idle_Start, &Mr_Wheezy::Idle_Update, &Mr_Wheezy::Idle_End_);
-		State_.CreateState("Attack", &Mr_Wheezy::Attack_Start, &Mr_Wheezy::Attack_Update, &Mr_Wheezy::Attack_End_);
-		State_.CreateState("Defeat", &Mr_Wheezy::Defeat_Start, &Mr_Wheezy::Defeat_Update, &Mr_Wheezy::Defeat_End_);
-		State_.CreateState("Telleport", &Mr_Wheezy::Telleport_Start, &Mr_Wheezy::Telleport_Update, &Mr_Wheezy::Telleport_End_);
+		State_.CreateState<Mr_Wheezy>("Intro",this,  &Mr_Wheezy::Intro_Start, &Mr_Wheezy::Intro_Update, &Mr_Wheezy::Intro_End_);
+		State_.CreateState<Mr_Wheezy>("Idle", this, &Mr_Wheezy::Idle_Start, &Mr_Wheezy::Idle_Update, &Mr_Wheezy::Idle_End_);
+		State_.CreateState<Mr_Wheezy>("Attack", this, &Mr_Wheezy::Attack_Start, &Mr_Wheezy::Attack_Update, &Mr_Wheezy::Attack_End_);
+		State_.CreateState<Mr_Wheezy>("Defeat", this, &Mr_Wheezy::Defeat_Start, &Mr_Wheezy::Defeat_Update, &Mr_Wheezy::Defeat_End_);
+		State_.CreateState<Mr_Wheezy>("Telleport", this, &Mr_Wheezy::Telleport_Start, &Mr_Wheezy::Telleport_Update, &Mr_Wheezy::Telleport_End_);
 
 		State_.ChangeState("Intro");
 	}

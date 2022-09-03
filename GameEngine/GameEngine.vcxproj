@@ -66,12 +66,10 @@
     <ClInclude Include="GameEngineFolderTextureManager.h" />
     <ClInclude Include="GameEngineFont.h" />
     <ClInclude Include="GameEngineFontManager.h" />
-    <ClInclude Include="GameEngineGUI.h" />
     <ClInclude Include="GameEngineImageRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineImageShotWindow.h" />
     <ClInclude Include="GameEngineIndexBuffer.h">
       <SubType>
       </SubType>
@@ -85,7 +83,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineLevelControlWindow.h" />
     <ClInclude Include="GameEngineMesh.h">
       <SubType>
       </SubType>
@@ -124,7 +121,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderWindow.h" />
     <ClInclude Include="GameEngineSampler.h" />
     <ClInclude Include="GameEngineSamplerManager.h">
       <SubType>
@@ -176,15 +172,6 @@
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
     <ClInclude Include="GameEngineResourcesManager.h" />
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_dx11.h" />
-    <ClInclude Include="imgui_impl_win32.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="imstb_rectpack.h" />
-    <ClInclude Include="imstb_textedit.h" />
-    <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="MouseActor.h" />
     <ClInclude Include="PostFade.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
@@ -241,13 +228,11 @@
     <ClCompile Include="GameEngineFolderTextureManager.cpp" />
     <ClCompile Include="GameEngineFont.cpp" />
     <ClCompile Include="GameEngineFontManager.cpp" />
-    <ClCompile Include="GameEngineGUI.cpp" />
     <ClCompile Include="GameEngineImageRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineImageRenderer_Animation2D.cpp" />
-    <ClCompile Include="GameEngineImageShotWindow.cpp" />
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <SubType>
       </SubType>
@@ -261,7 +246,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineLevelControlWindow.cpp" />
     <ClCompile Include="GameEngineMesh.cpp">
       <SubType>
       </SubType>
@@ -300,7 +284,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderWindow.cpp" />
     <ClCompile Include="GameEngineSampler.cpp" />
     <ClCompile Include="GameEngineSamplerManager.cpp">
       <SubType>
@@ -351,13 +334,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineWindow.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_dx11.cpp" />
-    <ClCompile Include="imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui_tables.cpp" />
-    <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="MouseActor.cpp" />
     <ClCompile Include="PostFade.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>

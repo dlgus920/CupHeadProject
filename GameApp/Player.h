@@ -69,8 +69,8 @@ private: //Member
 
 	GameEngineImageRenderer* PlayerImageRenderer;
 
-GameEngineFSM<Player> State_;
-	GameEngineFSM<Player> GameState_;
+	GameEngineFSM State_;
+	GameEngineFSM GameState_;
 
 	GameEngineTransform* Camera_;
 
