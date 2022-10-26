@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "GameEngineThreadQueue.h"
+#include "GameEngineDebug.h"
 
 GameEngineThreadQueue::GameEngineThreadQueue(const std::string& _ThreadName, int _ThreadCount)
 {
@@ -17,7 +18,11 @@ GameEngineThreadQueue::GameEngineThreadQueue(const std::string& _ThreadName, int
 		ThreadCount_ = 1;
 	}
 
-	Iocp.Start(ThreadCount_);
+	if (false == Iocp.Start(ThreadCount_))
+	{
+		GameEngineDebug::MsgBoxError("GameEngineIOCP 초기화 오류");
+	}
+
 	for (size_t i = 0; i < ThreadCount_; i++)
 	{
 		GameEngineThread* NewThread = new GameEngineThread();
@@ -25,11 +30,6 @@ GameEngineThreadQueue::GameEngineThreadQueue(const std::string& _ThreadName, int
 		NewThread->Start(ThreadName, std::bind(JobWorkThread, NewThread, &Iocp));
 		Threads_.push_back(NewThread);
 	}
-}
-
-GameEngineThreadQueue::~GameEngineThreadQueue()
-{
-	Destroy();
 }
 
 void GameEngineThreadQueue::JobPost(std::function<void()> _Job)
@@ -44,6 +44,9 @@ void GameEngineThreadQueue::JobWorkThread(GameEngineThread* Thread, GameEngineIo
 	DWORD lpNumberOfBytesTransferred = 0;
 	ULONG_PTR lpCompletionKey = 0;
 	LPOVERLAPPED Ptr = nullptr;
+
+	//IOCP가 반환해 주는 값에따라 스레드를 계속 작동할지, 중간에 폐기할지 결정한다.
+
 	while (true)
 	{
 		_Iocp->WaitforWork(lpNumberOfBytesTransferred, lpCompletionKey, Ptr);
@@ -82,4 +85,9 @@ void GameEngineThreadQueue::Destroy()
 	}
 
 	Threads_.clear();
+}
+
+GameEngineThreadQueue::~GameEngineThreadQueue()
+{
+	Destroy();
 }

@@ -28,12 +28,15 @@ void Stage_Mr_Wheezy::LevelStart()
 {
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
 
-	PhaseState_.CreateState<Stage_Mr_Wheezy>("Intro", this, &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
-	PhaseState_.CreateState<Stage_Mr_Wheezy>("Playing", this, &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
+	PhaseState_.CreateState<Stage_Mr_Wheezy>
+		("Intro", this, &Stage_Mr_Wheezy::Intro_Start, &Stage_Mr_Wheezy::Intro_Update, &Stage_Mr_Wheezy::Intro_End);
+	PhaseState_.CreateState<Stage_Mr_Wheezy>
+		("Playing", this, &Stage_Mr_Wheezy::Playing_Start, &Stage_Mr_Wheezy::Playing_Update, &Stage_Mr_Wheezy::Playing_End);
 
-	LoadState_.CreateState<Stage_Mr_Wheezy>("ResourcesLoad", this, &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
-	//LoadState_.CreateState<Stage_Mr_Wheezy>("Init", this, nullptr, &Stage_Mr_Wheezy::Init_Update, nullptr);
-	LoadState_.CreateState<Stage_Mr_Wheezy>("LevelLoop", this, &Stage_Mr_Wheezy::LevelLoop_Start, &Stage_Mr_Wheezy::LevelLoop_Update, nullptr);
+	LoadState_.CreateState<Stage_Mr_Wheezy>
+		("ResourcesLoad", this, &Stage_Mr_Wheezy::ResourcesLoad_Start, &Stage_Mr_Wheezy::ResourcesLoad_Update, nullptr);
+	LoadState_.CreateState<Stage_Mr_Wheezy>
+		("LevelLoop", this, &Stage_Mr_Wheezy::LevelLoop_Start, &Stage_Mr_Wheezy::LevelLoop_Update, nullptr);
 }
 void Stage_Mr_Wheezy::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 {

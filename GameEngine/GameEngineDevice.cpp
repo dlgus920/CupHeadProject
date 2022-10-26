@@ -31,7 +31,6 @@ ID3D11DeviceContext* GameEngineDevice::GetContext()
 
 GameEngineDevice::GameEngineDevice() // default constructer 디폴트 생성자
 {
-
 }
 
 GameEngineDevice::~GameEngineDevice() // default destructer 디폴트 소멸자
@@ -176,6 +175,7 @@ void GameEngineDevice::CreateSwapChain()
 		GameEngineDebug::MsgBoxError("IDXGIFactory null");
 	}
 	
+	//모든 설정이 완료되면 스왑체인을 형성한다.
 	if (S_OK != pF->CreateSwapChain(Device_, &ScInfo, &SwapChain_))
 	{
 		GameEngineDebug::MsgBoxError("SwapChain Create Error");

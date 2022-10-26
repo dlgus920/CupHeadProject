@@ -2,25 +2,17 @@
 #include <Windows.h>
 #include <process.h>
 
+// CreateIoCompletionPort는 2가지 용도로 사용된다.
+// 파일입출력에만 사용할수 있는것도 아닙니다.
+// 쓰레드를 핸들링
+// 내가 자유자제로 쓰레드를 제어하고 싶을때
+// 파일입출력과 소켓용으로 사용하지 않고
+// 파일입출력 == 서버통신이기 때문에
+
+// 무조건 쓰레드를 코어 개수만큼 만들겁니다.
+
 class GameEngineIocp
 {
-public:
-	GameEngineIocp()
-		: IocpHandle(nullptr)
-	{
-		// CreateIoCompletionPort는 2가지 용도로 사용된다.
-		// 파일입출력에만 사용할수 있는것도 아닙니다.
-		// 쓰레드를 핸들링
-		// 내가 자유자제로 쓰레드를 제어하고 싶을때
-		// 파일입출력과 소켓용으로 사용하지 않고
-		// 파일입출력 == 서버통신이기 때문에
-
-		// 무조건 쓰레드를 코어 개수만큼 만들겁니다.
-		// IocpHandle = CreateIoCompletionPort(IocpHandle, NULL, NULL, ThreadCount);
-	}	
-	
-	~GameEngineIocp() {}
-
 private:
 	HANDLE IocpHandle;
 
@@ -37,7 +29,7 @@ public:
 		return true;
 	}
 
-	// 쓰레드 안에서 실행은 시켜줘야 합니다.
+
 	// 파일입출력 == 소켓통신
 	// HANDLE CompletionPort, 이 쓰레드를 관리하는 IOCP
 	// LPDWORD lpNumberOfBytesTransferred, 소켓통신 혹은 파일입출력 하고 있다면 
@@ -47,9 +39,9 @@ public:
 	// LPOVERLAPPED* lpOverlapped, // 소켓통신을 할때 현재까지 읽은 비동기 입출력 정보.  
 	// DWORD dwMilliseconds      // 이건 얼마나 기다릴거냐.
 	//                          INFINITY를 넣으면 진짜 일이 있을때까지 영원히 기다림.
+
 	BOOL WaitforWork(DWORD& lpNumberOfBytesTransferred, ULONG_PTR& lpCompletionKey, LPOVERLAPPED& lpOverlapped, DWORD dwMilliseconds = INFINITE)
 	{
-
 		return GetQueuedCompletionStatus(IocpHandle, &lpNumberOfBytesTransferred, &lpCompletionKey, &lpOverlapped, dwMilliseconds);
 	}
 
@@ -59,5 +51,12 @@ public:
 	{
 		return PostQueuedCompletionStatus(IocpHandle, _WorkParameter, reinterpret_cast<ULONG_PTR>(_Ptr), nullptr);
 	}
+
+public:
+	GameEngineIocp()
+		: IocpHandle(nullptr)
+	{}
+
+	~GameEngineIocp() {}
 };
 

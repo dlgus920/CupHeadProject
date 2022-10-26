@@ -15,19 +15,12 @@ private:
 	std::function<void(GameEngineThread*)> ThreadFunction;
 
 private:
-	static void GameServerThreadFunction(GameEngineThread* _Thread, std::string _Name);
+	static void GameEngineThreadFunction(GameEngineThread* _Thread, std::string _Name);
 
 public:
-	void Start(std::string _ThreadName, std::function<void(GameEngineThread*)> _Function)
-	{
-		ThreadFunction = _Function;
-		Thread = std::thread(GameServerThreadFunction, this, _ThreadName);
-	}
+	void Start(std::string _ThreadName, std::function<void(GameEngineThread*)> _Function);
 
-	void Join()
-	{
-		Thread.join();
-	}
+	void Join();
 
 private:
 	GameEngineThread(const GameEngineThread& _Other) = delete;

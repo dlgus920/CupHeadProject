@@ -15,19 +15,20 @@ GameEngineThreadQueue GameEngineCore::ThreadQueue = GameEngineThreadQueue("GameE
 GameEngineCore* GameEngineCore::MainCore_ = nullptr;
 float TimeRate_ =1.f;
 
-GameEngineCore::GameEngineCore() // default constructer 디폴트 생성자
-{
+std::map<std::string, GameEngineLevel*> GameEngineCore::AllLevel_;
+GameEngineLevel* GameEngineCore::NextLevel_ = nullptr;
+GameEngineLevel* GameEngineCore::CurrentLevel_ = nullptr;
 
+GameEngineCore::GameEngineCore() 
+{
 }
 
-GameEngineCore::~GameEngineCore() // default destructer 디폴트 소멸자
+GameEngineCore::~GameEngineCore() 
 {
-
 }
 
 void GameEngineCore::EngineInitialize()
 {
-
 	GameEngineDevice::GetInst().Initialize();
 	EngineResourcesLoad();
 	EngineResourcesCreate();
@@ -36,10 +37,8 @@ void GameEngineCore::EngineInitialize()
 
 	GameEngineCollision::Init();
 
-
 	GameEngineSoundManager::GetInst().Initialize();
 }
-
 
 void GameEngineCore::EngineDestroy()
 {
@@ -60,7 +59,6 @@ void GameEngineCore::EngineDestroy()
 	GameEngineDevice::Destroy();
 	GameEngineWindow::Destroy();
 }
-
 
 void GameEngineCore::MainLoop()
 {
@@ -109,8 +107,6 @@ void GameEngineCore::MainLoop()
 
 }
 
-
-
 void GameEngineCore::WindowCreate(GameEngineCore& _RuntimeCore)
 {
 	GameEngineWindow::GetInst().CreateMainWindow("MainWindow", _RuntimeCore.StartWindowSize(), _RuntimeCore.StartWindowPos());
@@ -141,12 +137,6 @@ void GameEngineCore::Loop()
 	GameEngineWindow::GetInst().Loop(&GameEngineCore::MainLoop);
 }
 
-
-std::map<std::string, GameEngineLevel*> GameEngineCore::AllLevel_;
-GameEngineLevel* GameEngineCore::NextLevel_ = nullptr;
-GameEngineLevel* GameEngineCore::CurrentLevel_ = nullptr;
-
-
 GameEngineLevel* GameEngineCore::LevelFind(const std::string& _Level)
 {
 	std::map<std::string, GameEngineLevel*>::iterator FindIter = AllLevel_.find(_Level);
@@ -161,7 +151,6 @@ void GameEngineCore::SetTimeRate(float _TimeRate)
 {
 	TimeRate_ = _TimeRate;
 }
-
 
 void GameEngineCore::LevelChange(const std::string& _Level)
 {

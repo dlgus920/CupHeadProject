@@ -10,16 +10,13 @@ enum class ProjectionMode
 	Orthographic
 };
 
-// 분류 : 카메라 컴포넌트
-// 용도 : 
-// 설명 : 
 class GameEngineRenderer;
 class CameraComponent : public GameEngineTransformComponent
 {
 	friend class CameraActor;
 	friend class GameEngineLevel;
 
-private:	// member Var
+private:	
 	ProjectionMode				ProjectionMode_;			// 
 	float						FovAngleY_;					// 
 	float4						CamSize_;					// 
@@ -27,26 +24,13 @@ private:	// member Var
 	float						FarZ_;						// 
 	float						ZoomValue;
 
-private:
-	std::map<int, std::list<GameEngineRenderer*>> RendererList_;
-
-private:
 	int DebugRenderCount_;
 	float ZoomValue_;
+
+	std::map<int, std::list<GameEngineRenderer*>> RendererList_;
 	std::vector<GameEngineDebugRenderData> DebugVector_;
+
 	GameEngineRenderTarget* CameraBufferTarget_;
-
-public:
-	CameraComponent();
-	~CameraComponent();
-
-protected:		// delete constructer
-	CameraComponent(const CameraComponent& _other) = delete;
-	CameraComponent(CameraComponent&& _other) noexcept = delete;
-
-private:		//delete operator
-	CameraComponent& operator=(const CameraComponent& _other) = delete;
-	CameraComponent& operator=(const CameraComponent&& _other) = delete;
 
 private:
 	void ClearCameraTarget();
@@ -54,6 +38,20 @@ private:
 	void Render();
 	void DebugRender();
 	void ReleaseRenderer();
+
+public:
+	void CameraZoomReset();
+	void CameraZoomSetting(float _Value);
+
+	void SetProjectionMode(ProjectionMode _ProjectionMode);
+	void PushRenderer(int _Order, GameEngineRenderer* _Renderer);
+
+	void PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type, float4 _Color);
+	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
+
+protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
 
 public:
 	inline GameEngineRenderTarget* GetCameraRenderTarget()
@@ -66,22 +64,16 @@ public:
 		return ZoomValue_;
 	}
 
-
-
 public:
-	void CameraZoomReset();
-	void CameraZoomSetting(float _Value);
+	CameraComponent();
+	~CameraComponent();
 
-public:
-	void SetProjectionMode(ProjectionMode _ProjectionMode);
-	void PushRenderer(int _Order, GameEngineRenderer* _Renderer);
+protected:		
+	CameraComponent(const CameraComponent& _other) = delete;
+	CameraComponent(CameraComponent&& _other) noexcept = delete;
 
-public:
-	void PushDebugRender(GameEngineTransform* _Trans, CollisionType _Type, float4 _Color);
-	void ChangeRendererGroup(int _Group, GameEngineRenderer* _Renderer);
-
-protected:
-	void Start() override;
-	void Update(float _DeltaTime) override;
+private:		
+	CameraComponent& operator=(const CameraComponent& _other) = delete;
+	CameraComponent& operator=(const CameraComponent&& _other) = delete;
 };
 

@@ -64,22 +64,6 @@ private:
 		}
 	};
 
-public:
-	GameEngineImageRenderer();
-	~GameEngineImageRenderer();
-
-	GameEngineImageRenderer(const GameEngineImageRenderer& _Other);
-	GameEngineImageRenderer(GameEngineImageRenderer&& _Other) = delete;
-	GameEngineImageRenderer& operator=(const GameEngineImageRenderer& _Other) = delete;
-	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
-
-private:
-	void Start() override;
-
-protected:
-	void SetRenderingPipeLineSettingNext() override;
-	void Update(float _DeltaTime) override;
-
 private:
 	std::map<std::string, Animation2D*> AllAnimations_;
 
@@ -90,6 +74,13 @@ private:
 
 	float4 ResultColor; 
 	float4 CutData;
+
+private:
+	void Start() override;
+
+protected:
+	void SetRenderingPipeLineSettingNext() override;
+	void Update(float _DeltaTime) override;
 
 public:
 
@@ -218,5 +209,13 @@ public:
 		IsPlay_ = true;
 	}
 
+public:
+	GameEngineImageRenderer();
+	~GameEngineImageRenderer();
+
+	GameEngineImageRenderer(const GameEngineImageRenderer& _Other);
+	GameEngineImageRenderer(GameEngineImageRenderer&& _Other) = delete;
+	GameEngineImageRenderer& operator=(const GameEngineImageRenderer& _Other) = delete;
+	GameEngineImageRenderer& operator=(GameEngineImageRenderer&& _Other) noexcept = delete;
 };
 

@@ -6,9 +6,9 @@
 
 GameEngineActor::GameEngineActor() 
 	: Level_(nullptr)
-	, DeathTime_(-1.0f)
-	, IsFindObject_(false)
-	, IsDestroyed_(false)
+	//, DeathTime_(-1.0f)
+	//, IsFindObject_(false)
+	//, IsDestroyed_(false)
 	, PlayRate_(1.f)
 {
 }
@@ -96,18 +96,18 @@ void GameEngineActor::UpdateComponent(float _DeltaTime)
 	}
 }
 
-void GameEngineActor::ReleaseUpdate(float _DeltaTime)
-{
-	if (false == IsDestroyed_)
-	{
-		return;
-	}
-
-	DeathTime_ -= _DeltaTime;
-
-	if (0.0f >= DeathTime_)
-	{
-		ReleaseEvent();
-		Death();
-	}
-}
+//void GameEngineActor::ReleaseUpdate(float _DeltaTime)
+//{
+//	if (false == IsDestroyed_)
+//	{
+//		return;
+//	}
+//
+//	DeathTime_ -= _DeltaTime;
+//
+//	if (0.0f >= DeathTime_)
+//	{
+//		ReleaseEvent();
+//		Death();
+//	}
+//}

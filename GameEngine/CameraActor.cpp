@@ -48,64 +48,11 @@ float4x4 CameraActor::GetProjectionMatrix()
 {
 	return Camera_->GetTransform()->GetTransformData().Projection_;
 }
-//
-//void CameraActor::TransformUpdate() 
-//{
-//	GameEngineActor::TransformUpdate();
-//	Camera_->CameraTransformUpdate();
-//}
+
 void CameraActor::Update(float _DeltaTime)
 {
 	if (false == IsFreeCameraMode_)
 	{
-		/*if (false == IsFixed_)
-		{
-			float4 movepos;
-			float4 TargetPos;
-
-			TargetPos = GetTransform()->GetWorldPosition() - CamTargetPos_->GetWorldPosition();
-
-			float a = -50.f;
-
-			{
-				if (a <= TargetPos.x && TargetPos.x <= 50.f)
-				{
-					movepos.x = 0.f;
-				}
-				else
-				{
-					if (TargetPos.x > 0.f)
-					{
-						movepos.x = -CamSpeed_;
-					}
-					else
-					{
-						movepos.x = CamSpeed_;
-					}
-				}
-
-				if (a <= TargetPos.y && TargetPos.y <= 50.f)
-				{
-					movepos.y = 0.f;
-				}
-				else
-				{
-					if (TargetPos.y > 0.f)
-					{
-						movepos.y = -CamSpeed_;
-					}
-					else
-					{
-						movepos.y = CamSpeed_;
-					}
-				}
-			}
-
-			GetTransform()->SetWorldMove(movepos * _DeltaTime);
-		}
-
-		ResetUpdate();*/
-
 		return;
 	}
 
@@ -149,8 +96,6 @@ void CameraActor::Update(float _DeltaTime)
 		GetTransform()->AddWorldRotationDegreeY(GameEngineInput::GetMouse3DDir().x * _DeltaTime * RotSpeed_);
 		GetTransform()->AddWorldRotationDegreeX(-GameEngineInput::GetMouse3DDir().y * _DeltaTime * RotSpeed_);
 	}
-
-
 }
 
 void CameraActor::FreeCameraModeSwitch() 

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include <GameEngine\EngineVertex.h>
 #include "UserGame_Resources_Shader.h"
-#include <GameEngine\GameEngineFontManager.h>
+//#include <GameEngine\GameEngineFontManager.h>
 
 void TextureLoading(GameEngineDirectory Dir)
 {
@@ -41,21 +41,6 @@ void TextureLevelLoading(GameEngineDirectory Dir)
 
 void UserGame::ResourcesLoad()
 {
-	GameEngineFontManager::GetInst().Load("±Ã¼­");
-
-	//{
-	//	GameEngineDirectory SoundDir;
-	//	SoundDir.MoveParent(GV_GAMEFILENAME);
-	//	SoundDir.MoveChild("Resources");
-	//	SoundDir.MoveChild("Sound");
-
-	//	std::vector<GameEngineFile> AllFile = SoundDir.GetAllFile("mp3");
-
-	//	for (size_t i = 0; i < AllFile.size(); i++)
-	//	{
-	//		GameEngineSoundManager::GetInst().Load(AllFile[i].GetFullPath());
-	//	}
-	//}
 	UserGame::LoadingFolder++;
 	GameEngineCore::ThreadQueue.JobPost
 	(
@@ -124,5 +109,4 @@ void UserGame::ResourcesLoad()
 
 		GameEngineFolderTextureManager::GetInst().Load(TextureDir.PathToPlusFileName("ScreenIris"));
 	}
-	//AppShaderLoad(); 
 }

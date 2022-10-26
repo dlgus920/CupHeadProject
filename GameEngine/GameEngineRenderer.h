@@ -12,22 +12,14 @@ private:
 	friend GameEngineLevel;
 	friend CameraComponent;
 
-public:
-	// constrcuter destructer
-	GameEngineRenderer();
-	~GameEngineRenderer();
+	void Update(float _DeltaTime) override;
 
-	// delete Function
-	GameEngineRenderer(const GameEngineRenderer& _Other) = delete;
-	GameEngineRenderer(GameEngineRenderer&& _Other) noexcept = delete;
-	GameEngineRenderer& operator=(const GameEngineRenderer& _Other) = delete;
-	GameEngineRenderer& operator=(GameEngineRenderer&& _Other) noexcept = delete;
+public:
+	GameEngineShaderResHelper ShaderHelper;
 
 	void SetRenderingPipeLine(const std::string& _Value);
 
 	virtual void SetRenderingPipeLineSettingNext() {}
-
-	GameEngineShaderResHelper ShaderHelper;
 	virtual void SetRenderGroup(int _Order);
 
 protected:
@@ -37,9 +29,14 @@ protected:
 
 	virtual void Render();
 
-private:
-	void Update(float _DeltaTime) override;
+public:
+	GameEngineRenderer();
+	~GameEngineRenderer();
 
+	GameEngineRenderer(const GameEngineRenderer& _Other) = delete;
+	GameEngineRenderer(GameEngineRenderer&& _Other) = delete;
+	GameEngineRenderer& operator=(const GameEngineRenderer& _Other) = delete;
+	GameEngineRenderer& operator=(GameEngineRenderer&& _Other) = delete;
 
 };
 

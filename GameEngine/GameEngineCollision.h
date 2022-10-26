@@ -33,8 +33,6 @@ private:
 public:
 	GameEngineCollision* CollisionPtr(int _OtherGroup);
 	bool Collision(int _OtherGroup);
-	//void Collision(	CollisionType _ThisType, CollisionType _OtherType, int _OtherGroup, 
-	//	std::function<void(GameEngineCollision*)> _CallBack);
 
 public:
 	void SetCollisionGroup(int _Type);
@@ -58,14 +56,10 @@ private:
 	static void Init();
 
 public:
-	//충돌함수
 	static bool CirCleToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
 	static bool RectToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
 
 	static bool RectToCirCle(GameEngineTransform* _Left, GameEngineTransform* _Right);
 	static bool CirCleToRect(GameEngineTransform* _Left, GameEngineTransform* _Right);
-
-	//static bool OBBToOBB(GameEngineTransform* _Left, GameEngineTransform* _Right);
-	//static bool AABBToAABB(GameEngineTransform* _Left, GameEngineTransform* _Right);
 };
 

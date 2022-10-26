@@ -6,7 +6,6 @@ GameEngineRenderingPipeLineManager* GameEngineRenderingPipeLineManager::Inst = n
 
 GameEngineRenderingPipeLineManager::GameEngineRenderingPipeLineManager() // default constructer 디폴트 생성자
 {
-
 }
 
 GameEngineRenderingPipeLineManager::~GameEngineRenderingPipeLineManager() // default destructer 디폴트 소멸자
@@ -24,10 +23,7 @@ GameEngineRenderingPipeLineManager::~GameEngineRenderingPipeLineManager() // def
 
 GameEngineRenderingPipeLineManager::GameEngineRenderingPipeLineManager(GameEngineRenderingPipeLineManager&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
 {
-
 }
-
-
 
 GameEngineRenderingPipeLine* GameEngineRenderingPipeLineManager::Create(const std::string& _Name)
 {

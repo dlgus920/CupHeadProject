@@ -6,8 +6,6 @@
 
 void Player::Update_DEBUG()
 {
-	//GetLevel()->PushDebugRender(PlayerHitBox->GetTransform(), CollisionType::Rect);
-
 	if (PlayerMovingCollision_Middle->Collision(static_cast<int>(CollisionGruop::MonsterAttack)))
 	{
 		GetLevel()->PushDebugRender(PlayerMovingCollision_Middle->GetTransform(), CollisionType::Rect, float4::PINK);
@@ -80,7 +78,6 @@ void Player::KeyUpdate()
 	KeyState_RockOn_ = GameEngineInput::GetInst().Press("RockOn");
 	KeyState_Jump_ = GameEngineInput::GetInst().Down("Jump");
 	KeyState_Jump_Press = GameEngineInput::GetInst().Press("Jump");
-	//KeyState_Bomb = GameEngineInput::GetInst().Press("Bomb");
 	KeyState_Dash_ = GameEngineInput::GetInst().Press("Dash");
 
 	if (KeyState_Left_ && !KeyState_Right_)

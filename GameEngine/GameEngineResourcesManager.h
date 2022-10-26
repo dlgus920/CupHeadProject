@@ -14,11 +14,11 @@
 #include "GameEngineBlendManager.h"
 #include "GameEngineDepthStencilManager.h"
 #include "GameEngineDepthBufferManager.h"
-#include "GameEngineFontManager.h" 
+//#include "GameEngineFontManager.h" 
 
 #include "GameEngineRenderingPipeLineManager.h"
 
-#include "GameEngineFont.h"
+//#include "GameEngineFont.h"
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineVertexBuffer.h"
 #include "GameEngineVertexShader.h"
@@ -43,7 +43,7 @@ public:
 	{
 		GameEngineSoundManager::Destroy();
 
-		GameEngineFontManager::Destroy();
+		//GameEngineFontManager::Destroy();
 		GameEngineRenderingPipeLineManager::Destroy();
 		GameEngineConstantBufferManager::Destroy();
 		GameEngineFolderTextureManager::Destroy();

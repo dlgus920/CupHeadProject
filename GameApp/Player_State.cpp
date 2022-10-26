@@ -267,7 +267,7 @@ void Player::Jump_Update(float _DeltaTime)
 
 				ParryEffect = GetLevel()->CreateActor<GameEngineActor>();
 
-				ParryEffect->DeathTime_ = 1.f;
+				//ParryEffect->DeathTime_ = 1.f;
 
 				GameEngineImageRenderer* ParryRenderer;
 

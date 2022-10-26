@@ -18,11 +18,6 @@ Map::~Map()
 void Map::Start()
 {
 	CollisionMap_ = CreateTransformComponent<GameEngineImageRenderer>();
-
-	//ScreenFx = GetLevel()->CreateActor<Image>();
-	//ScreenFx->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f, true);
-	//ScreenFx->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
-	//ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
 }
 
 
@@ -96,16 +91,6 @@ bool4 Map::PixelCollisionTransform(GameEngineTransform* _Transform, int Precissi
 		}
 	}
 
-	////정확도를 위한 끝자리 검사
-	//if (GetColor(Rect.right, Rect.top) == float4::BLACK)
-	//{
-	//	Retern.b_Up = 1;
-	//}
-	//if (GetColor(Rect.right, Rect.bottom) == float4::BLACK)
-	//{
-	//	Retern.b_Down = 1;
-	//}
-
 	for (int i = Rect.top + VerticalConst; i < Rect.bottom; i += VerticalConst)
 	{
 		if (GetColor(Rect.left, i) == float4::BLACK)
@@ -117,16 +102,6 @@ bool4 Map::PixelCollisionTransform(GameEngineTransform* _Transform, int Precissi
 			Retern.b_Right = true;
 		}
 	}
-
-	////정확도를 위한 끝자리 검사
-	//if (GetColor(Rect.left, Rect.top) == float4::BLACK)
-	//{
-	//	Retern.b_Left = 1;
-	//}
-	//if (GetColor(Rect.right, Rect.bottom) == float4::BLACK)
-	//{
-	//	Retern.b_Right = 1;
-	//}
 
 	return Retern;
 }

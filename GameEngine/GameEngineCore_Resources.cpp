@@ -359,12 +359,14 @@ void GameEngineCore::EngineResourcesCreate()
 	}
 
 	{
-		GameEngineRenderingPipeLine* Pipe = GameEngineRenderingPipeLineManager::GetInst().Create("DebugRect");
+		GameEngineRenderingPipeLine* Pipe 
+			= GameEngineRenderingPipeLineManager::GetInst().Create("DebugRect");
 		Pipe->SetInputAssembler1VertexBufferSetting("DebugRect");
 		Pipe->SetInputAssembler1InputLayOutSetting("Color_VS");
 		Pipe->SetVertexShader("Color_VS");
 		Pipe->SetInputAssembler2IndexBufferSetting("DebugRect");
-		Pipe->SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		Pipe->SetInputAssembler2TopologySetting
+		(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		Pipe->SetPixelShader("Color_PS");
 		Pipe->SetOutputMergerDepthStencil("MergeDepth");
 	}

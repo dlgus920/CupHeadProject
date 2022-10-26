@@ -2,20 +2,18 @@
 #include "GameEngineUIRenderer.h"
 #include "GameEngineLevel.h"
 #include "CameraComponent.h"
-#include "GameEngineFont.h"
-#include "GameEngineFontManager.h"
 #include "GameEngineWindow.h"
 #include "GameEngineRenderTarget.h"
 
-GameEngineRenderTarget* GameEngineUIRenderer::FontTarget_ = nullptr;
+//GameEngineRenderTarget* GameEngineUIRenderer::FontTarget_ = nullptr;
 int GameEngineUIRenderer::UIRendererCount = 0;
 
 
 
 GameEngineUIRenderer::GameEngineUIRenderer()
-	: FontName_("±Ã¼­")
-	, PrintText_("")
-	, FontPivot_(float4::ZERO)
+	//: FontName_("±Ã¼­")
+	//, PrintText_("")
+	//, FontPivot_(float4::ZERO)
 {
 	++UIRendererCount;
 }
@@ -55,22 +53,22 @@ void GameEngineUIRenderer::SetRenderGroup(int _Order)
 	GetLevel()->GetUICamera()->ChangeRendererGroup(_Order, this);;
 }
 
-void GameEngineUIRenderer::TextSetting(std::string _FontName, std::string _PrintText, float _FontSize, float4 _Color)
-{
-	FontName_ = _FontName;
-	PrintText_ = _PrintText;
-	FontSize_ = _FontSize;
-	Color_ = _Color;
-}
+//void GameEngineUIRenderer::TextSetting(std::string _FontName, std::string _PrintText, float _FontSize, float4 _Color)
+//{
+//	FontName_ = _FontName;
+//	PrintText_ = _PrintText;
+//	FontSize_ = _FontSize;
+//	Color_ = _Color;
+//}
 
 void GameEngineUIRenderer::Render()
 {
 	GameEngineRenderer::Render();
 
-	if ("" == PrintText_)
-	{
-		return;
-	}
+	//if ("" == PrintText_)
+	//{
+	//	return;
+	//}
 	
 	// À§
 	float4 ScreenSize = GameEngineWindow::GetInst().GetSize();
@@ -82,11 +80,11 @@ void GameEngineUIRenderer::Render()
 
 	GameEngineRenderTarget* RenderTarget = GameEngineRenderTarget::GetLastRenderTarget();
 
-	FontTarget_->Clear();
-	FontTarget_->Setting();
+	//FontTarget_->Clear();
+	//FontTarget_->Setting();
 
-	GameEngineFont* Font = GameEngineFontManager::GetInst().Find(FontName_);
-	Font->DrawFont(PrintText_, FontSize_, ScreenSize - UIPos, Color_, FW1_CENTER);
+	//GameEngineFont* Font = GameEngineFontManager::GetInst().Find(FontName_);
+	//Font->DrawFont(PrintText_, FontSize_, ScreenSize - UIPos, Color_, FW1_CENTER);
 	GameEngineDevice::ShaderReset();
 
 	RenderTarget->Merge(FontTarget_);

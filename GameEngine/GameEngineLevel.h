@@ -17,22 +17,6 @@ class GameEngineLevel : public GameEngineObjectNameBase
 	friend class GameEngineCore;
 	friend class GameEngineRenderer;
 	friend class GameEngineCollision;
-	friend class GameEngineLevelControlWindow;
-
-public:
-	GameEngineLevel();
-	~GameEngineLevel();
-
-	GameEngineLevel(const GameEngineLevel& _Other) = delete;
-	GameEngineLevel(GameEngineLevel&& _Other) noexcept = delete;
-	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
-	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
-
-	CameraActor* GetMainCameraActor();
-	CameraComponent* GetMainCamera();
-
-	CameraActor* GetUICameraActor();
-	CameraComponent* GetUICamera();
 
 private:
 	CameraActor* MainCameraActor_;
@@ -71,13 +55,18 @@ private:
 	}
 
 public:
+	CameraActor* GetMainCameraActor();
+	CameraComponent* GetMainCamera();
+
+	CameraActor* GetUICameraActor();
+	CameraComponent* GetUICamera();
+
+public:
 
 	void SetDebug(bool _Debug)
 	{
 		IsDebug_ = _Debug;
 	}
-
-public:
 
 	template<typename ActorType>
 	ActorType* CreateActor(int _UpdateOrder = 0)
@@ -120,4 +109,13 @@ public:
 		PostRender[_Key].push_back(NewPost);
 		return NewPost;
 	}
+
+public:
+	GameEngineLevel();
+	~GameEngineLevel();
+
+	GameEngineLevel(const GameEngineLevel& _Other) = delete;
+	GameEngineLevel(GameEngineLevel&& _Other) noexcept = delete;
+	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
+	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 };

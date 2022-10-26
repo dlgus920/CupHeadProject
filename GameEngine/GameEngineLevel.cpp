@@ -9,31 +9,9 @@
 #include "GameEngineCollision.h"
 #include "GameEngineDebugRenderData.h"
 #include "GameEngineRenderTarget.h"
-#include "GameEngineFontManager.h"
-#include "GameEngineFont.h"
 #include "GameEngineUIRenderer.h"
 #include <GameEngine\GameEnginePostProcessRender.h>
 
-
-CameraActor* GameEngineLevel::GetMainCameraActor()
-{
-	return MainCameraActor_;
-}
-
-CameraComponent* GameEngineLevel::GetMainCamera()
-{
-	return MainCameraActor_->GetCamera();
-}
-
-CameraActor* GameEngineLevel::GetUICameraActor()
-{
-	return UICameraActor_;
-}
-
-CameraComponent* GameEngineLevel::GetUICamera()
-{
-	return UICameraActor_->GetCamera();
-}
 GameEngineLevel::GameEngineLevel()
 {
 }
@@ -133,16 +111,6 @@ void GameEngineLevel::Render(float _DeltaTime)
 
 void GameEngineLevel::Release(float _DeltaTime)
 {
-	for (std::pair<int, std::list<GameEngineActor*>> Pair : ActorList_)
-	{
-		std::list<GameEngineActor*>& Actors = Pair.second;
-
-		for (GameEngineActor* Actor : Actors)
-		{
-			Actor->ReleaseUpdate(_DeltaTime);
-		}
-	}
-
 	MainCameraActor_->GetCamera()->ReleaseRenderer();
 	UICameraActor_->GetCamera()->ReleaseRenderer();
 
@@ -274,4 +242,24 @@ void GameEngineLevel::AllClear()
 
 		}
 	}
+}
+
+CameraActor* GameEngineLevel::GetMainCameraActor()
+{
+	return MainCameraActor_;
+}
+
+CameraComponent* GameEngineLevel::GetMainCamera()
+{
+	return MainCameraActor_->GetCamera();
+}
+
+CameraActor* GameEngineLevel::GetUICameraActor()
+{
+	return UICameraActor_;
+}
+
+CameraComponent* GameEngineLevel::GetUICamera()
+{
+	return UICameraActor_->GetCamera();
 }

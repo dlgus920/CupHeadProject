@@ -7,20 +7,6 @@ class CameraComponent;
 class CameraActor : public GameEngineActor
 {
 public:
-	// constrcuter destructer
-	CameraActor();
-	~CameraActor();
-
-	// delete Function
-	CameraActor(const CameraActor& _Other) = delete;
-	CameraActor(CameraActor&& _Other) noexcept = delete;
-	CameraActor& operator=(const CameraActor& _Other) = delete;
-	CameraActor& operator=(CameraActor&& _Other) noexcept = delete;
-
-	CameraComponent* GetCamera() 
-	{
-		return Camera_;
-	}
 
 	float4x4 GetViewMatrix();
 	float4x4 GetProjectionMatrix();
@@ -51,6 +37,12 @@ private:
 	GameEngineLevel* curlevel;
 
 public:
+
+	CameraComponent* GetCamera()
+	{
+		return Camera_;
+	}
+
 	void SetFixed(bool _IsFixed_)
 	{
 		IsFixed_ = _IsFixed_;
@@ -77,5 +69,13 @@ public:
 		CamSpeed_ = _CamSpeed;
 	}
 
+public:
+	CameraActor();
+	~CameraActor();
+
+	CameraActor(const CameraActor& _Other) = delete;
+	CameraActor(CameraActor&& _Other) noexcept = delete;
+	CameraActor& operator=(const CameraActor& _Other) = delete;
+	CameraActor& operator=(CameraActor&& _Other) noexcept = delete;
 };
 

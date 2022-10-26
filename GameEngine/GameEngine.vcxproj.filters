@@ -94,6 +94,9 @@
     <Filter Include="Resources\Manager">
       <UniqueIdentifier>{b11e4bb5-b419-4203-8b25-36b88e679943}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RenderingPipeLine\Manager\Main">
+      <UniqueIdentifier>{423af8f8-568d-48b8-8e9b-ee9b8441222c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -197,9 +200,6 @@
     <ClInclude Include="GameEngineDepthBuffer.h">
       <Filter>Resources\02Image</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineFont.h">
-      <Filter>Resources\02Image</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineUIRenderer.h">
       <Filter>Object\Component\Renderer</Filter>
     </ClInclude>
@@ -254,16 +254,10 @@
     <ClInclude Include="GameEngineVertexShaderManager.h">
       <Filter>RenderingPipeLine\Manager\Sub</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderingPipeLineManager.h">
-      <Filter>RenderingPipeLine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineResourcesManager.h">
       <Filter>Resources\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineFolderTextureManager.h">
-      <Filter>Resources\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineFontManager.h">
       <Filter>Resources\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineSoundManager.h">
@@ -271,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="GameEngineTextureManager.h">
       <Filter>Resources\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderingPipeLineManager.h">
+      <Filter>RenderingPipeLine\Manager\Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -370,9 +367,6 @@
     <ClCompile Include="GameEngineDepthBuffer.cpp">
       <Filter>Resources\02Image</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineFont.cpp">
-      <Filter>Resources\02Image</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineUIRenderer.cpp">
       <Filter>Object\Component\Renderer</Filter>
     </ClCompile>
@@ -427,13 +421,7 @@
     <ClCompile Include="GameEngineVertexShaderManager.cpp">
       <Filter>RenderingPipeLine\Manager\Sub</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineRenderingPipeLineManager.cpp">
-      <Filter>RenderingPipeLine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngineFolderTextureManager.cpp">
-      <Filter>Resources\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineFontManager.cpp">
       <Filter>Resources\Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineSoundManager.cpp">
@@ -441,6 +429,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineTextureManager.cpp">
       <Filter>Resources\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderingPipeLineManager.cpp">
+      <Filter>RenderingPipeLine\Manager\Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

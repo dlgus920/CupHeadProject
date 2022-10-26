@@ -4,20 +4,22 @@
 
 #include "GameEngineWindow.h"
 
-GameEngineRenderingPipeLine::GameEngineRenderingPipeLine() // default constructer 디폴트 생성자
+GameEngineRenderingPipeLine::GameEngineRenderingPipeLine()
 	: VertexBuffer_(nullptr)
 	, InputLayOutVertexShader_(nullptr)
 	, VertexShader_(nullptr)
 	, IndexBuffer_(nullptr)
-	, Topology_(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+	, Topology_
+	(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 {
 	SetOutputMergerBlend("AlphaBlend");
 	SetRasterizer("EngineBaseRasterizer");
 	SetOutputMergerDepthStencil("BaseDepthOn");
-	SetInputAssembler2TopologySetting(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	SetInputAssembler2TopologySetting
+	(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-GameEngineRenderingPipeLine::~GameEngineRenderingPipeLine() // default destructer 디폴트 소멸자
+GameEngineRenderingPipeLine::~GameEngineRenderingPipeLine() 
 {
 
 }

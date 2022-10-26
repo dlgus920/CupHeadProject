@@ -48,15 +48,6 @@ class Player : public GameEngineActor
 public:
 	static Player* MainPlayer;
 
-private:
-	Player();
-	~Player();
-	 //delete Function
-	Player(const Player& _Other) = delete;
-	Player(Player&& _Other) noexcept = delete;
-	Player& operator=(const Player& _Other) = delete;
-	Player& operator=(Player&& _Other) noexcept = delete;
-
 private: //Legacy
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -320,5 +311,14 @@ public: //Inline
 	{
 		AniState_IntroEnd_ = true;
 	}
-};
 
+	private:
+		Player();
+		~Player();
+		//delete Function
+		Player(const Player& _Other) = delete;
+		Player(Player&& _Other) noexcept = delete;
+		Player& operator=(const Player& _Other) = delete;
+		Player& operator=(Player&& _Other) noexcept = delete;
+
+};

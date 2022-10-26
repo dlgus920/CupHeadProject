@@ -94,7 +94,6 @@ void GameEngineRenderTarget::Create(GameEngineTexture* _Texture, float4 _ClearCo
 	ClearColor_.push_back(_ClearColor);
 }
 
-
 void GameEngineRenderTarget::Setting(int _Index) 
 {
 #ifdef _DEBUG

@@ -11,29 +11,13 @@ class GameEngineActor : public GameEngineObjectNameBase
 {
 	friend GameEngineLevel;
 
-public:
-	GameEngineActor();
-	~GameEngineActor();
-
-	GameEngineActor(const GameEngineActor& _Other) = delete;
-	GameEngineActor(GameEngineActor&& _Other) = delete;
-	GameEngineActor& operator=(const GameEngineActor& _Other) = delete;
-	GameEngineActor& operator=(GameEngineActor&& _Other) = delete;
-
-public:
-	bool IsFindObject_;
-	bool NextLevelMove_;
-	bool IsDestroyed_;
-	float DeathTime_;
-
 private:
-	float PlayRate_;
-
-	GameEngineTransform Transform_;
 	GameEngineLevel* Level_;
-	// Status
+	GameEngineTransform Transform_;
 	std::list<GameEngineComponent*> ComponentList_;
 	std::list<GameEngineTransformComponent*> TransformComponentList_;
+
+	float PlayRate_;
 
 protected:
 	virtual void Start() {}
@@ -46,18 +30,13 @@ private:
 	void SetLevel(GameEngineLevel* Level);
 	void UpdateComponent(float _DeltaTime);
 	void ComponentRelease();
-	void ReleaseUpdate(float _DeltaTime);
+	//void ReleaseUpdate(float _DeltaTime);
 
 public:
 	template<typename LevelType>
 	LevelType* GetLevelConvert()
 	{
 		return dynamic_cast<LevelType*>(Level_);
-	}
-
-	void MoveNextOn()
-	{
-		NextLevelMove_ = true;
 	}
 
 	GameEngineTransform* GetTransform()
@@ -92,8 +71,8 @@ public:
 		}
 		else
 		{
-			IsDestroyed_ = true;
-			DeathTime_ = _Time;
+			//IsDestroyed_ = true;
+			//DeathTime_ = _Time;
 		}
 	}
 
@@ -142,5 +121,14 @@ template<typename ComponentType>
 		NewComponent->Start();
 		return dynamic_cast<ComponentType*>(NewComponent);;
 	}
+
+public:
+	GameEngineActor();
+	~GameEngineActor();
+
+	GameEngineActor(const GameEngineActor& _Other) = delete;
+	GameEngineActor(GameEngineActor&& _Other) = delete;
+	GameEngineActor& operator=(const GameEngineActor& _Other) = delete;
+	GameEngineActor& operator=(GameEngineActor&& _Other) = delete;
 };
 

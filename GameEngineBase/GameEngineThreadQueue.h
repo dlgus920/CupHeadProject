@@ -12,11 +12,6 @@ private:
 		std::function<void()> JobFunction;
 	};
 
-public:
-	// constrcuter destructer
-	GameEngineThreadQueue(const std::string& _ThreadName, int _ThreadCount = 0);
-	~GameEngineThreadQueue();
-
 private:
 	GameEngineIocp Iocp;
 
@@ -26,9 +21,12 @@ private:
 public:
 	static void JobWorkThread(GameEngineThread* Thread, GameEngineIocp* _Iocp);
 
-public:
 	void JobPost(std::function<void()> _Job);
 
 	void Destroy();
+
+public:
+	GameEngineThreadQueue(const std::string& _ThreadName, int _ThreadCount = 0);
+	~GameEngineThreadQueue();
 };
 
