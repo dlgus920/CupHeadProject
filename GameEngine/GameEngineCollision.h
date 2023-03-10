@@ -3,10 +3,6 @@
 #include "GameEngineShaderResHelper.h"
 #include "Enums.h"
 
-// 이녀석들만의 그룹을 만들겠습니다.
-
-
-// 설명 :
 class GameEngineCore;
 class GameEngineLevel;
 class GameEngineCollision : public GameEngineTransformComponent

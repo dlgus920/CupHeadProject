@@ -137,9 +137,7 @@ void WorldMapPlayer::Walk_Update( float _DeltaTime)
 		MoveDir_.x = 0.f;
 	}
 
-	Move(MoveDir_ * 300.f, _DeltaTime);
-
-	 
+	Move(MoveDir_ * 300.f, _DeltaTime);	 
 }
 void WorldMapPlayer::Walk_End()
 {

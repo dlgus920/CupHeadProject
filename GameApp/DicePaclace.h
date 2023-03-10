@@ -69,6 +69,8 @@ private:
 	void LevelLoop_Start();
 	void LevelLoop_Update(float _DeltaTime);
 
+private:
+	void KeySetting();
 
 public:
 	void SetNextScene(std::string _NextScene)

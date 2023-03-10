@@ -1,12 +1,11 @@
 #pragma once
 #include <GameEngineBase/GameEngineObjectNameBase.h>
 #include "GameEngineTransform.h"
+#include "GameEngineTransformComponent.h"
 
 // Ό³Έν :
 class GameEngineComponent;
 class GameEngineLevel;
-class GameEngineTransform;
-class GameEngineTransformComponent;
 class GameEngineActor : public GameEngineObjectNameBase
 {
 	friend GameEngineLevel;

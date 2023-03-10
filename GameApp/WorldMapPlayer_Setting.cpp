@@ -2,15 +2,6 @@
 #include "WorldMapPlayer.h"
 
 
-void WorldMapPlayer::KeySetting()
-{
-	GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
-	GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
-	GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
-	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
-	GameEngineInput::GetInst().CreateKey("Chose", VK_SPACE);
-}
-
 void WorldMapPlayer::StateSetting()
 {
 	State_.CreateState<WorldMapPlayer>("Entry", this, &WorldMapPlayer::Entry_Start,

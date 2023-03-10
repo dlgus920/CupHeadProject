@@ -3,13 +3,23 @@
 
 void WorldMapPlayer::Update(float _DeltaTime)
 {
-	//GetLevel()->GetMainCameraActor()->GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition());
-
 	float4 pos = GetTransform()->GetWorldPosition();
 
 	if (pos.x < 640.f)
 	{
 		pos.x = 640.f;
+	}
+	if (pos.x >= 1784.f)
+	{
+		pos.x = 1784.f;
+	}
+	if (pos.y >= -360.f)
+	{
+		pos.y = -360.f;
+	}
+	if (pos.y < -1519.f)
+	{
+		pos.y = -1519.f;
 	}
 
 	GetLevel()->GetMainCameraActor()->GetTransform()->SetWorldPosition(pos);
@@ -21,7 +31,7 @@ void WorldMapPlayer::Update(float _DeltaTime)
 
 	if (true == ColState_Update_)
 	{
-		CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서ㅏ 참고하도록 한다.
+		CollisonUpdate(); // 컬리젼 업데이트에서 상대방과 충돌 여부를 검사하고, stateupdate에서 참고하도록 한다.
 	}
 
 	if (true == State_Update_)
@@ -122,10 +132,4 @@ void WorldMapPlayer::CollisonUpdate()
 		ColState_Chose_ = dynamic_cast<StagePoint*>(Collision->GetActor());
 	}
 
-	//float4 Color = Map::GetColor(GetTransform());
-
-	//if (Color == float4::BLACK)
-	//{
-	//	ColState_ = true;
-	//}
 }

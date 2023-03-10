@@ -2,9 +2,6 @@
 #include "GameEngineInput.h"
 #include "GameEngineWindow.h"
 
-
-// class GameEngineInput::GameEngineKey : public PtrParent<GameEngineKey> --------------------------
-
 bool GameEngineInput::GameEngineKey::KeyCheck() 
 {
 
@@ -176,19 +173,14 @@ void GameEngineInput::Update()
 
     POINT P;
 
-    //// 모니터 상에서의 위치 현재 커서의 위치를 가져오고
     GetCursorPos(&P);
 
     // 윈도우 상에서의 위치로 바꾸고
     // 이 핸들을 가진 윈도우를 기준으로한 좌표로 변경
     ScreenToClient(GameEngineWindow::GetInst().GetWindowHWND(), &P);
-    // 4가지 캐스트를 적절하게 이용해야 한다.
     MousePos_.x = static_cast<float>(P.x);
     MousePos_.y = static_cast<float>(P.y);
 
-    // 요거 이해됐나요?
-    // 이전거 저장해 놓은 다음에
-    // 너무 급격하게 변할수 있으니까.
     PrevMousePos3D_ = MousePos3D_;
     MousePos3D_.x = MousePos_.x - GameEngineWindow::GetInst().GetSize().hx();
     MousePos3D_.y = MousePos_.y - GameEngineWindow::GetInst().GetSize().hy();

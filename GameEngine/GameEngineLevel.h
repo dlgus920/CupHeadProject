@@ -2,16 +2,15 @@
 #include <list>
 #include <map>
 #include <GameEngine\Enums.h>
+#include <GameEngine\GameEngineActor.h>
+#include <GameEngine\GameEnginePostProcessRender.h>
 #include <GameEngineBase\GameEngineObjectNameBase.h>
 
 class CameraActor;
 class CameraComponent;
-class GameEngineActor;
 class GameEngineRenderer;
-class GameEngineTransform;
 class GameEngineCollision;
 class GameEngineDebugRenderData;
-class GameEnginePostProcessRender;
 class GameEngineLevel : public GameEngineObjectNameBase
 {
 	friend class GameEngineCore;

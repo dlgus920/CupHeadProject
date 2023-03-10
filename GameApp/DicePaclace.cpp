@@ -27,6 +27,7 @@ DicePaclace::DicePaclace()
 	, CurStageNum_(0)
 	, StageMoveCount_(0)
 	, NextStageNum_(0)
+	, NumRenderer_{}
 {
 }
 
@@ -39,11 +40,8 @@ void DicePaclace::LevelStart()
 	PhaseState_.CreateState<DicePaclace>("Playing", this, &DicePaclace::Playing_Start, &DicePaclace::Playing_Update, &DicePaclace::Playing_End);
 	PhaseState_.CreateState<DicePaclace>("PlayingEnd", this, &DicePaclace::PlayingEnd_Start, &DicePaclace::PlayingEnd_Update, nullptr);
 
-	//PhaseState_.ChangeState("Intro");
-
 	LoadState_.CreateState<DicePaclace>("ResourcesLoad", this, &DicePaclace::ResourcesLoad_Start, &DicePaclace::ResourcesLoad_Update, nullptr);
 	LoadState_.CreateState<DicePaclace>("LevelLoop", this, &DicePaclace::LevelLoop_Start, &DicePaclace::LevelLoop_Update, nullptr);
-	//LoadState_.CreateState<DicePaclace>("Init", this, nullptr, &DicePaclace::Init_Update, nullptr);
 }
 void DicePaclace::LevelUpdate(float _DeltaTime)
 {
@@ -92,9 +90,7 @@ void DicePaclace::Playing_Update(float _DeltaTime)
 	if (true == IsStageMove_)
 	{
 		PhaseState_.ChangeState("PlayingEnd");
-		/*KingDice_Marker_->Clear(StageMoveCount_);*/
 	}
-
 
 	if (true == Victory_)
 	{
@@ -155,11 +151,21 @@ void DicePaclace::PlayingEnd_Update(float _DeltaTime)
 
 				GameEngineCore::LevelChange("Stage_Hopus_pocus");
 			}
-			else
-			{
-
-			}
 		}
 		FadeImage_->ImageRenderer_->SetResultColor(float4{ 0.f,0.f,0.f,BlendRate_ });
 	}
+}
+
+void DicePaclace::KeySetting()
+{
+	GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
+	GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
+	GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
+	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
+	GameEngineInput::GetInst().CreateKey("Jump", 'Z');
+	GameEngineInput::GetInst().CreateKey("Fire", 'X');
+	GameEngineInput::GetInst().CreateKey("RockOn", 'C');
+	GameEngineInput::GetInst().CreateKey("Dash", VK_LSHIFT);
+
+	GameEngineInput::GetInst().CreateKey("Debug", 'P');
 }

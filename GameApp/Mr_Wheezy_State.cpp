@@ -155,7 +155,7 @@ void Mr_Wheezy::Defeat_Update(float _DeltaTime)
 		TimeCheck_ = 0.f;
 
 		float4 pos = Cur_WheezyImageRenderer_->GetTransform()->GetWorldPosition();
-		pos.y - 450.f;
+		pos.y -= 350.f;
 
 		EffectDefeatRandom(250.f, pos);
 	} 

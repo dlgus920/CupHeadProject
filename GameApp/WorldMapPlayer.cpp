@@ -33,7 +33,6 @@ void WorldMapPlayer::Start()
 {
 	ComponentSetting();
 	AnimationSetting();
-	KeySetting();
 	StateSetting();
 }
 

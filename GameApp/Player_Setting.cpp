@@ -46,20 +46,6 @@ void Player::DefalutSetting()
 	}
 }
 
-void Player::KeySetting()
-{
-	GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
-	GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
-	GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
-	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
-	GameEngineInput::GetInst().CreateKey("Jump", 'Z');
-	GameEngineInput::GetInst().CreateKey("Fire", 'X');
-	GameEngineInput::GetInst().CreateKey("RockOn", 'C');
-	GameEngineInput::GetInst().CreateKey("Dash", VK_LSHIFT);
-
-	GameEngineInput::GetInst().CreateKey("Debug", 'P');
-}
-
 void Player::StateSetting()
 {
 	State_.CreateState<Player>("Idle",this, &Player::Idle_Start, &Player::Idle_Update, &Player::Idle_End);

@@ -11,17 +11,20 @@ class WorldMapScene : public SceneBase
 	friend class LoaddingScene;
 
 public:
-	WorldMapScene(); // default constructer 디폴트 생성자
-	~WorldMapScene(); // default destructer 디폴트 소멸자
+	WorldMapScene(); 
+	~WorldMapScene();
 
-	WorldMapScene(const WorldMapScene& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	WorldMapScene(WorldMapScene&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
-	WorldMapScene& operator=(const WorldMapScene& _other) = delete; // default Copy operator 디폴트 대입 연산자
-	WorldMapScene& operator=(const WorldMapScene&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
+	WorldMapScene(const WorldMapScene& _other) = delete; 
+	WorldMapScene(WorldMapScene&& _other) = delete; 
+	WorldMapScene& operator=(const WorldMapScene& _other) = delete; 
+	WorldMapScene& operator=(const WorldMapScene&& _other) = delete; 
 
 public:
 	class WorldMapPlayer* WorldMapPlayer_;
 	class Image* IrisImage_;
+
+	GameEngineImageRenderer* DEBUGBack_Image_;
+	GameEngineCollision* DeBugStage_Point_;
 
 	std::string NextScene_;
 
@@ -47,6 +50,8 @@ private:
 	void LevelChangeStartEvent(GameEngineLevel* _PrevLevel) override;
 
 private:
+	void KeySetting();
+
 	void ChangeScene(std::string _Scene);
 
 	friend void WorldMapPlayer::ChangeScene(std::string _Scene);
@@ -55,6 +60,7 @@ private:
 
 	void ScreenFadeEnd();
 	bool ScreenFadeEnd_;
+
 public:
 
 };

@@ -172,8 +172,6 @@ private: //Func
 	
 	void ChangeShootFunc(void(Player::* _FrameFunc)());
 
-	//void ShootGuidedBullet();
-	//void ShootSpreadBullet();
 	void ShootDefalutBullet();
 
 	void GravityUpdate(float _DeltaTime);
@@ -190,7 +188,6 @@ private: //Effect
 
 private: //Setting
 	void DefalutSetting();
-	void KeySetting();
 	void StateSetting();
 	void ComponentSetting();
 	void AnimationSetting();

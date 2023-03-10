@@ -99,7 +99,8 @@ public: // member func
     {
         if (nullptr != FindKey(_KeyName))
         {
-            assert("if (nullptr != FindKey(_KeyName))");
+            //GameEngineDebug::MsgBoxError("이미 존재하는 키");
+            //assert("if (nullptr != FindKey(_KeyName))");
             return;
         }
 

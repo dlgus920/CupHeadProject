@@ -25,8 +25,8 @@ GameEngineTextureManager::~GameEngineTextureManager() // default destructer 디폴
 
 	ResourcesMap.clear();
 
-	auto iter0 = GlobalResourcesMap.begin();
-	auto iter1 = GlobalResourcesMap.end();
+	auto iter0 = LocalResourcesMap.begin();
+	auto iter1 = LocalResourcesMap.end();
 
 	for (; iter0 != iter1; ++iter0)
 	{
@@ -38,7 +38,7 @@ GameEngineTextureManager::~GameEngineTextureManager() // default destructer 디폴
 			}
 		}
 	}
-	GlobalResourcesMap.clear();
+	LocalResourcesMap.clear();
 }
 
 GameEngineTextureManager::GameEngineTextureManager(GameEngineTextureManager&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
@@ -140,15 +140,15 @@ GameEngineTexture* GameEngineTextureManager::LoadLevelRes(const std::string& _Na
 	{
 		std::lock_guard Lock(ManagerLock);
 
-		std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(Level);
+		std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = LocalResourcesMap.find(Level);
 
-		if (FindIterglobal == GlobalResourcesMap.end())
+		if (FindIterglobal == LocalResourcesMap.end())
 		{
 			std::map<std::string, GameEngineTexture*> FindIter;
 
 			FindIter.insert(std::make_pair(UpName, NewRes));
 
-			GlobalResourcesMap.insert(std::make_pair(Level, FindIter));
+			LocalResourcesMap.insert(std::make_pair(Level, FindIter));
 
 			return NewRes;
 		}
@@ -167,10 +167,10 @@ GameEngineTexture* GameEngineTextureManager::FindLevelRes(const std::string& _Na
 
 	{
 		std::lock_guard Lock(ManagerLock);
-		FindIterglobal = GlobalResourcesMap.find(GameEngineCore::CurrentLevel());
+		FindIterglobal = LocalResourcesMap.find(GameEngineCore::CurrentLevel());
 	}
 
-	if (FindIterglobal == GlobalResourcesMap.end())
+	if (FindIterglobal == LocalResourcesMap.end())
 	{
 		return nullptr;
 	}
@@ -190,10 +190,10 @@ GameEngineTexture* GameEngineTextureManager::FindLevelRes(const std::string& _Na
 
 void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 {
-	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = GlobalResourcesMap.find(_Level);
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>>::iterator FindIterglobal = LocalResourcesMap.find(_Level);
 
 #ifdef _DEBUG
-	//if (GlobalResourcesMap.end() == FindIterglobal)
+	//if (LocalResourcesMap.end() == FindIterglobal)
 	//{
 	//	GameEngineDebug::MsgBox("존재하지 않는 레벨의 리소스를 제거함");
 	//	return;
@@ -201,7 +201,7 @@ void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 
 #endif // _DEBUG
 
-	if (FindIterglobal == GlobalResourcesMap.end())
+	if (FindIterglobal == LocalResourcesMap.end())
 	{
 		return;
 	}
@@ -216,5 +216,5 @@ void GameEngineTextureManager::DestroyLevelRes(GameEngineLevel* _Level)
 
 	FindIterglobal->second.clear();
 
-	GlobalResourcesMap.erase(FindIterglobal);
+	LocalResourcesMap.erase(FindIterglobal);
 }

@@ -66,7 +66,6 @@ private: //Legacy
 	void Update(float _DeltaTime) override;
 
 private: //Setting
-	void KeySetting();
 	void StateSetting();
 	void ComponentSetting();
 	void AnimationSetting();

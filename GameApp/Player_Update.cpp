@@ -70,6 +70,16 @@ void Player::StateUpdate(float _DeltaTime)
 
 void Player::KeyUpdate()
 {
+	/*
+		GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
+		GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
+		GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
+		GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
+		GameEngineInput::GetInst().CreateKey("Chose", VK_SPACE);
+
+		GameEngineInput::GetInst().CreateKey("DEBUG_Back_Image", VK_LSHIFT);
+	*/
+
 	KeyState_Left_ = GameEngineInput::GetInst().Press("MoveLeft");
 	KeyState_Right_ = GameEngineInput::GetInst().Press("MoveRight");
 	KeyState_Up_ = GameEngineInput::GetInst().Press("MoveUp");

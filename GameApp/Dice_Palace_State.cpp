@@ -6,7 +6,6 @@
 #include <GameEngine/CameraActor.h>
 #include <GameEngine/GameEngineCore.h>
 #include <GameEngine/GameEngineImageRenderer.h>
-//#include <GameEngineBase/GameEngineRandom.h>
 
 
 #include "Map.h"
@@ -222,6 +221,8 @@ void DicePaclace::ResourcesLoad_Update(float _DeltaTime)
 
 void DicePaclace::LevelLoop_Start() 
 {
+	KeySetting();
+
 	SceneBGM_ = GameEngineSoundManager::GetInst().FindSoundChannel("Diceintro");
 
 	SceneBGM_->SetVolume(0.25f);
@@ -238,7 +239,6 @@ void DicePaclace::LevelLoop_Start()
 		SceneBGM_->PlayLevelOverLap("MUS_TheKingsCourt_start.wav");
 	}
 
-
 	PhaseState_.ChangeState("Intro");
 
 	GameEngineInput::GetInst().CreateKey("FreeCameraOn", 'o');
@@ -247,13 +247,6 @@ void DicePaclace::LevelLoop_Start()
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z00Camera00)));
-
-	//{
-	//	ScreenFx = CreateActor<Image>();
-	//	ScreenFx->ImageCreateAnimationFolder("ScreenFx", "ScreenFx", 0.04f, true);
-	//	ScreenFx->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<int>(ZOrder::Z00Fx01)));
-	//	ScreenFx->ImageRenderer_->GetTransform()->SetLocalScaling(float4{ 1280.f,720.f,1.f });
-	//}
 
 	{
 		Image* BackImage = CreateActor<Image>();
@@ -320,16 +313,7 @@ void DicePaclace::LevelLoop_Start()
 		Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1440.f, 750.f });
 		Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 720.f, -375.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 
-		//Map::CurrentMap = CreateActor<Map>();
-		//Map::CurrentMap->GetCollisionMap()->SetImage("DicePalaceCol.png");
-		//Map::CurrentMap->GetCollisionMap()->GetTransform()->SetLocalScaling(float4{ 1280.f, 720.f });
-		//Map::CurrentMap->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z04CollisonMap01) });
 	}
-
-	//{
-	//	KingDice_Marker_ = CreateActor<KingDice_Marker>();
-	//	KingDice_Marker_->GetTransform()->SetWorldPosition(float4{ 640.f, -360.f, static_cast<float>(ZOrder::Z02Back08) });
-	//}
 
 	{
 		Player_ = CreateActor<Player>();
@@ -339,7 +323,6 @@ void DicePaclace::LevelLoop_Start()
 
 	{
 		King_Dice_ = CreateActor<King_Dice>();
-		//King_Dice_->GetTransform()->SetWorldPosition(float4(640.f, -360.f, static_cast<float>(ZOrder::Z01Actor03)));
 	}
 
 }

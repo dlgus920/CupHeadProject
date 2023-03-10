@@ -85,7 +85,6 @@ void Player::Start()
 
 	ComponentSetting();
 	AnimationSetting();
-	KeySetting();
 	StateSetting();
 
 	DefalutSetting();

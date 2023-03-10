@@ -28,7 +28,7 @@ public:
 private:	// member Var
 	std::map<std::string, GameEngineTexture*> ResourcesMap;
 	
-	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>> GlobalResourcesMap; //(Level, (Name, Texture))
+	std::map<GameEngineLevel*, std::map<std::string, GameEngineTexture*>> LocalResourcesMap; //(Level, (Name, Texture))
 
 public:
 	GameEngineTexture* Create(const std::string& _Name, ID3D11Texture2D* _Texture2D);

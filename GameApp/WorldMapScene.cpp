@@ -31,6 +31,8 @@ void WorldMapScene::LevelStart()
 {
 	LoadState_.CreateState<WorldMapScene>("ResourcesLoad", this, &WorldMapScene::ResourcesLoad_Start, &WorldMapScene::ResourcesLoad_Update, &WorldMapScene::ResourcesLoad_End);
 	LoadState_.CreateState<WorldMapScene>("LevelLoop", this, &WorldMapScene::LevelLoop_Start, &WorldMapScene::LevelLoop_Update, &WorldMapScene::LevelLoop_End);
+
+	KeySetting();
 }
 
 void WorldMapScene::LevelUpdate(float _DeltaTime)
@@ -165,7 +167,6 @@ void WorldMapScene::LevelLoop_Start()
 	SceneBGM_->PlayLevelOverLap("MUS_InkwellIsleOne.wav");
 
 	{
-		// 1280 720
 		Map* _Map = CreateActor<Map>();
 		_Map->GetCollisionMap()->SetLevelImage("WorldMap_PixelCheckBackground.png");
 		_Map->GetCollisionMap()->SetAdjustImzgeSize();
@@ -174,9 +175,12 @@ void WorldMapScene::LevelLoop_Start()
 		Map::CurrentMap = _Map;
 
 		Image* MapImage = CreateActor<Image>();
+		MapImage = CreateActor<Image>();
 		MapImage->ImageRenderer_->SetLevelImage("WorldMap_Background.png");
 		MapImage->ImageRenderer_->SetAdjustImzgeSize();
 		MapImage->GetTransform()->SetWorldPosition(float4{ 1212.f, -939.5f, static_cast<int>(ZOrder::Z02Back09) });
+
+		DEBUGBack_Image_ = MapImage->ImageRenderer_;
 
 		MapImage = CreateActor<Image>();
 		MapImage->ImageRenderer_->SetLevelImage("WorldMap_BackgroundTrees_01.png");
@@ -197,13 +201,12 @@ void WorldMapScene::LevelLoop_Start()
 	{
 		StagePoint* WorldMapPoint = CreateActor<StagePoint>();
 		WorldMapPoint->GetTransform()->SetWorldPosition(float4{ 1005.f, -950.f, static_cast<int>(ZOrder::Z01Actor02) });
-		//WorldMapPoint->SetNextScene("Stage_Mr_Wheezy");
 		WorldMapPoint->SetNextScene("DicePaclace");
+		DeBugStage_Point_ = WorldMapPoint->GetObjectCollision();
 	}
 
 	{
 		WorldMapPlayer_ = CreateActor<WorldMapPlayer>();
-		//WorldMapPlayer_->GetTransform()->SetWorldPosition(float4(500, -800.0f, static_cast<int>(ZOrder::Z01Actor00Player01)));
 		WorldMapPlayer_->GetTransform()->SetWorldPosition(UserGame::StageInfo_.WorldMapPlayer_Pos_);
 		GetMainCameraActor()->GetTransform()->SetWorldPosition(WorldMapPlayer_->GetTransform()->GetLocalPosition());
 	}
@@ -240,6 +243,17 @@ void WorldMapScene::LevelLoop_Update(float _DeltaTime)
 	float4 pos = GetMainCameraActor()->GetTransform()->GetWorldPosition();
 	pos.z -= 100.f;
 	IrisImage_->GetTransform()->SetWorldPosition(pos);
+
+	if (GameEngineInput::GetInst().Press("DEBUG_Back_Image"))
+	{
+		DEBUGBack_Image_->Off();
+		PushDebugRender(WorldMapPlayer_->PlayerCollision->GetTransform(), CollisionType::Rect);
+		PushDebugRender(DeBugStage_Point_->GetTransform(), CollisionType::Rect);
+	}
+	else
+	{
+		DEBUGBack_Image_->On();
+	}
 }
 
 void WorldMapScene::LevelLoop_End()
@@ -280,6 +294,17 @@ void WorldMapScene::LevelChangeStartEvent(GameEngineLevel* _PrevLevel)
 
 	GetMainCamera()->SetProjectionMode(ProjectionMode::Orthographic);
 	GetMainCamera()->GetTransform()->SetLocalPosition(float4(0.0f, 0.0f, static_cast<int>(ZOrder::Z00Camera00)));
+}
+
+void WorldMapScene::KeySetting()
+{
+	GameEngineInput::GetInst().CreateKey("MoveLeft", VK_LEFT);
+	GameEngineInput::GetInst().CreateKey("MoveRight", VK_RIGHT);
+	GameEngineInput::GetInst().CreateKey("MoveUp", VK_UP);
+	GameEngineInput::GetInst().CreateKey("MoveDown", VK_DOWN);
+	GameEngineInput::GetInst().CreateKey("Chose", VK_SPACE);
+
+	GameEngineInput::GetInst().CreateKey("DEBUG_Back_Image", VK_LSHIFT);
 }
 
 void WorldMapScene::ChangeScene(std::string _Scene)
